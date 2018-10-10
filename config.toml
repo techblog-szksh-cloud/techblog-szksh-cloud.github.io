@@ -1,0 +1,4 @@
+baseURL = "https://suzuki-shunsuke.github.io/"
+languageCode = "jp"
+title = "melody"
+theme = "tale"
