@@ -10,5 +10,5 @@ https://suzuki-shunsuke.github.io
 
 ## How to update blog
 
-Push updates to the master branch.
+Push updates to the source branch.
 Then ci is run and blog is updated.
