@@ -76,3 +76,10 @@ https://www.vagrantup.com/docs/docker/basics.html#host-vm
 https://docs.ansible.com/ansible-container/
 
 よく知りません。動作確認したいだけだとオーバースペックな印象は受けます。
+
+### Packer
+
+* https://www.packer.io/docs/builders/docker.html
+* https://www.packer.io/docs/provisioners/ansible.html
+
+記事を書き終わってからそういえば Packer があったなと思い出しました。
