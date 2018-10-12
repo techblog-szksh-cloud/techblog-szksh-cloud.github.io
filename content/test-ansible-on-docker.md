@@ -1,7 +1,7 @@
 ---
 title: "Dockerを使ってansible playbookをテストする"
 date: 2018-10-12T21:02:51+09:00
-draft: true
+draft: false
 tags:
 - ansible
 ---
