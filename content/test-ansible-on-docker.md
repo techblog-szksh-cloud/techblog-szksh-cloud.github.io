@@ -24,13 +24,13 @@ ansible playbookに加え、
 * docker-compose.yml
 * test_docker.sh: 簡単なシェルスクリプト
 
-を作成し、
+を作成してあります。
 
 ```console
 $ bash test_docker.sh
 ```
 
-とスクリプトを実行することで動作確認できます。
+とすることで動作確認できます。
 
 ## 説明
 
