@@ -1,7 +1,7 @@
 ---
 title: "akoi - binary installer"
 date: 2018-10-31T08:56:04+09:00
-draft: true
+draft: false
 tags:
 - oss
 - ansible
