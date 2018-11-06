@@ -5,6 +5,7 @@ draft: false
 tags:
 - oss
 - golang
+- gomic
 ---
 
 自作のOSS [gomic](https://github.com/suzuki-shunsuke/gomic) の紹介をします。
@@ -21,9 +22,6 @@ tags:
   * 自動生成できるコードは自動生成すべき
 * 設定ファイルで管理するため、interfaceの更新に合わせてmockの更新が容易
 * 生成されるモックはシンプルなAPIのみ提供するので学習コストが低い
-  * interfaceのメソッドを実装した関数を構造体のフィールドに渡すパターン
-  * gomockが提供する便利APIは不採用
-  * EXPECT, RETURNT パターン(?) も不採用
 
 ## gomic とは
 
@@ -48,7 +46,7 @@ https://github.com/suzuki-shunsuke/gomic/releases からバイナリをダウン
 上述のように既に同様のツールはありますし、 gomock と minimock は試しました。
 しかしあまり満足のいくものではなかったため、自分で作ることにしました。
 
-自分が欲しかったのは魔法のようなAPIではなく、シンプルなAPIです。
+自分が欲しかったのは学習コストの低いシンプルなAPIです。
 interfaceのメソッドを実装した関数を構造体のフィールドに渡し、構造体のメソッドでそのフィールドを呼び出すことで、
 簡単にメソッドの実装を切り替えたいのです。
 
@@ -105,7 +103,7 @@ interfaceを更新すればmockも更新しないといけません。
 ## モックの使い方
 
 生成されたモックの使い方について軽く説明します。
-[v0.2.1-1](https://github.com/suzuki-shunsuke/gomic/releases/tag/v0.2.1-1) 時点のものなので古くなっているかもしれません。
+[v0.4.0](https://github.com/suzuki-shunsuke/gomic/releases/tag/v0.4.0) 時点のものなので古くなっているかもしれません。
 最新の使い方は
 
 * https://github.com/suzuki-shunsuke/gomic
@@ -113,7 +111,7 @@ interfaceを更新すればmockも更新しないといけません。
 
 をご確認ください。
 
-以下のサンプルは [v0.2.1-1のサンプル](https://github.com/suzuki-shunsuke/gomic/tree/v0.2.1-1/examples) を元にしています。
+以下のサンプルは [v0.4.0のサンプル](https://github.com/suzuki-shunsuke/gomic/tree/v0.4.0/examples) を元にしています。
 
 まず mock を生成します(以下このモックを生成する関数を"コンストラクタ"と呼びます)。
 
@@ -136,6 +134,12 @@ mock.Impl.Getwd = func() (string, error) {
 
 `mock.Getwd` を呼び出すと `mock.Impl.Getwd` が呼び出されます。
 
+上記のサンプルのように決まった値を返すだけの fake はよくあるので、以下のように簡単に書けるようにしています。
+
+```go
+mock.SetFakeGetwd("/tmp", fmt.Errorf(""))
+```
+
 実装がセットされていない状態でモックのメソッドを呼び出すと
 `mock.CallbackNotImplemented` が呼び出されます(コンストラクタの第二引数が `mock.CallbackNotImplemented` にセットされています)。
 モックの生成後に`mock.CallbackNotImplemented` を直接変更しても大丈夫です。
@@ -153,6 +157,6 @@ s, err := mock.Getwd(nil, gomic.DoNothing)
 
 上で説明したことは
 
-https://github.com/suzuki-shunsuke/gomic/blob/v0.2.1-1/examples/os_mock.go#L31-L56
+https://github.com/suzuki-shunsuke/gomic/blob/v0.4.0/examples/os_mock.go#L30-L63
 
 を見てもらえばわかると思います。
