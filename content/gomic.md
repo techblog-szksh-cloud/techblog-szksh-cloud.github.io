@@ -47,13 +47,14 @@ https://github.com/suzuki-shunsuke/gomic/releases からバイナリをダウン
 しかしあまり満足のいくものではなかったため、自分で作ることにしました。
 
 自分が欲しかったのは学習コストの低いシンプルなAPIです。
-interfaceのメソッドを実装した関数を構造体のフィールドに渡し、構造体のメソッドでそのフィールドを呼び出すことで、
+interfaceのメソッドを実装した関数をモックに渡すことで
 簡単にメソッドの実装を切り替えたいのです。
 
 ```go
-mock.Impl.Getwd = func() (string, error) {
+// Getwd メソッドのモック
+mock.SetFuncGetwd(func() (string, error) {
 	return "/tmp", nil
-}
+})
 
 mock.Getwd() // "/tmp", nil
 ```
@@ -80,7 +81,8 @@ gomicはそういったAPIは提供していません。
 
 http://haya14busa.com/golang-how-to-write-mock-of-interface-for-testing/
 
-でもライブラリに依存しないでmockを書くパターンとして紹介されています。
+でも似たようなモッキングの方法がライブラリに依存しないでmockを書くパターンとして紹介されています
+(似たようなというか、[gomicも v0.4.0 までは構造体のフィールドに代入していました](https://github.com/suzuki-shunsuke/gomic/blob/v0.4.0/examples/os_mock_test.go#L20-L22))。
 
 Goではライブラリに依存しないで標準ライブラリだけで書くのが良いという思想・意見がよく見られます。
 そのため、gomicのようなツールを好まない方がいるのは承知しています。
@@ -92,7 +94,7 @@ Goではライブラリに依存しないで標準ライブラリだけで書く
 * https://github.com/suzuki-shunsuke/gomic/blob/master/examples/os.go
 * https://github.com/suzuki-shunsuke/gomic/blob/master/examples/os_mock.go
 
-とてもシンプルなinterfaceですが、それでもそのモックを実装するのはそこそこ面倒です。
+とてもシンプルな interface とそのモックですが、それでもモックを実装するのはそこそこ面倒です。
 メソッド、interfaceの数に比例してどんどん面倒になります。
 golintのようなlinterでエラーにならないようにコードコメントを書くのも地味に大変です。
 
@@ -103,7 +105,7 @@ interfaceを更新すればmockも更新しないといけません。
 ## モックの使い方
 
 生成されたモックの使い方について軽く説明します。
-[v0.4.0](https://github.com/suzuki-shunsuke/gomic/releases/tag/v0.4.0) 時点のものなので古くなっているかもしれません。
+[v0.5.0](https://github.com/suzuki-shunsuke/gomic/releases/tag/v0.5.0) 時点のものなので古くなっているかもしれません。
 最新の使い方は
 
 * https://github.com/suzuki-shunsuke/gomic
@@ -111,7 +113,7 @@ interfaceを更新すればmockも更新しないといけません。
 
 をご確認ください。
 
-以下のサンプルは [v0.4.0のサンプル](https://github.com/suzuki-shunsuke/gomic/tree/v0.4.0/examples) を元にしています。
+以下のサンプルは [v0.5.0のサンプル](https://github.com/suzuki-shunsuke/gomic/tree/v0.5.0/examples) を元にしています。
 
 まず mock を生成します(以下このモックを生成する関数を"コンストラクタ"と呼びます)。
 
@@ -120,34 +122,33 @@ mock := examples.NewOSMock(nil, nil)
 ```
 
 第一引数は *testing.T で、通常のテストならテスト関数の引数をそのまま渡せば良いし、そうでなければ nil を渡せば良いと思います。
-第二引数は `func(t *testing.T, intfName, methodName string)` 型の関数で、interfaceのメソッドの実装をモックのフィールドにセットしていない場合に呼び出されます。nil を渡すと代わりに[gomic.DefaultCallbackNotImplemented](https://godoc.org/github.com/suzuki-shunsuke/gomic/gomic#DefaultCallbackNotImplemented) が呼び出されます。
+第二引数は `func(t *testing.T, intfName, methodName string)` 型の関数で、interfaceのメソッドの実装がセットされていない場合に呼び出されます。nil を渡すと代わりに[gomic.DefaultCallbackNotImplemented](https://godoc.org/github.com/suzuki-shunsuke/gomic/gomic#DefaultCallbackNotImplemented) が呼び出されます。
 
 mockは interface を実装しています。
 
-次にinterfaceのメソッドの実装をmockにセットします。
+次にinterfaceのメソッドを実装した関数をmockにセットします。
 
 ```go
-mock.Impl.Getwd = func() (string, error) {
+mock.SetFuncGetwd(func() (string, error) {
 	return "/tmp", fmt.Errorf("")
-}
+})
 ```
 
-`mock.Getwd` を呼び出すと `mock.Impl.Getwd` が呼び出されます。
+`mock.Getwd` を呼び出すと `SetFuncGetwd` に渡した関数が呼び出されます。
 
 上記のサンプルのように決まった値を返すだけの fake はよくあるので、以下のように簡単に書けるようにしています。
 
 ```go
-mock.SetFakeGetwd("/tmp", fmt.Errorf(""))
+mock.SetReturnGetwd("/tmp", fmt.Errorf(""))
 ```
 
 実装がセットされていない状態でモックのメソッドを呼び出すと
-`mock.CallbackNotImplemented` が呼び出されます(コンストラクタの第二引数が `mock.CallbackNotImplemented` にセットされています)。
-モックの生成後に`mock.CallbackNotImplemented` を直接変更しても大丈夫です。
+コンストラクタの第二引数で渡した関数が呼び出されます。
 
-`mock.CallbackNotImplemented` がnilだと [gomic.DefaultCallbackNotImplemented](https://godoc.org/github.com/suzuki-shunsuke/gomic/gomic#DefaultCallbackNotImplemented) が呼びだされます。
+コンストラクタの第二引数がnilだと [gomic.DefaultCallbackNotImplemented](https://godoc.org/github.com/suzuki-shunsuke/gomic/gomic#DefaultCallbackNotImplemented) が呼びだされます。
 gomic.DefaultCallbackNotImplemented は コンストラクタの第一引数が nil だと [log.Fatal](https://golang.org/pkg/log/#Fatal) を、そうでなければ [testing.T#Fatal](https://golang.org/pkg/testing/#T.Fatal) を呼び出し、そこで処理を停止します。
 
-`mock.CallbackNotImplemented` でlog.Fatalやtesting.Fatal によって処理を止めなければ、interfaceのメソッドを実装していない場合、[zero value](https://golang.org/ref/spec#The_zero_value) を返す fake になります。
+コンストラクタの第二引数で渡した関数で log.Fatal や testing.Fatal によって処理を止めなければ、interfaceのメソッドを実装していない場合、[zero value](https://golang.org/ref/spec#The_zero_value) を返す fake になります。
 
 一番簡単なのは [gomic.DoNothing](https://godoc.org/github.com/suzuki-shunsuke/gomic/gomic#DoNothing) を渡すことです。
 
@@ -157,6 +158,6 @@ s, err := mock.Getwd(nil, gomic.DoNothing)
 
 上で説明したことは
 
-https://github.com/suzuki-shunsuke/gomic/blob/v0.4.0/examples/os_mock.go#L30-L63
+https://github.com/suzuki-shunsuke/gomic/blob/v0.5.0/examples/os_mock.go#L27-L67
 
 を見てもらえばわかると思います。
