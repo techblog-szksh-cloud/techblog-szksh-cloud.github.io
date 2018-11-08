@@ -142,6 +142,16 @@ mock.SetFuncGetwd(func() (string, error) {
 mock.SetReturnGetwd("/tmp", fmt.Errorf(""))
 ```
 
+モックの `SetFuncXXX` 及び `SetReturnXXX` はモック自身を返すのでメソッドチェーンが出来るようになっています。
+
+```go
+mock := examples.NewOSMock(nil, nil).
+  SetReturnMkdir(nil).
+	SetFuncGetwd(func() (string, error) {
+		return "/tmp", fmt.Errorf("")
+	})
+```
+
 実装がセットされていない状態でモックのメソッドを呼び出すと
 コンストラクタの第二引数で渡した関数が呼び出されます。
 
