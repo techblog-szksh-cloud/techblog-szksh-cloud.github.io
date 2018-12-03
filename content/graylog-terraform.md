@@ -39,10 +39,12 @@ GraylogのAPIの種類は非常に多く、残念ながらカバーできてい�
 * Role
 * Index Set
 * Stream
+* Stream Rule
+* Dashboard
 * Ldap Setting
 
 Role はサポートしているので権限管理は問題なく出来ます。
-Stream Rule と Dashboard もサポートしたいです。
+Dashboard Widget もサポートしたいです。
 
 出来れば Alert の設定も出来ると良いのですが、Alertに関するCRUD APIが提供されていない(GETのみ)ので、サポートできません。
 
@@ -79,14 +81,19 @@ terraform provider の開発に興味のある方はこの辺を見てみると�
 
 API を使って terraform provider を開発することで、Infrastructure as Code をある程度実現できました。
 
-* Stream Rule と Dashboard をサポートできていない
+* ~Stream Rule と Dashboard をサポートできていない~
 * Alertに関するCRUD APIが提供されていない(GETのみ)ので、サポートできない
 
 という問題がクリア出来てないので、そこをクリアしたいです。
 
 また、
 
-* まだ terraform を CI で出来ていない(ローカルから実行している)
+* ~まだ terraform を CI で出来ていない(ローカルから実行している)~
 * 新しいプロジェクトやユーザーの追加の際に雛形を自動生成できるツールを作りたい(特に、新しく参画した人のためにあると良い)
 
 といった点も改善したいです(出来たら記事にしたいと思います)。
+
+## 2018-12-03 追記
+
+* Stream Rule サポートしました
+* terraform を CI で実行するようにしました(気が向いたら記事書きます)
