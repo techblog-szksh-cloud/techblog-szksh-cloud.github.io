@@ -42,6 +42,12 @@ https://molecule.readthedocs.io/en/latest/installation.html
 $ pip install molecule
 ```
 
+Docker を使う場合 `docker-py` も必要です。
+
+```
+$ pip install docker-py
+```
+
 ## role のテスト
 
 playbookに比べて role のテストは簡単です。
@@ -73,16 +79,22 @@ lint:
 platforms:
   - name: server  # コンテナの名前になる
     # 必要に応じて image を変更
-    image: centos:7
+    # 今回は ansibleのremote user を非rootにするために自作の Docker Image を指定
+    # https://hub.docker.com/r/suzukishunsuke/ansible-test-centos/
+    image: suzukishunsuke/ansible-test-centos:0.1.0
     # systemd を使ったりする場合
     # https://molecule.readthedocs.io/en/latest/examples.html#systemd-container
     privileged: true
     command: /sbin/init  # systemd を使う場合必要
+    env:
+      USER: foo # DockerだとUSER環境変数が空になってしまうようなので明示的に設定
 provisioner:
   # https://molecule.readthedocs.io/en/latest/configuration.html#id12
   name: ansible
   lint:
     name: ansible-lint
+  options:
+    user: foo # 非rootユーザーで実行
   inventory:
     group_vars:
       # variables を指定
@@ -101,14 +113,25 @@ verifier:
     name: flake8
 ```
 
+test の前にまずは lint します。
+
+```
+$ molecule lint [-s <senario name>]
+```
+
+すると yamllint の設定ファイル `.yamllint` が作られていると思うので、必要に応じて修正します。
+
+https://yamllint.readthedocs.io/en/stable/configuration.html
+
+ansible-lint で引っかかった人はこちらを参照してください。
+
+https://github.com/ansible/ansible-lint
+
 そして test コマンドを実行します。
 
 ```
 $ molecule test [-s <senario name>]
 ```
-
-molecule ではデフォルトで [ansible-lint](https://github.com/ansible/ansible-lint) が使われています。
-それまで ansible-lint を使ってこなかった人は結構 lint に引っかかるかもしれません。
 
 `test` コマンドではコンテナが削除されるため、デバッグが難しかったりします。
 
@@ -116,6 +139,12 @@ molecule ではデフォルトで [ansible-lint](https://github.com/ansible/ansi
 
 ```
 $ molecule converge [-s <senario name>]
+```
+
+消したくなったら destroy コマンドで消しましょう。
+
+```
+$ molecule destroy [-s <senario name>]
 ```
 
 ## playbook のテスト
@@ -138,12 +167,14 @@ hello-molecule/  # ルートディレクトリ
   ansible.cfg
 ```
 
-このときに playbook `agent.yml` のテストがしたいのです。
+このときに playbook `agent.yml` のテストがしたいとします。
 molecule のためにこの構成を弄ったりは極力したくありません。
 
 playbook のディレクトリで `molecule init` を実行します。
+default シナリオは必須のようです。
 
 ```
+$ molecule init scenario -r hello-molecule
 $ molecule init scenario -s agent -r hello-molecule
 ```
 
@@ -161,6 +192,7 @@ hello-molecule/
   roles.yml
   ansible.cfg
   molecule/
+    default/
     agent/
       molecule.yml
       playbook.yml # これは使わない。消す
