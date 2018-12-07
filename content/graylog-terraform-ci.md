@@ -22,6 +22,16 @@ https://suzuki-shunsuke.github.io/graylog-terraform/
 * `plan/*` tag を push すると `terraform plan` が実行される
 * `apply/*` tag を push すると `terraform apply` が実行され、tfstate がコミット、プッシュされる
 
+## ソースコード
+
+https://github.com/suzuki-shunsuke/example/tree/master/graylog-terraform に置いておきました。
+
+* https://github.com/suzuki-shunsuke/example/blob/master/graylog-terraform/role.tf#L13-L25
+* https://github.com/suzuki-shunsuke/example/blob/master/graylog-terraform/user.tf#L12-L21
+* https://github.com/suzuki-shunsuke/example/blob/master/graylog-terraform/.drone.yml
+* https://github.com/suzuki-shunsuke/example/blob/master/graylog-terraform/terraform.tfvars.tpl
+* https://github.com/suzuki-shunsuke/example/blob/master/graylog-terraform/drone_pipeline_commands/git.sh
+
 ## CI/CD用の user, role を作成する
 
 まずは role を作成します。
