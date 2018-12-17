@@ -96,4 +96,4 @@ API を使って terraform provider を開発することで、Infrastructure as
 ## 2018-12-03 追記
 
 * Stream Rule サポートしました
-* terraform を CI で実行するようにしました(気が向いたら記事書きます)
+* [terraform を CI で実行するようにしました(気が向いたら記事書きます)](/graylog-terraform-ci)
