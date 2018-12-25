@@ -145,7 +145,7 @@ if f, err := os.Open(filename); err != nil {
 go-errlogではシンプルにロギングを記述できます。
 
 ```go
-logger := errlog.NewLogger(nil).
+logger := errlog.NewLogger(nil)
 // err != nil なら logging する
 // err がメタ情報を持ってたら logrusで構造化してロギングする
 // メッセージも pkg/errors のように一つのテキストに連結してロギング
