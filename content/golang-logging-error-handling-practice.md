@@ -7,6 +7,16 @@ tags:
 - logging
 ---
 
+## 2018-12-30 追記
+
+この記事を元にドキュメントを書いてみました。
+
+https://github.com/suzuki-shunsuke/go-error-handling-logging-practice
+
+追記ここまで
+
+---
+
 Golang でエラーハンドリングとロギングをしてきて自分の中で固まりつつあるプラクティスを明文化します。
 明文化することで以下のことを目指します。
 
