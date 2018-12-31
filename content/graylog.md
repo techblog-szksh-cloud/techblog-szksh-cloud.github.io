@@ -138,25 +138,25 @@ Notification のメッセージのテンプレートは自由に変えられま�
 自分は次のような感じにしています。
 
 ```
-Alert Condition: ${alert_condition.title}
-Messages:
-${foreach backlog message}
-<https://graylog.example.com/messages/<active index>/${message.id} | link> ${message.message} (${message.fields.error})
+${alert_condition.title}
 
+${foreach backlog message}
+<https://graylog.example.com/streams/${stream.id}/search?rangetype=absolute&from=${message.timestamp}&to=${message.timestamp} | link> ${message.message}
 ${end}
 ```
 
-graylog の URL と `<active index>` は適宜変更してください。 `<active index>` は適当に対象のStreamのメッセージ1つ選んでPermalinkのURLを見れば分かります。
+graylog の URL は適宜置き換えてください。
 `link` の部分を変数(`${message.message}`とか)にするとリンクが壊れてしまうことがあったので固定文字列にしています。
 
-ここで注意が必要なのが、graylog-plugin-slack の設定で `Graylog URL (optional)`を設定しないと `${stream_url}` などが空になってしまうことです。自分は optional なので元々設定していなかったのでハマりました(ググっても分からなかった)。
+graylog-plugin-slack の設定で `Graylog URL (optional)`を設定しないと `${stream_url}` などが空になってしまうことに注意してください。
+自分は optional なので元々設定していなかったのでハマりました(ググっても分からなかった)。
 `Graylog URL`という設定は notification 毎に変えるようなものでもないのでglobalに設定できるとよいのですが、どうも出来なそうです。
 
 また、テンプレート中で使える変数の中にmessageのURLはないそうです。
 
 https://community.graylog.org/t/message-url-in-alert-notification/1916
 
-`<active index>` の部分は恐らくESのインデックスが変わると変わってしまう気がする(要検証)ので出来れば変数として参照できるようになってほしいです。
+そのため、message.timestamp を from と to に指定して検索するという回りくどい(?)ことをしています。
 
 ## ダッシュボードの作成
 
