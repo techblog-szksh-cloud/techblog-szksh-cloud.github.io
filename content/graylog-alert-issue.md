@@ -13,11 +13,21 @@ Graylogのバージョンは 2.5.0 です。
 リストの詳細を書きだしてみたものの、リストだけでだいたい言いたいことが言えてしまっていたのと、単なる愚痴っぽくなってしまったので、
 リストだけに留めます。
 
+## 2018-12-31 追記
+
+元々 Alert Condition, Notification の APIがないと勘違いしていたのですが、
+実はちゃんとあったので terraform で管理できるように go-graylog を更新しました。
+
+* https://github.com/suzuki-shunsuke/go-graylog/pull/50
+* https://github.com/suzuki-shunsuke/go-graylog/pull/52
+* https://github.com/suzuki-shunsuke/go-graylog/blob/master/terraform/docs/alarm_callback.md
+* https://github.com/suzuki-shunsuke/go-graylog/blob/master/terraform/docs/alert_condition.md
+
 ## 課題リスト
 
-* APIでAlert Condition, Notificationを管理できない
-  * APIがないので terraform でサポートも出来ない
-  * 数が増えるとWeb UIでは管理が辛い・修正漏れや設定ミスが出やすい
+* ~~APIでAlert Condition, Notificationを管理できない~~
+  * ~~APIがないので terraform でサポートも出来ない~~
+  * ~~数が増えるとWeb UIでは管理が辛い・修正漏れや設定ミスが出やすい~~
 * Condition, NotificationがStreamに紐づく
   * ConditionによってNotificationを変えられない
     * 条件に応じてアラートの文面・通知先・メンション先・メンションの有無を変えられない
