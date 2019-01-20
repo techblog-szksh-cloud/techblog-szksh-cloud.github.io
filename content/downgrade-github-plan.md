@@ -1,7 +1,7 @@
 ---
 title: "GithubをFree Planにダウングレードした"
 date: 2019-01-20T12:27:26+09:00
-draft: true
+draft: false
 tags:
 - github
 ---
