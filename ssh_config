@@ -1,3 +1,5 @@
-Host *
+Host github.com
+  HostName github.com
   StrictHostKeyChecking no
   UserKnownHostsFile /dev/null
+  IdentityFile ~/.ssh/id_rsa
