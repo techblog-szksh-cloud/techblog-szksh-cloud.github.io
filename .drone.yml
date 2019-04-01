@@ -3,7 +3,7 @@ kind: pipeline
 name: build
 steps:
 - name: clone theme
-  image: &image_git plugin/git
+  image: &image_git plugins/git
   commands:
   - git config user.name "Suzuki Shunsuke"
   - git config user.email "suzuki.shunsuke.1989@gmail.com"
