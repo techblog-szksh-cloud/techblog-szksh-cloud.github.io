@@ -22,7 +22,10 @@ steps:
   - git status --porcelain
   - git add .
   - git commit -m "update"
+  - mkdir ~/.ssh/id_rsa
+  - chmod -R 700
   - echo $DEPLOY_KEY > ~/.ssh/id_rsa
+  - chmod 600 ~/.ssh/id_rsa
   - git push git@github.com:suzuki-shunsuke/suzuki-shunsuke.github.io master
   environment:
     DEPLOY_KEY:
