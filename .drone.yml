@@ -16,13 +16,15 @@ steps:
   image: *image_git
   commands:
   - git fetch
+  - mkdir ~/.ssh
+  - chmod -R 700 ~/.ssh
+  - cp ssh_config ~/.ssh/config 
   - git checkout -b master origin/master
   - mv .git .circleci public
   - cd public
   - git status --porcelain
   - git add .
   - git commit -m "update"
-  - mkdir ~/.ssh
   - chmod -R 700 ~/.ssh
   - echo $DEPLOY_KEY > ~/.ssh/id_rsa
   - chmod 600 ~/.ssh/id_rsa
