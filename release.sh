@@ -1,10 +1,5 @@
-git branch -D master
-git checkout -b master origin/master
-mv .git .circleci public
-cd public
-git status --porcelain
 if [ -n "`git status --porcelain`" ]; then
-  git add .
-  git commit -m "update"
-  git push origin master
+  git add . || exit 1
+  git commit -m "update" || exit 1
+  git push origin master || exit 1
 fi
