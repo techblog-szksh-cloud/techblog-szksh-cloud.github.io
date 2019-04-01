@@ -17,7 +17,7 @@ steps:
   commands:
   - git fetch
   - git checkout -b master origin/master
-  - mv .git .circle public
+  - mv .git .circleci public
   - cd public
   - git status --porcelain
   - sh ../release.sh
