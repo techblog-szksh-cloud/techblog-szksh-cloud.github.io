@@ -1,0 +1,18 @@
+---
+kind: pipeline
+name: build
+steps:
+- name: clone theme
+  image: &image_git plugin/git
+  commands:
+  - git config user.name "Suzuki Shunsuke"
+  - git config user.email "suzuki.shunsuke.1989@gmail.com"
+  - git clone --depth 1 https://github.com/suzuki-shunsuke/tale-hugo themes/tale
+- name: hugo
+  image: suzukishunsuke/hugo:0.2.0
+  commands:
+  - hugo
+- name: release
+  image: *image_git
+  commands:
+  - sh release.sh
