@@ -20,4 +20,6 @@ steps:
   - mv .git .circleci public
   - cd public
   - git status --porcelain
-  - sh ../release.sh
+  - git add .
+  - git commit -m "update"
+  - git push origin master
