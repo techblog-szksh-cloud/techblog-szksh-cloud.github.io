@@ -16,8 +16,9 @@ steps:
   image: *image_git
   commands:
   - git fetch
+  - mv .drone
   - git checkout -b master origin/master
-  - mv .git .drone.yml public
+  - mv .git public
   - cd public
   - git status --porcelain
   - sh ../release.sh
