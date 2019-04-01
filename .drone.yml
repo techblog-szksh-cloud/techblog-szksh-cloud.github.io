@@ -22,4 +22,8 @@ steps:
   - git status --porcelain
   - git add .
   - git commit -m "update"
-  - git push origin master
+  - echo $DEPLOY_KEY > ~/.ssh/id_rsa
+  - git push git@github.com:suzuki-shunsuke/suzuki-shunsuke.github.io master
+  environment:
+    DEPLOY_KEY:
+      from_secret: deploy_key
