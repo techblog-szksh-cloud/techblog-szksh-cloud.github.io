@@ -20,7 +20,7 @@ steps:
   - chmod -R 700 ~/.ssh
   - cp ssh_config ~/.ssh/config 
   - git checkout -b master origin/master
-  - mv .git .circleci CNAME public
+  - mv .git CNAME public
   - cd public
   - git status --porcelain
   - git add .
