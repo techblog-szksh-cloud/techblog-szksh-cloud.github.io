@@ -19,8 +19,9 @@ steps:
   - mkdir ~/.ssh
   - chmod -R 700 ~/.ssh
   - cp ssh_config ~/.ssh/config 
+  - cp README.md public
   - git checkout -b master origin/master
-  - mv .git CNAME README.md public
+  - mv .git CNAME public
   - cd public
   - git status --porcelain
   - git add .
