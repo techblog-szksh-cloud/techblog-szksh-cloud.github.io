@@ -1,7 +1,6 @@
 ---
 title: "Drone v0.8 の .drone.yml を v1 の .drone.jsonnet に変換するツールを作った"
 date: 2019-06-12T07:40:45+09:00
-draft: true
 tags:
 - oss
 - drone
