@@ -6,6 +6,7 @@ tags:
 - oss
 - golang
 - gomic
+archives: ["2018/10"]
 ---
 
 自作のOSS [gomic](https://github.com/suzuki-shunsuke/gomic) の紹介をします。

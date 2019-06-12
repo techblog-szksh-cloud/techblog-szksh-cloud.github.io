@@ -5,6 +5,7 @@ draft: false
 tags:
 - oss
 - graylog
+archives: ["2018/11"]
 ---
 
 Java 製の OSS ログ管理システム Graylog の紹介です。

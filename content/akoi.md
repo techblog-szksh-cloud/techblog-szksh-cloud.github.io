@@ -5,6 +5,7 @@ draft: false
 tags:
 - oss
 - ansible
+archives: ["2018/10"]
 ---
 
 自作のOSS [akoi](https://github.com/suzuki-shunsuke/akoi) の紹介をします。

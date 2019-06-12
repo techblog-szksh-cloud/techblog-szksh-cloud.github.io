@@ -4,6 +4,7 @@ date: 2018-10-12T21:02:51+09:00
 draft: false
 tags:
 - ansible
+archives: ["2018/10"]
 ---
 
 ansible playbookを(VMの代わりに)Dockerコンテナに対して実行すると、効率よく動作確認できるというお話です。

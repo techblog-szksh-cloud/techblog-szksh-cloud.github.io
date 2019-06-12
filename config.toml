@@ -2,3 +2,7 @@ baseURL = "https://suzuki-shunsuke.github.io/"
 languageCode = "jp"
 title = "melody"
 theme = "beg"
+
+[taxonomies]
+  tag = "tags"
+  archive = "archives"

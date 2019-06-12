@@ -5,6 +5,7 @@ draft: false
 tags:
 - drone
 - metabase
+archives: ["2018/09"]
 ---
 
 drone OSS 0.8.5 で検証しています。

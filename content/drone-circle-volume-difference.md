@@ -5,6 +5,7 @@ draft: false
 tags:
 - drone
 - circleci
+archives: ["2018/09"]
 ---
 
 drone は同じ pipeline の step 間で同じ workspace を docker の volume としてマウントすることで workspace を共有します。

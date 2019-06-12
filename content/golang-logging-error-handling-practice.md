@@ -5,6 +5,7 @@ draft: false
 tags:
 - golang
 - logging
+archives: ["2018/12"]
 ---
 
 ## 2018-12-30 追記

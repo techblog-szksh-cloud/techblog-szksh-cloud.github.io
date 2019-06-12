@@ -4,6 +4,7 @@ date: 2019-02-10T17:49:58+09:00
 draft: false
 tags:
 - golang
+archives: ["2019/02"]
 ---
 
 自分は 2017/8頃(曖昧)からメインで書く言語をPythonからGolangに変更しました。

@@ -6,6 +6,7 @@ tags:
 - graylog
 - terraform
 - ci
+archives: ["2018/12"]
 ---
 
 以前 Graylog を Terraform で管理する記事を書きました。

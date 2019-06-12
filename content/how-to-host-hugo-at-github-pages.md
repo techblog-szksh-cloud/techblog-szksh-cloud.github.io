@@ -4,6 +4,7 @@ date: 2018-10-01T08:04:16+09:00
 draft: false
 tags:
 - hugo
+archives: ["2018/10"]
 ---
 
 https://gohugo.io/ と https://pages.github.com/ の話です。

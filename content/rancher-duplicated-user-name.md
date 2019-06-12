@@ -4,6 +4,7 @@ date: 2019-03-16T21:17:05+09:00
 draft: false
 tags:
 - rancher
+archives: ["2019/03"]
 ---
 
 先日起こった Rancher のトラブルの解消方法について紹介したいと思います。

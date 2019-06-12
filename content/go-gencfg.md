@@ -4,6 +4,7 @@ date: 2018-09-06T23:59:35+09:00
 draft: false
 tags:
 - oss
+archives: ["2018/09"]
 ---
 
 自作のOSS [go-gencfg](https://github.com/suzuki-shunsuke/go-gencfg) を紹介します。

@@ -5,6 +5,7 @@ draft: false
 tags:
 - ansible
 - molecule
+archives: ["2018/12"]
 ---
 
 ansible 専用の testing ツール [molecule](https://molecule.readthedocs.io/en/latest/index.html) を紹介します。

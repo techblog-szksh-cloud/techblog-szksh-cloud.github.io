@@ -4,6 +4,7 @@ date: 2018-09-30T21:14:34+09:00
 draft: true
 tags:
 - drone
+archives: ["2018/09"]
 ---
 
 drone 0.8.5 で検証しています。

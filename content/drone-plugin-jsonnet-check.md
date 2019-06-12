@@ -4,6 +4,7 @@ date: 2019-06-01T08:34:10+09:00
 draft: false
 tags:
 - drone
+archives: ["2019/06"]
 ---
 
 久しぶりに [Drone plugin](https://docs.drone.io/plugins/) を作ったので紹介します。

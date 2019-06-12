@@ -6,6 +6,7 @@ tags:
 - oss
 - graylog
 - terraform
+archives: ["2018/12"]
 ---
 
 Graylogのリソースを terraform で管理するために作った terraform provider を紹介します。

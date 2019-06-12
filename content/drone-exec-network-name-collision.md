@@ -4,6 +4,7 @@ date: 2018-09-30T18:52:34+09:00
 draft: false
 tags:
 - drone
+archives: ["2018/09"]
 ---
 
 drone exec を並列実行すると docker network name が衝突することがあります。

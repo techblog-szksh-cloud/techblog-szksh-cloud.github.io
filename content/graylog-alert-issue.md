@@ -4,6 +4,7 @@ date: 2018-12-19T21:02:11+09:00
 draft: false
 tags:
 - graylog
+archives: ["2018/12"]
 ---
 
 Graylogを運用してきて感じているAlert機能周りの課題をリストアップします。

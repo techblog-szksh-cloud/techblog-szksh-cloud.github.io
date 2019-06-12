@@ -5,6 +5,7 @@ draft: false
 tags:
 - circleci
 - travisci
+archives: ["2018/10"]
 ---
 
 travis ci と circle ci の無償SaaS 版を比較しています。
