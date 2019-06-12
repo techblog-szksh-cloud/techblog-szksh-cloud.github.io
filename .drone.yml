@@ -7,9 +7,9 @@ steps:
   commands:
   - git config user.name "Suzuki Shunsuke"
   - git config user.email "suzuki.shunsuke.1989@gmail.com"
-  - git clone --depth 1 https://github.com/suzuki-shunsuke/tale-hugo themes/tale
+  - git clone --depth 1 https://github.com/dim0627/hugo_theme_beg
 - name: hugo
-  image: suzukishunsuke/hugo-ci:0.2.1
+  image: suzukishunsuke/hugo-ci:0.55.6__0.1.0
   commands:
   - hugo
 - name: release

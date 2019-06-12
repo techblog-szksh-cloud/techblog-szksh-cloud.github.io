@@ -1,5 +1,5 @@
-THEME_REPO=https://github.com/suzuki-shunsuke/tale-hugo
-THEME_NAME=themes/tale
+THEME_REPO=https://github.com/dim0627/hugo_theme_beg
+THEME_NAME=themes/beg
 
 theme: $(THEME_NAME)
 
