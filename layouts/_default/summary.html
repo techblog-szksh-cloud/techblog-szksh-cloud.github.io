@@ -30,21 +30,19 @@
 
   <footer class="article-footer">
     {{ $params := .Params }}
-    {{ range $key, $value := $.Site.Taxonomies }}
-    {{ if isset $params $key }}
+    {{ if isset $params "tags" }}
     <section class="bordered">
       <header>
-        <div class="panel-title">{{ $key | upper }}</div>
+        <div class="panel-title">TAGS</div>
       </header>
       <div>
         <ul class="p-terms">
-          {{ range (index $params $key) }}
-          <li><a href="{{ $.Site.BaseURL }}{{ $key | urlize }}/{{ . | urlize }}/">{{ . }}</a></li>
+          {{ range (index $params "tags") }}
+          <li><a href="{{ $.Site.BaseURL }}{{ "tags" | urlize }}/{{ . | urlize }}/">{{ . }}</a></li>
           {{ end }}
         </ul>
       </div>
     </section>
-    {{ end }}
     {{ end }}
   </footer>
 
