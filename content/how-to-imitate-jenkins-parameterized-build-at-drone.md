@@ -6,9 +6,10 @@ tags:
 ---
 
 Jenkins では parameterized build という機能で、ビルド実行時に Web UI からパラメータを指定することができます。
-Drone では基本的に Git のイベントをフックして動くので同様の機能はありません。
 
-自分はこのような機能は特に必要ないと思っていますが、
+Drone では基本的に Git のイベントをフックして動くので「ビルドを実行時に手動でパラメータを設定する」ということは出来ません。
+
+自分は基本的にできなくても構わないと思っていますが、
 こういった機能がないから Drone を使わないという人も中にはいるので、
 Drone でもちょっとした工夫でそれっぽいことは出来るんじゃないかと思い、簡単なサンプルを書いてみました。
 
@@ -18,7 +19,7 @@ https://github.com/suzuki-shunsuke/example-drone-build-parameter
 
 以下のファイルが必要です。
 
-* [build_params/params.sh.tpl](https://github.com/suzuki-shunsuke/example-drone-build-parameter/blob/master/build_params/params.sh.tpl): ビルドパラメータを記述ファイルのテンプレート
+* [build_params/params.sh.tpl](https://github.com/suzuki-shunsuke/example-drone-build-parameter/blob/master/build_params/params.sh.tpl): ビルドパラメータを記述するファイルのテンプレート
 * [scripts/deploy.sh](https://github.com/suzuki-shunsuke/example-drone-build-parameter/blob/master/scripts/deploy.sh): デプロイ時に実行するスクリプト
 * [.drone.yml](https://github.com/suzuki-shunsuke/example-drone-build-parameter/blob/master/.drone.yml): Drone の設定ファイル
 
@@ -28,7 +29,7 @@ https://github.com/suzuki-shunsuke/example-drone-build-parameter
 $ bash scripts/deploy.sh
 ```
 
-するとパラメータを記述するファイルがエディタで開きます。
+するとパラメータを記述するファイルがテンプレートから作成され、エディタで開きます。
 
 https://github.com/suzuki-shunsuke/example-drone-build-parameter/blob/master/scripts/deploy.sh#L12-L17
 
@@ -38,7 +39,7 @@ https://github.com/suzuki-shunsuke/example-drone-build-parameter/blob/master/scr
 
 https://github.com/suzuki-shunsuke/example-drone-build-parameter/blob/master/scripts/deploy.sh#L27-L35
 
-Drone でタグをフックしてビルドが実行されます。
+Drone でタグをプッシュするイベントをフックしてビルドが実行されます。
 
 https://github.com/suzuki-shunsuke/example-drone-build-parameter/blob/master/.drone.yml#L13-L17
 
