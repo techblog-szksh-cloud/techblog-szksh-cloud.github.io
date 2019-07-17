@@ -1,18 +1,26 @@
 ---
-title: "Fagott - Golang HTTP client testing framework"
+title: "Flute - Golang HTTP client testing framework"
 date: 2019-07-07T08:20:00+09:00
 tags:
 - oss
 - golang
-- fagott
+- flute
 archives: ["2019/07"]
+---
+
+## 2019-07-17 追記
+
+プロジェクト名が変わりました
+
+https://github.com/suzuki-shunsuke/flute/issues/20
+
 ---
 
 Go の HTTP client のテストフレームワークを作ったので紹介します。
 
-https://github.com/suzuki-shunsuke/fagott
+https://github.com/suzuki-shunsuke/flute
 
-執筆時点のバージョンは v0.3.0 です。
+執筆時点のバージョンは v0.6.0 です。
 
 * リクエストパラメータのテスト
 * HTTP サーバのモッキング
@@ -21,13 +29,13 @@ https://github.com/suzuki-shunsuke/fagott
 
 比較的実践的なサンプルとして、ユーザーを作成する簡単な API client とそのテストを書いたので参考にしてください。
 
-* https://github.com/suzuki-shunsuke/fagott/blob/master/examples/create_user.go
-* https://github.com/suzuki-shunsuke/fagott/blob/master/examples/create_user_test.go#L17-L53
+* https://github.com/suzuki-shunsuke/flute/blob/master/examples/create_user.go
+* https://github.com/suzuki-shunsuke/flute/blob/master/examples/create_user_test.go#L17-L53
 
 元々自分はこの目的のために [h2non/gock](https://github.com/h2non/gock) を使っていました。
 ただ、 gock だとリクエストがマッチしなかったときに、なぜマッチしないのかがわからず、調査に困るという問題がありました。
 
-そこで fagott では request に対し、matcher と tester という概念を導入し、
+そこで flute では request に対し、matcher と tester という概念を導入し、
 matcher でマッチしたリクエストを tester でテストするというふうにしました。
 テストでは内部で [stretchr/testify](https://github.com/stretchr/testify) の assert を使っており、テストに失敗したときになぜ失敗したのかが分かりやすく出力されるようになっています。
 
@@ -79,9 +87,9 @@ matcher でマッチしたリクエストを tester でテストするという�
 
 などがあります。
 
-詳細は コード中にコメントを入れているので [godoc](https://godoc.org/github.com/suzuki-shunsuke/fagott/fagott) を読んでください。
+詳細は コード中にコメントを入れているので [godoc](https://godoc.org/github.com/suzuki-shunsuke/flute/flute) を読んでください。
 
-技術的には [*http.Client](https://golang.org/pkg/net/http/#Client) の Transport に *fagott.Transport を設定することで HTTP サーバのモッキングをしています。
+技術的には [*http.Client](https://golang.org/pkg/net/http/#Client) の Transport に *flute.Transport を設定することで HTTP サーバのモッキングをしています。
 
 API のデザイン面で考慮したこととしては、
 グローバル変数である http.DefaultClient の変更をライブラリ側でやらないことです。
@@ -93,4 +101,4 @@ API のデザイン面で考慮したこととしては、
   * 明示的に `http.DefaultClient = client` のようにユーザーに書かせれば、理解しないまま使うことはないはず
 * ライブラリの外からも変更できるグローバル変数をライブラリで完全に管理するのは不可能なので、ユーザーに任せる
 
-以上、簡単ですが自作の OSS [fagott](https://github.com/suzuki-shunsuke/fagott) の紹介でした。
+以上、簡単ですが自作の OSS [flute](https://github.com/suzuki-shunsuke/flute) の紹介でした。
