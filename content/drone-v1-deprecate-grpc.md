@@ -1,6 +1,7 @@
 ---
 title: "Drone v1 で gRPC が使われなくなった"
 date: 2019-08-15T07:39:18+09:00
+archives: ["2019/08"]
 tags:
 - drone
 - grpc
