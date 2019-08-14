@@ -2,7 +2,6 @@
 title: "Drone Extension のリスク"
 date: 2019-08-15T07:54:23+09:00
 archives: ["2019/08"]
-draft: true
 tags:
 - drone
 ---
