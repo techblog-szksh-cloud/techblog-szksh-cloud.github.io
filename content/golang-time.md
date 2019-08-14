@@ -172,9 +172,26 @@ Location は `time.Local` になります。
 
 https://golang.org/pkg/time/#Now
 
+## log パッケージの時刻
+
+log パッケージで出力される時刻のフォーマットと location は log.SetFlags によってある程度変更できます。
+
+デフォルトは 日時を time.Local で出力します。
+log.LUTC をセットすることで UTC になります。
+
+* https://golang.org/pkg/log/#SetFlags
+* https://golang.org/pkg/log/#pkg-constants
+
+```go
+log.SetFlags(log.Flags() | log.LUTC)
+```
+
+また、[logrus](https://github.com/Sirupsen/logrus) のログの時刻の location も time.Local なようです。
+
 ## TODO: RDB での time.Time の扱い
 
 ちょっと疲れたのであとで調べます。
 
 * https://github.com/jinzhu/gorm/wiki/How-To-Do-Time
 * https://github.com/go-sql-driver/mysql#timetime-support
+* https://www.sambaiz.net/article/189/
