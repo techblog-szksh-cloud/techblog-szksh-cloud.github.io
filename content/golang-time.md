@@ -173,7 +173,9 @@ Location は `time.Local` になります。
 
 https://golang.org/pkg/time/#Now
 
-## log パッケージの時刻
+## 他のパッケージの location の扱い
+
+### log
 
 log パッケージで出力される時刻のフォーマットと location は log.SetFlags によってある程度変更できます。
 
@@ -187,12 +189,23 @@ log.LUTC をセットすることで UTC になります。
 log.SetFlags(log.Flags() | log.LUTC)
 ```
 
-また、[logrus](https://github.com/Sirupsen/logrus) のログの時刻の location も time.Local なようです。
+### logrus
 
-## TODO: RDB での time.Time の扱い
+[logrus](https://github.com/Sirupsen/logrus) のログの時刻の location も time.Local なようです。
 
-ちょっと疲れたのであとで調べます。
+### robfig/cron 
 
-* https://github.com/jinzhu/gorm/wiki/How-To-Do-Time
+https://github.com/robfig/cron
+
+> All interpretation and scheduling is done in the machine's local time zone (as provided by the Go time package (http://www.golang.org/pkg/time).
+
+time.Local なようです。
+
+### go-sql-driver/misql
+
 * https://github.com/go-sql-driver/mysql#timetime-support
 * https://www.sambaiz.net/article/189/
+
+### gorm
+
+https://github.com/jinzhu/gorm/wiki/How-To-Do-Time
