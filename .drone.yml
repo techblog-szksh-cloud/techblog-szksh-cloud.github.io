@@ -7,7 +7,7 @@ steps:
   commands:
   - git config user.name "Suzuki Shunsuke"
   - git config user.email "suzuki.shunsuke.1989@gmail.com"
-  - git clone --depth 1 https://github.com/dim0627/hugo_theme_beg themes/beg
+  - git clone --depth 1 https://github.com/suzuki-shunsuke/hugo_theme_beg themes/beg
 - name: hugo
   image: suzukishunsuke/hugo-ci:0.2.1
   commands:
