@@ -3,6 +3,8 @@ title: "cmdx - task runner"
 date: 2019-08-23T11:35:13+09:00
 archives: ["2019/08"]
 draft: false
+tags:
+- oss
 ---
 
 最近自作した OSS, cmdx の紹介です。
