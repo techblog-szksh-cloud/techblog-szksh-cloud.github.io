@@ -13,6 +13,8 @@ tags:
 * [AWSでTerraformに入門 | Developers.io](https://dev.classmethod.jp/cloud/terraform-getting-started-with-aws/)
 * [Terraform職人入門: 日々の運用で学んだ知見を淡々とまとめる | Qiita](https://qiita.com/minamijoyo/items/1f57c62bed781ab8f4d7)
 
+手を動かしたい方は [Terraform ハンズオン with MySQL Provider](https://techblog.szksh.cloud/terraform-hands-on-with-mysql-provider/) も参考にしてください。
+
 ## 前提
 
 * 執筆時点 (2020/01/05) で Terraform の最新バージョンは v0.12.18 です

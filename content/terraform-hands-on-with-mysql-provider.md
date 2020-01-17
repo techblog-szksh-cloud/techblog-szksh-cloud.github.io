@@ -21,6 +21,8 @@ MySQL のユーザーや Database を Terraform で管理したいとは自分�
 * https://github.com/terraform-providers
 * https://www.terraform.io/docs/providers/index.html
 
+また、 Terraform に関しては [Terraform 入門](https://techblog.szksh.cloud/terraform-getting-started/) も参照してください。
+
 今回の作業用に適当にディレクトリを作成し、そこで作業しましょう。
 
 以降、コマンドの実行結果は一部省略することがあります。
