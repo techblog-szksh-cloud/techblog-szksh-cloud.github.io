@@ -21,8 +21,8 @@ Graylogのバージョンは 2.5.0 です。
 
 * https://github.com/suzuki-shunsuke/go-graylog/pull/50
 * https://github.com/suzuki-shunsuke/go-graylog/pull/52
-* https://github.com/suzuki-shunsuke/go-graylog/blob/master/terraform/docs/alarm_callback.md
-* https://github.com/suzuki-shunsuke/go-graylog/blob/master/terraform/docs/alert_condition.md
+* https://github.com/suzuki-shunsuke/go-graylog/blob/v11.0.0/docs/resources/alarm_callback.md
+* https://github.com/suzuki-shunsuke/go-graylog/blob/v11.0.0/docs/resources/alert_condition.md
 
 ## 課題リスト
 

@@ -31,7 +31,7 @@ Web UIでポチポチするのは疲れますし、ソースコードで管理�
 APIを使って管理できるツールを探したものの見つからなかったので、
 APIを使ってGraylog用のterraform providerを自作しています。
 
-https://github.com/suzuki-shunsuke/go-graylog/tree/master/terraform
+https://github.com/suzuki-shunsuke/go-graylog
 
 GraylogのAPIの種類は非常に多く、残念ながらカバーできているのは一部だけですが、以下のようなものをサポートしています。
 

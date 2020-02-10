@@ -78,8 +78,8 @@ commands:
 
 drone API ないし CLI で有効化は出来るので、CIで連携を自動化することは可能だと思います。
 
-* http://docs.drone.io/cli-repository-add/
-* http://docs.drone.io/api-repo-create/
+* https://0-8-0.docs.drone.io/cli-repository-add/
+* https://0-8-0.docs.drone.io/api-repo-create/
 
 自分のところではまだそこまでやってなく、個人で有効化してしまっているのですが、
 自動化したらまた記事にでもしたいと思います。

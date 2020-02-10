@@ -10,7 +10,7 @@ Drone v1 では Extension という仕組みが導入されました。
 
 これは文字通り Drone を拡張する仕組みで、仕様に従って作れば自由に Drone を拡張できます。
 
-https://docs.drone.io/extend/
+https://docs.drone.io/extensions/overview/
 
 全てを本体でやるのではなく、拡張する仕組みを提供し、あとはコミュニティに委ねるというのが Drone の一つの方針とも言えると思います。
 

@@ -36,7 +36,6 @@ https://github.com/suzuki-shunsuke/go-errlog
 この記事を書く前に軽くググってみただけでちゃんと読んでないのですが、
 興味のある人は読んでみてください。
 
-* https://logmatic.io/blog/our-guide-to-a-golang-logs-world/
 * https://www.loggly.com/blog/think-differently-about-what-to-log-in-go-best-practices-examined/
 * https://dave.cheney.net/2015/11/05/lets-talk-about-logging
 * https://postd.cc/go-best-practices-2016/#logging-and-instrumentation

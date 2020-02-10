@@ -33,14 +33,14 @@ Nodeはバージョンの変化が速く、互換性が壊れたりとかも多�
 
 npm scripts によってそのリポジトリの開発に使うコマンド群を管理するということを自分はしています。
 
-https://github.com/suzuki-shunsuke/gomic/blob/master/package.json
+https://github.com/suzuki-shunsuke/gomic/blob/v0.5.7/package.json
 
 なにもツールを使わない場合に比べ、こうすることでチーム全体でコマンドを統一できますし、一連のコマンドをスクリプト化して npm scripts で実行できるようにするなど、自動化も促進されます。
 
 ごく簡単な自動化の例ですが、tag を打つと同時にソースコード中のバージョン番号を更新するのを `npm run tag v1.1.0` といったコマンドで出来るようにしています。
 こうすることで tag とversionコマンドで出力されるバージョンが違うなんてことを防ぐことが出来ます。
 
-https://github.com/suzuki-shunsuke/gomic/blob/master/scripts/tag.sh
+https://github.com/suzuki-shunsuke/gomic/blob/v0.5.7/scripts/tag.sh
 
 また、オプションによって動作が変わるようなコマンドは npm scripts によって実行することでオプションを統一できます。
 例えば `gofmt` は `-s` オプションの有無で結果が変わります。

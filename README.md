@@ -1,7 +1,7 @@
 # suzuki-shunsuke.github.io
 
 [![GitHub last commit](https://img.shields.io/github/last-commit/suzuki-shunsuke/suzuki-shunsuke.github.io.svg)](https://github.com/suzuki-shunsuke/suzuki-shunsuke.github.io)
-[![License](http://img.shields.io/badge/license-mit-blue.svg?style=flat-square)](https://raw.githubusercontent.com/suzuki-shunsuke/suzuki-shunsuke.github.io/master/LICENSE)
+[![License](http://img.shields.io/badge/license-mit-blue.svg?style=flat-square)](https://raw.githubusercontent.com/suzuki-shunsuke/suzuki-shunsuke.github.io/source/LICENSE)
 
 Personal blog powered by [Hugo](https://gohugo.io/).
 
