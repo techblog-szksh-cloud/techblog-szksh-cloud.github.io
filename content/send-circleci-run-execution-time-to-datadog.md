@@ -44,7 +44,7 @@ https://circleci.com/docs/2.0/configuration-reference/#run
 ```yaml
 - run:
     name: test dd-time
-    shell: /usr/local/bin/dd-time --metric-name dd_time.test -- sh -eo pipefail
+    shell: /usr/local/bin/dd-time -m dd_time.test -- sh -eo pipefail
     command: |
       echo start
       sleep 5
