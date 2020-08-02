@@ -1,7 +1,6 @@
 ---
 title: "AWS CodeBuild 良さそう"
 date: 2020-08-02T13:21:37+09:00
-draft: true
 archives: ["2020/08"]
 tags:
 - aws
