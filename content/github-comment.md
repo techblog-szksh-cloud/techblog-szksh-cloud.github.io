@@ -268,3 +268,14 @@ exec.Cmd の .String() のドキュメントに書いてあるとおり、 .Comm
 
 設定ファイルのパスは `--config -c` オプションで指定できます。
 何も指定しない場合、カレントディレクトリからルートディレクトリに向かって `.github-comment.yml`, `.github-comment.yaml` を探索し、最初に見つかったものを使います。
+
+## 設定ファイルで .Org, .Repo を指定する
+
+設定ファイルでコメント先のリポジトリを指定できます。
+Platform で補完される場合や、明示的にパラメータで指定する場合は不要です。
+
+```yaml
+base:
+  org: suzuki-shunsuke
+  repo: github-comment
+```
