@@ -22,6 +22,7 @@ AWS CodeBuild を検証しているんですが、結構良いですね。
 - AWS 以外のサービスに AWS の credential を登録しなくて良い
   - Secret を AWS Secrets Manager で管理できる
   - Secret を至るところに設定するのではなく、 AWS Secrets Manager か何かで一元管理するのが理想
+  - Role 作って Build Project の Service Role として指定するだけなら credential を扱う必要がなくて楽で安心
 - VPC 内で実行できる
 - GitHub 連携も簡単
   - Webhook の設定で PR の細かなイベント(merge とか reopen とか)に対応しているのも良い
