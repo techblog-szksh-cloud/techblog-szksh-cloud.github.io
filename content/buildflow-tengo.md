@@ -2,7 +2,6 @@
 title: "buildflow での Tengo の使い方"
 date: 2020-10-17T17:18:34+09:00
 archives: ["2020/10"]
-draft: true
 tags:
 - oss
 - buildflow
