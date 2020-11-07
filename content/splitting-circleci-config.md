@@ -108,10 +108,10 @@ You can use this example as a reference to split .circleci/config.yml and setup 
 Lastly, I introduce a use case of circleci-config-merge.
 Recently, I split a huge .circleci/config.yml which is over 6,000 lines to about 60 files.
 It was hard to maintain the original .circleci/config.yml, but by splitting it became easy to maintain .circleci/config.yml.
-If you are suffer from huge .circleci/config.yml, let's split it!
+If you are suffer from a huge .circleci/config.yml, let's split it!
 
 ## Conclusion
 
-In this post I introduced how to split the huge .circleci/config.yml.
+In this post I introduced how to split a huge .circleci/config.yml.
 We can generate .circleci/config.yml by merging split files with [circleci-config-merge](https://github.com/suzuki-shunsuke/circleci-config-merge).
 Please see the example [suzuki-shunsuke/example-circleci-config-merge](https://github.com/suzuki-shunsuke/example-circleci-config-merge) as a reference to split .circleci/config.yml and setup CI.
