@@ -6,7 +6,6 @@ tags:
 - aws
 - codebuild
 - ci
-- job
 ---
 
 AWS CodeBuild を検証しているんですが、結構良いですね。
