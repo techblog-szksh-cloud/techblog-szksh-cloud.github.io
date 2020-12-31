@@ -36,10 +36,10 @@ tags:
 
 * 個人ブログ
   * https://techblog.szksh.cloud/job-2020-10-01-10-31/
-  * https://suzuki-shunsuke.github.io/job-2020-07-01-09-30/
-  * https://suzuki-shunsuke.github.io/job-2020-04-01-06-30/
-  * https://suzuki-shunsuke.github.io/job-2020-01-01-03-31/
-  * https://suzuki-shunsuke.github.io/job-2019-10-01-12-31/
+  * https://techblog.szksh.cloud/job-2020-07-01-09-30/
+  * https://techblog.szksh.cloud/job-2020-04-01-06-30/
+  * https://techblog.szksh.cloud/job-2020-01-01-03-31/
+  * https://techblog.szksh.cloud/job-2019-10-01-12-31/
 * 会社ブログ
   * [Renovate の Tips](https://quipper.hatenablog.com/entry/2020/12/10/080000)
   * [Terraform の CI/CD を CodeBuild に移行した話](https://quipper.hatenablog.com/entry/2020/12/03/080000)
