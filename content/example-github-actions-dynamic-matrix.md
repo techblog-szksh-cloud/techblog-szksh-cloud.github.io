@@ -42,4 +42,4 @@ CI では setup job で CI を実行するサービスのリストを動的に�
 * [matchfile](https://github.com/suzuki-shunsuke/matchfile)
 * jq
 
-詳細は https://github.com/suzuki-shunsuke/example-github-actions-dynamic-matrix のコードを見てください。
+詳細は https://github.com/suzuki-shunsuke/example-github-actions-dynamic-matrix のコードと [Demo 用の PR](https://github.com/suzuki-shunsuke/example-github-actions-dynamic-matrix/pulls?q=is%3Apr+is%3Aopen+label%3Ademo) を見てください。
