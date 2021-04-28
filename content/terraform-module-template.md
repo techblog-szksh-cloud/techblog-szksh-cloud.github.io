@@ -1,6 +1,7 @@
 ---
 title: "Terraform Module の Template という使い方"
 date: 2021-04-03T11:04:25+09:00
+archives: ["2021/04"]
 tags:
 - terraform
 ---

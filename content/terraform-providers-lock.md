@@ -1,6 +1,7 @@
 ---
 title: "terraform init で lock ファイルが更新される問題の対応"
 date: 2021-04-24T21:57:27+09:00
+archives: ["2021/04"]
 tags:
 - terraform
 ---
