@@ -9,7 +9,7 @@ steps:
   - git config user.email "suzuki.shunsuke.1989@gmail.com"
   - git clone --depth 1 https://github.com/suzuki-shunsuke/hugo_theme_beg themes/beg
 - name: hugo
-  image: klakegg/hugo:0.79.0-busybox
+  image: klakegg/hugo:0.84.4-busybox
   commands:
   - hugo
 - name: release
