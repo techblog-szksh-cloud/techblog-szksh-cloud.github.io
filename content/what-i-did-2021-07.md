@@ -18,6 +18,7 @@ tags:
   * [tfmigrate](https://github.com/minamijoyo/tfmigrate) を CI に導入
   * (in progress) Terraform Modules を Terraform の Monorepo とは別リポジトリで管理して versioning するようにした
   * Route53 の管理を [Roadworker](https://github.com/codenize-tools/roadworker) から Terraform へ移行
+  * tfmigrate を使ったリファクタリング
 
 ## Event
 
