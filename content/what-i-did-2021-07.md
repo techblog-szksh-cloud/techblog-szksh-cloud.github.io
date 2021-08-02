@@ -38,7 +38,10 @@ AWS AppConfig を Terraform で管理できるようにする PR が無事マー
 
 ## 新たに作った OSS
 
-[tfmigrator/cli](https://github.com/tfmigrator/cli): CLI to Migrate Terraform Configuration and State with terraform state command and hcledit
+* [tfmigrator/cli](https://github.com/tfmigrator/cli): CLI to Migrate Terraform Configuration and State with terraform state command and hcledit
+* [Renovate github-tags Datasource Repositories](https://github.com/suzuki-shunsuke/renovate-github-tags-datasource-repositories)
+
+### tfmigrator
 
 Terraform Configuration と State をマイグレーションする tfmigrator の CLI をリリースしました。
 tfmigrator には紆余曲折有り(?)、時系列的に
@@ -56,6 +59,15 @@ tfmigrator には紆余曲折有り(?)、時系列的に
   * そもそも複雑な rule を一度に適用しようとするのが間違っていると感じた
 * tfmigrator/tfmigrator を使い、 CLI も実装 tfmigrator/cli
   * やはり基本的なユースケースでは YAML 書くほうが楽
+
+### Renovate github-tags Datasource Repositories
+
+Renovate の Datasource や Manager でサポートされていない package を Renovate で update するために、
+package ように GitHub Repository を作って package のバージョンに合わせて GitHub tag を更新し、
+`github-tags` Datasource として使おうというプロジェクトです。
+現状 AWS RDS や AWS Elasticache の engine version 用のリポジトリを作っています。
+tag は GitHub Actions を毎日定期実行することで更新します。
+詳細はリポジトリの README でも読んでください。
 
 ## 新しいバージョンをリリースした OSS
 
