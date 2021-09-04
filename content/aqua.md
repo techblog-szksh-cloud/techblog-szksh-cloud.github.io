@@ -6,6 +6,8 @@ tags:
 - oss
 ---
 
+2021-09-04 追記: [aqua v0.1.0 から v0.5.0 での変更点](/aqua-v0.5)
+
 [aqua](https://github.com/suzuki-shunsuke/aqua) という OSS を開発しているので紹介します。
 
 記事の内容は aqua v0.1.0 に基づきます。将来的に仕様が変わる可能性があります。
