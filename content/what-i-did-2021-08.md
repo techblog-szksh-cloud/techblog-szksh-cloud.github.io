@@ -43,5 +43,5 @@ Renovate の GitHub Actions のドキュメントの修正をしました。
   * [aqua - CLI ツールのバージョン管理](https://techblog.szksh.cloud/aqua/)
   * [AWS CodeBuild を実行する Github App を作る](https://techblog.szksh.cloud/github-app-for-codebuild/)
 * Quipper
-  * [Terraform の CI に tfmigrate を導入した話](https://quipper.hatenablog.com/entry/2021/08/11/080000)
-  * [AWS IAM の管理を miam から Terraform に移行した話](https://quipper.hatenablog.com/entry/2021/08/02/080000)
+  * [Terraform の CI に tfmigrate を導入した話](https://blog.studysapuri.jp/entry/2021/08/11/080000)
+  * [AWS IAM の管理を miam から Terraform に移行した話](https://blog.studysapuri.jp/entry/2021/08/02/080000)

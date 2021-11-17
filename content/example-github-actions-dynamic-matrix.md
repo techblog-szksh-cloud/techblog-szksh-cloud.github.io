@@ -25,7 +25,7 @@ GitHub Actions では path filter を用いて workflow の実行有無を制御
 その場合サービスを追加するたびに workflow を追加していく必要があります。
 まぁ .github/workflows 配下に 1 つ YAML をコピペで作成するだけといえばそれまでなのですが、それすらも省略したいとしましょう。
 
-[Terraform の CI/CD を CodeBuild に移行した話](https://quipper.hatenablog.com/entry/2020/12/03/080000)では CodeBuild の Batch Build の buildspec を
+[Terraform の CI/CD を CodeBuild に移行した話](https://blog.studysapuri.jp/entry/2020/12/03/080000)では CodeBuild の Batch Build の buildspec を
 PR で変更されたファイルおよび PR Label に応じて動的に生成しています。
 これの良いところは、サービスを追加したり、リネームしたり、削除したりしても CI をイジる必要がまったくないところです。
 

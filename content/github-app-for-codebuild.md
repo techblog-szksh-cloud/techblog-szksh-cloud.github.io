@@ -93,7 +93,7 @@ token を発行するには
 
 ## Lambda から Repository のコードを参照する
 
-https://quipper.hatenablog.com/entry/2020/12/03/080000 では CodeBuild でリポジトリのコードを checkout し、
+https://blog.studysapuri.jp/entry/2020/12/03/080000 では CodeBuild でリポジトリのコードを checkout し、
 build の中で動的に buildspec を生成して batch build を実行しています。
 
 同じようなことを Lambda でやろうとした場合、色々制約があります。

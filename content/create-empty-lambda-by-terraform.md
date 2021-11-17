@@ -79,7 +79,7 @@ Error: unable to load "lambda-base/dummy.zip": open lambda-base/dummy.zip: no su
 
 CI では Pull Request で plan file を生成して S3 に plan file を upload し、 PR をマージした default branch では terraform plan を実行せずに S3 から plan file をダウンロードして terraform apply を実行しています。
 
-[Pull Request の terraform plan の実行結果を S3 に保存して安全に apply | Quipper Product Team Blog](https://quipper.hatenablog.com/entry/2021/03/10/080000)
+[Pull Request の terraform plan の実行結果を S3 に保存して安全に apply | Quipper Product Team Blog](https://blog.studysapuri.jp/entry/2021/03/10/080000)
 
 plan file を指定して terraform apply を実行した際には zip file が作成されず、上記のエラーが発生することがわかりました。
 

@@ -20,7 +20,7 @@ tags:
 
 ## Blog
 
-* [2021-10-13: HashiTalks Japan 2021 で弊プロダクトの Terraform Platform について登壇しました](https://quipper.hatenablog.com/entry/2021/10/13/080000)
+* [2021-10-13: HashiTalks Japan 2021 で弊プロダクトの Terraform Platform について登壇しました](https://blog.studysapuri.jp/entry/2021/10/13/080000)
 
 ## OSS
 

@@ -8,7 +8,7 @@ tags:
 
 Terraform v0.14 で local で `terraform init` すると lock ファイルが更新されてしまう問題に対応しました。
 
-結論を最初に言うと、 [100 以上の Terraform 環境をいい感じに v0.14 に upgrade した方法](https://quipper.hatenablog.com/entry/2021/03/12/080000)で紹介している方法で Renovate で Terraform Provider を update する際に `terraform init -upgrade` を実行して lock ファイルを更新してコミット・プッシュしているのですが、
+結論を最初に言うと、 [100 以上の Terraform 環境をいい感じに v0.14 に upgrade した方法](https://blog.studysapuri.jp/entry/2021/03/12/080000)で紹介している方法で Renovate で Terraform Provider を update する際に `terraform init -upgrade` を実行して lock ファイルを更新してコミット・プッシュしているのですが、
 その際に `terraform providers lock -platform=darwin_amd64` を実行するようにしました。
 
 Terraform v0.14 で lock ファイル `.terraform.lock.hcl` が導入されました。
@@ -28,7 +28,7 @@ lock ファイルについて [.terraform.lock.hcl 完全に理解した](https:
 
 なので差分が出てしまった場合はコミットするで良いとは思いますが、そもそも CI で lock ファイルを更新する際に Mac の hash 値も追加してしまえばローカルで Mac 上で `terraform init` しても差分が出なくなります。ちなみに Windows 上で `terraform init` する人は自分の周りにはいなさそうなので、 Windows は対応しないことにしました。
 
-[100 以上の Terraform 環境をいい感じに v0.14 に upgrade した方法](https://quipper.hatenablog.com/entry/2021/03/12/080000)で紹介しているようにすでに lock ファイルを更新してコミット・プッシュする仕組みはあるので、変更としては 1 (正確にはコードコメント入れて4)行追加するだけでした。
+[100 以上の Terraform 環境をいい感じに v0.14 に upgrade した方法](https://blog.studysapuri.jp/entry/2021/03/12/080000)で紹介しているようにすでに lock ファイルを更新してコミット・プッシュする仕組みはあるので、変更としては 1 (正確にはコードコメント入れて4)行追加するだけでした。
 
 ```sh
 github-comment exec -- terraform providers lock -platform=darwin_amd64

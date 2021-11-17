@@ -41,11 +41,11 @@ tags:
   * https://techblog.szksh.cloud/job-2020-01-01-03-31/
   * https://techblog.szksh.cloud/job-2019-10-01-12-31/
 * 会社ブログ
-  * [Renovate の Tips](https://quipper.hatenablog.com/entry/2020/12/10/080000)
-  * [Terraform の CI/CD を CodeBuild に移行した話](https://quipper.hatenablog.com/entry/2020/12/03/080000)
-  * [巨大な .circleci/config.yml を分割した話](https://quipper.hatenablog.com/entry/2020/12/01/080000)
-  * [Docker Hub の Rate Limit 問題に対応した話](https://quipper.hatenablog.com/entry/2020/11/02/080000)
-  * [CI の修正をリリース前に本番と同じ条件下で検証出来る仕組みを構築した話](https://quipper.hatenablog.com/entry/2020/04/06/080000)
+  * [Renovate の Tips](https://blog.studysapuri.jp/entry/2020/12/10/080000)
+  * [Terraform の CI/CD を CodeBuild に移行した話](https://blog.studysapuri.jp/entry/2020/12/03/080000)
+  * [巨大な .circleci/config.yml を分割した話](https://blog.studysapuri.jp/entry/2020/12/01/080000)
+  * [Docker Hub の Rate Limit 問題に対応した話](https://blog.studysapuri.jp/entry/2020/11/02/080000)
+  * [CI の修正をリリース前に本番と同じ条件下で検証出来る仕組みを構築した話](https://blog.studysapuri.jp/entry/2020/04/06/080000)
 
 ## 何をやっているか
 
@@ -76,7 +76,7 @@ CI/CD には主に CircleCI を使っていますが、CIの設定や CI/CD で�
 
 例えば Terraform ではサービス・環境(staging, production, etc) ごとに State をディレクトリを分けていますが、新しいサービスを追加する際は、まずは generator を実行してコード生成し、そこに Terraform の configuration を書けば CI/CD で test や lint, apply が実行されるようになっています。
 元々新しいサービスの追加時には .circleci/config.yml に設定を書き足す必要がありましたが、
-最近 [Terraform の CI/CD を CircleCI から CodeBuild に移行した](https://quipper.hatenablog.com/entry/2020/12/03/080000) ことでそれが一切不要になりました。日々進化しています。
+最近 [Terraform の CI/CD を CircleCI から CodeBuild に移行した](https://blog.studysapuri.jp/entry/2020/12/03/080000) ことでそれが一切不要になりました。日々進化しています。
 単に PR で terraform plan して master で terraform apply するだけなら簡単ですが、
 より DX の高いものにするのが自分の強み・専門性です。
 
