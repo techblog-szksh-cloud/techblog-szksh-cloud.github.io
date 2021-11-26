@@ -1,4 +1,5 @@
-baseURL = "https://techblog.szksh.cloud/"
+# baseURL = "https://techblog.szksh.cloud/"
+baseURL = "https://techblog-szksh-cloud.github.io/" 
 languageCode = "jp"
 title = "melody"
 theme = "beg"
