@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>npm on melody</title>
-    <link>https://techblog-szksh-cloud.github.io/tags/npm/</link>
+    <link>https://techblog.szksh.cloud/tags/npm/</link>
     <description>Recent content in npm on melody</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>jp</language>
-    <lastBuildDate>Thu, 14 Feb 2019 21:34:22 +0900</lastBuildDate><atom:link href="https://techblog-szksh-cloud.github.io/tags/npm/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 14 Feb 2019 21:34:22 +0900</lastBuildDate><atom:link href="https://techblog.szksh.cloud/tags/npm/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>JS以外でのnpmの活用</title>
-      <link>https://techblog-szksh-cloud.github.io/use-npm/</link>
+      <link>https://techblog.szksh.cloud/use-npm/</link>
       <pubDate>Thu, 14 Feb 2019 21:34:22 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/use-npm/</guid>
+      <guid>https://techblog.szksh.cloud/use-npm/</guid>
       <description>npm は Node.js のパッケージマネージャーですが、自分はJS以外のプロジェクトでも使えると思っています。 実際、Goのアプリケーション、OSS、ansible role, playbook など種類を問わず、自分が管理している多くのリポジトリで使っています。 ただ、GoのOSSで npm 使っているのは自分以外で見たことはないですし、 正直あまり賛同はされないかなと思いますが、こういう考え方もあると思っていただけたらと思います。
 npm を使う理由は
  Node製のツールを使うため npm scripts を使うため (今回書きたいのはこっち)  の2つあります。

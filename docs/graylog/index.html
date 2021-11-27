@@ -8,7 +8,7 @@
 
 
 
-<link rel="canonical" href="https://techblog-szksh-cloud.github.io/graylog/">
+<link rel="canonical" href="https://techblog.szksh.cloud/graylog/">
 
 
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
@@ -20,18 +20,18 @@
 
 <meta property="og:title" content="Graylog で log を管理する - melody">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://techblog-szksh-cloud.github.io/graylog/">
-<meta property="og:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+<meta property="og:url" content="https://techblog.szksh.cloud/graylog/">
+<meta property="og:image" content="https://techblog.szksh.cloud/images/default.png">
 <meta property="og:site_name" content="melody">
 <meta property="og:description" content="Java 製の OSS ログ管理システム Graylog の紹介です。 Graylog については幾つかに分けて記事を書きたいと思います。 今回はGraylogの入門的な内容になります。なお、本記事中で「現在」「現時点」といった場合、特に断りがなければ記事執筆時点 2018-11-27 を指します。Graylog のバージョン 検証に用いるGraylogのバージョンは 2.4.6 になります。OSSバージョンとEnterpriseバージョンがありますが、本記事ではOSSバージョンを使用します。Graylog とは  https://www.graylog.org/ https://github.com/Graylog2/graylog2-server  Kibana と Elasticsearch(以下ES) を使ったことがある人は、Kibanaに代わるものだと思っていただくとイメージしやすいかと思います。 ログはGraylogそのものが保持するのではなく、ESにインデキシングされます。 Kibana同様、ESに収集されたログを検索したり、ダッシュボードを作ったり出来ます。 ダッシュボードに関してはKibanaのほうが優れているようにも思えますが、 Graylogは認証・認可によりダッシュボードやログを操作できる人を制限・管理することが出来ます。Graylogでログを管理する場合、ユーザーは直接ESにはログを送らず、Graylogを経由して送ります。 ESに対するGraylog以外のアクセスを制限し直接ESにアクセスされるのを防ぐことが出来ます。Graylog は多機能なシステムであり、ログを整形したり、アラートを飛ばしたり、他のシステムにログをフォワードしたりすることも出来ます。 marketplace でサードパーティの plugin が公開されており、機能を拡張することが出来ます。 APIも提供されており、ある程度自動化が可能です。認証・認可 オンプレミスでログを管理する場合、社外からは勿論社内からのアクセスも制限したいです。 Graylog では LDAP や Active Directory によってアクセスを制限できます。 リソース毎に誰が何を出来るか設定できます。http://docs.graylog.org/en/2.5/pages/users_and_roles/external_auth.htmlログの収集 ログの収集をするには Graylog で幾つかのリソースを作成する必要があります。 Input Index Set Stream Stream Rule  Input はログの入力のフォーマットの設定であり、 どのポートでどういったフォーマットのログを受け付けるかという設定になります。 フォーマットは様々なものがサポートされています。 AWS Flow Logs AWS Cloud Watch Logs AWS Cloud Trail Beats CEF AMQP CEF Kafka CEF TCP CEF UDP Fake HTTP Message GELF AMQP GELF HTTP GELF Kafka GELF TCP GELF UDP JSON Path NetFlow UDP Raw AMQP Syslog AMQP Syslog Kafka Syslog TCP Syslog UDP  この設定はログを収集するアプリケーションごとに設定するというより、グローバルな設定なので、他のアプリケーションで既に同じ形式でログを収集していたら新たに設定する必要はありません。">
 <meta property="og:locale" content="ja_JP">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="melody">
-<meta name="twitter:url" content="https://techblog-szksh-cloud.github.io/graylog/">
+<meta name="twitter:url" content="https://techblog.szksh.cloud/graylog/">
 <meta name="twitter:title" content="Graylog で log を管理する - melody">
 <meta name="twitter:description" content="Java 製の OSS ログ管理システム Graylog の紹介です。 Graylog については幾つかに分けて記事を書きたいと思います。 今回はGraylogの入門的な内容になります。なお、本記事中で「現在」「現時点」といった場合、特に断りがなければ記事執筆時点 2018-11-27 を指します。Graylog のバージョン 検証に用いるGraylogのバージョンは 2.4.6 になります。OSSバージョンとEnterpriseバージョンがありますが、本記事ではOSSバージョンを使用します。Graylog とは  https://www.graylog.org/ https://github.com/Graylog2/graylog2-server  Kibana と Elasticsearch(以下ES) を使ったことがある人は、Kibanaに代わるものだと思っていただくとイメージしやすいかと思います。 ログはGraylogそのものが保持するのではなく、ESにインデキシングされます。 Kibana同様、ESに収集されたログを検索したり、ダッシュボードを作ったり出来ます。 ダッシュボードに関してはKibanaのほうが優れているようにも思えますが、 Graylogは認証・認可によりダッシュボードやログを操作できる人を制限・管理することが出来ます。Graylogでログを管理する場合、ユーザーは直接ESにはログを送らず、Graylogを経由して送ります。 ESに対するGraylog以外のアクセスを制限し直接ESにアクセスされるのを防ぐことが出来ます。Graylog は多機能なシステムであり、ログを整形したり、アラートを飛ばしたり、他のシステムにログをフォワードしたりすることも出来ます。 marketplace でサードパーティの plugin が公開されており、機能を拡張することが出来ます。 APIも提供されており、ある程度自動化が可能です。認証・認可 オンプレミスでログを管理する場合、社外からは勿論社内からのアクセスも制限したいです。 Graylog では LDAP や Active Directory によってアクセスを制限できます。 リソース毎に誰が何を出来るか設定できます。http://docs.graylog.org/en/2.5/pages/users_and_roles/external_auth.htmlログの収集 ログの収集をするには Graylog で幾つかのリソースを作成する必要があります。 Input Index Set Stream Stream Rule  Input はログの入力のフォーマットの設定であり、 どのポートでどういったフォーマットのログを受け付けるかという設定になります。 フォーマットは様々なものがサポートされています。 AWS Flow Logs AWS Cloud Watch Logs AWS Cloud Trail Beats CEF AMQP CEF Kafka CEF TCP CEF UDP Fake HTTP Message GELF AMQP GELF HTTP GELF Kafka GELF TCP GELF UDP JSON Path NetFlow UDP Raw AMQP Syslog AMQP Syslog Kafka Syslog TCP Syslog UDP  この設定はログを収集するアプリケーションごとに設定するというより、グローバルな設定なので、他のアプリケーションで既に同じ形式でログを収集していたら新たに設定する必要はありません。">
-<meta name="twitter:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+<meta name="twitter:image" content="https://techblog.szksh.cloud/images/default.png">
 
 
 <script type="application/ld+json">
@@ -40,12 +40,12 @@
     "@type": "NewsArticle",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id":"https:\/\/techblog-szksh-cloud.github.io\/"
+      "@id":"https:\/\/techblog.szksh.cloud\/"
     },
     "headline": "Graylog で log を管理する - melody",
     "image": {
       "@type": "ImageObject",
-      "url": "https:\/\/techblog-szksh-cloud.github.io\/images\/default.png",
+      "url": "https:\/\/techblog.szksh.cloud\/images\/default.png",
       "height": 800,
       "width": 800
     },
@@ -60,7 +60,7 @@
       "name": "melody",
       "logo": {
         "@type": "ImageObject",
-        "url": "https:\/\/techblog-szksh-cloud.github.io\/images/logo.png",
+        "url": "https:\/\/techblog.szksh.cloud\/images/logo.png",
         "width": 600,
         "height": 60
       }
@@ -70,7 +70,7 @@
 </script>
 
 
-    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    <link href="https://techblog.szksh.cloud/css/styles.css" rel="stylesheet">
     
 
   </head>
@@ -90,7 +90,7 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+            <a class="navbar-brand" href="https://techblog.szksh.cloud/">melody</a>
           </div>
 
           
@@ -107,7 +107,7 @@
 
     <nav class="p-crumb">
       <ol class="breadcrumb">
-        <li><a href="https://techblog-szksh-cloud.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        <li><a href="https://techblog.szksh.cloud/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
         
         <li class="active">Graylog で log を管理する</li>
       </ol>
@@ -128,9 +128,9 @@
       <div>
         <ul class="p-terms">
           
-          <li><a href="https://techblog-szksh-cloud.github.io/tags/oss/">oss</a></li>
+          <li><a href="https://techblog.szksh.cloud/tags/oss/">oss</a></li>
           
-          <li><a href="https://techblog-szksh-cloud.github.io/tags/graylog/">graylog</a></li>
+          <li><a href="https://techblog.szksh.cloud/tags/graylog/">graylog</a></li>
           
         </ul>
       </div>
@@ -295,9 +295,9 @@ Graylogは多機能で自分が使っていない、分かっていない機能�
       <div>
         <ul class="p-terms">
           
-          <li><a href="https://techblog-szksh-cloud.github.io/tags/oss/">oss</a></li>
+          <li><a href="https://techblog.szksh.cloud/tags/oss/">oss</a></li>
           
-          <li><a href="https://techblog-szksh-cloud.github.io/tags/graylog/">graylog</a></li>
+          <li><a href="https://techblog.szksh.cloud/tags/graylog/">graylog</a></li>
           
         </ul>
       </div>
@@ -321,25 +321,25 @@ Graylogは多機能で自分が使っていない、分かっていない機能�
     </div>
     <div class="list-group">
       
-      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      <a href="https://techblog.szksh.cloud/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      <a href="https://techblog.szksh.cloud/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      <a href="https://techblog.szksh.cloud/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      <a href="https://techblog.szksh.cloud/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      <a href="https://techblog.szksh.cloud/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      <a href="https://techblog.szksh.cloud/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      <a href="https://techblog.szksh.cloud/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      <a href="https://techblog.szksh.cloud/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      <a href="https://techblog.szksh.cloud/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      <a href="https://techblog.szksh.cloud/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
       
     </div>
   </section>
@@ -350,25 +350,25 @@ Graylogは多機能で自分が使っていない、分かっていない機能�
     </div>
     <div class="list-group">
       
-      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      <a href="https://techblog.szksh.cloud/tags/oss" class="list-group-item">oss (42)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      <a href="https://techblog.szksh.cloud/tags/job" class="list-group-item">job (18)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      <a href="https://techblog.szksh.cloud/tags/drone" class="list-group-item">drone (14)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      <a href="https://techblog.szksh.cloud/tags/terraform" class="list-group-item">terraform (13)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      <a href="https://techblog.szksh.cloud/tags/buildflow" class="list-group-item">buildflow (12)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      <a href="https://techblog.szksh.cloud/tags/golang" class="list-group-item">golang (6)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      <a href="https://techblog.szksh.cloud/tags/aqua" class="list-group-item">aqua (5)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      <a href="https://techblog.szksh.cloud/tags/circleci" class="list-group-item">circleci (5)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      <a href="https://techblog.szksh.cloud/tags/graylog" class="list-group-item">graylog (5)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      <a href="https://techblog.szksh.cloud/tags/ansible" class="list-group-item">ansible (3)</a>
       
     </div>
   </section>
@@ -379,25 +379,25 @@ Graylogは多機能で自分が使っていない、分かっていない機能�
     </div>
     <div class="list-group">
       
-      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/11" class="list-group-item">2021/11 (1)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/10" class="list-group-item">2021/10 (2)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/09" class="list-group-item">2021/09 (3)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/08" class="list-group-item">2021/08 (3)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/07" class="list-group-item">2021/07 (3)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/06" class="list-group-item">2021/06 (1)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/05" class="list-group-item">2021/05 (1)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/04" class="list-group-item">2021/04 (4)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/03" class="list-group-item">2021/03 (1)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/02" class="list-group-item">2021/02 (3)</a>
       
     </div>
   </section>

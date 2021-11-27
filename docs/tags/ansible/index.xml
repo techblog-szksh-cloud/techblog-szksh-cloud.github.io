@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>ansible on melody</title>
-    <link>https://techblog-szksh-cloud.github.io/tags/ansible/</link>
+    <link>https://techblog.szksh.cloud/tags/ansible/</link>
     <description>Recent content in ansible on melody</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>jp</language>
-    <lastBuildDate>Thu, 06 Dec 2018 23:08:04 +0900</lastBuildDate><atom:link href="https://techblog-szksh-cloud.github.io/tags/ansible/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 06 Dec 2018 23:08:04 +0900</lastBuildDate><atom:link href="https://techblog.szksh.cloud/tags/ansible/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>molecule でansible の role と playbook をテストする</title>
-      <link>https://techblog-szksh-cloud.github.io/ansible-molecule/</link>
+      <link>https://techblog.szksh.cloud/ansible-molecule/</link>
       <pubDate>Thu, 06 Dec 2018 23:08:04 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/ansible-molecule/</guid>
+      <guid>https://techblog.szksh.cloud/ansible-molecule/</guid>
       <description>ansible 専用の testing ツール molecule を紹介します。 molecule の公式ドキュメント以外の情報は少ないので、参考になれば幸いです。
 以前 Docker を使って ansible のテストをする方法を紹介しました。
 https://suzuki-shunsuke.github.io/test-ansible-on-docker/
@@ -30,10 +30,10 @@ $ molecule init scenario -r &amp;lt;role name&amp;gt; こうすると molecule �
     
     <item>
       <title>akoi - binary installer</title>
-      <link>https://techblog-szksh-cloud.github.io/akoi/</link>
+      <link>https://techblog.szksh.cloud/akoi/</link>
       <pubDate>Wed, 31 Oct 2018 08:56:04 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/akoi/</guid>
+      <guid>https://techblog.szksh.cloud/akoi/</guid>
       <description>自作のOSS akoi の紹介をします。
  なぜこんなものを作ったのか akoi と ansible を使ってサーバにバイナリをインストールする方法  について主に説明します。
 まとめ  akoi はバイナリファイルのインストーラ 設定ファイルで管理できる 冪等であり、効率よくインストールできる  並列インストール Accept-Ranges による分散ダウンロード   ansibleでサーバにバイナリをインストールするのを補助してくれる  ansible で真面目にバージョンコントロールして効率よくインストールするのは難しい(ほとんどの ansible role は出来ていない)    akoi とは akoi はバイナリファイルのインストーラです。 設定ファイルにインストールするファイルのダウンロードURLとインストール先を記述して管理します。 インストールするバイナリのバージョン管理が可能であり、既にインストールしてあるバージョンへの切り替えはシンボリックを作り直すだけなので一瞬で終わります。無駄にダウンロードをしたりはしません。 複数のバイナリを並列でインストールしたり、Accept-Ranges ヘッダによる分散ダウンロードをサポートしています。
@@ -50,10 +50,10 @@ https://github.com/suzuki-shunsuke/akoi/releases からバイナリをダウン�
     
     <item>
       <title>Dockerを使ってansible playbookをテストする</title>
-      <link>https://techblog-szksh-cloud.github.io/test-ansible-on-docker/</link>
+      <link>https://techblog.szksh.cloud/test-ansible-on-docker/</link>
       <pubDate>Fri, 12 Oct 2018 21:02:51 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/test-ansible-on-docker/</guid>
+      <guid>https://techblog.szksh.cloud/test-ansible-on-docker/</guid>
       <description>ansible playbookを(VMの代わりに)Dockerコンテナに対して実行すると、効率よく動作確認できるというお話です。 ansible playbookの動作確認のためにvagrantでVMを起動したりしていると動作確認に時間がかかるし、容量も喰います。 Dockerコンテナを使って動作確認できればこれらの問題を解決できます。
 ただし、Dockerコンテナの場合、一部のansible のtaskが失敗することがあるので ansible playbookによってはDockerコンテナではテストにならない場合もあるかと思います。
 サンプル https://github.com/suzuki-shunsuke/example/tree/master/ansible/test-on-docker

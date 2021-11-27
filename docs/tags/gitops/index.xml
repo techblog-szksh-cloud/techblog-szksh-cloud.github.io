@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>gitops on melody</title>
-    <link>https://techblog-szksh-cloud.github.io/tags/gitops/</link>
+    <link>https://techblog.szksh.cloud/tags/gitops/</link>
     <description>Recent content in gitops on melody</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>jp</language>
-    <lastBuildDate>Mon, 11 Jan 2021 16:24:44 +0900</lastBuildDate><atom:link href="https://techblog-szksh-cloud.github.io/tags/gitops/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 11 Jan 2021 16:24:44 +0900</lastBuildDate><atom:link href="https://techblog.szksh.cloud/tags/gitops/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>skaffold を使って GitOps する</title>
-      <link>https://techblog-szksh-cloud.github.io/gitops-skaffold/</link>
+      <link>https://techblog.szksh.cloud/gitops-skaffold/</link>
       <pubDate>Mon, 11 Jan 2021 16:24:44 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/gitops-skaffold/</guid>
+      <guid>https://techblog.szksh.cloud/gitops-skaffold/</guid>
       <description>skaffold を用いてマニフェストを動的に生成しつつ GitOps する方法を考えたので紹介します。 なお、現時点ではあくまで考えてみただけで実際に導入したりはしていません。
 GitOps はマニフェストを Git リポジトリにコミットしないといけないわけですが、 Docker image をビルド、プッシュし、マニフェストの image tag を書き換えるという一連の処理をどうやってやるのがいいのか 個人的に考えていました。
 自分は FluxCD には詳しくないのですが、 FluxCD では registry をポーリングして自動で最新のタグに書き換える機能があるそうですね。

@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>melody</title>
-    <link>https://techblog-szksh-cloud.github.io/</link>
+    <link>https://techblog.szksh.cloud/</link>
     <description>Recent content on melody</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>jp</language>
-    <lastBuildDate>Thu, 18 Nov 2021 20:21:57 +0900</lastBuildDate><atom:link href="https://techblog-szksh-cloud.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 18 Nov 2021 20:21:57 +0900</lastBuildDate><atom:link href="https://techblog.szksh.cloud/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>aqua の最近の update (v0.7.4 ~ v0.7.16)</title>
-      <link>https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/</link>
+      <link>https://techblog.szksh.cloud/update-aqua-v0.7.16/</link>
       <pubDate>Thu, 18 Nov 2021 20:21:57 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/</guid>
+      <guid>https://techblog.szksh.cloud/update-aqua-v0.7.16/</guid>
       <description>以前 aqua v0.7.3 がリリースされた際に aqua で組織・チームのツール群を管理 という記事を書きました。 あれからもうすぐ 2 ヶ月になり、最新バージョンは v0.7.16 になりました。 そこで v0.7.4 ~ v0.7.16 の間の更新と、関連 repository の更新を幾つか(全部ではない)紹介します。
 基本的に Release Note に書いてある内容です。
  GitHub の Access Token が基本的に不要になりました Homebrew で install できるようになりました aqua.yaml がより簡潔に書けるようになりました aqua.yaml の packages を他のローカルのファイルから import できるようになりました aqua.yaml をディレクトリの階層的にネストできるようになりました aqua which コマンドをサポートしました github_archive, github_content type をサポートしました (advanced) バージョンによってパッケージの type が変更された場合にも対応できるようになりました Standard Registry の package の数が 139 =&amp;gt; 220 になりました。 aqua のための CircleCI Orb をリリースしました  GitHub の Access Token が基本的に不要になりました private repository から package をインストール場合は当然必要ですが、そうでなければ不要になりました。 これにより、 aqua を導入するハードルが下がりましたし、 GitHub API の Rate Limit に引っかかることが基本的になくなりました。</description>
@@ -20,30 +20,30 @@
     
     <item>
       <title>2021-10 やったこと</title>
-      <link>https://techblog-szksh-cloud.github.io/what-i-did-2021-10/</link>
+      <link>https://techblog.szksh.cloud/what-i-did-2021-10/</link>
       <pubDate>Tue, 26 Oct 2021 20:43:03 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/what-i-did-2021-10/</guid>
+      <guid>https://techblog.szksh.cloud/what-i-did-2021-10/</guid>
       <description>Job  AWS SSO の導入  Google アカウントで AWS へサインインできるように設定 AWS SSO の Terraform 管理 ssosync を Lambda で定期実行 開発者向けの移行ガイドの作成し、実際に案内 terraform, kubectl などのツールで AWS にアクセスできるかの検証   AWS WAF の COUNT, BLOCK の log を Firehose, Lambda で抽出 akoi を aqua にリプレース  Blog  2021-10-13: HashiTalks Japan 2021 で弊プロダクトの Terraform Platform について登壇しました  OSS https://github.com/pulls?q=is%3Aclosed+is%3Apublic+is%3Apr+author%3Asuzuki-shunsuke+archived%3Afalse+created%3A2021-10-01..2021-10-31+
  Profile などの更新: https://github.com/suzuki-shunsuke/suzuki-shunsuke GitHub Actions の開発 自作ツールを Homebrew でインストールできるようにした aqua: v0.7.3 =&amp;gt; v0.7.10  aqua-registry: v0.</description>
     </item>
     
     <item>
       <title>2021-09 やったこと</title>
-      <link>https://techblog-szksh-cloud.github.io/what-i-did-2021-09/</link>
+      <link>https://techblog.szksh.cloud/what-i-did-2021-09/</link>
       <pubDate>Sat, 02 Oct 2021 21:46:15 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/what-i-did-2021-09/</guid>
+      <guid>https://techblog.szksh.cloud/what-i-did-2021-09/</guid>
       <description>仕事 今月は有休消化やシルバーウィークもあり、稼働が少なく、あまり仕事が進まなかったです。
  AWS SSO や Organizations を導入するためのロードマップの策定 AWS SSO の検証  登壇  2021-09-30 HashiTalks Japan 2021 (youtube)  Terraform Platform in Quipper (youtube) Talk (30 min)    新たに作った OSS  aqua-renovate-config  Renovate Configuration to update packages and registries of aqua    Blog  English  Tips about Renovate 2021-09-08 aqua - Declarative CLI Version Manager   https://techblog.szksh.cloud/archives/2021/09/  2021-09-25 aqua で組織・チームのツール群を管理 2021-09-05 aqua の設定ファイルをインタラクティブに生成する generate コマンド 2021-09-04 aqua v0.</description>
     </item>
     
     <item>
       <title>aqua で組織・チームのツール群を管理</title>
-      <link>https://techblog-szksh-cloud.github.io/aqua-global-configs/</link>
+      <link>https://techblog.szksh.cloud/aqua-global-configs/</link>
       <pubDate>Sat, 25 Sep 2021 12:01:56 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/aqua-global-configs/</guid>
+      <guid>https://techblog.szksh.cloud/aqua-global-configs/</guid>
       <description>aqua v0.7.3 をリリースし、 複数の global configuration をサポートしました。
 個人で使う分にはあまり嬉しい機能でもないかもしれませんが、 会社・組織・チームといった集団(以下組織で統一)で設定を共有するには便利な機能だと思います。
 これまで aqua では 2 つの設定ファイルをサポートしていました。
@@ -59,10 +59,10 @@
     
     <item>
       <title>aqua の設定ファイルをインタラクティブに生成する generate コマンド</title>
-      <link>https://techblog-szksh-cloud.github.io/aqua-generate/</link>
+      <link>https://techblog.szksh.cloud/aqua-generate/</link>
       <pubDate>Sun, 05 Sep 2021 10:17:39 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/aqua-generate/</guid>
+      <guid>https://techblog.szksh.cloud/aqua-generate/</guid>
       <description>aqua - CLI ツールのバージョン管理 aqua v0.1.0 から v0.5.0 での変更点  aqua v0.5.1 で追加された generate というサブコマンドを紹介します。
 aqua では Registry を活用することで設定を記述する手間を省くことができますが、 Registry を活用するには、インストールしたいツールが Registry で定義されているか、されているとしたら name はなにか調べる必要があります。 Registry で定義されているのに見逃してしまうこともあるでしょう。
 また、 aqua でツールをインストールするには version を指定する必要がありますが、多くの場合はとりあえず最新バージョンはなにかを調べることになるでしょう。
@@ -72,10 +72,10 @@ aqua では Registry を活用することで設定を記述する手間を省�
     
     <item>
       <title>aqua v0.1.0 から v0.5.0 での変更点</title>
-      <link>https://techblog-szksh-cloud.github.io/aqua-v0.5/</link>
+      <link>https://techblog.szksh.cloud/aqua-v0.5/</link>
       <pubDate>Sat, 04 Sep 2021 11:58:42 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/aqua-v0.5/</guid>
+      <guid>https://techblog.szksh.cloud/aqua-v0.5/</guid>
       <description>先日 aqua v0.1.0 をリリースした記事を書いたばかりですが、 そこから更に開発を続けて v0.5.0 をリリースしたので、変更点を紹介します。
 基本的に Release Note に書いてあるとおりです。
  PATH を project (aqua.yaml) 毎に設定する必要がなくなりました  ~/.aqua/bin を PATH に追加すればよくなりました direnv などを使って環境変数を追加する必要がなくなりました   install コマンドに --test option を追加し、 file.src の設定が正しいかテストできるようになりました  CI で aqua の設定をテストするのに便利   GitHub Release だけでなく、任意の URL から tool のダウンロード・インストールができるようになりました  Go や helm, Hashicorp の product のような公式サイトからダウンロードするタイプのツールも install できるようになりました   Breaking Change: inline_registry の設定の形式を変更しました aqua の設定の再利用性を高める Registry という仕組みを導入しました  standard Registry を公開しました https://github.</description>
@@ -83,19 +83,19 @@ aqua では Registry を活用することで設定を記述する手間を省�
     
     <item>
       <title>2021-08 やったこと</title>
-      <link>https://techblog-szksh-cloud.github.io/what-i-did-2021-08/</link>
+      <link>https://techblog.szksh.cloud/what-i-did-2021-08/</link>
       <pubDate>Thu, 02 Sep 2021 14:33:16 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/what-i-did-2021-08/</guid>
+      <guid>https://techblog.szksh.cloud/what-i-did-2021-08/</guid>
       <description>仕事  AWS IAM User を削除する際に force_destroy が true になっているか Conftest でテスト Terraform の State 分割 Terraform Modules を別リポジトリで管理して versioning git-secrets を secretlint に移行  git-secrets がメンテされてなくて、既知バグが放置されているから   CI で terraform fmt によるフォーマットの自動化 WIP: AWS WAF の COUNT, BLOCK ログを Firehose で抽出 WIP: AWS CodeBuild で Provisioning Error が発生したら自動で Retry WIP: AWS CodeBuild のための GitHub App の開発 WIP: AWS SSO について調査  OSS Contribution Renovate の GitHub Actions のドキュメントの修正をしました。 ドキュメント中に書かれたバージョンを Renovate で自動 update するようにしました。</description>
     </item>
     
     <item>
       <title>aqua - CLI ツールのバージョン管理</title>
-      <link>https://techblog-szksh-cloud.github.io/aqua/</link>
+      <link>https://techblog.szksh.cloud/aqua/</link>
       <pubDate>Sat, 28 Aug 2021 09:07:38 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/aqua/</guid>
+      <guid>https://techblog.szksh.cloud/aqua/</guid>
       <description>2021-09-04 追記: aqua v0.1.0 から v0.5.0 での変更点
 aqua という OSS を開発しているので紹介します。
 記事の内容は aqua v0.1.0 に基づきます。将来的に仕様が変わる可能性があります。
@@ -106,39 +106,39 @@ packages: - name: jq registry: inline version: jq-1.6 - name: conftest registry:
     
     <item>
       <title>AWS CodeBuild を実行する Github App を作る</title>
-      <link>https://techblog-szksh-cloud.github.io/github-app-for-codebuild/</link>
+      <link>https://techblog.szksh.cloud/github-app-for-codebuild/</link>
       <pubDate>Mon, 16 Aug 2021 09:10:51 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/github-app-for-codebuild/</guid>
+      <guid>https://techblog.szksh.cloud/github-app-for-codebuild/</guid>
       <description>GitHub Repository の CI に CodeBuild を使う場合、 CodeBuild の Webhook integration (以下 CodeBuild GitHub integration と呼ぶことにします) を使うのが一番自然でしょう。 基本的なユースケースならこれでよいのですが、 GitHub App を活用することでより高度な CI を実現することができます。
 解決したい課題  Batch Build の課題  起動・終了が遅い 全 build が成功した Batch Build を Retry できない Web UI がわかりにくい  余計な build が起動する build 単体を Retry できない   build ごとに条件設定とかできない buildspec を動的に生成できない   CodeBuild GitHub integration の課題  Build Project ごとに Repository Webhook が 1 つ作られる  webhook 1 repository あたり 20 個までしか作れない (これを裏付ける客観的なソースはないですが) webhook の数が増えると build の動作が不安定になるのを観測しています   Filter の条件が限られている(例えば PR label で filter とかできない) 複数の build を実行できない(Batch Build も 1 つとみなした場合の話)   CodeBuild の課題  Retry した場合 webhook で起動したときの環境変数が設定されない    GitHub App Amazon API Gateway と Lambda を使って GitHub App を構築します。 Lambda で webhook を受け取り、 AWS SDK を使って build を実行します。</description>
     </item>
     
     <item>
       <title>2021-07 やったこと</title>
-      <link>https://techblog-szksh-cloud.github.io/what-i-did-2021-07/</link>
+      <link>https://techblog.szksh.cloud/what-i-did-2021-07/</link>
       <pubDate>Wed, 28 Jul 2021 06:58:45 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/what-i-did-2021-07/</guid>
+      <guid>https://techblog.szksh.cloud/what-i-did-2021-07/</guid>
       <description>今まで仕事に限定して書いてきましたが、 OSS 活動なんかにも触れてもいいんじゃないかと思ったので分かる範囲で書きます。
 仕事  Docker Image を Docker Hub から ECR へ移行 Terraform  .terraform.lock.hcl を CI の中で自動で更新(commit, push)できるようにした  Terraform に詳しくない人も使うので、自動化したほうが良いと判断   tfmigrate を CI に導入 (in progress) Terraform Modules を Terraform の Monorepo とは別リポジトリで管理して versioning するようにした Route53 の管理を Roadworker から Terraform へ移行 tfmigrate を使ったリファクタリング    Event  Open Policy Agent Rego Knowledge Sharing Meetup で登壇  https://gist.github.com/suzuki-shunsuke/9372337aa62a6f8394bb136582ec068e    OSS Contribution AWS AppConfig を Terraform で管理できるようにする PR が無事マージされました。</description>
     </item>
     
     <item>
       <title>仕事でやったこと 2021-06-01 ~ 2021-06-30</title>
-      <link>https://techblog-szksh-cloud.github.io/job-2021-06-01-06-30/</link>
+      <link>https://techblog.szksh.cloud/job-2021-06-01-06-30/</link>
       <pubDate>Tue, 13 Jul 2021 05:47:11 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/job-2021-06-01-06-30/</guid>
+      <guid>https://techblog.szksh.cloud/job-2021-06-01-06-30/</guid>
       <description> GCP を Terraform で管理するための developer support miam を Terraform に移行 Docker Hub から ECR への移行  </description>
     </item>
     
     <item>
       <title>OPA で Table Driven Tests っぽいことをしてみる</title>
-      <link>https://techblog-szksh-cloud.github.io/opa-table-driven-test/</link>
+      <link>https://techblog.szksh.cloud/opa-table-driven-test/</link>
       <pubDate>Fri, 09 Jul 2021 19:38:55 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/opa-table-driven-test/</guid>
+      <guid>https://techblog.szksh.cloud/opa-table-driven-test/</guid>
       <description>OPA で Table Driven Tests っぽく Policy を Test する方法について考えたので紹介します。
 背景 先日 Open Policy Agent Rego Knowledge Sharing Meetup で発表する機会を頂きました。 発表の資料はこちら。 普段他社の事例を聞いたり OPA について話たりする機会がないので、非常に貴重な時間になりました。
 その中で deeeet さんが Table Driven Tests っぽくテストしたいというようなことをおっしゃっていました。
@@ -153,10 +153,10 @@ https://github.com/suzuki-shunsuke/example-opa-table-driven-tests
     
     <item>
       <title>Terraform で空の AWS Lambda Function を作る方法</title>
-      <link>https://techblog-szksh-cloud.github.io/create-empty-lambda-by-terraform/</link>
+      <link>https://techblog.szksh.cloud/create-empty-lambda-by-terraform/</link>
       <pubDate>Thu, 24 Jun 2021 21:25:24 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/create-empty-lambda-by-terraform/</guid>
+      <guid>https://techblog.szksh.cloud/create-empty-lambda-by-terraform/</guid>
       <description>Terraform で空の AWS Lambda Function を作ろうとした際にちょっとハマったのでやり方を書いておきます。
 「空の Lambda Function」という表現は適切ではないかもしれませんが、 Lambda で実行するコードのデプロイは Terraform 以外のツールでやるけど、 Lambda Function の作成は Terraform で行うので、 dummy のコードを指定して Terraform で Lambda を作るという話です。
 自分は今は lambroll というツールで Lambda をデプロイしています。 lambroll は Lambda Function も作ってくれるので Terraform で作る必要は必ずしもありません。
@@ -166,28 +166,28 @@ https://github.com/suzuki-shunsuke/example-opa-table-driven-tests
     
     <item>
       <title>仕事でやったこと 2021-05-01 ~ 2021-05-31</title>
-      <link>https://techblog-szksh-cloud.github.io/job-2021-05-01-05-31/</link>
+      <link>https://techblog.szksh.cloud/job-2021-05-01-05-31/</link>
       <pubDate>Sun, 30 May 2021 08:19:32 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/job-2021-05-01-05-31/</guid>
+      <guid>https://techblog.szksh.cloud/job-2021-05-01-05-31/</guid>
       <description> SRE チームの新メンバーのオンボーディングのサポート GCP  dev からのリクエストに応じて権限付与したり対応 Terraform による GCP の管理 CI/CD の整備 Workload Identity Federation について調べた Terraform による IAM 管理の仕方を検討   Conftest  opa fmt によるフォーマット(CI も導入) Policy Testing (CI も導入)   Upgrade Terraform to v0.15.4 miam の Terraform 移行を検証  </description>
     </item>
     
     <item>
       <title>仕事でやったこと 2021-04-01 ~ 2021-04-30</title>
-      <link>https://techblog-szksh-cloud.github.io/job-2021-04-01-04-30/</link>
+      <link>https://techblog.szksh.cloud/job-2021-04-01-04-30/</link>
       <pubDate>Wed, 28 Apr 2021 09:28:01 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/job-2021-04-01-04-30/</guid>
+      <guid>https://techblog.szksh.cloud/job-2021-04-01-04-30/</guid>
       <description> SRE チームの新メンバーのオンボーディングのサポート Lambda の Monorepo  幾つか実際に Function 作った(developer support) 幾つかの Release Strategy の実装・検証  シンプルな GitHub Flow Git Flow をアレンジしたリリースフロー Canary Release WIP: AWS AppConfig を用いた Dark Launch     IAM User の初期パスワード送信の自動化 Terraform  Renovate による Terraform の patch update の自動化 Docker を使ったローカル開発環境の改善 ローカルで terraform init したら .terraform.lock.hcl が更新される問題の対応 https://techblog.szksh.cloud/terraform-providers-lock/   GCP の Terraform 管理  調査 WIP   Conftest  社内の Rego の活用事例をまとめた opa fmt によるフォーマット(CI も導入) Policy Testing (CI も導入)    </description>
     </item>
     
     <item>
       <title>PR で変更されたファイルや PR Label に応じて matrix build を実行する Github Actions の Workflow のサンプルを書いてみた</title>
-      <link>https://techblog-szksh-cloud.github.io/example-github-actions-dynamic-matrix/</link>
+      <link>https://techblog.szksh.cloud/example-github-actions-dynamic-matrix/</link>
       <pubDate>Sun, 25 Apr 2021 16:09:47 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/example-github-actions-dynamic-matrix/</guid>
+      <guid>https://techblog.szksh.cloud/example-github-actions-dynamic-matrix/</guid>
       <description>GitHub Actions の勉強がてら Pull Request (以下 PR) で変更されたファイルや PR Label に応じて Matrix build を実行する Github Actions の Workflow のサンプルを書いてみました。
 https://github.com/suzuki-shunsuke/example-github-actions-dynamic-matrix
 Monorepo で同じ Job を PR で変更されたものに対してだけ実行したい、 けど workflow をサービスごとに定義するのはめんどいみたいな場合に使えるかもしれません。
@@ -200,10 +200,10 @@ Terraform の CI/CD を CodeBuild に移行した話では CodeBuild の Batch B
     
     <item>
       <title>terraform init で lock ファイルが更新される問題の対応</title>
-      <link>https://techblog-szksh-cloud.github.io/terraform-providers-lock/</link>
+      <link>https://techblog.szksh.cloud/terraform-providers-lock/</link>
       <pubDate>Sat, 24 Apr 2021 21:57:27 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/terraform-providers-lock/</guid>
+      <guid>https://techblog.szksh.cloud/terraform-providers-lock/</guid>
       <description>Terraform v0.14 で local で terraform init すると lock ファイルが更新されてしまう問題に対応しました。
 結論を最初に言うと、 100 以上の Terraform 環境をいい感じに v0.14 に upgrade した方法で紹介している方法で Renovate で Terraform Provider を update する際に terraform init -upgrade を実行して lock ファイルを更新してコミット・プッシュしているのですが、 その際に terraform providers lock -platform=darwin_amd64 を実行するようにしました。
 Terraform v0.14 で lock ファイル .terraform.lock.hcl が導入されました。 Renovate で Terraform Provider を update する際にも lock ファイルを更新する必要があるので、 terraform init -upgrade を実行して lock ファイルを更新してコミット・プッシュしています。 なのですが、ローカルで terraform init を実行するとなんか lock ファイルが更新されることが良くありました。しばらく放置していたのですが、 developer から「なんかファイル更新されたんだけど、これコミットしていいの？」と聞かれ、このまま放っておいて困惑させたりもやっとさせたりするのは良くないなと思い、調べてみました。
@@ -212,10 +212,10 @@ lock ファイルについて .</description>
     
     <item>
       <title>Terraform Module の Template という使い方</title>
-      <link>https://techblog-szksh-cloud.github.io/terraform-module-template/</link>
+      <link>https://techblog.szksh.cloud/terraform-module-template/</link>
       <pubDate>Sat, 03 Apr 2021 11:04:25 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/terraform-module-template/</guid>
+      <guid>https://techblog.szksh.cloud/terraform-module-template/</guid>
       <description>Terraform Module の使い方として Terraform Module のテンプレートをコピペして使うというアプローチを紹介します。
 Terraform の設定ファイル(以下 tfファイル) を書く際、毎回一から書くのは大変です。 多くの場合、既存のコードを再利用したほうが楽でしょう。
 Terraform のコードの再利用の仕組みとして、 Module があります。 Module は勿論便利なのですが、使い方には注意が必要で、「安易に Module 化するな。使うな」というふうな考え方もあるでしょう。 自分も基本的に同意見で、 Module を共用するようになると Module への変更がしづらくなったり、パラメータがどんどん増えて複雑になったりします。
@@ -228,47 +228,47 @@ Terraform にそこまで詳しくない developer にも書いてもらうと�
     
     <item>
       <title>仕事でやったこと 2021-03-01 ~ 2021-03-31</title>
-      <link>https://techblog-szksh-cloud.github.io/job-2021-03-01-03-31/</link>
+      <link>https://techblog.szksh.cloud/job-2021-03-01-03-31/</link>
       <pubDate>Sun, 28 Mar 2021 23:36:55 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/job-2021-03-01-03-31/</guid>
+      <guid>https://techblog.szksh.cloud/job-2021-03-01-03-31/</guid>
       <description> ブログの執筆  100 以上の Terraform 環境をいい感じに v0.14 に upgrade した方法 Pull Request の terraform plan の実行結果を S3 に保存して安全に apply   Terraform のドキュメント作成  CI/CD でやってること ローカルでの開発環境 setup etc   CI の改善  CircleCI の job の branch filter を設定して余計な job が実行されないようにした (進行中) デプロイをサービスごとに分割   (進行中) Lambda を爆速でデプロイするためのプラットフォームづくり  Terraform + lambroll + AWS CodeBuild   MongoDB upgrade (Atlas) On Boarding のドキュメントの整理  </description>
     </item>
     
     <item>
       <title>仕事でやったこと 2021-02-01 ~ 2021-02-28</title>
-      <link>https://techblog-szksh-cloud.github.io/job-2021-02-01-02-28/</link>
+      <link>https://techblog.szksh.cloud/job-2021-02-01-02-28/</link>
       <pubDate>Sat, 27 Feb 2021 20:51:56 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/job-2021-02-01-02-28/</guid>
+      <guid>https://techblog.szksh.cloud/job-2021-02-01-02-28/</guid>
       <description> Terraform リポジトリの統合 Terraform を v0.14 へ upgrade デプロイをサービスごとに分割 CircleCI の設定ファイルの分割  https://blog.studysapuri.jp/entry/2020/12/01/080000 と同様のことを別のリポジトリでもやった   Renovate の設定を改善し、安全性と運用の負担軽減、オープンなままの PR の削減 miam の Rate Limit 問題の解消  </description>
     </item>
     
     <item>
       <title>仕事でやったこと 2021-01-01 ~ 2021-01-31</title>
-      <link>https://techblog-szksh-cloud.github.io/job-2021-01-01-01-31/</link>
+      <link>https://techblog.szksh.cloud/job-2021-01-01-01-31/</link>
       <pubDate>Thu, 11 Feb 2021 08:13:10 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/job-2021-01-01-01-31/</guid>
+      <guid>https://techblog.szksh.cloud/job-2021-01-01-01-31/</guid>
       <description> CI: PR コメントの非表示  github-comment, tfcmt  非表示以外にも細かな改善入れている     Renovate  label を設定 Renovate の PR に便利なリンクを追加   Terraform  apply こけたときに plan 再実行して S3 に保存している plan file 及び PR コメントを更新 tfnotify を tfcmt にリプレース  tfnotify を fork した      </description>
     </item>
     
     <item>
       <title>仕事でやったこと 2020-12-01 ~ 2020-12-31</title>
-      <link>https://techblog-szksh-cloud.github.io/job-2020-12-01-12-31/</link>
+      <link>https://techblog.szksh.cloud/job-2020-12-01-12-31/</link>
       <pubDate>Thu, 11 Feb 2021 08:02:11 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/job-2020-12-01-12-31/</guid>
+      <guid>https://techblog.szksh.cloud/job-2020-12-01-12-31/</guid>
       <description>2020-12-01 から 2020-12-31 にかけて仕事でやったことを書ける範囲で書きます。
  AWS SAM Application の開発 Renovate の PR にリンクを追加 Terraform  Terraform の CI に関して日々行っている改善点・変更点をチームにシェア Docker Compose を用いてローカルで開発しやすいように改善 ドキュメント・コードコメントの追加 リファクタリング  不要なコードの削除 不要な secret を削除 不要な変数の削除 data.terraform_remote_state を local values に置換 なぜか環境変数でパラメータを渡していた箇所を、 local value に置換   CI に tflint の導入 対象の build が 1 つの場合 batch build を実行しないようにする  Terraform の CI/CD を CodeBuild に移行した話 の改良 Batch Build の起動に時間がかかる問題の解消   master の HEAD じゃなくても apply できるようにする plan file を S3 に保存 refactor: tfsec で設定ファイルを使うようにする Renovate の PR が多すぎて鬱陶しい問題の対応  automerge されるものは reviewer を設定しないようにした prConcurrentLimit を 1 にした branch protection Require branches to be up to date before merging を無効化     kube-linter  Rule に基づいて manifest の修正   miam でリソースが削除されそうなときに警告をするようにした ブログの執筆  Renovate の Tips Terraform の CI/CD を CodeBuild に移行した話 巨大な .</description>
     </item>
     
     <item>
       <title>terraformer で雑に生成した tf ファイル と state を分割したくてツールを書いた</title>
-      <link>https://techblog-szksh-cloud.github.io/tfmigrator/</link>
+      <link>https://techblog.szksh.cloud/tfmigrator/</link>
       <pubDate>Sun, 31 Jan 2021 14:53:23 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/tfmigrator/</guid>
+      <guid>https://techblog.szksh.cloud/tfmigrator/</guid>
       <description>terraformer で雑に生成した Terraform の設定ファイル (以下 tf ファイル) と state を分割したくてツールを書きました。
 tfmigrator
 経緯 miam から Terraform へ移行したい miam というツールで管理されている大量のリソースを Terraform で管理したくなりました。 多くの AWS Resource は Terraform で管理されていますが、 IAM に関しては miam で管理されています。 なぜ Terraform ではなく miam で管理されているかというと、当時のことは自分には分かりませんが、歴史的な経緯もあると思います。 昔は今よりも Terraform の表現力が豊かではなく、 Ruby で自由にかける miam のほうが扱いやすかったとか、 miam だと miam でリソースを管理することを強制できるため、権限管理を厳格にやるという観点では都合が良いという点もあるかと思います。
@@ -277,10 +277,10 @@ tfmigrator
     
     <item>
       <title>skaffold を使って GitOps する</title>
-      <link>https://techblog-szksh-cloud.github.io/gitops-skaffold/</link>
+      <link>https://techblog.szksh.cloud/gitops-skaffold/</link>
       <pubDate>Mon, 11 Jan 2021 16:24:44 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/gitops-skaffold/</guid>
+      <guid>https://techblog.szksh.cloud/gitops-skaffold/</guid>
       <description>skaffold を用いてマニフェストを動的に生成しつつ GitOps する方法を考えたので紹介します。 なお、現時点ではあくまで考えてみただけで実際に導入したりはしていません。
 GitOps はマニフェストを Git リポジトリにコミットしないといけないわけですが、 Docker image をビルド、プッシュし、マニフェストの image tag を書き換えるという一連の処理をどうやってやるのがいいのか 個人的に考えていました。
 自分は FluxCD には詳しくないのですが、 FluxCD では registry をポーリングして自動で最新のタグに書き換える機能があるそうですね。
@@ -293,10 +293,10 @@ How リポジトリを 2 つ用意します。
     
     <item>
       <title>tfnotify を fork した</title>
-      <link>https://techblog-szksh-cloud.github.io/fork-tfnotify/</link>
+      <link>https://techblog.szksh.cloud/fork-tfnotify/</link>
       <pubDate>Sat, 02 Jan 2021 19:42:10 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/fork-tfnotify/</guid>
+      <guid>https://techblog.szksh.cloud/fork-tfnotify/</guid>
       <description>mercari/tfnotify を Fork して 2 つほど OSS を作りました。
  https://github.com/suzuki-shunsuke/tfnotify - tfnotify と互換性あり https://github.com/suzuki-shunsuke/tfcmt - tfnotify と互換性がない  開発の経緯 これまで tfnotify を便利に使わせてもらってたのですが、幾つか改善したいと思うところがあり、本家に PR を投げました。 しかし残念ながらこれまでのところ反応がなく、そこまで本家が活発ではないこと、また他にも色々改修したいところがあったことから、自分でフォークしてメンテすることにしました。 最初は互換性を維持しながら suzuki-shunsuke/tfnotify を開発していました(今もしています)。 しかし、開発を進めるに連れ、自分にとって必要のないプラットフォームなどに関するコードが邪魔であると感じ、それらを消したバージョンを別に開発することにしました。 互換性がなくなることから、名前も変えて tfcmt としました。
 https://github.com/suzuki-shunsuke/tfcmt
@@ -308,10 +308,10 @@ mercari/tfnotify との違い 本家との違いは Release Note とドキュメ
     
     <item>
       <title>2019-10 から今(2020-12-31)に至るまで仕事でやっていること</title>
-      <link>https://techblog-szksh-cloud.github.io/my-work-2020/</link>
+      <link>https://techblog.szksh.cloud/my-work-2020/</link>
       <pubDate>Thu, 31 Dec 2020 11:00:40 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/my-work-2020/</guid>
+      <guid>https://techblog.szksh.cloud/my-work-2020/</guid>
       <description>2019-10-01 から今の職場で SRE として働いています。 その中で自分がどういうことをやっているかという話をします。
 2020-12-31 現在の内容です。
 要約  プロダクト横断的な SRE チームで、プロダクトのプラットフォームを運用・開発している 特に CI/CD の改善が得意 developer に CI/CD をいわばサービスとして提供しており、 DX の改善に取り組んでいる Monorepo の負の側面(CIが遅い、関係ないTestがこけるetc)の解消にも取り組んでいる 自分が直面している課題を解決する OSS を色々開発している  キーワード  SRE Monorepo CI/CD Developer Experience Terraform Go / Shell script k8s CircleCI / CodeBuild Conftest Renovate  より具体的にやっていることを書いた記事  個人ブログ  https://techblog.szksh.cloud/job-2020-10-01-10-31/ https://techblog.szksh.cloud/job-2020-07-01-09-30/ https://techblog.szksh.cloud/job-2020-04-01-06-30/ https://techblog.szksh.cloud/job-2020-01-01-03-31/ https://techblog.szksh.cloud/job-2019-10-01-12-31/   会社ブログ  Renovate の Tips Terraform の CI/CD を CodeBuild に移行した話 巨大な .circleci/config.yml を分割した話 Docker Hub の Rate Limit 問題に対応した話 CI の修正をリリース前に本番と同じ条件下で検証出来る仕組みを構築した話    何をやっているか プロダクト横断的な SRE チームで、プロダクトのプラットフォームを運用・開発しています。</description>
@@ -319,20 +319,20 @@ mercari/tfnotify との違い 本家との違いは Release Note とドキュメ
     
     <item>
       <title>仕事でやったこと 2020-11-01 ~ 2020-11-30</title>
-      <link>https://techblog-szksh-cloud.github.io/job-2020-11-01-11-30/</link>
+      <link>https://techblog.szksh.cloud/job-2020-11-01-11-30/</link>
       <pubDate>Wed, 30 Dec 2020 05:44:14 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/job-2020-11-01-11-30/</guid>
+      <guid>https://techblog.szksh.cloud/job-2020-11-01-11-30/</guid>
       <description>2020-11-01 から 2020-11-30 にかけて仕事でやったことを書ける範囲で書きます。
  github-ci-monitor を導入し、 CI の失敗を通知  https://github.com/suzuki-shunsuke/github-ci-monitor   Terraform  Upgrade AWS Provider: Renovate で自動更新する仕組みの改善 Upgrade Terraform from v0.12 to v0.13 tfsec の導入 PR の label によって CI(plan/apply) の実行対象を追加できるようにした CircleCI から CodeBuild への移行 tfmigrate の検証   Monorepo の CI の高速化 (CircleCI)  k8s manifest の test を、変更があったものに対してだけ実行するようにした   kube-linter の導入 Renovate  https://blog.studysapuri.jp/entry/2020/12/10/080000 additionalBranchPrefix によるブランチの分割 depName を使ったリファクタリング   .circleci/config.yml の分割 ブログの執筆  Docker Hub の Rate Limit 問題に対応した話    </description>
     </item>
     
     <item>
       <title>Renovate の PR に便利なリンクを追加</title>
-      <link>https://techblog-szksh-cloud.github.io/renovate-add-compare/</link>
+      <link>https://techblog.szksh.cloud/renovate-add-compare/</link>
       <pubDate>Mon, 28 Dec 2020 14:32:31 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/renovate-add-compare/</guid>
+      <guid>https://techblog.szksh.cloud/renovate-add-compare/</guid>
       <description>Renovate による PR をレビューする際、差分がなんなのか分かりづらいときがあります。 例えば data source が github-release の場合、 PR の description に Release Note が含まれており、コードの差分も link があるので便利です。 一方 helm data source の場合、 そういったものがなく差分がなんなのか分からないことがあります。 そういう場合、 prBodyNotes を利用して link を追加すると便利です。
 例えば、 datadog helm chart の場合
 { &amp;#34;datasources&amp;#34;: [&amp;#34;helm&amp;#34;], &amp;#34;packageNames&amp;#34;: [&amp;#34;datadog&amp;#34;], &amp;#34;prBodyNotes&amp;#34;: [ &amp;#34;[compare](https://github.com/DataDog/helm-charts/compare/datadog-{{currentVersion}}...datadog-{{newVersion}})&amp;#34; ] } とすると、 PR の description にリンクが追加されます。地味ですが便利です。 Release page へのリンクを追加しても便利かもしれませんね。
@@ -342,10 +342,10 @@ template で使える変数は https://docs.renovatebot.com/templates/ を参照
     
     <item>
       <title>Renovate と Dependabot の比較</title>
-      <link>https://techblog-szksh-cloud.github.io/compare-renovate-dependabot/</link>
+      <link>https://techblog.szksh.cloud/compare-renovate-dependabot/</link>
       <pubDate>Sat, 05 Dec 2020 12:37:17 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/compare-renovate-dependabot/</guid>
+      <guid>https://techblog.szksh.cloud/compare-renovate-dependabot/</guid>
       <description>普段 Renovate を主に使っている自分が、 Dependabot と Renovate の違いについて調べてみました。 普段 Renovate を主に使っているので、 Renovate 寄りの内容になっています。 気分を害する人がいましたら申し訳ありません。 Dependabot の理解が浅いので間違ってたら指摘してもらえると助かります。 2020-12-01 時点の情報です。
 設定項目の数  https://docs.github.com/en/free-pro-team@latest/github/administering-a-repository/configuration-options-for-dependency-updates#directory https://docs.renovatebot.com/configuration-options/  まずは設定のドキュメントを見比べると、 Renovate のほうが設定項目が多いです。 Renovate はよく言うと設定項目が多く、柔軟な設定ができるといえる一方、すべての設定を理解し使いこなすのは難しいです。 決して日本語の情報も多くないので、色々試行錯誤したりすることもあります。 Dependabot の場合、設定がそんなに多くなく割と分かりやすい印象があります。
 scheduling  https://docs.github.com/en/free-pro-team@latest/github/administering-a-repository/configuration-options-for-dependency-updates#scheduleinterval https://docs.renovatebot.com/configuration-options/#prhourlylimit https://docs.renovatebot.com/configuration-options/#schedule  Dependabot は schedule の設定が必須です。 Renovate でも schedule の設定は出来ます。
@@ -358,10 +358,10 @@ Renovate は .circleci/config.yml などの update もサポート  https://docs
     
     <item>
       <title>Terraform の Docker Provider の Collaborator になりました</title>
-      <link>https://techblog-szksh-cloud.github.io/collaborator-of-terraform-docker-provider/</link>
+      <link>https://techblog.szksh.cloud/collaborator-of-terraform-docker-provider/</link>
       <pubDate>Thu, 03 Dec 2020 09:07:32 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/collaborator-of-terraform-docker-provider/</guid>
+      <guid>https://techblog.szksh.cloud/collaborator-of-terraform-docker-provider/</guid>
       <description>先日 kreuzwerker/terraform-provider-docker の Collaborator になりました。 kreuzwerker/terraform-provider-docker は Terraform の Docker Provider であり、 Docker コンテナや image, network などを管理できます。 元々は Hashicorp の Official Provider であった terraform-providers/terraform-provider-docker が kreuzwerker/terraform-provider-docker に移管され、 Community Provider になりました。 元のリポジトリは hashicorp org に移され archive されています。
 Collaborator になった経緯 リポジトリが移管される際に、メンテナを募集していて過去に contribution していた自分にも声をかけていただきました。
 https://github.com/hashicorp/terraform-provider-docker/issues/306
@@ -371,70 +371,70 @@ Hands on の題材として Docker コンテナを作ったりできたらいい
     
     <item>
       <title>仕事でやったこと 2020-10-01 ~ 2020-10-31</title>
-      <link>https://techblog-szksh-cloud.github.io/job-2020-10-01-10-31/</link>
+      <link>https://techblog.szksh.cloud/job-2020-10-01-10-31/</link>
       <pubDate>Sun, 29 Nov 2020 11:48:17 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/job-2020-10-01-10-31/</guid>
+      <guid>https://techblog.szksh.cloud/job-2020-10-01-10-31/</guid>
       <description>2020-10-01 から 2020-10-31 にかけて仕事でやったことを書きます。 勿論全部は書けないのでいくつかピックアップして書きます。
  Terraform  CodeBuild Batch Build による dynamic な build pipeline の導入 Conftest の実行方法を修正  https://www.openpolicyagent.org/docs/latest/terraform/ tf ファイルに対して conftest を実行するのではなく、公式の方法に従ってテストするようにした   aws_cloudwatch_log_group.retention_in_days が設定されているか Conftest でテスト  コスト削減   tfnotify が parse に失敗した場合、 github-comment でコメント  https://techblog.szksh.cloud/post-tfnotify-parse-error/     Docker Hub 認証するようにした  Docker Hub の Rate Limit 問題に対応した話   kustomize build のテスト(失敗したら PR にコメントをして、なぜ失敗したか分かるようにした)  元々 kustomize build に失敗して CI がこけても、なぜこけたのか分かりにくく、 SRE に問い合わせが来て調べるみたいなことがあった どの k8s manifest の kustomize build に失敗したのか、 PR に分かりやすくコメントするようにした   CI で kubectl apply &amp;ndash;server-dry-run によるテストを導入 Monorepo  差分検知・デプロイパイプラインの改善   Renovate  automerge の導入  renovate-approve 便利   CI で renovate-config-validator による validation の導入  https://docs.</description>
     </item>
     
     <item>
       <title>仕事でやったこと 2020-07-01 ~ 2020-09-30</title>
-      <link>https://techblog-szksh-cloud.github.io/job-2020-07-01-09-30/</link>
+      <link>https://techblog.szksh.cloud/job-2020-07-01-09-30/</link>
       <pubDate>Sun, 29 Nov 2020 11:36:44 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/job-2020-07-01-09-30/</guid>
+      <guid>https://techblog.szksh.cloud/job-2020-07-01-09-30/</guid>
       <description>2020-07-01 から 2020-09-30 にかけて仕事でやったことを書きます。 勿論全部は書けないのでいくつかピックアップして書きます。
  Terraform  CircleCI から CodeBuild への移行  Security + DX 10月以降も継続   tfnotify の導入  Monorepo で導入するには一工夫が必要 コメントが消える挙動がドキュメント化されてなくて軽くハマった     Renovate の導入  Regex Manager 便利   Monorepo  差分検知・デプロイパイプラインの改善   DataDog からのアラートのハンドリング業務の改善  どんなアラートがあって、どう対応したかなどのナレッジの共有の改善 割とアナログな手法だが、ちゃんと work している    </description>
     </item>
     
     <item>
       <title>仕事でやったこと 2020-04-01 ~ 2020-06-30</title>
-      <link>https://techblog-szksh-cloud.github.io/job-2020-04-01-06-30/</link>
+      <link>https://techblog.szksh.cloud/job-2020-04-01-06-30/</link>
       <pubDate>Sun, 29 Nov 2020 11:20:07 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/job-2020-04-01-06-30/</guid>
+      <guid>https://techblog.szksh.cloud/job-2020-04-01-06-30/</guid>
       <description>2020-04-01 から 2020-06-30 にかけて仕事でやったことを書きます。 勿論全部は書けないのでいくつかピックアップして書きます。
  Monorepo  CI で kustomize build の diff を PR にコメント Conftest で k8s manifest の validation の導入 Go で書かれた差分検知のコードのリファクタリング CI の高速化・コスト削減   GitOps  GitOps を導入するためのツールの開発のサポート   Terraform  input variables を local value に置き換え   GuardDuty の導入  Terraform で IaC False Positive なアラートが多くてハンドリングできてない   ブログの執筆  CI の修正をリリース前に本番と同じ条件下で検証出来る仕組みを構築した話   Argo Workflows の検証 MongoDB Atlas への移行サポート  Go で Restore Job の開発 オペレーション    </description>
     </item>
     
     <item>
       <title>仕事でやったこと 2020-01-01 ~ 2020-03-31</title>
-      <link>https://techblog-szksh-cloud.github.io/job-2020-01-01-03-31/</link>
+      <link>https://techblog.szksh.cloud/job-2020-01-01-03-31/</link>
       <pubDate>Sun, 29 Nov 2020 10:50:11 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/job-2020-01-01-03-31/</guid>
+      <guid>https://techblog.szksh.cloud/job-2020-01-01-03-31/</guid>
       <description>2020-01-01 から 2020-03-31 にかけて仕事でやったことを書きます。 勿論全部は書けないのでいくつかピックアップして書きます。
  Monorepo  更新検知のシェルスクリプトを Go でリプレース  CI の修正をリリース前に本番と同じ条件下で検証出来る仕組みを構築した話   CircleCI のコードリストアの改善(コスト削減・高速化)  リポジトリが非常にでかいので全部 checkout, restore すると時間がかかる Job ごとに必要最小限のコードだけをリストアすることで高速化     サーバの OS upgrade Ansible  CI の更新検知で、 PR の label で対象を指定できるようにした(コードに変更がなくてもテストが実行できるようにした)  たまにテストしたいときはある それまではてきとうにコードを修正しないとテストが実行されなかったが、 PR の label で対象の playbook を指定できるようにした   key=value 形式を YAML に変換  https://www.ansible.com/blog/ansible-best-practices-essentials  Use Native YAML Syntax       .circleci/config.yml のリファクタリング  job を parameterize して共通化したり parameterize された command を使って共通化したり コード量の大幅な削減   Terraform  CircleCI の環境変数を設定することで、 master での CI を一時的に禁止できるようにした  State を弄ってたりするときに予期せぬ apply が実行されないようにするため   master branch の CI が終わるまで wait  master の CI が走っている間に PR の CI でまだ apply されていないリソースが差分として出るのを防ぐ   shfmt, shellcheck の導入  CI/CD でシェルスクリプトを書いているので、それらを lint   State Locking の導入 Terraform Cloud の検証  結果、見送り すでに CI/CD pipeline を構築している自分たちにとっては、わざわざ移行するメリットが薄いと判断     MongoDB upgrade Jenkins Alternative の検証  RunDeck Argo Workflows 結局、ローカルで検証した程度    </description>
     </item>
     
     <item>
       <title>仕事でやったこと 2019-10-01 ~ 2019-12-31</title>
-      <link>https://techblog-szksh-cloud.github.io/job-2019-10-01-12-31/</link>
+      <link>https://techblog.szksh.cloud/job-2019-10-01-12-31/</link>
       <pubDate>Sun, 29 Nov 2020 10:38:57 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/job-2019-10-01-12-31/</guid>
+      <guid>https://techblog.szksh.cloud/job-2019-10-01-12-31/</guid>
       <description>2019-10-01 から 2019-12-31 にかけて仕事でやったことを書きます。 勿論全部は書けないのでいくつかピックアップして書きます。
  Terraform  terraform fmt の導入 Terraform の upgrade v0.11 =&amp;gt; v0.12 State の分割 3 =&amp;gt; 40 弱(正確な数は忘れた) Conftest による lint: Remote Backend のパスを間違えるとまずいので test を導入 新しいサービスを追加するときのための generator (シェルスクリプト)を開発 CODEOWNERS の設定 突撃隣の Terraform リリースブランチをやめて GitHub Flow に移行 古いリビジョンで apply の実行の禁止(CI がこけるようにした)   Ansible  CI の高速化 Jenkins job を CircleCI の scheduled job にリプレース(脱 Jenkins) ローカルでの開発環境の改善  コンテナを使い回せるようにする   goss に置き換えて高速化   CI の改善  高速化(無駄な処理の削減)    </description>
     </item>
     
     <item>
       <title>Splitting .circleci/config.yml</title>
-      <link>https://techblog-szksh-cloud.github.io/splitting-circleci-config/</link>
+      <link>https://techblog.szksh.cloud/splitting-circleci-config/</link>
       <pubDate>Sat, 07 Nov 2020 14:43:10 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/splitting-circleci-config/</guid>
+      <guid>https://techblog.szksh.cloud/splitting-circleci-config/</guid>
       <description>In this post I introduce how to split a huge .circleci/config.yml.
 CircleCI doesn&amp;rsquo;t support to split .circleci/config.yml, so we manage all workflows and jobs configuration into one file .circleci/config.yml. If the repository is Monorepo, the more the number of services increases, the more the size of .circleci/config.yml becomes large and it&amp;rsquo;s hard to maintain .circleci/config.yml. By splitting .circleci/config.yml per service, it makes easy to maintain .circleci/config.yml and we can configure split file&amp;rsquo;s CODEOWNERS.</description>
     </item>
     
     <item>
       <title>github-ci-monitor: CI のステータスを DataDog で監視</title>
-      <link>https://techblog-szksh-cloud.github.io/github-ci-monitor/</link>
+      <link>https://techblog.szksh.cloud/github-ci-monitor/</link>
       <pubDate>Sun, 01 Nov 2020 17:51:44 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/github-ci-monitor/</guid>
+      <guid>https://techblog.szksh.cloud/github-ci-monitor/</guid>
       <description>自作の OSS github-ci-monitor の紹介です。
 GitHub リポジトリの CI のステータスを定期的に取得し、 DataDog に送ることで、 CI のステータスを監視するツールです。 現状は AWS Lambda で動かすことを想定していますが、他の方法でも動かせるようにするつもりです。
 Motivation モチベーションは、 PR をマージしたあとに CI がこけた場合に通知が欲しいというものです。 マージしたあとに CI が一瞬で終わるなら無事終わるのを見届けてもいいんですが、 数分かかると待ってるのも時間がもったいないです。 しばらくしたあとに結果を確認すればいいんですが、それも面倒くさいですし、普通に忘れます。 そうするとデプロイしたつもりが実は CI がこけてたなんてことが普通にあります。
@@ -447,10 +447,10 @@ GitHub API で各リポジトリのステータスを取得し、 DataDog API �
     
     <item>
       <title>matchfile - 変更されたファイルの一覧から必要なタスクを導出するための CLI ツール</title>
-      <link>https://techblog-szksh-cloud.github.io/matchfile/</link>
+      <link>https://techblog.szksh.cloud/matchfile/</link>
       <pubDate>Tue, 27 Oct 2020 19:39:44 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/matchfile/</guid>
+      <guid>https://techblog.szksh.cloud/matchfile/</guid>
       <description>自作の CLI ツール matchfile について紹介します。
 https://github.com/suzuki-shunsuke/matchfile
 この記事の執筆時点で最新バージョンは v0.1.1 です。
@@ -467,10 +467,10 @@ $ matchfile run &amp;lt;PR で変更されたファイルパスのリストが�
     
     <item>
       <title>なぜ buildflow を作ったのか</title>
-      <link>https://techblog-szksh-cloud.github.io/buildflow-goal/</link>
+      <link>https://techblog.szksh.cloud/buildflow-goal/</link>
       <pubDate>Sun, 18 Oct 2020 09:53:08 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/buildflow-goal/</guid>
+      <guid>https://techblog.szksh.cloud/buildflow-goal/</guid>
       <description>buildflow というツールを開発しているので buildflow というタグをつけて何回かに分けてブログを書きます。
 この記事では なぜ buildflow を作ったのかについて説明します。 開発者である自分の好みや置かれた環境などが所々に反映された内容になっています。
 解決したい課題 自分は CI/CD の DX の改善に業務として取り組んでいます。 リポジトリはたくさんあり、横断的にメンテナンスしています。 幾つかのリポジトリはモノレポになっており、 CI の複雑さが増していたり、 CI の実行時間が長かったりします。
@@ -481,10 +481,10 @@ buildflow で必要な処理だけを実行する buildflow では PR の情報�
     
     <item>
       <title>buildflow の実行結果の出力形式</title>
-      <link>https://techblog-szksh-cloud.github.io/buildflow-result-output/</link>
+      <link>https://techblog.szksh.cloud/buildflow-result-output/</link>
       <pubDate>Sun, 18 Oct 2020 08:36:09 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/buildflow-result-output/</guid>
+      <guid>https://techblog.szksh.cloud/buildflow-result-output/</guid>
       <description>buildflow というツールを開発しているので buildflow というタグをつけて何回かに分けてブログを書きます。
 この記事では buildflow の実行結果の出力フォーマットなどについて説明します。
 ちょっと出力はわかりにくいかもしれません。 改善したいと思いつつ、どうあるべきなのかまだ見えてないのでこんな感じになっています。
@@ -494,10 +494,10 @@ task の標準出力、標準エラー出力はリアルタイムで出力され
     
     <item>
       <title>buildflow が自動で取得する Pull Request の情報</title>
-      <link>https://techblog-szksh-cloud.github.io/buildflow-pr-info/</link>
+      <link>https://techblog.szksh.cloud/buildflow-pr-info/</link>
       <pubDate>Sun, 18 Oct 2020 08:13:48 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/buildflow-pr-info/</guid>
+      <guid>https://techblog.szksh.cloud/buildflow-pr-info/</guid>
       <description>buildflow というツールを開発しているので buildflow というタグをつけて何回かに分けてブログを書きます。
 この記事では buildflow が自動で Pull Request (以下 PR) の情報を取得してくる機能について説明します。
 この機能は GitHub のみサポートしています。 GitLab や BitBucket はサポートしていません。 これは単純に自分が GitHub しか使わないからです。
@@ -511,10 +511,10 @@ PR の情報をとってくるには、以下の情報が必要です。
     
     <item>
       <title>buildflow ではなぜ Tengo を採用しているのか</title>
-      <link>https://techblog-szksh-cloud.github.io/buildflow-why-tengo/</link>
+      <link>https://techblog.szksh.cloud/buildflow-why-tengo/</link>
       <pubDate>Sat, 17 Oct 2020 22:35:56 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/buildflow-why-tengo/</guid>
+      <guid>https://techblog.szksh.cloud/buildflow-why-tengo/</guid>
       <description>buildflow というツールを開発しているので buildflow というタグをつけて何回かに分けてブログを書きます。
 この記事では buildflow でなぜ Tengo を採用しているのかについて説明します。
 https://github.com/d5/tengo
@@ -531,10 +531,10 @@ https://github.com/avelino/awesome-go#embeddable-scripting-languages
     
     <item>
       <title>buildflow の dynamic task</title>
-      <link>https://techblog-szksh-cloud.github.io/buildflow-dynamic-task/</link>
+      <link>https://techblog.szksh.cloud/buildflow-dynamic-task/</link>
       <pubDate>Sat, 17 Oct 2020 21:29:51 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/buildflow-dynamic-task/</guid>
+      <guid>https://techblog.szksh.cloud/buildflow-dynamic-task/</guid>
       <description>buildflow というツールを開発しているので buildflow というタグをつけて何回かに分けてブログを書きます。
 この記事では buildflow の dynamic task という機能について説明します。 dynamic task では task.items の値でループを回し、複数の task を動的に生成できます。 勿論 task.items はオプションなので、指定しなければ普通の task として扱われます。 task.items を指定する場合、 map か list か、それらを返す Tengo script でないといけません。
 --- phases: - name: main tasks: - name: &amp;#34;list {{.Item.Key}} {{.Item.Value.name}}&amp;#34; command: command: &amp;#34;echo {{.Item.Key}} {{.Item.Value.name}} {{.Item.Value.age}}&amp;#34; items: - name: foo age: 10 - name: bar age: 20 上記の設定は dynamic task を使わないとこうなります。
@@ -543,10 +543,10 @@ https://github.com/avelino/awesome-go#embeddable-scripting-languages
     
     <item>
       <title>buildflow の task の input, output という機能</title>
-      <link>https://techblog-szksh-cloud.github.io/buildflow-input-output/</link>
+      <link>https://techblog.szksh.cloud/buildflow-input-output/</link>
       <pubDate>Sat, 17 Oct 2020 21:05:41 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/buildflow-input-output/</guid>
+      <guid>https://techblog.szksh.cloud/buildflow-input-output/</guid>
       <description>buildflow というツールを開発しているので buildflow というタグをつけて何回かに分けてブログを書きます。
 この記事では buildflow の task の input, output という機能について説明します。 task の input, output は Tengo script で task のパラメータを整形する機能です。
 task の command.command や write_file.template など、幾つかの設定では Go の text/template が使えますが、 text/template は複雑なロジックを記述したりするのには向いていません。 そこで task の input で Tengo script を使って必要なデータの整形を行うことで、 template は比較的きれいな状態に保つことが出来ます。
@@ -557,10 +557,10 @@ task.input は task.when が評価されたあと、 task の command などが�
     
     <item>
       <title>buildflow で設定ファイルを分割する</title>
-      <link>https://techblog-szksh-cloud.github.io/buildflow-split-files/</link>
+      <link>https://techblog.szksh.cloud/buildflow-split-files/</link>
       <pubDate>Sat, 17 Oct 2020 20:49:28 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/buildflow-split-files/</guid>
+      <guid>https://techblog.szksh.cloud/buildflow-split-files/</guid>
       <description>buildflow というツールを開発しているので buildflow というタグをつけて何回かに分けてブログを書こうかなと思います。
 この記事では buildflow の設定ファイルを分割する方法について説明します。
 buildflow では一部の設定項目について他のファイルのパスを指定して読み込むということが出来ます。 1 つのファイルに全部の設定を書いていると、ファイルが大きくなってメンテナンス性が悪くなったり、 コードオーナーが曖昧になったりするので、そういう場合は分割すると良いでしょう。 コードオーナーが異なる複数のサービスで共通の設定ファイルを用いる場合、ファイルを分割して GitHub の CODEOWNERS を設定するのもよいでしょう。 あまりないかもしれませんが、ファイルを分割すると同じファイルを読み込んで再利用も出来ます。
@@ -571,10 +571,10 @@ buildflow では一部の設定項目について他のファイルのパスを�
     
     <item>
       <title>buildflow の script や template に渡される parameter</title>
-      <link>https://techblog-szksh-cloud.github.io/buildflow-parameter/</link>
+      <link>https://techblog.szksh.cloud/buildflow-parameter/</link>
       <pubDate>Sat, 17 Oct 2020 19:44:39 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/buildflow-parameter/</guid>
+      <guid>https://techblog.szksh.cloud/buildflow-parameter/</guid>
       <description>buildflow というツールを開発しているので buildflow というタグをつけて何回かに分けてブログを書こうと思います。
 この記事では buildflow の Tengo script やテンプレートにパラメータとして渡される変数について紹介します。
 buildflow では Tengo script はテンプレートが使える設定項目が多くあります。それらの設定には共通のフォーマットのパラメータが渡されます。
@@ -584,10 +584,10 @@ buildflow では Tengo script はテンプレートが使える設定項目が�
     
     <item>
       <title>buildflow の task の設定項目</title>
-      <link>https://techblog-szksh-cloud.github.io/buildflow-task/</link>
+      <link>https://techblog.szksh.cloud/buildflow-task/</link>
       <pubDate>Sat, 17 Oct 2020 18:26:57 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/buildflow-task/</guid>
+      <guid>https://techblog.szksh.cloud/buildflow-task/</guid>
       <description>buildflow というツールを開発しているので buildflow というタグをつけて何回かに分けてブログを書こうと思います。
 この記事では buildflow の task の基本的な設定項目などについて説明します。 数が多いので、個々の設定の詳細はまた別の記事に書きます。
 task には幾つか type がありますが、全ての type に共通するパラメータが以下になります。
@@ -596,10 +596,10 @@ task には幾つか type がありますが、全ての type に共通するパ
     
     <item>
       <title>buildflow の build, phase, task について</title>
-      <link>https://techblog-szksh-cloud.github.io/buildflow-build-phase-task/</link>
+      <link>https://techblog.szksh.cloud/buildflow-build-phase-task/</link>
       <pubDate>Sat, 17 Oct 2020 18:09:19 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/buildflow-build-phase-task/</guid>
+      <guid>https://techblog.szksh.cloud/buildflow-build-phase-task/</guid>
       <description>buildflow というツールを開発しているので buildflow というタグをつけて何回かに分けてブログを書こうと思います。
 この記事では buildflow の概念である build, phase, task について書きたいと思います。
 buildflow には Build, Phase, Task という概念があります。 CircleCI の Pipeline, Workflow, Job みたいなものと思ってもらえるとよいと思います。
@@ -610,10 +610,10 @@ $ buildflow run で 1 つの build が実行されます。 build は複数の p
     
     <item>
       <title>buildflow での Tengo の使い方</title>
-      <link>https://techblog-szksh-cloud.github.io/buildflow-tengo/</link>
+      <link>https://techblog.szksh.cloud/buildflow-tengo/</link>
       <pubDate>Sat, 17 Oct 2020 17:18:34 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/buildflow-tengo/</guid>
+      <guid>https://techblog.szksh.cloud/buildflow-tengo/</guid>
       <description>buildflow というツールを開発しているので buildflow というタグをつけて何回かに分けてブログを書こうかなと思います。
 この記事では buildflow で Tengo というスクリプト言語をどのように使っているか書きたいと思います。
 https://github.com/d5/tengo
@@ -624,10 +624,10 @@ result := true task.input, output などだと result の値が Task.Input, Task
     
     <item>
       <title>buildflow というワークフローエンジンのようなタスクランナーのようなツールを作っている</title>
-      <link>https://techblog-szksh-cloud.github.io/buildflow-1/</link>
+      <link>https://techblog.szksh.cloud/buildflow-1/</link>
       <pubDate>Sat, 17 Oct 2020 16:06:31 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/buildflow-1/</guid>
+      <guid>https://techblog.szksh.cloud/buildflow-1/</guid>
       <description>buildflow というツールを開発しているので紹介します。 buildflow というタグをつけて何回かに分けてブログを書こうかなと思います。 1本目のこの記事では
  どんなツールか Hello World 特徴  について簡単に説明します。
 どんなツールか https://github.com/suzuki-shunsuke/buildflow
@@ -642,10 +642,10 @@ $ buildflow run ============== = Phase: main = ============== 07:50:46UTC | hell
     
     <item>
       <title>tfnotify の parse error を通知する</title>
-      <link>https://techblog-szksh-cloud.github.io/post-tfnotify-parse-error/</link>
+      <link>https://techblog.szksh.cloud/post-tfnotify-parse-error/</link>
       <pubDate>Sat, 12 Sep 2020 08:05:59 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/post-tfnotify-parse-error/</guid>
+      <guid>https://techblog.szksh.cloud/post-tfnotify-parse-error/</guid>
       <description>tfnotify が terraform の標準出力のパースに失敗してコメントを投稿できないことがあります。
 コメントを投稿できなくてもビルドのログには残るのですが、やはりコメントを投稿できると便利なので、tfnotify がパースエラーでコメントの投稿に失敗したら、 github-comment でコメントを投稿するようにしました。
 なお、この記事を書いている時点のバージョンは tfnotify v0.7.0, github-comment v1.9.0 です。
@@ -656,10 +656,10 @@ terraform plan | github-comment exec -k plan -- tfnotify plan .github-comment.ym
     
     <item>
       <title>AWS CodeBuild 良さそう</title>
-      <link>https://techblog-szksh-cloud.github.io/codebuild-1/</link>
+      <link>https://techblog.szksh.cloud/codebuild-1/</link>
       <pubDate>Sun, 02 Aug 2020 13:21:37 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/codebuild-1/</guid>
+      <guid>https://techblog.szksh.cloud/codebuild-1/</guid>
       <description>AWS CodeBuild を検証しているんですが、結構良いですね。 現状 Jenkins や CircleCI で実行しているジョブや CI/CD を一部移行したいなと思いました。
 一部と言っているのは、単純に全部いきなり移行するのは難しいから共存する前提で考えるくらいの意味です。
 なお、これを書いている時点ではまだ軽く検証しているだけなので、CodeBuild の理解は浅いです。
@@ -669,10 +669,10 @@ terraform plan | github-comment exec -k plan -- tfnotify plan .github-comment.ym
     
     <item>
       <title>github-comment - GitHub にコメントを投稿する CLI</title>
-      <link>https://techblog-szksh-cloud.github.io/github-comment/</link>
+      <link>https://techblog.szksh.cloud/github-comment/</link>
       <pubDate>Fri, 31 Jul 2020 20:42:54 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/github-comment/</guid>
+      <guid>https://techblog.szksh.cloud/github-comment/</guid>
       <description>GitHub の issue や pull request, commit にコメントを投稿する CLI ツールを作りました(結構前の話ですが)。
 https://github.com/suzuki-shunsuke/github-comment
 このブログの執筆時点で最新は v1.5.0 です。
@@ -687,10 +687,10 @@ $ github-comment post -org suzuki-shunsuke -repo github-comment -pr 1 -template 
     
     <item>
       <title>clap - 簡単にツールをインストールするためのツールを作った</title>
-      <link>https://techblog-szksh-cloud.github.io/clap/</link>
+      <link>https://techblog.szksh.cloud/clap/</link>
       <pubDate>Mon, 06 Jul 2020 16:52:58 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/clap/</guid>
+      <guid>https://techblog.szksh.cloud/clap/</guid>
       <description>多分車輪の再生産だとは思いますが、簡単にツールをインストールするための CLI ツールを作りました。 tarball や zip をダウンロードして展開して指定したパスにインストールするツールです。
 https://github.com/suzuki-shunsuke/clap
 Go で書かれています。 ツールの名前(clap)には特別な意味や理由はなく、なんとなくです。
@@ -705,10 +705,10 @@ CONFTEST_VERSION=0.18.2 clap install https://github.com/instrumenta/conftest/rel
     
     <item>
       <title>CircleCI の run の実行時間を DataDog に送る</title>
-      <link>https://techblog-szksh-cloud.github.io/send-circleci-run-execution-time-to-datadog/</link>
+      <link>https://techblog.szksh.cloud/send-circleci-run-execution-time-to-datadog/</link>
       <pubDate>Sat, 23 May 2020 14:20:53 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/send-circleci-run-execution-time-to-datadog/</guid>
+      <guid>https://techblog.szksh.cloud/send-circleci-run-execution-time-to-datadog/</guid>
       <description>小ネタです。
 dd-time を使って CircleCI の run を使ったコマンドの実行時間をどう計測したらいいのかちょっと考えました。
 以前、コマンドの実行時間を DataDog に送るツール dd-time を作りました。
@@ -723,10 +723,10 @@ https://circleci.com/docs/2.0/configuration-reference/#run
     
     <item>
       <title>CircleCI の checkout の注意点</title>
-      <link>https://techblog-szksh-cloud.github.io/circleci-checkout-default-branch/</link>
+      <link>https://techblog.szksh.cloud/circleci-checkout-default-branch/</link>
       <pubDate>Fri, 24 Apr 2020 16:53:01 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/circleci-checkout-default-branch/</guid>
+      <guid>https://techblog.szksh.cloud/circleci-checkout-default-branch/</guid>
       <description>CircleCI の組み込みの command checkout の注意点について書きます。
 なお、ここに書かれている内容は 2020/04/24 時点のものであり、予告なしに checkout の挙動が変わる可能性があります。
 また、今回は話を簡略化するため、 checkout 実行時点で .git がない(つまりキャッシュしていない)ものとします。
@@ -739,10 +739,10 @@ elif [ -n &amp;#34;$CIRCLE_BRANCH&amp;#34; ] then git reset --hard &amp;#34;$CIR
     
     <item>
       <title>Skaffold で特定のサービスだけ動かすためのツールを作った</title>
-      <link>https://techblog-szksh-cloud.github.io/skaffold-generator/</link>
+      <link>https://techblog.szksh.cloud/skaffold-generator/</link>
       <pubDate>Sun, 05 Apr 2020 18:53:25 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/skaffold-generator/</guid>
+      <guid>https://techblog.szksh.cloud/skaffold-generator/</guid>
       <description>自作の CLI ツール skaffold-generator の紹介です。 プロトタイピングみたいなノリで半日くらいで割と手早く作れました。 名前が長くて適当なのでもっと良い名前ないかなと思ってます。
 Skaffold に欲しい機能がないので補完する感じで作ったのですが、「それ〇〇で出来るよ」とかあったら(GitHub issue とか Twitter で)教えていただけると幸いです。
 どんなツールか 設定ファイル skaffold-generator.yaml を監視して変更があったら skaffold.yaml を生成するツールです。設定ファイルでサービスの依存関係を定義できたり、コマンドライン引数で指定したサービス及びそれが依存するサービスに関連した設定だけを使って skaffold.yaml を更新します。 このツールは skaffold.yaml を生成するだけなので実際にアプリケーションをビルド・デプロイするには skaffold と組み合わせて使います。
@@ -753,10 +753,10 @@ Skaffold に欲しい機能がないので補完する感じで作ったので�
     
     <item>
       <title>Terraform ハンズオン with MySQL Provider</title>
-      <link>https://techblog-szksh-cloud.github.io/terraform-hands-on-with-mysql-provider/</link>
+      <link>https://techblog.szksh.cloud/terraform-hands-on-with-mysql-provider/</link>
       <pubDate>Fri, 17 Jan 2020 09:14:08 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/terraform-hands-on-with-mysql-provider/</guid>
+      <guid>https://techblog.szksh.cloud/terraform-hands-on-with-mysql-provider/</guid>
       <description>Terraform を勉強するには実際に使ってみるのが一番手っ取り早いですが、 では手頃な題材はあるかと言われると少し難しいです。
 公式の Getting Started では AWS が使われていますが、 AWS のアカウントやクレデンシャルが必要ですしお金もかかってしまいます(無料枠はありますが)。 もう少し手軽なものが欲しいところです。
 そこで公式の Provider で丁度いいものはないか探したところ、 MySQL Provider が良さそうでした。 MySQL のユーザーや Database を Terraform で管理したいとは自分は思いませんが、 Terraform の入門で遊ぶにはちょうどよいでしょう。
@@ -769,10 +769,10 @@ $ mkdir workspace $ cd workspace Terraform のバージョンと tfenv Terraform
     
     <item>
       <title>Terraform 入門</title>
-      <link>https://techblog-szksh-cloud.github.io/terraform-getting-started/</link>
+      <link>https://techblog.szksh.cloud/terraform-getting-started/</link>
       <pubDate>Thu, 16 Jan 2020 09:25:05 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/terraform-getting-started/</guid>
+      <guid>https://techblog.szksh.cloud/terraform-getting-started/</guid>
       <description>参考  10分で理解するTerraform | Qiita Terraform入門資料(v0.12.0対応) ~基本知識から設計や運用、知っておくべきtipsまで~ | Qiita AWSでTerraformに入門 | Developers.io Terraform職人入門: 日々の運用で学んだ知見を淡々とまとめる | Qiita  手を動かしたい方は Terraform ハンズオン with MySQL Provider も参考にしてください。
 前提  執筆時点 (2020/01/05) で Terraform の最新バージョンは v0.12.18 です  Terraform とは Terraform は Infrastructure as Code を実現する汎用的なCLIツールです。 インフラの状態を設定ファイルに定義し、コマンドを実行することで、 実際のインフラの状態と設定ファイルの差分を検知し、設定ファイルに記述されたとおりになるようにインフラを変更(CRUD)します。
 Hashicorp という企業がホストしている OSS になります。 Go で書かれています。 https://github.com/hashicorp/terraform
@@ -785,10 +785,10 @@ tfenv は Terraform のバージョン管理ツールです。 pyenv や rbenv �
     
     <item>
       <title>Terraform の State Locking の概要</title>
-      <link>https://techblog-szksh-cloud.github.io/terraform-state-locking/</link>
+      <link>https://techblog.szksh.cloud/terraform-state-locking/</link>
       <pubDate>Fri, 10 Jan 2020 16:18:05 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/terraform-state-locking/</guid>
+      <guid>https://techblog.szksh.cloud/terraform-state-locking/</guid>
       <description>Terraform の State Locking という機能の概要について説明します。 ただし、自分もちゃんと理解しているわけではないので、推測も混じります。 基本的には公式ドキュメントに書いてある内容なのでそちらをご参照ください。
 State Locking とは terraform plan などのコマンドは State を変更する場合があります。 その処理は atomic ではないため、同時に複数のコマンドが State を書き換えようとすると不整合が生じる可能性があります。
  例えば S3 backend の state を state rm で更新する場合を考えます。 これはコマンド内部で
@@ -799,10 +799,10 @@ State Locking とは terraform plan などのコマンドは State を変更す�
     
     <item>
       <title>dd-time - コマンドの実行時間を Datadog に送るツール</title>
-      <link>https://techblog-szksh-cloud.github.io/dd-time/</link>
+      <link>https://techblog.szksh.cloud/dd-time/</link>
       <pubDate>Sat, 30 Nov 2019 13:54:47 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/dd-time/</guid>
+      <guid>https://techblog.szksh.cloud/dd-time/</guid>
       <description>コマンドの実行時間を Datadog に送る dd-time というツールを作りました。
 このツールは circle-dd-bench にインスパイアされていますが、 CircleCI 以外でも需要あると思ったり、他にも幾つか改善したい部分があったので自作することにしました。
 circle-dd-bench については circle-dd-bench の作者が書いたブログ https://blog.yuyat.jp/post/circle-dd-bench/ も参考にしてください。
@@ -815,10 +815,10 @@ CircleCI で実行した場合、 CircleCI のビルドイン環境変数が tag
     
     <item>
       <title>モブレビューやっていきたい</title>
-      <link>https://techblog-szksh-cloud.github.io/mobreview/</link>
+      <link>https://techblog.szksh.cloud/mobreview/</link>
       <pubDate>Sun, 10 Nov 2019 18:31:05 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/mobreview/</guid>
+      <guid>https://techblog.szksh.cloud/mobreview/</guid>
       <description>最近モブレビュー取り入れたいと感じていて、なんで取り入れたいかなどについて書いてみました。 モブレビュー自体まだ 2, 3 回しかやってないので説得力にかけますが、ご容赦ください。
 想定  チームは 6 人以下 Pull Request (以下 PR) をマージするには必ず他の誰かが approve しないといけない  目的  チーム内の情報共有  属人化の解消 退職や異動などによる情報の喪失(誰も分からない状態)を防ぐ チーム外の人とのコミュニケーションにも活用できる   レビュー待ちの短縮 レビューの品質の改善 仕事を評価してもらうことで承認欲求を満たす オンボーディングの改善  レビューを通じて必要な知識を吸収してもらう オンボーディングに限ったことではないが、オンボーディングにも有効ではないか   最後までやりきる  箇条書した内容を補足します。
 情報共有 属人化の解消は結構重要だと自分は思っていて、特定の人じゃないと出来ないこと、わからないことというのは ボトルネックや技術的負債だったり、障害対応時に致命的になりかねません(深夜に障害が起こってAさんに聞かないとわからないのに、Aさんと連絡が取れないとか最悪)。 チーム全員とはいかなくても 3 人ぐらいは出来る・分かってる必要があるかなと思います。
@@ -832,10 +832,10 @@ CircleCI で実行した場合、 CircleCI のビルドイン環境変数が tag
     
     <item>
       <title>go-timeout - command の timeout</title>
-      <link>https://techblog-szksh-cloud.github.io/go-timeout/</link>
+      <link>https://techblog.szksh.cloud/go-timeout/</link>
       <pubDate>Mon, 04 Nov 2019 10:00:21 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/go-timeout/</guid>
+      <guid>https://techblog.szksh.cloud/go-timeout/</guid>
       <description>作ったのは 2ヶ月くらい前の話ですが、 Go の command の timeout を実装するためのライブラリを作ったので紹介します。
 https://github.com/suzuki-shunsuke/go-timeout
 基本的には https://github.com/Songmu/timeout をオススメしますが、これだと上手くいかないパターンがあったので自作しました。
@@ -848,10 +848,10 @@ Go の command の timeout に関しては https://junkyard.song.mu/slides/gocon
     
     <item>
       <title>cmdx - task runner</title>
-      <link>https://techblog-szksh-cloud.github.io/cmdx/</link>
+      <link>https://techblog.szksh.cloud/cmdx/</link>
       <pubDate>Fri, 23 Aug 2019 11:35:13 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/cmdx/</guid>
+      <guid>https://techblog.szksh.cloud/cmdx/</guid>
       <description>最近自作した OSS, cmdx の紹介です。
 https://github.com/suzuki-shunsuke/cmdx
 cmdx は task runner です。
@@ -868,10 +868,10 @@ $ cmdx -l init, i - setup git hooks coverage, c - test a package (fzf is require
     
     <item>
       <title>Drone Extension のリスク</title>
-      <link>https://techblog-szksh-cloud.github.io/risk-of-drone-extension/</link>
+      <link>https://techblog.szksh.cloud/risk-of-drone-extension/</link>
       <pubDate>Thu, 15 Aug 2019 07:54:23 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/risk-of-drone-extension/</guid>
+      <guid>https://techblog.szksh.cloud/risk-of-drone-extension/</guid>
       <description>Drone v1 では Extension という仕組みが導入されました。
 これは文字通り Drone を拡張する仕組みで、仕様に従って作れば自由に Drone を拡張できます。
 https://docs.drone.io/extensions/overview/
@@ -884,10 +884,10 @@ Extension は非常に面白い仕組みだと思いますが、 Drone を運用
     
     <item>
       <title>Drone v1 で gRPC が使われなくなった</title>
-      <link>https://techblog-szksh-cloud.github.io/drone-v1-deprecate-grpc/</link>
+      <link>https://techblog.szksh.cloud/drone-v1-deprecate-grpc/</link>
       <pubDate>Thu, 15 Aug 2019 07:39:18 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/drone-v1-deprecate-grpc/</guid>
+      <guid>https://techblog.szksh.cloud/drone-v1-deprecate-grpc/</guid>
       <description>v0.8 では server - agent 間の通信に gPRC が使われていましたが、 v1 では使われなくなりました。
 理由  https://discourse.drone.io/t/curious-about-decision-to-drop-grpc/3987  gRPC関連のトラブルの問い合わせが多すぎてサポートしきれないので止めた    v1 での通信方法  https://discourse.drone.io/t/drone-agents-keep-closing-connections-with-499-code/5197/2  agent がロングポーリングしている 30秒後、なんのビルドもなければコネクションを切って、再接続する(張りっぱなしにしてると、LBやファイアウォールにコネクション切られるため)     自分も v0.8 から Drone を運用していて最近 v1 に upgrade しましたが、 v0.8 では gRPC 関連のトラブルが頻発していました。 server のログでは絶えず gRPC 関連のエラーを吐いていましたし、 server - agent 間の TCP connection が切れっぱなしになって戻らくなって agent 数がどんどん減っていったり ビルドが pending のままになったり、色々ありました。
 関連する issue はあり、幾つか対策を打ってみたりしましたが、結局解決しませんでした。
@@ -896,20 +896,20 @@ Extension は非常に面白い仕組みだと思いますが、 Drone を運用
     
     <item>
       <title>Golang での時刻の扱い方を整理する</title>
-      <link>https://techblog-szksh-cloud.github.io/golang-time/</link>
+      <link>https://techblog.szksh.cloud/golang-time/</link>
       <pubDate>Wed, 14 Aug 2019 20:28:56 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/golang-time/</guid>
+      <guid>https://techblog.szksh.cloud/golang-time/</guid>
       <description>今更ながら Golang での時刻の扱い方について改めて整理してみました。
 まとめ  time.Local は明示的に設定する(基本UTC) DB などには 基本UTC で永続化する 出力時に必要になったらタイムゾーンを変更する  location は出力時に問題になるので出力時に location を明示的に指定する 逆に言うと出力時以外は問題にならないので無理に location を UTC にしなくても良いかもしれない サードパーティ(ex. ORM) に time.Time を渡す場合は location に注意が必要   文字列として時刻の入力を受け付ける場合は location を明示的にセットする サードパーティが time.Local に依存する場合、 time.Local を明示的に UTC にしたりする必要があるかもしれない アプリケーションで利用する location が分かっている場合、location を取得するヘルパー関数を定義する time.LoadLocation は環境依存なので予め location が分かっているなら使わないほうがよい 文字列を time.Time に変換する場合、time.ParseInLocation で Location を指定して time.Time に変換後、time.Time.UTC() で UTC に変換する time.Time を文字列に変換する場合、time.In で location を変換後、time.Time.Format で文字列に変換する  グローバルな location https://golang.org/pkg/time/#Location</description>
     </item>
     
     <item>
       <title>Drone v1 では Jsonnet が extension なしで使える</title>
-      <link>https://techblog-szksh-cloud.github.io/drone-jsonnet/</link>
+      <link>https://techblog.szksh.cloud/drone-jsonnet/</link>
       <pubDate>Fri, 02 Aug 2019 23:02:57 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/drone-jsonnet/</guid>
+      <guid>https://techblog.szksh.cloud/drone-jsonnet/</guid>
       <description>Drone では v1 から冗長な YAML を DRY にする一つの手として、 Jsonnet の利用が推奨されています。 これについては過去のブログでも触れています。
 https://techblog.szksh.cloud/drone-jsonnet-generator/
 しかし、 v1 の rc の時点では Jsonnet の活用には Jsonnet Extension が必要でした。
@@ -923,20 +923,20 @@ https://engineering.linecorp.com/ja/blog/go-oss-ci-cd-platform-drone-1-0-0-rc-1/
     
     <item>
       <title>The Top 10 Most Common Mistakes I’ve Seen in Go Projects を読んでみて</title>
-      <link>https://techblog-szksh-cloud.github.io/the-top-10-most-common-mistakes-ive-seen-in-go-projects/</link>
+      <link>https://techblog.szksh.cloud/the-top-10-most-common-mistakes-ive-seen-in-go-projects/</link>
       <pubDate>Sun, 21 Jul 2019 18:13:53 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/the-top-10-most-common-mistakes-ive-seen-in-go-projects/</guid>
+      <guid>https://techblog.szksh.cloud/the-top-10-most-common-mistakes-ive-seen-in-go-projects/</guid>
       <description>The Top 10 Most Common Mistakes I’ve Seen in Go Projects という記事を読んで面白かったのでメモります。 翻訳ではないです。メモなので、原文を読んでください。
  Unknown Enum Value: Unknown であることを表す enum の値は 0 にしよう。値がセットされていない場合に Unknown として扱えるから Benchmarking: ベンチマークを取るのは難しい。コンパイラの最適化によってベンチマークの結果が不適切になる場合がある Pointers! Pointers Everywhere!: パフォーマンスの観点から基本的にはポインタを使うべきではない。変数を共有する必要がある場合のみ、ポインタを使う Breaking a for/switch or a for/select: for, switch が入れ子になっている場合、switch の中で break しても for から抜けられない。抜けたければ labeled break を使う Errors Management Slice Initialization Context Management Not Using the -race Option: go test コマンドでは -race オプションをつけよう Using a Filename as an Input: 引数としてファイル名を渡すのではなく、 io.</description>
     </item>
     
     <item>
       <title>Flute - Golang HTTP client testing framework</title>
-      <link>https://techblog-szksh-cloud.github.io/fagott/</link>
+      <link>https://techblog.szksh.cloud/fagott/</link>
       <pubDate>Sun, 07 Jul 2019 08:20:00 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/fagott/</guid>
+      <guid>https://techblog.szksh.cloud/fagott/</guid>
       <description>2019-07-17 追記 プロジェクト名が変わりました
 https://github.com/suzuki-shunsuke/flute/issues/20
  Go の HTTP client のテストフレームワークを作ったので紹介します。
@@ -952,10 +952,10 @@ https://github.com/suzuki-shunsuke/flute
     
     <item>
       <title>Drone で「ビルド実行時にパラメータを渡す」っぽいことをする</title>
-      <link>https://techblog-szksh-cloud.github.io/how-to-imitate-jenkins-parameterized-build-at-drone/</link>
+      <link>https://techblog.szksh.cloud/how-to-imitate-jenkins-parameterized-build-at-drone/</link>
       <pubDate>Thu, 20 Jun 2019 17:50:11 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/how-to-imitate-jenkins-parameterized-build-at-drone/</guid>
+      <guid>https://techblog.szksh.cloud/how-to-imitate-jenkins-parameterized-build-at-drone/</guid>
       <description>Jenkins では parameterized build という機能で、ビルド実行時に Web UI からパラメータを指定することができます。
 Drone では基本的に Git のイベントをフックして動くので「ビルドを実行時に手動でパラメータを設定する」ということは出来ません。
 自分は基本的にできなくても構わないと思っていますが、 こういった機能がないから Drone を使わないという人も中にはいるので、 Drone でもちょっとした工夫でそれっぽいことは出来るんじゃないかと思い、簡単なサンプルを書いてみました。
@@ -980,10 +980,10 @@ https://github.com/suzuki-shunsuke/example-drone-build-parameter/blob/master/bui
     
     <item>
       <title>Drone v0.8 の .drone.yml を v1 の .drone.jsonnet に変換するツールを作った</title>
-      <link>https://techblog-szksh-cloud.github.io/drone-jsonnet-generator/</link>
+      <link>https://techblog.szksh.cloud/drone-jsonnet-generator/</link>
       <pubDate>Wed, 12 Jun 2019 07:40:45 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/drone-jsonnet-generator/</guid>
+      <guid>https://techblog.szksh.cloud/drone-jsonnet-generator/</guid>
       <description>Drone v0.8 の .drone.yml を v1 の .drone.jsonnet に変換するツールを作ったので紹介します。
 https://github.com/suzuki-shunsuke/drone-jsonnet-generator
 背景 https://docs.drone.io/user-guide/pipeline/migrating/
@@ -997,10 +997,10 @@ https://docs.drone.io/user-guide/pipeline/migrating/
     
     <item>
       <title>.drone.jsonnet と .drone.yml を比較する Drone plugin を作った</title>
-      <link>https://techblog-szksh-cloud.github.io/drone-plugin-jsonnet-check/</link>
+      <link>https://techblog.szksh.cloud/drone-plugin-jsonnet-check/</link>
       <pubDate>Sat, 01 Jun 2019 08:34:10 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/drone-plugin-jsonnet-check/</guid>
+      <guid>https://techblog.szksh.cloud/drone-plugin-jsonnet-check/</guid>
       <description>久しぶりに Drone plugin を作ったので紹介します。
 https://www.github.com/suzuki-shunsuke/drone-plugin-jsonnet-check
 .drone.jsonnet から .drone.yml を生成していて、両方を Git で管理している場合に、 .drone.jsonnet と .drone.yml の状態が一致しているかテストするための plugin です。
@@ -1012,10 +1012,10 @@ https://docs.drone.io/user-guide/pipeline/migrating/
     
     <item>
       <title>go-jsoneq - 2つの値がJSONとして等しいか比較するGoライブラリ</title>
-      <link>https://techblog-szksh-cloud.github.io/go-jsoneq/</link>
+      <link>https://techblog.szksh.cloud/go-jsoneq/</link>
       <pubDate>Thu, 23 May 2019 11:43:18 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/go-jsoneq/</guid>
+      <guid>https://techblog.szksh.cloud/go-jsoneq/</guid>
       <description>https://github.com/suzuki-shunsuke/go-jsoneq
 2つの値がJSONとして等しいか比較するGoライブラリを開発したので紹介します。
 「2つの値がJSONとして等しい」とは、2つの値をそれぞれJSON文字列に変換したら、2つが表現するデータがおなじになるという意味です。
@@ -1031,10 +1031,10 @@ GoDoc やサンプルを見れば使い方は簡単にわかると思います�
     
     <item>
       <title>durl - 壊れたURLを検知するCLIツール</title>
-      <link>https://techblog-szksh-cloud.github.io/durl/</link>
+      <link>https://techblog.szksh.cloud/durl/</link>
       <pubDate>Sun, 28 Apr 2019 21:25:00 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/durl/</guid>
+      <guid>https://techblog.szksh.cloud/durl/</guid>
       <description>結構前に開発したツールですが、まだ記事にしてなかったので紹介します。
 https://github.com/suzuki-shunsuke/durl
 ファイル中の URL が壊れていないかチェックするツールです。 ファイル中の URL を抽出し、HTTPリクエストを投げてステータスコードが 2xx でないものがあった場合、異常終了します。
@@ -1051,10 +1051,10 @@ find . \ -type d -name node_modules -prune -o \ -type d -name .git -prune -o \ -
     
     <item>
       <title>毎週30分の技術共有会</title>
-      <link>https://techblog-szksh-cloud.github.io/2019-knowledge-share-meeting/</link>
+      <link>https://techblog.szksh.cloud/2019-knowledge-share-meeting/</link>
       <pubDate>Sun, 17 Mar 2019 13:47:40 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/2019-knowledge-share-meeting/</guid>
+      <guid>https://techblog.szksh.cloud/2019-knowledge-share-meeting/</guid>
       <description>自分が最近職場で行っている技術共有の取り組みについて紹介したいと思います。
 背景 これまで自分は積極的に自分にとって新しい技術を取り入れてサービスの品質の向上に繋げてきました。 ただし、それらの技術に関して周りに十分に共有できていなかった側面がありました。
 やっていること 毎週30分決まった時間にスライドを使って発表しています。 対象は同じ部署の希望者です。 枠は30分ですが、実質話しているのは20分くらいな気がします。 k8sのハンズオン的なこともやりました(そのときは30分で終わらないので2回に分けてやりました)。
@@ -1067,10 +1067,10 @@ find . \ -type d -name node_modules -prune -o \ -type d -name .git -prune -o \ -
     
     <item>
       <title>Rancherでusername が重複してログインできなくなった場合の解消方法</title>
-      <link>https://techblog-szksh-cloud.github.io/rancher-duplicated-user-name/</link>
+      <link>https://techblog.szksh.cloud/rancher-duplicated-user-name/</link>
       <pubDate>Sat, 16 Mar 2019 21:17:05 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/rancher-duplicated-user-name/</guid>
+      <guid>https://techblog.szksh.cloud/rancher-duplicated-user-name/</guid>
       <description>先日起こった Rancher のトラブルの解消方法について紹介したいと思います。 Rancher のバージョンは v2.1.6 です。 admin ユーザーでログインしようとしたところ、エラーが起こりました。 最初パスワードが間違っているのかと思い、パスワードリセットしたものの、解消しませんでした。
 https://rancher.com/docs/rancher/v2.x/en/faq/technical/#how-can-i-reset-the-admin-password
 エラーメッセージをよく見ると 500 エラーでした。そこで rancher のコンテナのログを見ました。
@@ -1083,10 +1083,10 @@ https://qiita.com/yamamoto-febc/items/498b911611dd25351ad7
     
     <item>
       <title>Goの設定管理で viper の代わりに confita を使う</title>
-      <link>https://techblog-szksh-cloud.github.io/use-confita/</link>
+      <link>https://techblog.szksh.cloud/use-confita/</link>
       <pubDate>Sat, 16 Feb 2019 18:38:45 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/use-confita/</guid>
+      <guid>https://techblog.szksh.cloud/use-confita/</guid>
       <description>Golang の設定管理のライブラリといえば viper が有名ですが、 confita も良さそうだったので紹介したいと思います。
 confita の機能としては以下のようなものがあります。
  構造体に設定をマッピング flag や環境変数、設定ファイルに対応 複数の設定ファイルに対応  構造体に設定をマッピングすることで、https://github.com/go-playground/validator のようなライブラリを使って設定のバリデーションが出来ます。
@@ -1099,10 +1099,10 @@ import ( &amp;#34;context&amp;#34; &amp;#34;gopkg.in/go-playground/validator.v9&
     
     <item>
       <title>JS以外でのnpmの活用</title>
-      <link>https://techblog-szksh-cloud.github.io/use-npm/</link>
+      <link>https://techblog.szksh.cloud/use-npm/</link>
       <pubDate>Thu, 14 Feb 2019 21:34:22 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/use-npm/</guid>
+      <guid>https://techblog.szksh.cloud/use-npm/</guid>
       <description>npm は Node.js のパッケージマネージャーですが、自分はJS以外のプロジェクトでも使えると思っています。 実際、Goのアプリケーション、OSS、ansible role, playbook など種類を問わず、自分が管理している多くのリポジトリで使っています。 ただ、GoのOSSで npm 使っているのは自分以外で見たことはないですし、 正直あまり賛同はされないかなと思いますが、こういう考え方もあると思っていただけたらと思います。
 npm を使う理由は
  Node製のツールを使うため npm scripts を使うため (今回書きたいのはこっち)  の2つあります。
@@ -1117,10 +1117,10 @@ https://github.com/suzuki-shunsuke/gomic/blob/v0.5.7/scripts/tag.sh
     
     <item>
       <title>Golang の好きなところ</title>
-      <link>https://techblog-szksh-cloud.github.io/golang-good-point/</link>
+      <link>https://techblog.szksh.cloud/golang-good-point/</link>
       <pubDate>Sun, 10 Feb 2019 17:49:58 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/golang-good-point/</guid>
+      <guid>https://techblog.szksh.cloud/golang-good-point/</guid>
       <description>自分は 2017/8頃(曖昧)からメインで書く言語をPythonからGolangに変更しました。 Goを書き始めて割と早い段階でGoが一番好きになりました。 そこでなんで Go が好きなのかということを頑張って言語化しようと思います。
 若干他の言語と比較する部分もありますが、決して他の言語をディスったり、 他の言語より優れているということが言いたいわけではないのでご了承ください。
  依存するものが小さく、バイナリ1つインストールするだけで良い  Prometheus の exporter とかインストールするの簡単 Docker Imageも最小限になる   静的型付け  ビルド出来ている時点で一定の信頼性が担保されている よく知らないコードを読んだり修正するときとかだいぶ有り難い   GoDocが素晴らしい  何もしなくてもライブラリのドキュメントが出来上がっている   ライブラリの公開が容易  GitHubに公開するだけ npm や pypi のようなレジストリがないので楽   go test とか go vet, gofmt みたいに標準ツールが揃っている コーディング規約で悩む必要がない lintツールが充実している  gometalinter とか使っておけば OK lintできる環境を構築するのにそこまで頑張らなくて良い   エラーハンドリングが暗黙的に省略できないので信頼性が高い  Goのエラーハンドリング嫌いって人もいるし、v2で改善されるって話も聞くけど、自分はむしろ好き(面倒なのは理解できるけど)   言語仕様がシンプル(客観的な根拠はないし、難しい部分もあるけど、そんな気がする)  メタプログラミング使った、魔術的なコードになりにくい   interface 使ってコードを疎結合にするのが書いてて気持ちいい 並列処理が書きやすい  </description>
@@ -1128,10 +1128,10 @@ https://github.com/suzuki-shunsuke/gomic/blob/v0.5.7/scripts/tag.sh
     
     <item>
       <title>go-error-handling-logging-practice v0.2</title>
-      <link>https://techblog-szksh-cloud.github.io/golang-logging-error-handling-practice-0.2.0/</link>
+      <link>https://techblog.szksh.cloud/golang-logging-error-handling-practice-0.2.0/</link>
       <pubDate>Fri, 01 Feb 2019 22:26:13 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/golang-logging-error-handling-practice-0.2.0/</guid>
+      <guid>https://techblog.szksh.cloud/golang-logging-error-handling-practice-0.2.0/</guid>
       <description>以前 Golang のロギング・エラーハンドリングについて書きました。
  https://suzuki-shunsuke.github.io/golang-logging-error-handling-practice/ https://github.com/suzuki-shunsuke/go-error-handling-logging-practice  それを少し v0.1 から v0.2 に互換性を壊す形でアップデートしようかと思います。 本記事ではその変更点について書きます。
 変更点 関数のエラーに情報を付与する責務を関数に割り当てていたものを、呼び出し元に割り当てるようにします。
@@ -1145,10 +1145,10 @@ func createUser(name string, age int) error { return errlog.Wrap(checkName(name)
     
     <item>
       <title>Terraform Providerで import を実装する方法</title>
-      <link>https://techblog-szksh-cloud.github.io/terraform-provider-graylog-import/</link>
+      <link>https://techblog.szksh.cloud/terraform-provider-graylog-import/</link>
       <pubDate>Fri, 25 Jan 2019 22:38:28 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/terraform-provider-graylog-import/</guid>
+      <guid>https://techblog.szksh.cloud/terraform-provider-graylog-import/</guid>
       <description>terraform provider graylog で alert condition と stream rule の import を実装しました。
  https://github.com/suzuki-shunsuke/go-graylog/pull/59 https://github.com/suzuki-shunsuke/go-graylog/pull/60  そこで import を実装する方法を紹介したいと思います。
 terraform でリソースをimportするにはリソースがimportをサポートしている必要があります。 schema.Resource の Importer フィールドですね。リソースがIDだけでGet出来る場合、schema.ImportStatePassthroughを使えば終わりです。 一方、Graylogのalert condition や stream rule はIDだけでなく、stream id も必要になります。 terraform import コマンドは1つの引数しか取らないため、サポートできないのでは？と以前まで思っていました。 そういった場合、次のようにStateFuncを実装すればサポートできます。
@@ -1160,10 +1160,10 @@ https://godoc.org/github.com/hashicorp/terraform/helper/schema#ImportStatePassth
     
     <item>
       <title>GithubをFree Planにダウングレードした</title>
-      <link>https://techblog-szksh-cloud.github.io/downgrade-github-plan/</link>
+      <link>https://techblog.szksh.cloud/downgrade-github-plan/</link>
       <pubDate>Sun, 20 Jan 2019 12:27:26 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/downgrade-github-plan/</guid>
+      <guid>https://techblog.szksh.cloud/downgrade-github-plan/</guid>
       <description>GitHub のプラン体系が変わり、無料プランでも無制限でprivate repositoryが作れるようになりました。
 https://github.blog/2019-01-07-new-year-new-github/
 そこで無料プランにダウングレードすることにしました。
@@ -1179,10 +1179,10 @@ curl &amp;#34;https://api.github.com/user/repos?access_token=$GITHUB_TOKEN&amp;a
     
     <item>
       <title>Golangにおけるエラーハンドリングとロギングのプラクティス</title>
-      <link>https://techblog-szksh-cloud.github.io/golang-logging-error-handling-practice/</link>
+      <link>https://techblog.szksh.cloud/golang-logging-error-handling-practice/</link>
       <pubDate>Tue, 25 Dec 2018 21:51:41 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/golang-logging-error-handling-practice/</guid>
+      <guid>https://techblog.szksh.cloud/golang-logging-error-handling-practice/</guid>
       <description>2018-12-30 追記 この記事を元にドキュメントを書いてみました。
 https://github.com/suzuki-shunsuke/go-error-handling-logging-practice
 追記ここまで
@@ -1204,10 +1204,10 @@ if err != nil { return err } ロギングに必要な情報を戻り値のerror�
     
     <item>
       <title>GraylogのAlertの課題</title>
-      <link>https://techblog-szksh-cloud.github.io/graylog-alert-issue/</link>
+      <link>https://techblog.szksh.cloud/graylog-alert-issue/</link>
       <pubDate>Wed, 19 Dec 2018 21:02:11 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/graylog-alert-issue/</guid>
+      <guid>https://techblog.szksh.cloud/graylog-alert-issue/</guid>
       <description>Graylogを運用してきて感じているAlert機能周りの課題をリストアップします。 自分のGraylogの理解が不十分で勘違いしている部分もあるかもしれませんが、ご了承ください。 Graylogのバージョンは 2.5.0 です。 ここでいう「メンション」とは、Slackのようなチャットツールのメンションを指します。 リストの詳細を書きだしてみたものの、リストだけでだいたい言いたいことが言えてしまっていたのと、単なる愚痴っぽくなってしまったので、 リストだけに留めます。
 2018-12-31 追記 元々 Alert Condition, Notification の APIがないと勘違いしていたのですが、 実はちゃんとあったので terraform で管理できるように go-graylog を更新しました。
  https://github.com/suzuki-shunsuke/go-graylog/pull/50 https://github.com/suzuki-shunsuke/go-graylog/pull/52 https://github.com/suzuki-shunsuke/go-graylog/blob/v11.0.0/docs/resources/alarm_callback.md https://github.com/suzuki-shunsuke/go-graylog/blob/v11.0.0/docs/resources/alert_condition.md  課題リスト  APIでAlert Condition, Notificationを管理できない  APIがないので terraform でサポートも出来ない 数が増えるとWeb UIでは管理が辛い・修正漏れや設定ミスが出やすい   Condition, NotificationがStreamに紐づく  ConditionによってNotificationを変えられない  条件に応じてアラートの文面・通知先・メンション先・メンションの有無を変えられない (正確にはテンプレートエンジンで頑張ればある程度対応できるかもしれないが、個人的にはテンプレートそのものを切り替えたい)   ConditionやNotificationを複数のStreamで使い回せない   (少なくとも標準機能では)時間帯によってアラートの挙動を変更できない  夜中にはアラートを飛ばさない・メンションをつけないといったことが出来ない 一時的にアラートを止められない   Pluginを使うにしてもどれを使ったら良いか分からない  もっとGraylogがメジャーになれば状況も変わるかもしれない    </description>
@@ -1215,10 +1215,10 @@ if err != nil { return err } ロギングに必要な情報を戻り値のerror�
     
     <item>
       <title>Graylog の Terraform を CI/CDで実行する</title>
-      <link>https://techblog-szksh-cloud.github.io/graylog-terraform-ci/</link>
+      <link>https://techblog.szksh.cloud/graylog-terraform-ci/</link>
       <pubDate>Fri, 07 Dec 2018 08:22:49 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/graylog-terraform-ci/</guid>
+      <guid>https://techblog.szksh.cloud/graylog-terraform-ci/</guid>
       <description>以前 Graylog を Terraform で管理する記事を書きました。
 https://suzuki-shunsuke.github.io/graylog-terraform/
 今回はそれを CI/CD で実行できるようにした話です。
@@ -1231,10 +1231,10 @@ resource &amp;quot;graylog_role&amp;quot; &amp;quot;terraform&amp;quot; { name =
     
     <item>
       <title>molecule でansible の role と playbook をテストする</title>
-      <link>https://techblog-szksh-cloud.github.io/ansible-molecule/</link>
+      <link>https://techblog.szksh.cloud/ansible-molecule/</link>
       <pubDate>Thu, 06 Dec 2018 23:08:04 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/ansible-molecule/</guid>
+      <guid>https://techblog.szksh.cloud/ansible-molecule/</guid>
       <description>ansible 専用の testing ツール molecule を紹介します。 molecule の公式ドキュメント以外の情報は少ないので、参考になれば幸いです。
 以前 Docker を使って ansible のテストをする方法を紹介しました。
 https://suzuki-shunsuke.github.io/test-ansible-on-docker/
@@ -1252,10 +1252,10 @@ $ molecule init scenario -r &amp;lt;role name&amp;gt; こうすると molecule �
     
     <item>
       <title>GraylogをTerraformで管理する</title>
-      <link>https://techblog-szksh-cloud.github.io/graylog-terraform/</link>
+      <link>https://techblog.szksh.cloud/graylog-terraform/</link>
       <pubDate>Sat, 01 Dec 2018 14:56:00 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/graylog-terraform/</guid>
+      <guid>https://techblog.szksh.cloud/graylog-terraform/</guid>
       <description>Graylogのリソースを terraform で管理するために作った terraform provider を紹介します。 Graylogとは何かはこちらを読んでください。
 Graylogには様々なリソースがあります。
  User Role Input Index Set Stream Stream Rule Dashboard Alert etc  これらのリソースはWeb UIから作成したり出来るわけですが、 Web UIでポチポチするのは疲れますし、ソースコードで管理したいものです(Infrastructure as Code)。 また、Web UIからでは細かな権限管理は出来ず(限られた権限管理しか出来ない)、APIを使ってする必要があります。
@@ -1273,10 +1273,10 @@ https://github.com/suzuki-shunsuke/example/tree/master/graylog-terraform
     
     <item>
       <title>Graylog で log を管理する</title>
-      <link>https://techblog-szksh-cloud.github.io/graylog/</link>
+      <link>https://techblog.szksh.cloud/graylog/</link>
       <pubDate>Tue, 27 Nov 2018 16:40:33 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/graylog/</guid>
+      <guid>https://techblog.szksh.cloud/graylog/</guid>
       <description>Java 製の OSS ログ管理システム Graylog の紹介です。 Graylog については幾つかに分けて記事を書きたいと思います。 今回はGraylogの入門的な内容になります。
 なお、本記事中で「現在」「現時点」といった場合、特に断りがなければ記事執筆時点 2018-11-27 を指します。
 Graylog のバージョン 検証に用いるGraylogのバージョンは 2.4.6 になります。
@@ -1293,10 +1293,10 @@ http://docs.graylog.org/en/2.5/pages/users_and_roles/external_auth.html
     
     <item>
       <title>akoi - binary installer</title>
-      <link>https://techblog-szksh-cloud.github.io/akoi/</link>
+      <link>https://techblog.szksh.cloud/akoi/</link>
       <pubDate>Wed, 31 Oct 2018 08:56:04 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/akoi/</guid>
+      <guid>https://techblog.szksh.cloud/akoi/</guid>
       <description>自作のOSS akoi の紹介をします。
  なぜこんなものを作ったのか akoi と ansible を使ってサーバにバイナリをインストールする方法  について主に説明します。
 まとめ  akoi はバイナリファイルのインストーラ 設定ファイルで管理できる 冪等であり、効率よくインストールできる  並列インストール Accept-Ranges による分散ダウンロード   ansibleでサーバにバイナリをインストールするのを補助してくれる  ansible で真面目にバージョンコントロールして効率よくインストールするのは難しい(ほとんどの ansible role は出来ていない)    akoi とは akoi はバイナリファイルのインストーラです。 設定ファイルにインストールするファイルのダウンロードURLとインストール先を記述して管理します。 インストールするバイナリのバージョン管理が可能であり、既にインストールしてあるバージョンへの切り替えはシンボリックを作り直すだけなので一瞬で終わります。無駄にダウンロードをしたりはしません。 複数のバイナリを並列でインストールしたり、Accept-Ranges ヘッダによる分散ダウンロードをサポートしています。
@@ -1313,10 +1313,10 @@ https://github.com/suzuki-shunsuke/akoi/releases からバイナリをダウン�
     
     <item>
       <title>gomic - Goのモックジェネレータ</title>
-      <link>https://techblog-szksh-cloud.github.io/gomic/</link>
+      <link>https://techblog.szksh.cloud/gomic/</link>
       <pubDate>Tue, 30 Oct 2018 08:35:16 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/gomic/</guid>
+      <guid>https://techblog.szksh.cloud/gomic/</guid>
       <description>自作のOSS gomic の紹介をします。
  なぜわざわざこんなものを作ったのか 生成されたモックの簡単な使い方  を主に説明したいと思います。
 まとめ  gomic は Goのinterfaceを実装したモックを生成するCLIツール モックを手で書くのが辛すぎた &amp;amp; 既存ツールで満足できなかったため作った  自動生成できるコードは自動生成すべき   設定ファイルで管理するため、interfaceの更新に合わせてmockの更新が容易 生成されるモックはシンプルなAPIのみ提供するので学習コストが低い  gomic とは gomic は Goのinterfaceを実装したモックを生成するCLIツールです。 これによってモックを使ったテストの作成を効率化します。 単調な作業を自動化し、本来注力すべきことに注力できるようにするためのツールです。
@@ -1331,10 +1331,10 @@ https://github.com/suzuki-shunsuke/gomic/releases からバイナリをダウン
     
     <item>
       <title>Dockerを使ってansible playbookをテストする</title>
-      <link>https://techblog-szksh-cloud.github.io/test-ansible-on-docker/</link>
+      <link>https://techblog.szksh.cloud/test-ansible-on-docker/</link>
       <pubDate>Fri, 12 Oct 2018 21:02:51 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/test-ansible-on-docker/</guid>
+      <guid>https://techblog.szksh.cloud/test-ansible-on-docker/</guid>
       <description>ansible playbookを(VMの代わりに)Dockerコンテナに対して実行すると、効率よく動作確認できるというお話です。 ansible playbookの動作確認のためにvagrantでVMを起動したりしていると動作確認に時間がかかるし、容量も喰います。 Dockerコンテナを使って動作確認できればこれらの問題を解決できます。
 ただし、Dockerコンテナの場合、一部のansible のtaskが失敗することがあるので ansible playbookによってはDockerコンテナではテストにならない場合もあるかと思います。
 サンプル https://github.com/suzuki-shunsuke/example/tree/master/ansible/test-on-docker
@@ -1357,10 +1357,10 @@ https://www.vagrantup.com/docs/docker/basics.html#host-vm
     
     <item>
       <title>Project site を User site に移行しました (GitHub Pages)</title>
-      <link>https://techblog-szksh-cloud.github.io/migrate-to-user-gh-pages/</link>
+      <link>https://techblog.szksh.cloud/migrate-to-user-gh-pages/</link>
       <pubDate>Wed, 10 Oct 2018 21:14:03 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/migrate-to-user-gh-pages/</guid>
+      <guid>https://techblog.szksh.cloud/migrate-to-user-gh-pages/</guid>
       <description>なんとなく試験的に Project site でホスティングしていた GitHub Pages を User site に移行しました。
 source code は source branch にあります。
 CIに関しては Hugo製ブログをGitHub PagesへCIでデプロイ にも書きましたが参考になる部分もあるかもしれません。</description>
@@ -1368,10 +1368,10 @@ CIに関しては Hugo製ブログをGitHub PagesへCIでデプロイ にも書�
     
     <item>
       <title>Hugo製ブログをGitHub PagesへCIでデプロイ</title>
-      <link>https://techblog-szksh-cloud.github.io/how-to-host-hugo-at-github-pages/</link>
+      <link>https://techblog.szksh.cloud/how-to-host-hugo-at-github-pages/</link>
       <pubDate>Mon, 01 Oct 2018 08:04:16 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/how-to-host-hugo-at-github-pages/</guid>
+      <guid>https://techblog.szksh.cloud/how-to-host-hugo-at-github-pages/</guid>
       <description>https://gohugo.io/ と https://pages.github.com/ の話です。 master に push したら GitHub Pages に circle ciでデプロイするようにする方法の紹介です。
 前提  テーマは master branch に含めない(CIでcloneする) buildしたものは gh-pages ブランチにデプロイ  コード .circleci/config.yml
 --- version: 2 jobs: build: docker: - image: suzukishunsuke/hugo-ci:0.1.2 steps: - checkout - run: git config user.name &amp;#34;***&amp;#34; - run: git config user.email &amp;#34;***@example.com&amp;#34; # --depth 1 で高速化 - run: git clone --depth 1 https://github.com/suzuki-shunsuke/tale-hugo themes/tale - run: hugo - run: sh release.sh workflows: version: 2 build: jobs: - build: filters: branches: only: master release.</description>
@@ -1379,10 +1379,10 @@ CIに関しては Hugo製ブログをGitHub PagesへCIでデプロイ にも書�
     
     <item>
       <title>travis ci から circle ci への移行のすすめ</title>
-      <link>https://techblog-szksh-cloud.github.io/migrate-from-travis-ci-to-circle-ci/</link>
+      <link>https://techblog.szksh.cloud/migrate-from-travis-ci-to-circle-ci/</link>
       <pubDate>Mon, 01 Oct 2018 07:23:15 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/migrate-from-travis-ci-to-circle-ci/</guid>
+      <guid>https://techblog.szksh.cloud/migrate-from-travis-ci-to-circle-ci/</guid>
       <description>travis ci と circle ci の無償SaaS 版を比較しています。
 OSS の CI では travis ci がよく使われる印象がありますが、 場合によっては circle CI に移行するとCIの時間が大幅に短くなったりして良いと思います。 ただし、複数バージョンで並列にテストしたい場合、circle ci の無償planだと並列に実行できないため、 travis でやったほうが速いかもしれません。
 Circle CI の良いところ  好きな Docker Image が使える ローカルでテストが出来る Pending 時間が travis ci に比べて短い気がする(主観) private repository の CI も出来る  好きな Docker Image が使えるのが大きいですね。 予め CI に必要なツールをインストールした Image を用意しておくことで大幅に高速化出来ますし、 ツールがインストールできなかったりバージョンが変わってしまったりするトラブルも避けられます。 同じImageを使ってローカルでテストできるのでローカルでの検証もしやすいです。
@@ -1392,10 +1392,10 @@ https://hub.docker.com/r/suzukishunsuke/go-ci/</description>
     
     <item>
       <title>metabase を使って drone の利用状況を可視化する</title>
-      <link>https://techblog-szksh-cloud.github.io/visualize-drone-usage-by-metabase/</link>
+      <link>https://techblog.szksh.cloud/visualize-drone-usage-by-metabase/</link>
       <pubDate>Sun, 30 Sep 2018 22:55:57 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/visualize-drone-usage-by-metabase/</guid>
+      <guid>https://techblog.szksh.cloud/visualize-drone-usage-by-metabase/</guid>
       <description>drone OSS 0.8.5 で検証しています。
 https://drone.io/ と https://www.metabase.com/ の話です。
 drone の利用状況を可視化したかったので、 drone の DB(MySQL) のデータを metabase で可視化しました。
@@ -1405,10 +1405,10 @@ drone の利用状況を可視化したかったので、 drone の DB(MySQL) �
     
     <item>
       <title>drone の管理のために portainer を導入した</title>
-      <link>https://techblog-szksh-cloud.github.io/use-portainer-for-drone-admin/</link>
+      <link>https://techblog.szksh.cloud/use-portainer-for-drone-admin/</link>
       <pubDate>Sun, 30 Sep 2018 21:56:42 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/use-portainer-for-drone-admin/</guid>
+      <guid>https://techblog.szksh.cloud/use-portainer-for-drone-admin/</guid>
       <description>drone OSS 0.8.5 で検証しています。
 https://drone.io/ と https://portainer.io/ の話です。
 drone はかなり安定したシステムだと思いますが、 ユーザーが好きなイメージで好きなコマンドを実行できる以上、トラブルが起こることはあります。
@@ -1425,10 +1425,10 @@ docker API でエラーが出て、コンテナを操作できない これは�
     
     <item>
       <title>drone で非rootユーザーで実行されるImageを使えない</title>
-      <link>https://techblog-szksh-cloud.github.io/drone-cant-use-nonroot-image/</link>
+      <link>https://techblog.szksh.cloud/drone-cant-use-nonroot-image/</link>
       <pubDate>Sun, 30 Sep 2018 21:42:16 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/drone-cant-use-nonroot-image/</guid>
+      <guid>https://techblog.szksh.cloud/drone-cant-use-nonroot-image/</guid>
       <description>drone で非rootユーザーで実行されるDocker Imageを使おうとするとbuildに失敗します。
 /bin/sh: 3: cannot create /root/.netrc: Permission denied これについては drone の開発者が回答しています。
  https://discourse.drone.io/t/solved-netrc-permission-denied/171/2 https://discourse.drone.io/t/solved-netrc-permission-denied/171/4  結論を言うと、 他のイメージを使うか、 rootで実行されるようにイメージを修正する必要がありそうです。</description>
@@ -1436,10 +1436,10 @@ docker API でエラーが出て、コンテナを操作できない これは�
     
     <item>
       <title>drone の step を実行するか否かをタグ名で判定する方法</title>
-      <link>https://techblog-szksh-cloud.github.io/drone-tag-conditional-step/</link>
+      <link>https://techblog.szksh.cloud/drone-tag-conditional-step/</link>
       <pubDate>Sun, 30 Sep 2018 21:30:06 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/drone-tag-conditional-step/</guid>
+      <guid>https://techblog.szksh.cloud/drone-tag-conditional-step/</guid>
       <description>drone 0.8.5 で検証しています。
 tag 名による判定方法はドキュメントには書いてないので書いておきます。
 when: ref: refs/tags/foo-* # タグ名が foo-* ならステップを実行 グロブ * には / は含まれないことには注意してください。
@@ -1449,10 +1449,10 @@ when: ref: refs/tags/foo-* # タグ名が foo-* ならステップを実行 グ�
     
     <item>
       <title>drone の project visibility とは</title>
-      <link>https://techblog-szksh-cloud.github.io/drone-project-visibility/</link>
+      <link>https://techblog.szksh.cloud/drone-project-visibility/</link>
       <pubDate>Sun, 30 Sep 2018 20:32:20 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/drone-project-visibility/</guid>
+      <guid>https://techblog.szksh.cloud/drone-project-visibility/</guid>
       <description>恐らく公式ドキュメントに説明がない気がするので書いておきます。 と言っても、以下のissueに全部書いてありますが。
 https://github.com/drone/drone/issues/2042
 droneの web ui からリポジトリごとに設定できます。 そのリポジトリが誰に見えるかの設定です。
@@ -1461,10 +1461,10 @@ droneの web ui からリポジトリごとに設定できます。 そのリポ
     
     <item>
       <title>drone の matrix build が27個しか実行されない</title>
-      <link>https://techblog-szksh-cloud.github.io/drone-matrix-build-run-only-27/</link>
+      <link>https://techblog.szksh.cloud/drone-matrix-build-run-only-27/</link>
       <pubDate>Sun, 30 Sep 2018 20:26:11 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/drone-matrix-build-run-only-27/</guid>
+      <guid>https://techblog.szksh.cloud/drone-matrix-build-run-only-27/</guid>
       <description>drone 0.8.5 で検証しています。
 matrix: ZOO: - 1 - 2 - 3 - 4 FOO: - 1 - 2 - 3 - 4 - 5 - 6 - 7 - 8 BAR: - 1 - 2 上記の場合、本来 4 * 8 * 2 = 64 個実行されるはずのmatrix builds が27個しか実行されなかったのでソースコードを確認したところ、 27個しか実行されないようにハードコードされていました。
  https://github.com/cncd/pipeline/blob/d4e09fd3021a16408bc3ebdd3500efd28f51e72c/pipeline/frontend/yaml/matrix/matrix.go#L11 https://github.com/cncd/pipeline/blob/d4e09fd3021a16408bc3ebdd3500efd28f51e72c/pipeline/frontend/yaml/matrix/matrix.go#L93  関係ある部分だけ抽出すると以下のような感じになります。
@@ -1473,10 +1473,10 @@ limitAxis = 25 axisList := []Axis{} for p := 0; p &amp;lt; perm; p++ { axisList 
     
     <item>
       <title>drone の build の timeout が変更できない</title>
-      <link>https://techblog-szksh-cloud.github.io/drone-build-timeout/</link>
+      <link>https://techblog.szksh.cloud/drone-build-timeout/</link>
       <pubDate>Sun, 30 Sep 2018 20:16:28 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/drone-build-timeout/</guid>
+      <guid>https://techblog.szksh.cloud/drone-build-timeout/</guid>
       <description>drone 0.8.5 で検証しています。
 drone の build の タイムアウトの設定はリポジトリの settings から変更できそうですが、 実は drone の admin しか変更できません。
 ブラウザのデベロッパーツールを使うと、この Timeout の設定を変更した際に
@@ -1486,10 +1486,10 @@ PATCH /api/repos/:owner/:name にリクエストが飛んでいるので、そ�
     
     <item>
       <title>Drone の build 実行時の認証方法</title>
-      <link>https://techblog-szksh-cloud.github.io/drone-git-authentication/</link>
+      <link>https://techblog.szksh.cloud/drone-git-authentication/</link>
       <pubDate>Sun, 30 Sep 2018 19:44:27 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/drone-git-authentication/</guid>
+      <guid>https://techblog.szksh.cloud/drone-git-authentication/</guid>
       <description>drone の build における GitHub (GitHub前提で書きますが、GitHub以外でも同じだと思います) の認証の話(どうやって認証しているか)について書いておこうと思います。 drone の build は clone step で対象のリポジトリを GitHub から clone してきています。 この際に何かしらの方法で認証しているはずです。
 結論を言うと、
 あるリポジトリAのbuildでは、 リポジトリAの drone連携を有効化したユーザー Bの access token を .netrc に書き込んで認証しています。 よってユーザーBにcloneする権限があるリポジトリはcloneできるし、 ユーザーBにcloneする権限がないリポジトリはcloneできません。 つまり、 誰が連携を有効化するかが重要 になります(これについては後述します)。 なお、drone連携の有効化はそのリポジトリのowner以上でないと出来ません。
@@ -1500,10 +1500,10 @@ drone上でリポジトリの連携を有効化すると、 リポジトリのHo
     
     <item>
       <title>Drone と Circle CI の workspace の扱いの違いについて</title>
-      <link>https://techblog-szksh-cloud.github.io/drone-circle-volume-difference/</link>
+      <link>https://techblog.szksh.cloud/drone-circle-volume-difference/</link>
       <pubDate>Sun, 30 Sep 2018 19:27:59 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/drone-circle-volume-difference/</guid>
+      <guid>https://techblog.szksh.cloud/drone-circle-volume-difference/</guid>
       <description>drone は同じ pipeline の step 間で同じ workspace を docker の volume としてマウントすることで workspace を共有します。
 http://docs.drone.io/workspace/
 circle ci はデフォルトで job 間で workspace を共有しません。 persist_to_workspace を指定することで共有する事ができます。
@@ -1519,20 +1519,20 @@ circle ci の場合は archive, unarchive する分、volume 共有に比べて�
     
     <item>
       <title>drone exec を並列実行した際のdocker network name の衝突について</title>
-      <link>https://techblog-szksh-cloud.github.io/drone-exec-network-name-collision/</link>
+      <link>https://techblog.szksh.cloud/drone-exec-network-name-collision/</link>
       <pubDate>Sun, 30 Sep 2018 18:52:34 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/drone-exec-network-name-collision/</guid>
+      <guid>https://techblog.szksh.cloud/drone-exec-network-name-collision/</guid>
       <description>drone exec を並列実行すると docker network name が衝突することがあります。
 $ drone exec --local &amp;amp; drone exec --local [1] 42934 2018/06/06 01:58:12 Error response from daemon: network drone_default is ambiguous (4 matches found on name) 2018/06/06 01:58:12 Error response from daemon: Conflict. The container name &amp;quot;/drone_step_0&amp;quot; is already in use by container &amp;quot;464a29b0726d6ff1a352d81df9c837330501085be550bb16abac3d338dfad887&amp;quot;. You have to remove (or rename) that container to be able to reuse that name. [1] + exit 1 drone exec --local drone は pipeline 実行時に network を作成し、pipeline が終了すると network を削除します。</description>
     </item>
     
     <item>
       <title>go-gencfg - viperの個々のアプリケーション用のラッパーのコードジェネレータ</title>
-      <link>https://techblog-szksh-cloud.github.io/go-gencfg/</link>
+      <link>https://techblog.szksh.cloud/go-gencfg/</link>
       <pubDate>Thu, 06 Sep 2018 23:59:35 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/go-gencfg/</guid>
+      <guid>https://techblog.szksh.cloud/go-gencfg/</guid>
       <description>自作のOSS go-gencfg を紹介します。 Golang で viper という汎用的な設定管理ライブラリがありますが、 特定のアプリケーション用に viper のラッパーを生成するCLIツールです。
 使い方や開発の背景を書こうかと思いましたが、だいたい README に書いてあるので そちらを御覧ください。
 https://github.com/suzuki-shunsuke/go-gencfg/blob/master/README.md</description>
@@ -1540,10 +1540,10 @@ https://github.com/suzuki-shunsuke/go-gencfg/blob/master/README.md</description>
     
     <item>
       <title>About</title>
-      <link>https://techblog-szksh-cloud.github.io/about/</link>
+      <link>https://techblog.szksh.cloud/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/about/</guid>
+      <guid>https://techblog.szksh.cloud/about/</guid>
       <description> https://github.com/suzuki-shunsuke/profile  </description>
     </item>
     

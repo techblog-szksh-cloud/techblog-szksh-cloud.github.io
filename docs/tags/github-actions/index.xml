@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>github-actions on melody</title>
-    <link>https://techblog-szksh-cloud.github.io/tags/github-actions/</link>
+    <link>https://techblog.szksh.cloud/tags/github-actions/</link>
     <description>Recent content in github-actions on melody</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>jp</language>
-    <lastBuildDate>Sun, 25 Apr 2021 16:09:47 +0900</lastBuildDate><atom:link href="https://techblog-szksh-cloud.github.io/tags/github-actions/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 25 Apr 2021 16:09:47 +0900</lastBuildDate><atom:link href="https://techblog.szksh.cloud/tags/github-actions/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>PR で変更されたファイルや PR Label に応じて matrix build を実行する Github Actions の Workflow のサンプルを書いてみた</title>
-      <link>https://techblog-szksh-cloud.github.io/example-github-actions-dynamic-matrix/</link>
+      <link>https://techblog.szksh.cloud/example-github-actions-dynamic-matrix/</link>
       <pubDate>Sun, 25 Apr 2021 16:09:47 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/example-github-actions-dynamic-matrix/</guid>
+      <guid>https://techblog.szksh.cloud/example-github-actions-dynamic-matrix/</guid>
       <description>GitHub Actions の勉強がてら Pull Request (以下 PR) で変更されたファイルや PR Label に応じて Matrix build を実行する Github Actions の Workflow のサンプルを書いてみました。
 https://github.com/suzuki-shunsuke/example-github-actions-dynamic-matrix
 Monorepo で同じ Job を PR で変更されたものに対してだけ実行したい、 けど workflow をサービスごとに定義するのはめんどいみたいな場合に使えるかもしれません。

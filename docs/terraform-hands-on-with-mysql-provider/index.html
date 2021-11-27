@@ -8,7 +8,7 @@
 
 
 
-<link rel="canonical" href="https://techblog-szksh-cloud.github.io/terraform-hands-on-with-mysql-provider/">
+<link rel="canonical" href="https://techblog.szksh.cloud/terraform-hands-on-with-mysql-provider/">
 
 
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
@@ -20,18 +20,18 @@
 
 <meta property="og:title" content="Terraform ハンズオン with MySQL Provider - melody">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://techblog-szksh-cloud.github.io/terraform-hands-on-with-mysql-provider/">
-<meta property="og:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+<meta property="og:url" content="https://techblog.szksh.cloud/terraform-hands-on-with-mysql-provider/">
+<meta property="og:image" content="https://techblog.szksh.cloud/images/default.png">
 <meta property="og:site_name" content="melody">
 <meta property="og:description" content="Terraform を勉強するには実際に使ってみるのが一番手っ取り早いですが、 では手頃な題材はあるかと言われると少し難しいです。公式の Getting Started では AWS が使われていますが、 AWS のアカウントやクレデンシャルが必要ですしお金もかかってしまいます(無料枠はありますが)。 もう少し手軽なものが欲しいところです。そこで公式の Provider で丁度いいものはないか探したところ、 MySQL Provider が良さそうでした。 MySQL のユーザーや Database を Terraform で管理したいとは自分は思いませんが、 Terraform の入門で遊ぶにはちょうどよいでしょう。ちなみに公式の Provider のリストはこちらです。 https://github.com/terraform-providers https://www.terraform.io/docs/providers/index.html  また、 Terraform に関しては Terraform 入門 も参照してください。今回の作業用に適当にディレクトリを作成し、そこで作業しましょう。以降、コマンドの実行結果は一部省略することがあります。$ mkdir workspace $ cd workspace Terraform のバージョンと tfenv Terraform を複数人で使う場合、 Terraform のバージョンを揃えるのが重要です。 理由の一つとして、 Terraform の State は State を作成した Terraform のバージョンを記録しており、それより古いバージョンの Terraform で terraform plan などを実行すると失敗するようになっていることが挙げられます(この点については後でも触れます)。 そういう意味では、 tfenv によってバージョン管理するのが良いです。">
 <meta property="og:locale" content="ja_JP">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="melody">
-<meta name="twitter:url" content="https://techblog-szksh-cloud.github.io/terraform-hands-on-with-mysql-provider/">
+<meta name="twitter:url" content="https://techblog.szksh.cloud/terraform-hands-on-with-mysql-provider/">
 <meta name="twitter:title" content="Terraform ハンズオン with MySQL Provider - melody">
 <meta name="twitter:description" content="Terraform を勉強するには実際に使ってみるのが一番手っ取り早いですが、 では手頃な題材はあるかと言われると少し難しいです。公式の Getting Started では AWS が使われていますが、 AWS のアカウントやクレデンシャルが必要ですしお金もかかってしまいます(無料枠はありますが)。 もう少し手軽なものが欲しいところです。そこで公式の Provider で丁度いいものはないか探したところ、 MySQL Provider が良さそうでした。 MySQL のユーザーや Database を Terraform で管理したいとは自分は思いませんが、 Terraform の入門で遊ぶにはちょうどよいでしょう。ちなみに公式の Provider のリストはこちらです。 https://github.com/terraform-providers https://www.terraform.io/docs/providers/index.html  また、 Terraform に関しては Terraform 入門 も参照してください。今回の作業用に適当にディレクトリを作成し、そこで作業しましょう。以降、コマンドの実行結果は一部省略することがあります。$ mkdir workspace $ cd workspace Terraform のバージョンと tfenv Terraform を複数人で使う場合、 Terraform のバージョンを揃えるのが重要です。 理由の一つとして、 Terraform の State は State を作成した Terraform のバージョンを記録しており、それより古いバージョンの Terraform で terraform plan などを実行すると失敗するようになっていることが挙げられます(この点については後でも触れます)。 そういう意味では、 tfenv によってバージョン管理するのが良いです。">
-<meta name="twitter:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+<meta name="twitter:image" content="https://techblog.szksh.cloud/images/default.png">
 
 
 <script type="application/ld+json">
@@ -40,12 +40,12 @@
     "@type": "NewsArticle",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id":"https:\/\/techblog-szksh-cloud.github.io\/"
+      "@id":"https:\/\/techblog.szksh.cloud\/"
     },
     "headline": "Terraform ハンズオン with MySQL Provider - melody",
     "image": {
       "@type": "ImageObject",
-      "url": "https:\/\/techblog-szksh-cloud.github.io\/images\/default.png",
+      "url": "https:\/\/techblog.szksh.cloud\/images\/default.png",
       "height": 800,
       "width": 800
     },
@@ -60,7 +60,7 @@
       "name": "melody",
       "logo": {
         "@type": "ImageObject",
-        "url": "https:\/\/techblog-szksh-cloud.github.io\/images/logo.png",
+        "url": "https:\/\/techblog.szksh.cloud\/images/logo.png",
         "width": 600,
         "height": 60
       }
@@ -70,7 +70,7 @@
 </script>
 
 
-    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    <link href="https://techblog.szksh.cloud/css/styles.css" rel="stylesheet">
     
 
   </head>
@@ -90,7 +90,7 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+            <a class="navbar-brand" href="https://techblog.szksh.cloud/">melody</a>
           </div>
 
           
@@ -107,7 +107,7 @@
 
     <nav class="p-crumb">
       <ol class="breadcrumb">
-        <li><a href="https://techblog-szksh-cloud.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        <li><a href="https://techblog.szksh.cloud/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
         
         <li class="active">Terraform ハンズオン with MySQL Provider</li>
       </ol>
@@ -128,7 +128,7 @@
       <div>
         <ul class="p-terms">
           
-          <li><a href="https://techblog-szksh-cloud.github.io/tags/terraform/">terraform</a></li>
+          <li><a href="https://techblog.szksh.cloud/tags/terraform/">terraform</a></li>
           
         </ul>
       </div>
@@ -1256,7 +1256,7 @@ Destroy complete! Resources: 2 destroyed.
       <div>
         <ul class="p-terms">
           
-          <li><a href="https://techblog-szksh-cloud.github.io/tags/terraform/">terraform</a></li>
+          <li><a href="https://techblog.szksh.cloud/tags/terraform/">terraform</a></li>
           
         </ul>
       </div>
@@ -1280,25 +1280,25 @@ Destroy complete! Resources: 2 destroyed.
     </div>
     <div class="list-group">
       
-      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      <a href="https://techblog.szksh.cloud/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      <a href="https://techblog.szksh.cloud/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      <a href="https://techblog.szksh.cloud/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      <a href="https://techblog.szksh.cloud/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      <a href="https://techblog.szksh.cloud/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      <a href="https://techblog.szksh.cloud/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      <a href="https://techblog.szksh.cloud/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      <a href="https://techblog.szksh.cloud/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      <a href="https://techblog.szksh.cloud/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      <a href="https://techblog.szksh.cloud/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
       
     </div>
   </section>
@@ -1309,25 +1309,25 @@ Destroy complete! Resources: 2 destroyed.
     </div>
     <div class="list-group">
       
-      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      <a href="https://techblog.szksh.cloud/tags/oss" class="list-group-item">oss (42)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      <a href="https://techblog.szksh.cloud/tags/job" class="list-group-item">job (18)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      <a href="https://techblog.szksh.cloud/tags/drone" class="list-group-item">drone (14)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      <a href="https://techblog.szksh.cloud/tags/terraform" class="list-group-item">terraform (13)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      <a href="https://techblog.szksh.cloud/tags/buildflow" class="list-group-item">buildflow (12)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      <a href="https://techblog.szksh.cloud/tags/golang" class="list-group-item">golang (6)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      <a href="https://techblog.szksh.cloud/tags/aqua" class="list-group-item">aqua (5)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      <a href="https://techblog.szksh.cloud/tags/circleci" class="list-group-item">circleci (5)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      <a href="https://techblog.szksh.cloud/tags/graylog" class="list-group-item">graylog (5)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      <a href="https://techblog.szksh.cloud/tags/ansible" class="list-group-item">ansible (3)</a>
       
     </div>
   </section>
@@ -1338,25 +1338,25 @@ Destroy complete! Resources: 2 destroyed.
     </div>
     <div class="list-group">
       
-      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/11" class="list-group-item">2021/11 (1)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/10" class="list-group-item">2021/10 (2)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/09" class="list-group-item">2021/09 (3)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/08" class="list-group-item">2021/08 (3)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/07" class="list-group-item">2021/07 (3)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/06" class="list-group-item">2021/06 (1)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/05" class="list-group-item">2021/05 (1)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/04" class="list-group-item">2021/04 (4)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/03" class="list-group-item">2021/03 (1)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/02" class="list-group-item">2021/02 (3)</a>
       
     </div>
   </section>

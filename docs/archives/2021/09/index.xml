@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>2021/09 on melody</title>
-    <link>https://techblog-szksh-cloud.github.io/archives/2021/09/</link>
+    <link>https://techblog.szksh.cloud/archives/2021/09/</link>
     <description>Recent content in 2021/09 on melody</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>jp</language><atom:link href="https://techblog-szksh-cloud.github.io/archives/2021/09/index.xml" rel="self" type="application/rss+xml" />
+    <language>jp</language><atom:link href="https://techblog.szksh.cloud/archives/2021/09/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>aqua で組織・チームのツール群を管理</title>
-      <link>https://techblog-szksh-cloud.github.io/aqua-global-configs/</link>
+      <link>https://techblog.szksh.cloud/aqua-global-configs/</link>
       <pubDate>Sat, 25 Sep 2021 12:01:56 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/aqua-global-configs/</guid>
+      <guid>https://techblog.szksh.cloud/aqua-global-configs/</guid>
       <description>aqua v0.7.3 をリリースし、 複数の global configuration をサポートしました。
 個人で使う分にはあまり嬉しい機能でもないかもしれませんが、 会社・組織・チームといった集団(以下組織で統一)で設定を共有するには便利な機能だと思います。
 これまで aqua では 2 つの設定ファイルをサポートしていました。
@@ -27,10 +27,10 @@
     
     <item>
       <title>aqua の設定ファイルをインタラクティブに生成する generate コマンド</title>
-      <link>https://techblog-szksh-cloud.github.io/aqua-generate/</link>
+      <link>https://techblog.szksh.cloud/aqua-generate/</link>
       <pubDate>Sun, 05 Sep 2021 10:17:39 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/aqua-generate/</guid>
+      <guid>https://techblog.szksh.cloud/aqua-generate/</guid>
       <description>aqua - CLI ツールのバージョン管理 aqua v0.1.0 から v0.5.0 での変更点  aqua v0.5.1 で追加された generate というサブコマンドを紹介します。
 aqua では Registry を活用することで設定を記述する手間を省くことができますが、 Registry を活用するには、インストールしたいツールが Registry で定義されているか、されているとしたら name はなにか調べる必要があります。 Registry で定義されているのに見逃してしまうこともあるでしょう。
 また、 aqua でツールをインストールするには version を指定する必要がありますが、多くの場合はとりあえず最新バージョンはなにかを調べることになるでしょう。
@@ -40,10 +40,10 @@ aqua では Registry を活用することで設定を記述する手間を省�
     
     <item>
       <title>aqua v0.1.0 から v0.5.0 での変更点</title>
-      <link>https://techblog-szksh-cloud.github.io/aqua-v0.5/</link>
+      <link>https://techblog.szksh.cloud/aqua-v0.5/</link>
       <pubDate>Sat, 04 Sep 2021 11:58:42 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/aqua-v0.5/</guid>
+      <guid>https://techblog.szksh.cloud/aqua-v0.5/</guid>
       <description>先日 aqua v0.1.0 をリリースした記事を書いたばかりですが、 そこから更に開発を続けて v0.5.0 をリリースしたので、変更点を紹介します。
 基本的に Release Note に書いてあるとおりです。
  PATH を project (aqua.yaml) 毎に設定する必要がなくなりました  ~/.aqua/bin を PATH に追加すればよくなりました direnv などを使って環境変数を追加する必要がなくなりました   install コマンドに --test option を追加し、 file.src の設定が正しいかテストできるようになりました  CI で aqua の設定をテストするのに便利   GitHub Release だけでなく、任意の URL から tool のダウンロード・インストールができるようになりました  Go や helm, Hashicorp の product のような公式サイトからダウンロードするタイプのツールも install できるようになりました   Breaking Change: inline_registry の設定の形式を変更しました aqua の設定の再利用性を高める Registry という仕組みを導入しました  standard Registry を公開しました https://github.</description>

@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>rancher on melody</title>
-    <link>https://techblog-szksh-cloud.github.io/tags/rancher/</link>
+    <link>https://techblog.szksh.cloud/tags/rancher/</link>
     <description>Recent content in rancher on melody</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>jp</language>
-    <lastBuildDate>Sat, 16 Mar 2019 21:17:05 +0900</lastBuildDate><atom:link href="https://techblog-szksh-cloud.github.io/tags/rancher/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 16 Mar 2019 21:17:05 +0900</lastBuildDate><atom:link href="https://techblog.szksh.cloud/tags/rancher/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Rancherでusername が重複してログインできなくなった場合の解消方法</title>
-      <link>https://techblog-szksh-cloud.github.io/rancher-duplicated-user-name/</link>
+      <link>https://techblog.szksh.cloud/rancher-duplicated-user-name/</link>
       <pubDate>Sat, 16 Mar 2019 21:17:05 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/rancher-duplicated-user-name/</guid>
+      <guid>https://techblog.szksh.cloud/rancher-duplicated-user-name/</guid>
       <description>先日起こった Rancher のトラブルの解消方法について紹介したいと思います。 Rancher のバージョンは v2.1.6 です。 admin ユーザーでログインしようとしたところ、エラーが起こりました。 最初パスワードが間違っているのかと思い、パスワードリセットしたものの、解消しませんでした。
 https://rancher.com/docs/rancher/v2.x/en/faq/technical/#how-can-i-reset-the-admin-password
 エラーメッセージをよく見ると 500 エラーでした。そこで rancher のコンテナのログを見ました。

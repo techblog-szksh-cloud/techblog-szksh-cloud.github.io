@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>2019/04 on melody</title>
-    <link>https://techblog-szksh-cloud.github.io/archives/2019/04/</link>
+    <link>https://techblog.szksh.cloud/archives/2019/04/</link>
     <description>Recent content in 2019/04 on melody</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>jp</language><atom:link href="https://techblog-szksh-cloud.github.io/archives/2019/04/index.xml" rel="self" type="application/rss+xml" />
+    <language>jp</language><atom:link href="https://techblog.szksh.cloud/archives/2019/04/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>durl - 壊れたURLを検知するCLIツール</title>
-      <link>https://techblog-szksh-cloud.github.io/durl/</link>
+      <link>https://techblog.szksh.cloud/durl/</link>
       <pubDate>Sun, 28 Apr 2019 21:25:00 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/durl/</guid>
+      <guid>https://techblog.szksh.cloud/durl/</guid>
       <description>結構前に開発したツールですが、まだ記事にしてなかったので紹介します。
 https://github.com/suzuki-shunsuke/durl
 ファイル中の URL が壊れていないかチェックするツールです。 ファイル中の URL を抽出し、HTTPリクエストを投げてステータスコードが 2xx でないものがあった場合、異常終了します。

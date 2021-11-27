@@ -8,7 +8,7 @@
 
 
 
-<link rel="canonical" href="https://techblog-szksh-cloud.github.io/risk-of-drone-extension/">
+<link rel="canonical" href="https://techblog.szksh.cloud/risk-of-drone-extension/">
 
 
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
@@ -20,18 +20,18 @@
 
 <meta property="og:title" content="Drone Extension のリスク - melody">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://techblog-szksh-cloud.github.io/risk-of-drone-extension/">
-<meta property="og:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+<meta property="og:url" content="https://techblog.szksh.cloud/risk-of-drone-extension/">
+<meta property="og:image" content="https://techblog.szksh.cloud/images/default.png">
 <meta property="og:site_name" content="melody">
 <meta property="og:description" content="Drone v1 では Extension という仕組みが導入されました。これは文字通り Drone を拡張する仕組みで、仕様に従って作れば自由に Drone を拡張できます。https://docs.drone.io/extensions/overview/全てを本体でやるのではなく、拡張する仕組みを提供し、あとはコミュニティに委ねるというのが Drone の一つの方針とも言えると思います。Extension は非常に面白い仕組みだと思いますが、 Drone を運用する立場からすると中々頭が痛い仕組みな気がしてて、 自分は導入に対し慎重な立場です。 単なる杞憂で済めば良いのですが、その懸念について書きたいと思います。根本は Drone Extension 固有の問題と言うより、一般的な拡張機構全般に言えることだと思います。 ただし、 Drone Extension は全てのビルドに影響を及ぼす、 CI/CDシステムが動かなくなるとサービスのリリースに影響を及ぼしかねないということからよりリスクの高いものになっています。 本体の drone/drone と比べ、開発は活発ではなく、サードパーティの extension はいつ開発が止まってもおかしくない 本体の drone/drone と比べ、ドキュメントやサポート体制が貧弱だと思われる(drone に関しては https://discourse.drone.io でサポートされているが、サードパーティの extension では難しい) ユーザーからの extension に関する要望を受け付けるようになると、管理者の負担になる extension のクォリティはマチマチであり、例外処理が甘かったり、ちゃんとエラーを吐かないものもあるだろう トラブルシューティングが難しいと思われる extension の仕組み上、extension を必要としないビルドにも影響を及ぼしうる 一度追加し、依存しだすと消すのが難しくなる extension が落ちると全 build に影響するので、耐障害性(冗長化)、モニタリングが必要 etc  勿論、上記の懸念点は Extension によって提供される機能とトレードオフであり、 Extension の導入方針は Drone が運用される環境によって大きく依存すると思います。例えば全員が顔見知りのような小さな組織で特定のサービス専用に Drone を使っていてかつ Drone の運用体制(人員)に十分余裕があるなら 積極的に Extension を導入しても問題ないかもしれません。">
 <meta property="og:locale" content="ja_JP">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="melody">
-<meta name="twitter:url" content="https://techblog-szksh-cloud.github.io/risk-of-drone-extension/">
+<meta name="twitter:url" content="https://techblog.szksh.cloud/risk-of-drone-extension/">
 <meta name="twitter:title" content="Drone Extension のリスク - melody">
 <meta name="twitter:description" content="Drone v1 では Extension という仕組みが導入されました。これは文字通り Drone を拡張する仕組みで、仕様に従って作れば自由に Drone を拡張できます。https://docs.drone.io/extensions/overview/全てを本体でやるのではなく、拡張する仕組みを提供し、あとはコミュニティに委ねるというのが Drone の一つの方針とも言えると思います。Extension は非常に面白い仕組みだと思いますが、 Drone を運用する立場からすると中々頭が痛い仕組みな気がしてて、 自分は導入に対し慎重な立場です。 単なる杞憂で済めば良いのですが、その懸念について書きたいと思います。根本は Drone Extension 固有の問題と言うより、一般的な拡張機構全般に言えることだと思います。 ただし、 Drone Extension は全てのビルドに影響を及ぼす、 CI/CDシステムが動かなくなるとサービスのリリースに影響を及ぼしかねないということからよりリスクの高いものになっています。 本体の drone/drone と比べ、開発は活発ではなく、サードパーティの extension はいつ開発が止まってもおかしくない 本体の drone/drone と比べ、ドキュメントやサポート体制が貧弱だと思われる(drone に関しては https://discourse.drone.io でサポートされているが、サードパーティの extension では難しい) ユーザーからの extension に関する要望を受け付けるようになると、管理者の負担になる extension のクォリティはマチマチであり、例外処理が甘かったり、ちゃんとエラーを吐かないものもあるだろう トラブルシューティングが難しいと思われる extension の仕組み上、extension を必要としないビルドにも影響を及ぼしうる 一度追加し、依存しだすと消すのが難しくなる extension が落ちると全 build に影響するので、耐障害性(冗長化)、モニタリングが必要 etc  勿論、上記の懸念点は Extension によって提供される機能とトレードオフであり、 Extension の導入方針は Drone が運用される環境によって大きく依存すると思います。例えば全員が顔見知りのような小さな組織で特定のサービス専用に Drone を使っていてかつ Drone の運用体制(人員)に十分余裕があるなら 積極的に Extension を導入しても問題ないかもしれません。">
-<meta name="twitter:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+<meta name="twitter:image" content="https://techblog.szksh.cloud/images/default.png">
 
 
 <script type="application/ld+json">
@@ -40,12 +40,12 @@
     "@type": "NewsArticle",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id":"https:\/\/techblog-szksh-cloud.github.io\/"
+      "@id":"https:\/\/techblog.szksh.cloud\/"
     },
     "headline": "Drone Extension のリスク - melody",
     "image": {
       "@type": "ImageObject",
-      "url": "https:\/\/techblog-szksh-cloud.github.io\/images\/default.png",
+      "url": "https:\/\/techblog.szksh.cloud\/images\/default.png",
       "height": 800,
       "width": 800
     },
@@ -60,7 +60,7 @@
       "name": "melody",
       "logo": {
         "@type": "ImageObject",
-        "url": "https:\/\/techblog-szksh-cloud.github.io\/images/logo.png",
+        "url": "https:\/\/techblog.szksh.cloud\/images/logo.png",
         "width": 600,
         "height": 60
       }
@@ -70,7 +70,7 @@
 </script>
 
 
-    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    <link href="https://techblog.szksh.cloud/css/styles.css" rel="stylesheet">
     
 
   </head>
@@ -90,7 +90,7 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+            <a class="navbar-brand" href="https://techblog.szksh.cloud/">melody</a>
           </div>
 
           
@@ -107,7 +107,7 @@
 
     <nav class="p-crumb">
       <ol class="breadcrumb">
-        <li><a href="https://techblog-szksh-cloud.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        <li><a href="https://techblog.szksh.cloud/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
         
         <li class="active">Drone Extension のリスク</li>
       </ol>
@@ -128,7 +128,7 @@
       <div>
         <ul class="p-terms">
           
-          <li><a href="https://techblog-szksh-cloud.github.io/tags/drone/">drone</a></li>
+          <li><a href="https://techblog.szksh.cloud/tags/drone/">drone</a></li>
           
         </ul>
       </div>
@@ -176,7 +176,7 @@ Extension の導入方針は Drone が運用される環境によって大きく
       <div>
         <ul class="p-terms">
           
-          <li><a href="https://techblog-szksh-cloud.github.io/tags/drone/">drone</a></li>
+          <li><a href="https://techblog.szksh.cloud/tags/drone/">drone</a></li>
           
         </ul>
       </div>
@@ -200,25 +200,25 @@ Extension の導入方針は Drone が運用される環境によって大きく
     </div>
     <div class="list-group">
       
-      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      <a href="https://techblog.szksh.cloud/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      <a href="https://techblog.szksh.cloud/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      <a href="https://techblog.szksh.cloud/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      <a href="https://techblog.szksh.cloud/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      <a href="https://techblog.szksh.cloud/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      <a href="https://techblog.szksh.cloud/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      <a href="https://techblog.szksh.cloud/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      <a href="https://techblog.szksh.cloud/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      <a href="https://techblog.szksh.cloud/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      <a href="https://techblog.szksh.cloud/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
       
     </div>
   </section>
@@ -229,25 +229,25 @@ Extension の導入方針は Drone が運用される環境によって大きく
     </div>
     <div class="list-group">
       
-      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      <a href="https://techblog.szksh.cloud/tags/oss" class="list-group-item">oss (42)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      <a href="https://techblog.szksh.cloud/tags/job" class="list-group-item">job (18)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      <a href="https://techblog.szksh.cloud/tags/drone" class="list-group-item">drone (14)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      <a href="https://techblog.szksh.cloud/tags/terraform" class="list-group-item">terraform (13)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      <a href="https://techblog.szksh.cloud/tags/buildflow" class="list-group-item">buildflow (12)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      <a href="https://techblog.szksh.cloud/tags/golang" class="list-group-item">golang (6)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      <a href="https://techblog.szksh.cloud/tags/aqua" class="list-group-item">aqua (5)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      <a href="https://techblog.szksh.cloud/tags/circleci" class="list-group-item">circleci (5)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      <a href="https://techblog.szksh.cloud/tags/graylog" class="list-group-item">graylog (5)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      <a href="https://techblog.szksh.cloud/tags/ansible" class="list-group-item">ansible (3)</a>
       
     </div>
   </section>
@@ -258,25 +258,25 @@ Extension の導入方針は Drone が運用される環境によって大きく
     </div>
     <div class="list-group">
       
-      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/11" class="list-group-item">2021/11 (1)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/10" class="list-group-item">2021/10 (2)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/09" class="list-group-item">2021/09 (3)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/08" class="list-group-item">2021/08 (3)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/07" class="list-group-item">2021/07 (3)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/06" class="list-group-item">2021/06 (1)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/05" class="list-group-item">2021/05 (1)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/04" class="list-group-item">2021/04 (4)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/03" class="list-group-item">2021/03 (1)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/02" class="list-group-item">2021/02 (3)</a>
       
     </div>
   </section>

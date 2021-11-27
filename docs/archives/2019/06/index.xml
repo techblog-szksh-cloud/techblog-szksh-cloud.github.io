@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>2019/06 on melody</title>
-    <link>https://techblog-szksh-cloud.github.io/archives/2019/06/</link>
+    <link>https://techblog.szksh.cloud/archives/2019/06/</link>
     <description>Recent content in 2019/06 on melody</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>jp</language><atom:link href="https://techblog-szksh-cloud.github.io/archives/2019/06/index.xml" rel="self" type="application/rss+xml" />
+    <language>jp</language><atom:link href="https://techblog.szksh.cloud/archives/2019/06/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Drone v0.8 の .drone.yml を v1 の .drone.jsonnet に変換するツールを作った</title>
-      <link>https://techblog-szksh-cloud.github.io/drone-jsonnet-generator/</link>
+      <link>https://techblog.szksh.cloud/drone-jsonnet-generator/</link>
       <pubDate>Wed, 12 Jun 2019 07:40:45 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/drone-jsonnet-generator/</guid>
+      <guid>https://techblog.szksh.cloud/drone-jsonnet-generator/</guid>
       <description>Drone v0.8 の .drone.yml を v1 の .drone.jsonnet に変換するツールを作ったので紹介します。
 https://github.com/suzuki-shunsuke/drone-jsonnet-generator
 背景 https://docs.drone.io/user-guide/pipeline/migrating/
@@ -25,10 +25,10 @@ https://docs.drone.io/user-guide/pipeline/migrating/
     
     <item>
       <title>.drone.jsonnet と .drone.yml を比較する Drone plugin を作った</title>
-      <link>https://techblog-szksh-cloud.github.io/drone-plugin-jsonnet-check/</link>
+      <link>https://techblog.szksh.cloud/drone-plugin-jsonnet-check/</link>
       <pubDate>Sat, 01 Jun 2019 08:34:10 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/drone-plugin-jsonnet-check/</guid>
+      <guid>https://techblog.szksh.cloud/drone-plugin-jsonnet-check/</guid>
       <description>久しぶりに Drone plugin を作ったので紹介します。
 https://www.github.com/suzuki-shunsuke/drone-plugin-jsonnet-check
 .drone.jsonnet から .drone.yml を生成していて、両方を Git で管理している場合に、 .drone.jsonnet と .drone.yml の状態が一致しているかテストするための plugin です。

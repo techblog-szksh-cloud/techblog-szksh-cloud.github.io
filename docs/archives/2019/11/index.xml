@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>2019/11 on melody</title>
-    <link>https://techblog-szksh-cloud.github.io/archives/2019/11/</link>
+    <link>https://techblog.szksh.cloud/archives/2019/11/</link>
     <description>Recent content in 2019/11 on melody</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>jp</language><atom:link href="https://techblog-szksh-cloud.github.io/archives/2019/11/index.xml" rel="self" type="application/rss+xml" />
+    <language>jp</language><atom:link href="https://techblog.szksh.cloud/archives/2019/11/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>dd-time - コマンドの実行時間を Datadog に送るツール</title>
-      <link>https://techblog-szksh-cloud.github.io/dd-time/</link>
+      <link>https://techblog.szksh.cloud/dd-time/</link>
       <pubDate>Sat, 30 Nov 2019 13:54:47 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/dd-time/</guid>
+      <guid>https://techblog.szksh.cloud/dd-time/</guid>
       <description>コマンドの実行時間を Datadog に送る dd-time というツールを作りました。
 このツールは circle-dd-bench にインスパイアされていますが、 CircleCI 以外でも需要あると思ったり、他にも幾つか改善したい部分があったので自作することにしました。
 circle-dd-bench については circle-dd-bench の作者が書いたブログ https://blog.yuyat.jp/post/circle-dd-bench/ も参考にしてください。
@@ -24,10 +24,10 @@ CircleCI で実行した場合、 CircleCI のビルドイン環境変数が tag
     
     <item>
       <title>モブレビューやっていきたい</title>
-      <link>https://techblog-szksh-cloud.github.io/mobreview/</link>
+      <link>https://techblog.szksh.cloud/mobreview/</link>
       <pubDate>Sun, 10 Nov 2019 18:31:05 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/mobreview/</guid>
+      <guid>https://techblog.szksh.cloud/mobreview/</guid>
       <description>最近モブレビュー取り入れたいと感じていて、なんで取り入れたいかなどについて書いてみました。 モブレビュー自体まだ 2, 3 回しかやってないので説得力にかけますが、ご容赦ください。
 想定  チームは 6 人以下 Pull Request (以下 PR) をマージするには必ず他の誰かが approve しないといけない  目的  チーム内の情報共有  属人化の解消 退職や異動などによる情報の喪失(誰も分からない状態)を防ぐ チーム外の人とのコミュニケーションにも活用できる   レビュー待ちの短縮 レビューの品質の改善 仕事を評価してもらうことで承認欲求を満たす オンボーディングの改善  レビューを通じて必要な知識を吸収してもらう オンボーディングに限ったことではないが、オンボーディングにも有効ではないか   最後までやりきる  箇条書した内容を補足します。
 情報共有 属人化の解消は結構重要だと自分は思っていて、特定の人じゃないと出来ないこと、わからないことというのは ボトルネックや技術的負債だったり、障害対応時に致命的になりかねません(深夜に障害が起こってAさんに聞かないとわからないのに、Aさんと連絡が取れないとか最悪)。 チーム全員とはいかなくても 3 人ぐらいは出来る・分かってる必要があるかなと思います。
@@ -41,10 +41,10 @@ CircleCI で実行した場合、 CircleCI のビルドイン環境変数が tag
     
     <item>
       <title>go-timeout - command の timeout</title>
-      <link>https://techblog-szksh-cloud.github.io/go-timeout/</link>
+      <link>https://techblog.szksh.cloud/go-timeout/</link>
       <pubDate>Mon, 04 Nov 2019 10:00:21 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/go-timeout/</guid>
+      <guid>https://techblog.szksh.cloud/go-timeout/</guid>
       <description>作ったのは 2ヶ月くらい前の話ですが、 Go の command の timeout を実装するためのライブラリを作ったので紹介します。
 https://github.com/suzuki-shunsuke/go-timeout
 基本的には https://github.com/Songmu/timeout をオススメしますが、これだと上手くいかないパターンがあったので自作しました。

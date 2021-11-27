@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>2018/12 on melody</title>
-    <link>https://techblog-szksh-cloud.github.io/archives/2018/12/</link>
+    <link>https://techblog.szksh.cloud/archives/2018/12/</link>
     <description>Recent content in 2018/12 on melody</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>jp</language><atom:link href="https://techblog-szksh-cloud.github.io/archives/2018/12/index.xml" rel="self" type="application/rss+xml" />
+    <language>jp</language><atom:link href="https://techblog.szksh.cloud/archives/2018/12/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Golangにおけるエラーハンドリングとロギングのプラクティス</title>
-      <link>https://techblog-szksh-cloud.github.io/golang-logging-error-handling-practice/</link>
+      <link>https://techblog.szksh.cloud/golang-logging-error-handling-practice/</link>
       <pubDate>Tue, 25 Dec 2018 21:51:41 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/golang-logging-error-handling-practice/</guid>
+      <guid>https://techblog.szksh.cloud/golang-logging-error-handling-practice/</guid>
       <description>2018-12-30 追記 この記事を元にドキュメントを書いてみました。
 https://github.com/suzuki-shunsuke/go-error-handling-logging-practice
 追記ここまで
@@ -33,10 +33,10 @@ if err != nil { return err } ロギングに必要な情報を戻り値のerror�
     
     <item>
       <title>GraylogのAlertの課題</title>
-      <link>https://techblog-szksh-cloud.github.io/graylog-alert-issue/</link>
+      <link>https://techblog.szksh.cloud/graylog-alert-issue/</link>
       <pubDate>Wed, 19 Dec 2018 21:02:11 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/graylog-alert-issue/</guid>
+      <guid>https://techblog.szksh.cloud/graylog-alert-issue/</guid>
       <description>Graylogを運用してきて感じているAlert機能周りの課題をリストアップします。 自分のGraylogの理解が不十分で勘違いしている部分もあるかもしれませんが、ご了承ください。 Graylogのバージョンは 2.5.0 です。 ここでいう「メンション」とは、Slackのようなチャットツールのメンションを指します。 リストの詳細を書きだしてみたものの、リストだけでだいたい言いたいことが言えてしまっていたのと、単なる愚痴っぽくなってしまったので、 リストだけに留めます。
 2018-12-31 追記 元々 Alert Condition, Notification の APIがないと勘違いしていたのですが、 実はちゃんとあったので terraform で管理できるように go-graylog を更新しました。
  https://github.com/suzuki-shunsuke/go-graylog/pull/50 https://github.com/suzuki-shunsuke/go-graylog/pull/52 https://github.com/suzuki-shunsuke/go-graylog/blob/v11.0.0/docs/resources/alarm_callback.md https://github.com/suzuki-shunsuke/go-graylog/blob/v11.0.0/docs/resources/alert_condition.md  課題リスト  APIでAlert Condition, Notificationを管理できない  APIがないので terraform でサポートも出来ない 数が増えるとWeb UIでは管理が辛い・修正漏れや設定ミスが出やすい   Condition, NotificationがStreamに紐づく  ConditionによってNotificationを変えられない  条件に応じてアラートの文面・通知先・メンション先・メンションの有無を変えられない (正確にはテンプレートエンジンで頑張ればある程度対応できるかもしれないが、個人的にはテンプレートそのものを切り替えたい)   ConditionやNotificationを複数のStreamで使い回せない   (少なくとも標準機能では)時間帯によってアラートの挙動を変更できない  夜中にはアラートを飛ばさない・メンションをつけないといったことが出来ない 一時的にアラートを止められない   Pluginを使うにしてもどれを使ったら良いか分からない  もっとGraylogがメジャーになれば状況も変わるかもしれない    </description>
@@ -44,10 +44,10 @@ if err != nil { return err } ロギングに必要な情報を戻り値のerror�
     
     <item>
       <title>Graylog の Terraform を CI/CDで実行する</title>
-      <link>https://techblog-szksh-cloud.github.io/graylog-terraform-ci/</link>
+      <link>https://techblog.szksh.cloud/graylog-terraform-ci/</link>
       <pubDate>Fri, 07 Dec 2018 08:22:49 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/graylog-terraform-ci/</guid>
+      <guid>https://techblog.szksh.cloud/graylog-terraform-ci/</guid>
       <description>以前 Graylog を Terraform で管理する記事を書きました。
 https://suzuki-shunsuke.github.io/graylog-terraform/
 今回はそれを CI/CD で実行できるようにした話です。
@@ -60,10 +60,10 @@ resource &amp;quot;graylog_role&amp;quot; &amp;quot;terraform&amp;quot; { name =
     
     <item>
       <title>molecule でansible の role と playbook をテストする</title>
-      <link>https://techblog-szksh-cloud.github.io/ansible-molecule/</link>
+      <link>https://techblog.szksh.cloud/ansible-molecule/</link>
       <pubDate>Thu, 06 Dec 2018 23:08:04 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/ansible-molecule/</guid>
+      <guid>https://techblog.szksh.cloud/ansible-molecule/</guid>
       <description>ansible 専用の testing ツール molecule を紹介します。 molecule の公式ドキュメント以外の情報は少ないので、参考になれば幸いです。
 以前 Docker を使って ansible のテストをする方法を紹介しました。
 https://suzuki-shunsuke.github.io/test-ansible-on-docker/
@@ -81,10 +81,10 @@ $ molecule init scenario -r &amp;lt;role name&amp;gt; こうすると molecule �
     
     <item>
       <title>GraylogをTerraformで管理する</title>
-      <link>https://techblog-szksh-cloud.github.io/graylog-terraform/</link>
+      <link>https://techblog.szksh.cloud/graylog-terraform/</link>
       <pubDate>Sat, 01 Dec 2018 14:56:00 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/graylog-terraform/</guid>
+      <guid>https://techblog.szksh.cloud/graylog-terraform/</guid>
       <description>Graylogのリソースを terraform で管理するために作った terraform provider を紹介します。 Graylogとは何かはこちらを読んでください。
 Graylogには様々なリソースがあります。
  User Role Input Index Set Stream Stream Rule Dashboard Alert etc  これらのリソースはWeb UIから作成したり出来るわけですが、 Web UIでポチポチするのは疲れますし、ソースコードで管理したいものです(Infrastructure as Code)。 また、Web UIからでは細かな権限管理は出来ず(限られた権限管理しか出来ない)、APIを使ってする必要があります。

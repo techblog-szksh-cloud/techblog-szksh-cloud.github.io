@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>portainer on melody</title>
-    <link>https://techblog-szksh-cloud.github.io/tags/portainer/</link>
+    <link>https://techblog.szksh.cloud/tags/portainer/</link>
     <description>Recent content in portainer on melody</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>jp</language>
-    <lastBuildDate>Sun, 30 Sep 2018 21:56:42 +0900</lastBuildDate><atom:link href="https://techblog-szksh-cloud.github.io/tags/portainer/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 30 Sep 2018 21:56:42 +0900</lastBuildDate><atom:link href="https://techblog.szksh.cloud/tags/portainer/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>drone の管理のために portainer を導入した</title>
-      <link>https://techblog-szksh-cloud.github.io/use-portainer-for-drone-admin/</link>
+      <link>https://techblog.szksh.cloud/use-portainer-for-drone-admin/</link>
       <pubDate>Sun, 30 Sep 2018 21:56:42 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/use-portainer-for-drone-admin/</guid>
+      <guid>https://techblog.szksh.cloud/use-portainer-for-drone-admin/</guid>
       <description>drone OSS 0.8.5 で検証しています。
 https://drone.io/ と https://portainer.io/ の話です。
 drone はかなり安定したシステムだと思いますが、 ユーザーが好きなイメージで好きなコマンドを実行できる以上、トラブルが起こることはあります。

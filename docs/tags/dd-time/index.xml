@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>dd-time on melody</title>
-    <link>https://techblog-szksh-cloud.github.io/tags/dd-time/</link>
+    <link>https://techblog.szksh.cloud/tags/dd-time/</link>
     <description>Recent content in dd-time on melody</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>jp</language>
-    <lastBuildDate>Sat, 23 May 2020 14:20:53 +0900</lastBuildDate><atom:link href="https://techblog-szksh-cloud.github.io/tags/dd-time/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 23 May 2020 14:20:53 +0900</lastBuildDate><atom:link href="https://techblog.szksh.cloud/tags/dd-time/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>CircleCI の run の実行時間を DataDog に送る</title>
-      <link>https://techblog-szksh-cloud.github.io/send-circleci-run-execution-time-to-datadog/</link>
+      <link>https://techblog.szksh.cloud/send-circleci-run-execution-time-to-datadog/</link>
       <pubDate>Sat, 23 May 2020 14:20:53 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/send-circleci-run-execution-time-to-datadog/</guid>
+      <guid>https://techblog.szksh.cloud/send-circleci-run-execution-time-to-datadog/</guid>
       <description>小ネタです。
 dd-time を使って CircleCI の run を使ったコマンドの実行時間をどう計測したらいいのかちょっと考えました。
 以前、コマンドの実行時間を DataDog に送るツール dd-time を作りました。

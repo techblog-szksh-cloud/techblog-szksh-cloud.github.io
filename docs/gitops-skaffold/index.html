@@ -8,7 +8,7 @@
 
 
 
-<link rel="canonical" href="https://techblog-szksh-cloud.github.io/gitops-skaffold/">
+<link rel="canonical" href="https://techblog.szksh.cloud/gitops-skaffold/">
 
 
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
@@ -20,18 +20,18 @@
 
 <meta property="og:title" content="skaffold を使って GitOps する - melody">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://techblog-szksh-cloud.github.io/gitops-skaffold/">
-<meta property="og:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+<meta property="og:url" content="https://techblog.szksh.cloud/gitops-skaffold/">
+<meta property="og:image" content="https://techblog.szksh.cloud/images/default.png">
 <meta property="og:site_name" content="melody">
 <meta property="og:description" content="skaffold を用いてマニフェストを動的に生成しつつ GitOps する方法を考えたので紹介します。 なお、現時点ではあくまで考えてみただけで実際に導入したりはしていません。GitOps はマニフェストを Git リポジトリにコミットしないといけないわけですが、 Docker image をビルド、プッシュし、マニフェストの image tag を書き換えるという一連の処理をどうやってやるのがいいのか 個人的に考えていました。自分は FluxCD には詳しくないのですが、 FluxCD では registry をポーリングして自動で最新のタグに書き換える機能があるそうですね。https://toolkit.fluxcd.io/guides/image-update/ただし、まだ alpha であることと、 semver に従っていないといけないようです。 これだと master branch が update されるたびに image をビルドして sha でタグを付与するみたいな運用は難しそうです。Skaffold だとマニフェストの image tag を自動で書き換えてくれる機能があります。 加えて skaffold render コマンドを使うと manifest の apply はせずにファイルへの出力だけやってくれます。 出力された manifest を Git リポジトリに commit, push すれば GitOps が実現できそうです。How リポジトリを 2 つ用意します。 app: アプリケーションのコードとマニフェストを管理するリポジトリ manifest: GitOps が連携するマニフェストを管理するリポジトリ  app は Monorepo になっているとします。ディレクトリ構成は次のような感じをイメージしています。">
 <meta property="og:locale" content="ja_JP">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="melody">
-<meta name="twitter:url" content="https://techblog-szksh-cloud.github.io/gitops-skaffold/">
+<meta name="twitter:url" content="https://techblog.szksh.cloud/gitops-skaffold/">
 <meta name="twitter:title" content="skaffold を使って GitOps する - melody">
 <meta name="twitter:description" content="skaffold を用いてマニフェストを動的に生成しつつ GitOps する方法を考えたので紹介します。 なお、現時点ではあくまで考えてみただけで実際に導入したりはしていません。GitOps はマニフェストを Git リポジトリにコミットしないといけないわけですが、 Docker image をビルド、プッシュし、マニフェストの image tag を書き換えるという一連の処理をどうやってやるのがいいのか 個人的に考えていました。自分は FluxCD には詳しくないのですが、 FluxCD では registry をポーリングして自動で最新のタグに書き換える機能があるそうですね。https://toolkit.fluxcd.io/guides/image-update/ただし、まだ alpha であることと、 semver に従っていないといけないようです。 これだと master branch が update されるたびに image をビルドして sha でタグを付与するみたいな運用は難しそうです。Skaffold だとマニフェストの image tag を自動で書き換えてくれる機能があります。 加えて skaffold render コマンドを使うと manifest の apply はせずにファイルへの出力だけやってくれます。 出力された manifest を Git リポジトリに commit, push すれば GitOps が実現できそうです。How リポジトリを 2 つ用意します。 app: アプリケーションのコードとマニフェストを管理するリポジトリ manifest: GitOps が連携するマニフェストを管理するリポジトリ  app は Monorepo になっているとします。ディレクトリ構成は次のような感じをイメージしています。">
-<meta name="twitter:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+<meta name="twitter:image" content="https://techblog.szksh.cloud/images/default.png">
 
 
 <script type="application/ld+json">
@@ -40,12 +40,12 @@
     "@type": "NewsArticle",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id":"https:\/\/techblog-szksh-cloud.github.io\/"
+      "@id":"https:\/\/techblog.szksh.cloud\/"
     },
     "headline": "skaffold を使って GitOps する - melody",
     "image": {
       "@type": "ImageObject",
-      "url": "https:\/\/techblog-szksh-cloud.github.io\/images\/default.png",
+      "url": "https:\/\/techblog.szksh.cloud\/images\/default.png",
       "height": 800,
       "width": 800
     },
@@ -60,7 +60,7 @@
       "name": "melody",
       "logo": {
         "@type": "ImageObject",
-        "url": "https:\/\/techblog-szksh-cloud.github.io\/images/logo.png",
+        "url": "https:\/\/techblog.szksh.cloud\/images/logo.png",
         "width": 600,
         "height": 60
       }
@@ -70,7 +70,7 @@
 </script>
 
 
-    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    <link href="https://techblog.szksh.cloud/css/styles.css" rel="stylesheet">
     
 
   </head>
@@ -90,7 +90,7 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+            <a class="navbar-brand" href="https://techblog.szksh.cloud/">melody</a>
           </div>
 
           
@@ -107,7 +107,7 @@
 
     <nav class="p-crumb">
       <ol class="breadcrumb">
-        <li><a href="https://techblog-szksh-cloud.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        <li><a href="https://techblog.szksh.cloud/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
         
         <li class="active">skaffold を使って GitOps する</li>
       </ol>
@@ -128,11 +128,11 @@
       <div>
         <ul class="p-terms">
           
-          <li><a href="https://techblog-szksh-cloud.github.io/tags/skaffold/">skaffold</a></li>
+          <li><a href="https://techblog.szksh.cloud/tags/skaffold/">skaffold</a></li>
           
-          <li><a href="https://techblog-szksh-cloud.github.io/tags/gitops/">gitops</a></li>
+          <li><a href="https://techblog.szksh.cloud/tags/gitops/">gitops</a></li>
           
-          <li><a href="https://techblog-szksh-cloud.github.io/tags/k8s/">k8s</a></li>
+          <li><a href="https://techblog.szksh.cloud/tags/k8s/">k8s</a></li>
           
         </ul>
       </div>
@@ -254,11 +254,11 @@ Skaffold 使うと Docker image の build, push といった一連の流れも�
       <div>
         <ul class="p-terms">
           
-          <li><a href="https://techblog-szksh-cloud.github.io/tags/skaffold/">skaffold</a></li>
+          <li><a href="https://techblog.szksh.cloud/tags/skaffold/">skaffold</a></li>
           
-          <li><a href="https://techblog-szksh-cloud.github.io/tags/gitops/">gitops</a></li>
+          <li><a href="https://techblog.szksh.cloud/tags/gitops/">gitops</a></li>
           
-          <li><a href="https://techblog-szksh-cloud.github.io/tags/k8s/">k8s</a></li>
+          <li><a href="https://techblog.szksh.cloud/tags/k8s/">k8s</a></li>
           
         </ul>
       </div>
@@ -282,25 +282,25 @@ Skaffold 使うと Docker image の build, push といった一連の流れも�
     </div>
     <div class="list-group">
       
-      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      <a href="https://techblog.szksh.cloud/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      <a href="https://techblog.szksh.cloud/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      <a href="https://techblog.szksh.cloud/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      <a href="https://techblog.szksh.cloud/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      <a href="https://techblog.szksh.cloud/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      <a href="https://techblog.szksh.cloud/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      <a href="https://techblog.szksh.cloud/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      <a href="https://techblog.szksh.cloud/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      <a href="https://techblog.szksh.cloud/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      <a href="https://techblog.szksh.cloud/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
       
     </div>
   </section>
@@ -311,25 +311,25 @@ Skaffold 使うと Docker image の build, push といった一連の流れも�
     </div>
     <div class="list-group">
       
-      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      <a href="https://techblog.szksh.cloud/tags/oss" class="list-group-item">oss (42)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      <a href="https://techblog.szksh.cloud/tags/job" class="list-group-item">job (18)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      <a href="https://techblog.szksh.cloud/tags/drone" class="list-group-item">drone (14)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      <a href="https://techblog.szksh.cloud/tags/terraform" class="list-group-item">terraform (13)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      <a href="https://techblog.szksh.cloud/tags/buildflow" class="list-group-item">buildflow (12)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      <a href="https://techblog.szksh.cloud/tags/golang" class="list-group-item">golang (6)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      <a href="https://techblog.szksh.cloud/tags/aqua" class="list-group-item">aqua (5)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      <a href="https://techblog.szksh.cloud/tags/circleci" class="list-group-item">circleci (5)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      <a href="https://techblog.szksh.cloud/tags/graylog" class="list-group-item">graylog (5)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      <a href="https://techblog.szksh.cloud/tags/ansible" class="list-group-item">ansible (3)</a>
       
     </div>
   </section>
@@ -340,25 +340,25 @@ Skaffold 使うと Docker image の build, push といった一連の流れも�
     </div>
     <div class="list-group">
       
-      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/11" class="list-group-item">2021/11 (1)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/10" class="list-group-item">2021/10 (2)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/09" class="list-group-item">2021/09 (3)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/08" class="list-group-item">2021/08 (3)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/07" class="list-group-item">2021/07 (3)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/06" class="list-group-item">2021/06 (1)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/05" class="list-group-item">2021/05 (1)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/04" class="list-group-item">2021/04 (4)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/03" class="list-group-item">2021/03 (1)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/02" class="list-group-item">2021/02 (3)</a>
       
     </div>
   </section>

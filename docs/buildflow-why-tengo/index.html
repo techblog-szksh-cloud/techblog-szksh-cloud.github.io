@@ -8,7 +8,7 @@
 
 
 
-<link rel="canonical" href="https://techblog-szksh-cloud.github.io/buildflow-why-tengo/">
+<link rel="canonical" href="https://techblog.szksh.cloud/buildflow-why-tengo/">
 
 
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
@@ -20,18 +20,18 @@
 
 <meta property="og:title" content="buildflow ではなぜ Tengo を採用しているのか - melody">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://techblog-szksh-cloud.github.io/buildflow-why-tengo/">
-<meta property="og:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+<meta property="og:url" content="https://techblog.szksh.cloud/buildflow-why-tengo/">
+<meta property="og:image" content="https://techblog.szksh.cloud/images/default.png">
 <meta property="og:site_name" content="melody">
 <meta property="og:description" content="buildflow というツールを開発しているので buildflow というタグをつけて何回かに分けてブログを書きます。この記事では buildflow でなぜ Tengo を採用しているのかについて説明します。https://github.com/d5/tengoTengo に関しては https://techblog.szksh.cloud/buildflow-1/ でも多少触れています。なぜ Tengo を採用しているのかに関しては なぜスクリプト言語を採用しているのか なぜ他の言語ではなく Tengo なのか  の 2 つの観点で話します。なぜスクリプト言語を採用しているのか 逆にスクリプト言語を採用しない方法としては、 YAML などで独自 DSL のようなものを定義する方法があります。 DSL と言うと大げさかもしれませんが、 AND, OR, NOT といった論理を YAML のようなデータ記述言語で表現しようと思うとそんな感じになると思います。この方法は扱いたいロジックが単純なものに限られるのであれば問題ないですが、 より柔軟なロジックを表現したいとなった場合に、無理があります。 どうやって表現すればいいのか自分で考えないといけない  どう頑張っても独自ルールになるため、ユーザーにとって直感的とは言えない   正しく実装しないといけない 仕様をドキュメント化しないといけない  一方、 Go では幾つかのスクリプト言語がサードパーティのライブラリとして実装されており、 buildflow のようなツールに組み込むことが出来ます。https://github.com/avelino/awesome-go#embeddable-scripting-languagesこれらを活用すれば上記の問題は解決できるうえに、非常に柔軟にロジックを実装できます(勿論言語によりますが)。なぜ他の言語ではなく Tengo なのか 単純に https://github.com/avelino/awesome-go#embeddable-scripting-languages で紹介されているライブラリの中で一番要件にマッチしてそうだったからです。 といっても全てをちゃんとチェックしたわけではありませんが。 Lua とかもあるのでそれでも良かったかもですが、自分は Lua を全然知りません。 あとちゃんとバージョンニングされていたのも理由の一つです。 Tengo より人気のある言語もありましたが、バージョニングされてないという理由で見送ったりしました。">
 <meta property="og:locale" content="ja_JP">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="melody">
-<meta name="twitter:url" content="https://techblog-szksh-cloud.github.io/buildflow-why-tengo/">
+<meta name="twitter:url" content="https://techblog.szksh.cloud/buildflow-why-tengo/">
 <meta name="twitter:title" content="buildflow ではなぜ Tengo を採用しているのか - melody">
 <meta name="twitter:description" content="buildflow というツールを開発しているので buildflow というタグをつけて何回かに分けてブログを書きます。この記事では buildflow でなぜ Tengo を採用しているのかについて説明します。https://github.com/d5/tengoTengo に関しては https://techblog.szksh.cloud/buildflow-1/ でも多少触れています。なぜ Tengo を採用しているのかに関しては なぜスクリプト言語を採用しているのか なぜ他の言語ではなく Tengo なのか  の 2 つの観点で話します。なぜスクリプト言語を採用しているのか 逆にスクリプト言語を採用しない方法としては、 YAML などで独自 DSL のようなものを定義する方法があります。 DSL と言うと大げさかもしれませんが、 AND, OR, NOT といった論理を YAML のようなデータ記述言語で表現しようと思うとそんな感じになると思います。この方法は扱いたいロジックが単純なものに限られるのであれば問題ないですが、 より柔軟なロジックを表現したいとなった場合に、無理があります。 どうやって表現すればいいのか自分で考えないといけない  どう頑張っても独自ルールになるため、ユーザーにとって直感的とは言えない   正しく実装しないといけない 仕様をドキュメント化しないといけない  一方、 Go では幾つかのスクリプト言語がサードパーティのライブラリとして実装されており、 buildflow のようなツールに組み込むことが出来ます。https://github.com/avelino/awesome-go#embeddable-scripting-languagesこれらを活用すれば上記の問題は解決できるうえに、非常に柔軟にロジックを実装できます(勿論言語によりますが)。なぜ他の言語ではなく Tengo なのか 単純に https://github.com/avelino/awesome-go#embeddable-scripting-languages で紹介されているライブラリの中で一番要件にマッチしてそうだったからです。 といっても全てをちゃんとチェックしたわけではありませんが。 Lua とかもあるのでそれでも良かったかもですが、自分は Lua を全然知りません。 あとちゃんとバージョンニングされていたのも理由の一つです。 Tengo より人気のある言語もありましたが、バージョニングされてないという理由で見送ったりしました。">
-<meta name="twitter:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+<meta name="twitter:image" content="https://techblog.szksh.cloud/images/default.png">
 
 
 <script type="application/ld+json">
@@ -40,12 +40,12 @@
     "@type": "NewsArticle",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id":"https:\/\/techblog-szksh-cloud.github.io\/"
+      "@id":"https:\/\/techblog.szksh.cloud\/"
     },
     "headline": "buildflow ではなぜ Tengo を採用しているのか - melody",
     "image": {
       "@type": "ImageObject",
-      "url": "https:\/\/techblog-szksh-cloud.github.io\/images\/default.png",
+      "url": "https:\/\/techblog.szksh.cloud\/images\/default.png",
       "height": 800,
       "width": 800
     },
@@ -60,7 +60,7 @@
       "name": "melody",
       "logo": {
         "@type": "ImageObject",
-        "url": "https:\/\/techblog-szksh-cloud.github.io\/images/logo.png",
+        "url": "https:\/\/techblog.szksh.cloud\/images/logo.png",
         "width": 600,
         "height": 60
       }
@@ -70,7 +70,7 @@
 </script>
 
 
-    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    <link href="https://techblog.szksh.cloud/css/styles.css" rel="stylesheet">
     
 
   </head>
@@ -90,7 +90,7 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+            <a class="navbar-brand" href="https://techblog.szksh.cloud/">melody</a>
           </div>
 
           
@@ -107,7 +107,7 @@
 
     <nav class="p-crumb">
       <ol class="breadcrumb">
-        <li><a href="https://techblog-szksh-cloud.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        <li><a href="https://techblog.szksh.cloud/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
         
         <li class="active">buildflow ではなぜ Tengo を採用しているのか</li>
       </ol>
@@ -128,9 +128,9 @@
       <div>
         <ul class="p-terms">
           
-          <li><a href="https://techblog-szksh-cloud.github.io/tags/oss/">oss</a></li>
+          <li><a href="https://techblog.szksh.cloud/tags/oss/">oss</a></li>
           
-          <li><a href="https://techblog-szksh-cloud.github.io/tags/buildflow/">buildflow</a></li>
+          <li><a href="https://techblog.szksh.cloud/tags/buildflow/">buildflow</a></li>
           
         </ul>
       </div>
@@ -215,9 +215,9 @@ Tengo で外部コマンドを呼び出したりとかファイルを読み書�
       <div>
         <ul class="p-terms">
           
-          <li><a href="https://techblog-szksh-cloud.github.io/tags/oss/">oss</a></li>
+          <li><a href="https://techblog.szksh.cloud/tags/oss/">oss</a></li>
           
-          <li><a href="https://techblog-szksh-cloud.github.io/tags/buildflow/">buildflow</a></li>
+          <li><a href="https://techblog.szksh.cloud/tags/buildflow/">buildflow</a></li>
           
         </ul>
       </div>
@@ -241,25 +241,25 @@ Tengo で外部コマンドを呼び出したりとかファイルを読み書�
     </div>
     <div class="list-group">
       
-      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      <a href="https://techblog.szksh.cloud/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      <a href="https://techblog.szksh.cloud/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      <a href="https://techblog.szksh.cloud/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      <a href="https://techblog.szksh.cloud/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      <a href="https://techblog.szksh.cloud/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      <a href="https://techblog.szksh.cloud/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      <a href="https://techblog.szksh.cloud/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      <a href="https://techblog.szksh.cloud/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      <a href="https://techblog.szksh.cloud/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      <a href="https://techblog.szksh.cloud/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
       
     </div>
   </section>
@@ -270,25 +270,25 @@ Tengo で外部コマンドを呼び出したりとかファイルを読み書�
     </div>
     <div class="list-group">
       
-      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      <a href="https://techblog.szksh.cloud/tags/oss" class="list-group-item">oss (42)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      <a href="https://techblog.szksh.cloud/tags/job" class="list-group-item">job (18)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      <a href="https://techblog.szksh.cloud/tags/drone" class="list-group-item">drone (14)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      <a href="https://techblog.szksh.cloud/tags/terraform" class="list-group-item">terraform (13)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      <a href="https://techblog.szksh.cloud/tags/buildflow" class="list-group-item">buildflow (12)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      <a href="https://techblog.szksh.cloud/tags/golang" class="list-group-item">golang (6)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      <a href="https://techblog.szksh.cloud/tags/aqua" class="list-group-item">aqua (5)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      <a href="https://techblog.szksh.cloud/tags/circleci" class="list-group-item">circleci (5)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      <a href="https://techblog.szksh.cloud/tags/graylog" class="list-group-item">graylog (5)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      <a href="https://techblog.szksh.cloud/tags/ansible" class="list-group-item">ansible (3)</a>
       
     </div>
   </section>
@@ -299,25 +299,25 @@ Tengo で外部コマンドを呼び出したりとかファイルを読み書�
     </div>
     <div class="list-group">
       
-      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/11" class="list-group-item">2021/11 (1)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/10" class="list-group-item">2021/10 (2)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/09" class="list-group-item">2021/09 (3)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/08" class="list-group-item">2021/08 (3)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/07" class="list-group-item">2021/07 (3)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/06" class="list-group-item">2021/06 (1)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/05" class="list-group-item">2021/05 (1)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/04" class="list-group-item">2021/04 (4)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/03" class="list-group-item">2021/03 (1)</a>
       
-      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/02" class="list-group-item">2021/02 (3)</a>
       
     </div>
   </section>

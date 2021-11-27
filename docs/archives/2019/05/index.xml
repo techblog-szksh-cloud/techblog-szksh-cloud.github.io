@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>2019/05 on melody</title>
-    <link>https://techblog-szksh-cloud.github.io/archives/2019/05/</link>
+    <link>https://techblog.szksh.cloud/archives/2019/05/</link>
     <description>Recent content in 2019/05 on melody</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>jp</language><atom:link href="https://techblog-szksh-cloud.github.io/archives/2019/05/index.xml" rel="self" type="application/rss+xml" />
+    <language>jp</language><atom:link href="https://techblog.szksh.cloud/archives/2019/05/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>go-jsoneq - 2つの値がJSONとして等しいか比較するGoライブラリ</title>
-      <link>https://techblog-szksh-cloud.github.io/go-jsoneq/</link>
+      <link>https://techblog.szksh.cloud/go-jsoneq/</link>
       <pubDate>Thu, 23 May 2019 11:43:18 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/go-jsoneq/</guid>
+      <guid>https://techblog.szksh.cloud/go-jsoneq/</guid>
       <description>https://github.com/suzuki-shunsuke/go-jsoneq
 2つの値がJSONとして等しいか比較するGoライブラリを開発したので紹介します。
 「2つの値がJSONとして等しい」とは、2つの値をそれぞれJSON文字列に変換したら、2つが表現するデータがおなじになるという意味です。

@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>lambda on melody</title>
-    <link>https://techblog-szksh-cloud.github.io/tags/lambda/</link>
+    <link>https://techblog.szksh.cloud/tags/lambda/</link>
     <description>Recent content in lambda on melody</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>jp</language>
-    <lastBuildDate>Thu, 24 Jun 2021 21:25:24 +0900</lastBuildDate><atom:link href="https://techblog-szksh-cloud.github.io/tags/lambda/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 24 Jun 2021 21:25:24 +0900</lastBuildDate><atom:link href="https://techblog.szksh.cloud/tags/lambda/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Terraform で空の AWS Lambda Function を作る方法</title>
-      <link>https://techblog-szksh-cloud.github.io/create-empty-lambda-by-terraform/</link>
+      <link>https://techblog.szksh.cloud/create-empty-lambda-by-terraform/</link>
       <pubDate>Thu, 24 Jun 2021 21:25:24 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/create-empty-lambda-by-terraform/</guid>
+      <guid>https://techblog.szksh.cloud/create-empty-lambda-by-terraform/</guid>
       <description>Terraform で空の AWS Lambda Function を作ろうとした際にちょっとハマったのでやり方を書いておきます。
 「空の Lambda Function」という表現は適切ではないかもしれませんが、 Lambda で実行するコードのデプロイは Terraform 以外のツールでやるけど、 Lambda Function の作成は Terraform で行うので、 dummy のコードを指定して Terraform で Lambda を作るという話です。
 自分は今は lambroll というツールで Lambda をデプロイしています。 lambroll は Lambda Function も作ってくれるので Terraform で作る必要は必ずしもありません。

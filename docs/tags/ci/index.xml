@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>ci on melody</title>
-    <link>https://techblog-szksh-cloud.github.io/tags/ci/</link>
+    <link>https://techblog.szksh.cloud/tags/ci/</link>
     <description>Recent content in ci on melody</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>jp</language>
-    <lastBuildDate>Sun, 02 Aug 2020 13:21:37 +0900</lastBuildDate><atom:link href="https://techblog-szksh-cloud.github.io/tags/ci/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 02 Aug 2020 13:21:37 +0900</lastBuildDate><atom:link href="https://techblog.szksh.cloud/tags/ci/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>AWS CodeBuild 良さそう</title>
-      <link>https://techblog-szksh-cloud.github.io/codebuild-1/</link>
+      <link>https://techblog.szksh.cloud/codebuild-1/</link>
       <pubDate>Sun, 02 Aug 2020 13:21:37 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/codebuild-1/</guid>
+      <guid>https://techblog.szksh.cloud/codebuild-1/</guid>
       <description>AWS CodeBuild を検証しているんですが、結構良いですね。 現状 Jenkins や CircleCI で実行しているジョブや CI/CD を一部移行したいなと思いました。
 一部と言っているのは、単純に全部いきなり移行するのは難しいから共存する前提で考えるくらいの意味です。
 なお、これを書いている時点ではまだ軽く検証しているだけなので、CodeBuild の理解は浅いです。
@@ -22,10 +22,10 @@
     
     <item>
       <title>Graylog の Terraform を CI/CDで実行する</title>
-      <link>https://techblog-szksh-cloud.github.io/graylog-terraform-ci/</link>
+      <link>https://techblog.szksh.cloud/graylog-terraform-ci/</link>
       <pubDate>Fri, 07 Dec 2018 08:22:49 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/graylog-terraform-ci/</guid>
+      <guid>https://techblog.szksh.cloud/graylog-terraform-ci/</guid>
       <description>以前 Graylog を Terraform で管理する記事を書きました。
 https://suzuki-shunsuke.github.io/graylog-terraform/
 今回はそれを CI/CD で実行できるようにした話です。

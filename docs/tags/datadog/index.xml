@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>datadog on melody</title>
-    <link>https://techblog-szksh-cloud.github.io/tags/datadog/</link>
+    <link>https://techblog.szksh.cloud/tags/datadog/</link>
     <description>Recent content in datadog on melody</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>jp</language>
-    <lastBuildDate>Sat, 23 May 2020 14:20:53 +0900</lastBuildDate><atom:link href="https://techblog-szksh-cloud.github.io/tags/datadog/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 23 May 2020 14:20:53 +0900</lastBuildDate><atom:link href="https://techblog.szksh.cloud/tags/datadog/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>CircleCI の run の実行時間を DataDog に送る</title>
-      <link>https://techblog-szksh-cloud.github.io/send-circleci-run-execution-time-to-datadog/</link>
+      <link>https://techblog.szksh.cloud/send-circleci-run-execution-time-to-datadog/</link>
       <pubDate>Sat, 23 May 2020 14:20:53 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/send-circleci-run-execution-time-to-datadog/</guid>
+      <guid>https://techblog.szksh.cloud/send-circleci-run-execution-time-to-datadog/</guid>
       <description>小ネタです。
 dd-time を使って CircleCI の run を使ったコマンドの実行時間をどう計測したらいいのかちょっと考えました。
 以前、コマンドの実行時間を DataDog に送るツール dd-time を作りました。
@@ -27,10 +27,10 @@ https://circleci.com/docs/2.0/configuration-reference/#run
     
     <item>
       <title>dd-time - コマンドの実行時間を Datadog に送るツール</title>
-      <link>https://techblog-szksh-cloud.github.io/dd-time/</link>
+      <link>https://techblog.szksh.cloud/dd-time/</link>
       <pubDate>Sat, 30 Nov 2019 13:54:47 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/dd-time/</guid>
+      <guid>https://techblog.szksh.cloud/dd-time/</guid>
       <description>コマンドの実行時間を Datadog に送る dd-time というツールを作りました。
 このツールは circle-dd-bench にインスパイアされていますが、 CircleCI 以外でも需要あると思ったり、他にも幾つか改善したい部分があったので自作することにしました。
 circle-dd-bench については circle-dd-bench の作者が書いたブログ https://blog.yuyat.jp/post/circle-dd-bench/ も参考にしてください。

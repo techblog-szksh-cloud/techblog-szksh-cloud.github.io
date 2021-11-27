@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>skaffold-generator on melody</title>
-    <link>https://techblog-szksh-cloud.github.io/tags/skaffold-generator/</link>
+    <link>https://techblog.szksh.cloud/tags/skaffold-generator/</link>
     <description>Recent content in skaffold-generator on melody</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>jp</language>
-    <lastBuildDate>Sun, 05 Apr 2020 18:53:25 +0900</lastBuildDate><atom:link href="https://techblog-szksh-cloud.github.io/tags/skaffold-generator/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 05 Apr 2020 18:53:25 +0900</lastBuildDate><atom:link href="https://techblog.szksh.cloud/tags/skaffold-generator/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Skaffold で特定のサービスだけ動かすためのツールを作った</title>
-      <link>https://techblog-szksh-cloud.github.io/skaffold-generator/</link>
+      <link>https://techblog.szksh.cloud/skaffold-generator/</link>
       <pubDate>Sun, 05 Apr 2020 18:53:25 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/skaffold-generator/</guid>
+      <guid>https://techblog.szksh.cloud/skaffold-generator/</guid>
       <description>自作の CLI ツール skaffold-generator の紹介です。 プロトタイピングみたいなノリで半日くらいで割と手早く作れました。 名前が長くて適当なのでもっと良い名前ないかなと思ってます。
 Skaffold に欲しい機能がないので補完する感じで作ったのですが、「それ〇〇で出来るよ」とかあったら(GitHub issue とか Twitter で)教えていただけると幸いです。
 どんなツールか 設定ファイル skaffold-generator.yaml を監視して変更があったら skaffold.yaml を生成するツールです。設定ファイルでサービスの依存関係を定義できたり、コマンドライン引数で指定したサービス及びそれが依存するサービスに関連した設定だけを使って skaffold.yaml を更新します。 このツールは skaffold.yaml を生成するだけなので実際にアプリケーションをビルド・デプロイするには skaffold と組み合わせて使います。

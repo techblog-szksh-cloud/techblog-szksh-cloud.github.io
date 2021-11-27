@@ -2,120 +2,120 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>job on melody</title>
-    <link>https://techblog-szksh-cloud.github.io/tags/job/</link>
+    <link>https://techblog.szksh.cloud/tags/job/</link>
     <description>Recent content in job on melody</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>jp</language>
-    <lastBuildDate>Tue, 26 Oct 2021 20:43:03 +0900</lastBuildDate><atom:link href="https://techblog-szksh-cloud.github.io/tags/job/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 26 Oct 2021 20:43:03 +0900</lastBuildDate><atom:link href="https://techblog.szksh.cloud/tags/job/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>2021-10 やったこと</title>
-      <link>https://techblog-szksh-cloud.github.io/what-i-did-2021-10/</link>
+      <link>https://techblog.szksh.cloud/what-i-did-2021-10/</link>
       <pubDate>Tue, 26 Oct 2021 20:43:03 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/what-i-did-2021-10/</guid>
+      <guid>https://techblog.szksh.cloud/what-i-did-2021-10/</guid>
       <description>Job  AWS SSO の導入  Google アカウントで AWS へサインインできるように設定 AWS SSO の Terraform 管理 ssosync を Lambda で定期実行 開発者向けの移行ガイドの作成し、実際に案内 terraform, kubectl などのツールで AWS にアクセスできるかの検証   AWS WAF の COUNT, BLOCK の log を Firehose, Lambda で抽出 akoi を aqua にリプレース  Blog  2021-10-13: HashiTalks Japan 2021 で弊プロダクトの Terraform Platform について登壇しました  OSS https://github.com/pulls?q=is%3Aclosed+is%3Apublic+is%3Apr+author%3Asuzuki-shunsuke+archived%3Afalse+created%3A2021-10-01..2021-10-31+
  Profile などの更新: https://github.com/suzuki-shunsuke/suzuki-shunsuke GitHub Actions の開発 自作ツールを Homebrew でインストールできるようにした aqua: v0.7.3 =&amp;gt; v0.7.10  aqua-registry: v0.</description>
     </item>
     
     <item>
       <title>2021-09 やったこと</title>
-      <link>https://techblog-szksh-cloud.github.io/what-i-did-2021-09/</link>
+      <link>https://techblog.szksh.cloud/what-i-did-2021-09/</link>
       <pubDate>Sat, 02 Oct 2021 21:46:15 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/what-i-did-2021-09/</guid>
+      <guid>https://techblog.szksh.cloud/what-i-did-2021-09/</guid>
       <description>仕事 今月は有休消化やシルバーウィークもあり、稼働が少なく、あまり仕事が進まなかったです。
  AWS SSO や Organizations を導入するためのロードマップの策定 AWS SSO の検証  登壇  2021-09-30 HashiTalks Japan 2021 (youtube)  Terraform Platform in Quipper (youtube) Talk (30 min)    新たに作った OSS  aqua-renovate-config  Renovate Configuration to update packages and registries of aqua    Blog  English  Tips about Renovate 2021-09-08 aqua - Declarative CLI Version Manager   https://techblog.szksh.cloud/archives/2021/09/  2021-09-25 aqua で組織・チームのツール群を管理 2021-09-05 aqua の設定ファイルをインタラクティブに生成する generate コマンド 2021-09-04 aqua v0.</description>
     </item>
     
     <item>
       <title>2021-08 やったこと</title>
-      <link>https://techblog-szksh-cloud.github.io/what-i-did-2021-08/</link>
+      <link>https://techblog.szksh.cloud/what-i-did-2021-08/</link>
       <pubDate>Thu, 02 Sep 2021 14:33:16 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/what-i-did-2021-08/</guid>
+      <guid>https://techblog.szksh.cloud/what-i-did-2021-08/</guid>
       <description>仕事  AWS IAM User を削除する際に force_destroy が true になっているか Conftest でテスト Terraform の State 分割 Terraform Modules を別リポジトリで管理して versioning git-secrets を secretlint に移行  git-secrets がメンテされてなくて、既知バグが放置されているから   CI で terraform fmt によるフォーマットの自動化 WIP: AWS WAF の COUNT, BLOCK ログを Firehose で抽出 WIP: AWS CodeBuild で Provisioning Error が発生したら自動で Retry WIP: AWS CodeBuild のための GitHub App の開発 WIP: AWS SSO について調査  OSS Contribution Renovate の GitHub Actions のドキュメントの修正をしました。 ドキュメント中に書かれたバージョンを Renovate で自動 update するようにしました。</description>
     </item>
     
     <item>
       <title>2021-07 やったこと</title>
-      <link>https://techblog-szksh-cloud.github.io/what-i-did-2021-07/</link>
+      <link>https://techblog.szksh.cloud/what-i-did-2021-07/</link>
       <pubDate>Wed, 28 Jul 2021 06:58:45 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/what-i-did-2021-07/</guid>
+      <guid>https://techblog.szksh.cloud/what-i-did-2021-07/</guid>
       <description>今まで仕事に限定して書いてきましたが、 OSS 活動なんかにも触れてもいいんじゃないかと思ったので分かる範囲で書きます。
 仕事  Docker Image を Docker Hub から ECR へ移行 Terraform  .terraform.lock.hcl を CI の中で自動で更新(commit, push)できるようにした  Terraform に詳しくない人も使うので、自動化したほうが良いと判断   tfmigrate を CI に導入 (in progress) Terraform Modules を Terraform の Monorepo とは別リポジトリで管理して versioning するようにした Route53 の管理を Roadworker から Terraform へ移行 tfmigrate を使ったリファクタリング    Event  Open Policy Agent Rego Knowledge Sharing Meetup で登壇  https://gist.github.com/suzuki-shunsuke/9372337aa62a6f8394bb136582ec068e    OSS Contribution AWS AppConfig を Terraform で管理できるようにする PR が無事マージされました。</description>
     </item>
     
     <item>
       <title>仕事でやったこと 2021-06-01 ~ 2021-06-30</title>
-      <link>https://techblog-szksh-cloud.github.io/job-2021-06-01-06-30/</link>
+      <link>https://techblog.szksh.cloud/job-2021-06-01-06-30/</link>
       <pubDate>Tue, 13 Jul 2021 05:47:11 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/job-2021-06-01-06-30/</guid>
+      <guid>https://techblog.szksh.cloud/job-2021-06-01-06-30/</guid>
       <description> GCP を Terraform で管理するための developer support miam を Terraform に移行 Docker Hub から ECR への移行  </description>
     </item>
     
     <item>
       <title>仕事でやったこと 2021-05-01 ~ 2021-05-31</title>
-      <link>https://techblog-szksh-cloud.github.io/job-2021-05-01-05-31/</link>
+      <link>https://techblog.szksh.cloud/job-2021-05-01-05-31/</link>
       <pubDate>Sun, 30 May 2021 08:19:32 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/job-2021-05-01-05-31/</guid>
+      <guid>https://techblog.szksh.cloud/job-2021-05-01-05-31/</guid>
       <description> SRE チームの新メンバーのオンボーディングのサポート GCP  dev からのリクエストに応じて権限付与したり対応 Terraform による GCP の管理 CI/CD の整備 Workload Identity Federation について調べた Terraform による IAM 管理の仕方を検討   Conftest  opa fmt によるフォーマット(CI も導入) Policy Testing (CI も導入)   Upgrade Terraform to v0.15.4 miam の Terraform 移行を検証  </description>
     </item>
     
     <item>
       <title>仕事でやったこと 2021-04-01 ~ 2021-04-30</title>
-      <link>https://techblog-szksh-cloud.github.io/job-2021-04-01-04-30/</link>
+      <link>https://techblog.szksh.cloud/job-2021-04-01-04-30/</link>
       <pubDate>Wed, 28 Apr 2021 09:28:01 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/job-2021-04-01-04-30/</guid>
+      <guid>https://techblog.szksh.cloud/job-2021-04-01-04-30/</guid>
       <description> SRE チームの新メンバーのオンボーディングのサポート Lambda の Monorepo  幾つか実際に Function 作った(developer support) 幾つかの Release Strategy の実装・検証  シンプルな GitHub Flow Git Flow をアレンジしたリリースフロー Canary Release WIP: AWS AppConfig を用いた Dark Launch     IAM User の初期パスワード送信の自動化 Terraform  Renovate による Terraform の patch update の自動化 Docker を使ったローカル開発環境の改善 ローカルで terraform init したら .terraform.lock.hcl が更新される問題の対応 https://techblog.szksh.cloud/terraform-providers-lock/   GCP の Terraform 管理  調査 WIP   Conftest  社内の Rego の活用事例をまとめた opa fmt によるフォーマット(CI も導入) Policy Testing (CI も導入)    </description>
     </item>
     
     <item>
       <title>仕事でやったこと 2021-03-01 ~ 2021-03-31</title>
-      <link>https://techblog-szksh-cloud.github.io/job-2021-03-01-03-31/</link>
+      <link>https://techblog.szksh.cloud/job-2021-03-01-03-31/</link>
       <pubDate>Sun, 28 Mar 2021 23:36:55 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/job-2021-03-01-03-31/</guid>
+      <guid>https://techblog.szksh.cloud/job-2021-03-01-03-31/</guid>
       <description> ブログの執筆  100 以上の Terraform 環境をいい感じに v0.14 に upgrade した方法 Pull Request の terraform plan の実行結果を S3 に保存して安全に apply   Terraform のドキュメント作成  CI/CD でやってること ローカルでの開発環境 setup etc   CI の改善  CircleCI の job の branch filter を設定して余計な job が実行されないようにした (進行中) デプロイをサービスごとに分割   (進行中) Lambda を爆速でデプロイするためのプラットフォームづくり  Terraform + lambroll + AWS CodeBuild   MongoDB upgrade (Atlas) On Boarding のドキュメントの整理  </description>
     </item>
     
     <item>
       <title>仕事でやったこと 2021-02-01 ~ 2021-02-28</title>
-      <link>https://techblog-szksh-cloud.github.io/job-2021-02-01-02-28/</link>
+      <link>https://techblog.szksh.cloud/job-2021-02-01-02-28/</link>
       <pubDate>Sat, 27 Feb 2021 20:51:56 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/job-2021-02-01-02-28/</guid>
+      <guid>https://techblog.szksh.cloud/job-2021-02-01-02-28/</guid>
       <description> Terraform リポジトリの統合 Terraform を v0.14 へ upgrade デプロイをサービスごとに分割 CircleCI の設定ファイルの分割  https://blog.studysapuri.jp/entry/2020/12/01/080000 と同様のことを別のリポジトリでもやった   Renovate の設定を改善し、安全性と運用の負担軽減、オープンなままの PR の削減 miam の Rate Limit 問題の解消  </description>
     </item>
     
     <item>
       <title>仕事でやったこと 2021-01-01 ~ 2021-01-31</title>
-      <link>https://techblog-szksh-cloud.github.io/job-2021-01-01-01-31/</link>
+      <link>https://techblog.szksh.cloud/job-2021-01-01-01-31/</link>
       <pubDate>Thu, 11 Feb 2021 08:13:10 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/job-2021-01-01-01-31/</guid>
+      <guid>https://techblog.szksh.cloud/job-2021-01-01-01-31/</guid>
       <description> CI: PR コメントの非表示  github-comment, tfcmt  非表示以外にも細かな改善入れている     Renovate  label を設定 Renovate の PR に便利なリンクを追加   Terraform  apply こけたときに plan 再実行して S3 に保存している plan file 及び PR コメントを更新 tfnotify を tfcmt にリプレース  tfnotify を fork した      </description>
     </item>
     
     <item>
       <title>仕事でやったこと 2020-12-01 ~ 2020-12-31</title>
-      <link>https://techblog-szksh-cloud.github.io/job-2020-12-01-12-31/</link>
+      <link>https://techblog.szksh.cloud/job-2020-12-01-12-31/</link>
       <pubDate>Thu, 11 Feb 2021 08:02:11 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/job-2020-12-01-12-31/</guid>
+      <guid>https://techblog.szksh.cloud/job-2020-12-01-12-31/</guid>
       <description>2020-12-01 から 2020-12-31 にかけて仕事でやったことを書ける範囲で書きます。
  AWS SAM Application の開発 Renovate の PR にリンクを追加 Terraform  Terraform の CI に関して日々行っている改善点・変更点をチームにシェア Docker Compose を用いてローカルで開発しやすいように改善 ドキュメント・コードコメントの追加 リファクタリング  不要なコードの削除 不要な secret を削除 不要な変数の削除 data.terraform_remote_state を local values に置換 なぜか環境変数でパラメータを渡していた箇所を、 local value に置換   CI に tflint の導入 対象の build が 1 つの場合 batch build を実行しないようにする  Terraform の CI/CD を CodeBuild に移行した話 の改良 Batch Build の起動に時間がかかる問題の解消   master の HEAD じゃなくても apply できるようにする plan file を S3 に保存 refactor: tfsec で設定ファイルを使うようにする Renovate の PR が多すぎて鬱陶しい問題の対応  automerge されるものは reviewer を設定しないようにした prConcurrentLimit を 1 にした branch protection Require branches to be up to date before merging を無効化     kube-linter  Rule に基づいて manifest の修正   miam でリソースが削除されそうなときに警告をするようにした ブログの執筆  Renovate の Tips Terraform の CI/CD を CodeBuild に移行した話 巨大な .</description>
     </item>
     
     <item>
       <title>2019-10 から今(2020-12-31)に至るまで仕事でやっていること</title>
-      <link>https://techblog-szksh-cloud.github.io/my-work-2020/</link>
+      <link>https://techblog.szksh.cloud/my-work-2020/</link>
       <pubDate>Thu, 31 Dec 2020 11:00:40 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/my-work-2020/</guid>
+      <guid>https://techblog.szksh.cloud/my-work-2020/</guid>
       <description>2019-10-01 から今の職場で SRE として働いています。 その中で自分がどういうことをやっているかという話をします。
 2020-12-31 現在の内容です。
 要約  プロダクト横断的な SRE チームで、プロダクトのプラットフォームを運用・開発している 特に CI/CD の改善が得意 developer に CI/CD をいわばサービスとして提供しており、 DX の改善に取り組んでいる Monorepo の負の側面(CIが遅い、関係ないTestがこけるetc)の解消にも取り組んでいる 自分が直面している課題を解決する OSS を色々開発している  キーワード  SRE Monorepo CI/CD Developer Experience Terraform Go / Shell script k8s CircleCI / CodeBuild Conftest Renovate  より具体的にやっていることを書いた記事  個人ブログ  https://techblog.szksh.cloud/job-2020-10-01-10-31/ https://techblog.szksh.cloud/job-2020-07-01-09-30/ https://techblog.szksh.cloud/job-2020-04-01-06-30/ https://techblog.szksh.cloud/job-2020-01-01-03-31/ https://techblog.szksh.cloud/job-2019-10-01-12-31/   会社ブログ  Renovate の Tips Terraform の CI/CD を CodeBuild に移行した話 巨大な .circleci/config.yml を分割した話 Docker Hub の Rate Limit 問題に対応した話 CI の修正をリリース前に本番と同じ条件下で検証出来る仕組みを構築した話    何をやっているか プロダクト横断的な SRE チームで、プロダクトのプラットフォームを運用・開発しています。</description>
@@ -123,60 +123,60 @@
     
     <item>
       <title>仕事でやったこと 2020-11-01 ~ 2020-11-30</title>
-      <link>https://techblog-szksh-cloud.github.io/job-2020-11-01-11-30/</link>
+      <link>https://techblog.szksh.cloud/job-2020-11-01-11-30/</link>
       <pubDate>Wed, 30 Dec 2020 05:44:14 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/job-2020-11-01-11-30/</guid>
+      <guid>https://techblog.szksh.cloud/job-2020-11-01-11-30/</guid>
       <description>2020-11-01 から 2020-11-30 にかけて仕事でやったことを書ける範囲で書きます。
  github-ci-monitor を導入し、 CI の失敗を通知  https://github.com/suzuki-shunsuke/github-ci-monitor   Terraform  Upgrade AWS Provider: Renovate で自動更新する仕組みの改善 Upgrade Terraform from v0.12 to v0.13 tfsec の導入 PR の label によって CI(plan/apply) の実行対象を追加できるようにした CircleCI から CodeBuild への移行 tfmigrate の検証   Monorepo の CI の高速化 (CircleCI)  k8s manifest の test を、変更があったものに対してだけ実行するようにした   kube-linter の導入 Renovate  https://blog.studysapuri.jp/entry/2020/12/10/080000 additionalBranchPrefix によるブランチの分割 depName を使ったリファクタリング   .circleci/config.yml の分割 ブログの執筆  Docker Hub の Rate Limit 問題に対応した話    </description>
     </item>
     
     <item>
       <title>仕事でやったこと 2020-10-01 ~ 2020-10-31</title>
-      <link>https://techblog-szksh-cloud.github.io/job-2020-10-01-10-31/</link>
+      <link>https://techblog.szksh.cloud/job-2020-10-01-10-31/</link>
       <pubDate>Sun, 29 Nov 2020 11:48:17 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/job-2020-10-01-10-31/</guid>
+      <guid>https://techblog.szksh.cloud/job-2020-10-01-10-31/</guid>
       <description>2020-10-01 から 2020-10-31 にかけて仕事でやったことを書きます。 勿論全部は書けないのでいくつかピックアップして書きます。
  Terraform  CodeBuild Batch Build による dynamic な build pipeline の導入 Conftest の実行方法を修正  https://www.openpolicyagent.org/docs/latest/terraform/ tf ファイルに対して conftest を実行するのではなく、公式の方法に従ってテストするようにした   aws_cloudwatch_log_group.retention_in_days が設定されているか Conftest でテスト  コスト削減   tfnotify が parse に失敗した場合、 github-comment でコメント  https://techblog.szksh.cloud/post-tfnotify-parse-error/     Docker Hub 認証するようにした  Docker Hub の Rate Limit 問題に対応した話   kustomize build のテスト(失敗したら PR にコメントをして、なぜ失敗したか分かるようにした)  元々 kustomize build に失敗して CI がこけても、なぜこけたのか分かりにくく、 SRE に問い合わせが来て調べるみたいなことがあった どの k8s manifest の kustomize build に失敗したのか、 PR に分かりやすくコメントするようにした   CI で kubectl apply &amp;ndash;server-dry-run によるテストを導入 Monorepo  差分検知・デプロイパイプラインの改善   Renovate  automerge の導入  renovate-approve 便利   CI で renovate-config-validator による validation の導入  https://docs.</description>
     </item>
     
     <item>
       <title>仕事でやったこと 2020-07-01 ~ 2020-09-30</title>
-      <link>https://techblog-szksh-cloud.github.io/job-2020-07-01-09-30/</link>
+      <link>https://techblog.szksh.cloud/job-2020-07-01-09-30/</link>
       <pubDate>Sun, 29 Nov 2020 11:36:44 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/job-2020-07-01-09-30/</guid>
+      <guid>https://techblog.szksh.cloud/job-2020-07-01-09-30/</guid>
       <description>2020-07-01 から 2020-09-30 にかけて仕事でやったことを書きます。 勿論全部は書けないのでいくつかピックアップして書きます。
  Terraform  CircleCI から CodeBuild への移行  Security + DX 10月以降も継続   tfnotify の導入  Monorepo で導入するには一工夫が必要 コメントが消える挙動がドキュメント化されてなくて軽くハマった     Renovate の導入  Regex Manager 便利   Monorepo  差分検知・デプロイパイプラインの改善   DataDog からのアラートのハンドリング業務の改善  どんなアラートがあって、どう対応したかなどのナレッジの共有の改善 割とアナログな手法だが、ちゃんと work している    </description>
     </item>
     
     <item>
       <title>仕事でやったこと 2020-04-01 ~ 2020-06-30</title>
-      <link>https://techblog-szksh-cloud.github.io/job-2020-04-01-06-30/</link>
+      <link>https://techblog.szksh.cloud/job-2020-04-01-06-30/</link>
       <pubDate>Sun, 29 Nov 2020 11:20:07 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/job-2020-04-01-06-30/</guid>
+      <guid>https://techblog.szksh.cloud/job-2020-04-01-06-30/</guid>
       <description>2020-04-01 から 2020-06-30 にかけて仕事でやったことを書きます。 勿論全部は書けないのでいくつかピックアップして書きます。
  Monorepo  CI で kustomize build の diff を PR にコメント Conftest で k8s manifest の validation の導入 Go で書かれた差分検知のコードのリファクタリング CI の高速化・コスト削減   GitOps  GitOps を導入するためのツールの開発のサポート   Terraform  input variables を local value に置き換え   GuardDuty の導入  Terraform で IaC False Positive なアラートが多くてハンドリングできてない   ブログの執筆  CI の修正をリリース前に本番と同じ条件下で検証出来る仕組みを構築した話   Argo Workflows の検証 MongoDB Atlas への移行サポート  Go で Restore Job の開発 オペレーション    </description>
     </item>
     
     <item>
       <title>仕事でやったこと 2020-01-01 ~ 2020-03-31</title>
-      <link>https://techblog-szksh-cloud.github.io/job-2020-01-01-03-31/</link>
+      <link>https://techblog.szksh.cloud/job-2020-01-01-03-31/</link>
       <pubDate>Sun, 29 Nov 2020 10:50:11 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/job-2020-01-01-03-31/</guid>
+      <guid>https://techblog.szksh.cloud/job-2020-01-01-03-31/</guid>
       <description>2020-01-01 から 2020-03-31 にかけて仕事でやったことを書きます。 勿論全部は書けないのでいくつかピックアップして書きます。
  Monorepo  更新検知のシェルスクリプトを Go でリプレース  CI の修正をリリース前に本番と同じ条件下で検証出来る仕組みを構築した話   CircleCI のコードリストアの改善(コスト削減・高速化)  リポジトリが非常にでかいので全部 checkout, restore すると時間がかかる Job ごとに必要最小限のコードだけをリストアすることで高速化     サーバの OS upgrade Ansible  CI の更新検知で、 PR の label で対象を指定できるようにした(コードに変更がなくてもテストが実行できるようにした)  たまにテストしたいときはある それまではてきとうにコードを修正しないとテストが実行されなかったが、 PR の label で対象の playbook を指定できるようにした   key=value 形式を YAML に変換  https://www.ansible.com/blog/ansible-best-practices-essentials  Use Native YAML Syntax       .circleci/config.yml のリファクタリング  job を parameterize して共通化したり parameterize された command を使って共通化したり コード量の大幅な削減   Terraform  CircleCI の環境変数を設定することで、 master での CI を一時的に禁止できるようにした  State を弄ってたりするときに予期せぬ apply が実行されないようにするため   master branch の CI が終わるまで wait  master の CI が走っている間に PR の CI でまだ apply されていないリソースが差分として出るのを防ぐ   shfmt, shellcheck の導入  CI/CD でシェルスクリプトを書いているので、それらを lint   State Locking の導入 Terraform Cloud の検証  結果、見送り すでに CI/CD pipeline を構築している自分たちにとっては、わざわざ移行するメリットが薄いと判断     MongoDB upgrade Jenkins Alternative の検証  RunDeck Argo Workflows 結局、ローカルで検証した程度    </description>
     </item>
     
     <item>
       <title>仕事でやったこと 2019-10-01 ~ 2019-12-31</title>
-      <link>https://techblog-szksh-cloud.github.io/job-2019-10-01-12-31/</link>
+      <link>https://techblog.szksh.cloud/job-2019-10-01-12-31/</link>
       <pubDate>Sun, 29 Nov 2020 10:38:57 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/job-2019-10-01-12-31/</guid>
+      <guid>https://techblog.szksh.cloud/job-2019-10-01-12-31/</guid>
       <description>2019-10-01 から 2019-12-31 にかけて仕事でやったことを書きます。 勿論全部は書けないのでいくつかピックアップして書きます。
  Terraform  terraform fmt の導入 Terraform の upgrade v0.11 =&amp;gt; v0.12 State の分割 3 =&amp;gt; 40 弱(正確な数は忘れた) Conftest による lint: Remote Backend のパスを間違えるとまずいので test を導入 新しいサービスを追加するときのための generator (シェルスクリプト)を開発 CODEOWNERS の設定 突撃隣の Terraform リリースブランチをやめて GitHub Flow に移行 古いリビジョンで apply の実行の禁止(CI がこけるようにした)   Ansible  CI の高速化 Jenkins job を CircleCI の scheduled job にリプレース(脱 Jenkins) ローカルでの開発環境の改善  コンテナを使い回せるようにする   goss に置き換えて高速化   CI の改善  高速化(無駄な処理の削減)    </description>
     </item>

@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>2018/11 on melody</title>
-    <link>https://techblog-szksh-cloud.github.io/archives/2018/11/</link>
+    <link>https://techblog.szksh.cloud/archives/2018/11/</link>
     <description>Recent content in 2018/11 on melody</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>jp</language><atom:link href="https://techblog-szksh-cloud.github.io/archives/2018/11/index.xml" rel="self" type="application/rss+xml" />
+    <language>jp</language><atom:link href="https://techblog.szksh.cloud/archives/2018/11/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Graylog で log を管理する</title>
-      <link>https://techblog-szksh-cloud.github.io/graylog/</link>
+      <link>https://techblog.szksh.cloud/graylog/</link>
       <pubDate>Tue, 27 Nov 2018 16:40:33 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/graylog/</guid>
+      <guid>https://techblog.szksh.cloud/graylog/</guid>
       <description>Java 製の OSS ログ管理システム Graylog の紹介です。 Graylog については幾つかに分けて記事を書きたいと思います。 今回はGraylogの入門的な内容になります。
 なお、本記事中で「現在」「現時点」といった場合、特に断りがなければ記事執筆時点 2018-11-27 を指します。
 Graylog のバージョン 検証に用いるGraylogのバージョンは 2.4.6 になります。

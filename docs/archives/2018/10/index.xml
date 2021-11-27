@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>2018/10 on melody</title>
-    <link>https://techblog-szksh-cloud.github.io/archives/2018/10/</link>
+    <link>https://techblog.szksh.cloud/archives/2018/10/</link>
     <description>Recent content in 2018/10 on melody</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>jp</language><atom:link href="https://techblog-szksh-cloud.github.io/archives/2018/10/index.xml" rel="self" type="application/rss+xml" />
+    <language>jp</language><atom:link href="https://techblog.szksh.cloud/archives/2018/10/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>akoi - binary installer</title>
-      <link>https://techblog-szksh-cloud.github.io/akoi/</link>
+      <link>https://techblog.szksh.cloud/akoi/</link>
       <pubDate>Wed, 31 Oct 2018 08:56:04 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/akoi/</guid>
+      <guid>https://techblog.szksh.cloud/akoi/</guid>
       <description>自作のOSS akoi の紹介をします。
  なぜこんなものを作ったのか akoi と ansible を使ってサーバにバイナリをインストールする方法  について主に説明します。
 まとめ  akoi はバイナリファイルのインストーラ 設定ファイルで管理できる 冪等であり、効率よくインストールできる  並列インストール Accept-Ranges による分散ダウンロード   ansibleでサーバにバイナリをインストールするのを補助してくれる  ansible で真面目にバージョンコントロールして効率よくインストールするのは難しい(ほとんどの ansible role は出来ていない)    akoi とは akoi はバイナリファイルのインストーラです。 設定ファイルにインストールするファイルのダウンロードURLとインストール先を記述して管理します。 インストールするバイナリのバージョン管理が可能であり、既にインストールしてあるバージョンへの切り替えはシンボリックを作り直すだけなので一瞬で終わります。無駄にダウンロードをしたりはしません。 複数のバイナリを並列でインストールしたり、Accept-Ranges ヘッダによる分散ダウンロードをサポートしています。
@@ -28,10 +28,10 @@ https://github.com/suzuki-shunsuke/akoi/releases からバイナリをダウン�
     
     <item>
       <title>gomic - Goのモックジェネレータ</title>
-      <link>https://techblog-szksh-cloud.github.io/gomic/</link>
+      <link>https://techblog.szksh.cloud/gomic/</link>
       <pubDate>Tue, 30 Oct 2018 08:35:16 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/gomic/</guid>
+      <guid>https://techblog.szksh.cloud/gomic/</guid>
       <description>自作のOSS gomic の紹介をします。
  なぜわざわざこんなものを作ったのか 生成されたモックの簡単な使い方  を主に説明したいと思います。
 まとめ  gomic は Goのinterfaceを実装したモックを生成するCLIツール モックを手で書くのが辛すぎた &amp;amp; 既存ツールで満足できなかったため作った  自動生成できるコードは自動生成すべき   設定ファイルで管理するため、interfaceの更新に合わせてmockの更新が容易 生成されるモックはシンプルなAPIのみ提供するので学習コストが低い  gomic とは gomic は Goのinterfaceを実装したモックを生成するCLIツールです。 これによってモックを使ったテストの作成を効率化します。 単調な作業を自動化し、本来注力すべきことに注力できるようにするためのツールです。
@@ -46,10 +46,10 @@ https://github.com/suzuki-shunsuke/gomic/releases からバイナリをダウン
     
     <item>
       <title>Dockerを使ってansible playbookをテストする</title>
-      <link>https://techblog-szksh-cloud.github.io/test-ansible-on-docker/</link>
+      <link>https://techblog.szksh.cloud/test-ansible-on-docker/</link>
       <pubDate>Fri, 12 Oct 2018 21:02:51 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/test-ansible-on-docker/</guid>
+      <guid>https://techblog.szksh.cloud/test-ansible-on-docker/</guid>
       <description>ansible playbookを(VMの代わりに)Dockerコンテナに対して実行すると、効率よく動作確認できるというお話です。 ansible playbookの動作確認のためにvagrantでVMを起動したりしていると動作確認に時間がかかるし、容量も喰います。 Dockerコンテナを使って動作確認できればこれらの問題を解決できます。
 ただし、Dockerコンテナの場合、一部のansible のtaskが失敗することがあるので ansible playbookによってはDockerコンテナではテストにならない場合もあるかと思います。
 サンプル https://github.com/suzuki-shunsuke/example/tree/master/ansible/test-on-docker
@@ -72,10 +72,10 @@ https://www.vagrantup.com/docs/docker/basics.html#host-vm
     
     <item>
       <title>Project site を User site に移行しました (GitHub Pages)</title>
-      <link>https://techblog-szksh-cloud.github.io/migrate-to-user-gh-pages/</link>
+      <link>https://techblog.szksh.cloud/migrate-to-user-gh-pages/</link>
       <pubDate>Wed, 10 Oct 2018 21:14:03 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/migrate-to-user-gh-pages/</guid>
+      <guid>https://techblog.szksh.cloud/migrate-to-user-gh-pages/</guid>
       <description>なんとなく試験的に Project site でホスティングしていた GitHub Pages を User site に移行しました。
 source code は source branch にあります。
 CIに関しては Hugo製ブログをGitHub PagesへCIでデプロイ にも書きましたが参考になる部分もあるかもしれません。</description>
@@ -83,10 +83,10 @@ CIに関しては Hugo製ブログをGitHub PagesへCIでデプロイ にも書�
     
     <item>
       <title>Hugo製ブログをGitHub PagesへCIでデプロイ</title>
-      <link>https://techblog-szksh-cloud.github.io/how-to-host-hugo-at-github-pages/</link>
+      <link>https://techblog.szksh.cloud/how-to-host-hugo-at-github-pages/</link>
       <pubDate>Mon, 01 Oct 2018 08:04:16 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/how-to-host-hugo-at-github-pages/</guid>
+      <guid>https://techblog.szksh.cloud/how-to-host-hugo-at-github-pages/</guid>
       <description>https://gohugo.io/ と https://pages.github.com/ の話です。 master に push したら GitHub Pages に circle ciでデプロイするようにする方法の紹介です。
 前提  テーマは master branch に含めない(CIでcloneする) buildしたものは gh-pages ブランチにデプロイ  コード .circleci/config.yml
 --- version: 2 jobs: build: docker: - image: suzukishunsuke/hugo-ci:0.1.2 steps: - checkout - run: git config user.name &amp;#34;***&amp;#34; - run: git config user.email &amp;#34;***@example.com&amp;#34; # --depth 1 で高速化 - run: git clone --depth 1 https://github.com/suzuki-shunsuke/tale-hugo themes/tale - run: hugo - run: sh release.sh workflows: version: 2 build: jobs: - build: filters: branches: only: master release.</description>
@@ -94,10 +94,10 @@ CIに関しては Hugo製ブログをGitHub PagesへCIでデプロイ にも書�
     
     <item>
       <title>travis ci から circle ci への移行のすすめ</title>
-      <link>https://techblog-szksh-cloud.github.io/migrate-from-travis-ci-to-circle-ci/</link>
+      <link>https://techblog.szksh.cloud/migrate-from-travis-ci-to-circle-ci/</link>
       <pubDate>Mon, 01 Oct 2018 07:23:15 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/migrate-from-travis-ci-to-circle-ci/</guid>
+      <guid>https://techblog.szksh.cloud/migrate-from-travis-ci-to-circle-ci/</guid>
       <description>travis ci と circle ci の無償SaaS 版を比較しています。
 OSS の CI では travis ci がよく使われる印象がありますが、 場合によっては circle CI に移行するとCIの時間が大幅に短くなったりして良いと思います。 ただし、複数バージョンで並列にテストしたい場合、circle ci の無償planだと並列に実行できないため、 travis でやったほうが速いかもしれません。
 Circle CI の良いところ  好きな Docker Image が使える ローカルでテストが出来る Pending 時間が travis ci に比べて短い気がする(主観) private repository の CI も出来る  好きな Docker Image が使えるのが大きいですね。 予め CI に必要なツールをインストールした Image を用意しておくことで大幅に高速化出来ますし、 ツールがインストールできなかったりバージョンが変わってしまったりするトラブルも避けられます。 同じImageを使ってローカルでテストできるのでローカルでの検証もしやすいです。

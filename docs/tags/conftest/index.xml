@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>conftest on melody</title>
-    <link>https://techblog-szksh-cloud.github.io/tags/conftest/</link>
+    <link>https://techblog.szksh.cloud/tags/conftest/</link>
     <description>Recent content in conftest on melody</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>jp</language>
-    <lastBuildDate>Fri, 09 Jul 2021 19:38:55 +0900</lastBuildDate><atom:link href="https://techblog-szksh-cloud.github.io/tags/conftest/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 09 Jul 2021 19:38:55 +0900</lastBuildDate><atom:link href="https://techblog.szksh.cloud/tags/conftest/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>OPA で Table Driven Tests っぽいことをしてみる</title>
-      <link>https://techblog-szksh-cloud.github.io/opa-table-driven-test/</link>
+      <link>https://techblog.szksh.cloud/opa-table-driven-test/</link>
       <pubDate>Fri, 09 Jul 2021 19:38:55 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/opa-table-driven-test/</guid>
+      <guid>https://techblog.szksh.cloud/opa-table-driven-test/</guid>
       <description>OPA で Table Driven Tests っぽく Policy を Test する方法について考えたので紹介します。
 背景 先日 Open Policy Agent Rego Knowledge Sharing Meetup で発表する機会を頂きました。 発表の資料はこちら。 普段他社の事例を聞いたり OPA について話たりする機会がないので、非常に貴重な時間になりました。
 その中で deeeet さんが Table Driven Tests っぽくテストしたいというようなことをおっしゃっていました。

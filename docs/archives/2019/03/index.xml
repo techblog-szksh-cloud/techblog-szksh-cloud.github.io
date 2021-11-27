@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>2019/03 on melody</title>
-    <link>https://techblog-szksh-cloud.github.io/archives/2019/03/</link>
+    <link>https://techblog.szksh.cloud/archives/2019/03/</link>
     <description>Recent content in 2019/03 on melody</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>jp</language><atom:link href="https://techblog-szksh-cloud.github.io/archives/2019/03/index.xml" rel="self" type="application/rss+xml" />
+    <language>jp</language><atom:link href="https://techblog.szksh.cloud/archives/2019/03/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>毎週30分の技術共有会</title>
-      <link>https://techblog-szksh-cloud.github.io/2019-knowledge-share-meeting/</link>
+      <link>https://techblog.szksh.cloud/2019-knowledge-share-meeting/</link>
       <pubDate>Sun, 17 Mar 2019 13:47:40 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/2019-knowledge-share-meeting/</guid>
+      <guid>https://techblog.szksh.cloud/2019-knowledge-share-meeting/</guid>
       <description>自分が最近職場で行っている技術共有の取り組みについて紹介したいと思います。
 背景 これまで自分は積極的に自分にとって新しい技術を取り入れてサービスの品質の向上に繋げてきました。 ただし、それらの技術に関して周りに十分に共有できていなかった側面がありました。
 やっていること 毎週30分決まった時間にスライドを使って発表しています。 対象は同じ部署の希望者です。 枠は30分ですが、実質話しているのは20分くらいな気がします。 k8sのハンズオン的なこともやりました(そのときは30分で終わらないので2回に分けてやりました)。
@@ -24,10 +24,10 @@
     
     <item>
       <title>Rancherでusername が重複してログインできなくなった場合の解消方法</title>
-      <link>https://techblog-szksh-cloud.github.io/rancher-duplicated-user-name/</link>
+      <link>https://techblog.szksh.cloud/rancher-duplicated-user-name/</link>
       <pubDate>Sat, 16 Mar 2019 21:17:05 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/rancher-duplicated-user-name/</guid>
+      <guid>https://techblog.szksh.cloud/rancher-duplicated-user-name/</guid>
       <description>先日起こった Rancher のトラブルの解消方法について紹介したいと思います。 Rancher のバージョンは v2.1.6 です。 admin ユーザーでログインしようとしたところ、エラーが起こりました。 最初パスワードが間違っているのかと思い、パスワードリセットしたものの、解消しませんでした。
 https://rancher.com/docs/rancher/v2.x/en/faq/technical/#how-can-i-reset-the-admin-password
 エラーメッセージをよく見ると 500 エラーでした。そこで rancher のコンテナのログを見ました。

@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>github-comment on melody</title>
-    <link>https://techblog-szksh-cloud.github.io/tags/github-comment/</link>
+    <link>https://techblog.szksh.cloud/tags/github-comment/</link>
     <description>Recent content in github-comment on melody</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>jp</language>
-    <lastBuildDate>Sat, 12 Sep 2020 08:05:59 +0900</lastBuildDate><atom:link href="https://techblog-szksh-cloud.github.io/tags/github-comment/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 12 Sep 2020 08:05:59 +0900</lastBuildDate><atom:link href="https://techblog.szksh.cloud/tags/github-comment/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>tfnotify の parse error を通知する</title>
-      <link>https://techblog-szksh-cloud.github.io/post-tfnotify-parse-error/</link>
+      <link>https://techblog.szksh.cloud/post-tfnotify-parse-error/</link>
       <pubDate>Sat, 12 Sep 2020 08:05:59 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/post-tfnotify-parse-error/</guid>
+      <guid>https://techblog.szksh.cloud/post-tfnotify-parse-error/</guid>
       <description>tfnotify が terraform の標準出力のパースに失敗してコメントを投稿できないことがあります。
 コメントを投稿できなくてもビルドのログには残るのですが、やはりコメントを投稿できると便利なので、tfnotify がパースエラーでコメントの投稿に失敗したら、 github-comment でコメントを投稿するようにしました。
 なお、この記事を書いている時点のバージョンは tfnotify v0.7.0, github-comment v1.9.0 です。

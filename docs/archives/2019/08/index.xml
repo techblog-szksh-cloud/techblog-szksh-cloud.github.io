@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>2019/08 on melody</title>
-    <link>https://techblog-szksh-cloud.github.io/archives/2019/08/</link>
+    <link>https://techblog.szksh.cloud/archives/2019/08/</link>
     <description>Recent content in 2019/08 on melody</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>jp</language><atom:link href="https://techblog-szksh-cloud.github.io/archives/2019/08/index.xml" rel="self" type="application/rss+xml" />
+    <language>jp</language><atom:link href="https://techblog.szksh.cloud/archives/2019/08/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>cmdx - task runner</title>
-      <link>https://techblog-szksh-cloud.github.io/cmdx/</link>
+      <link>https://techblog.szksh.cloud/cmdx/</link>
       <pubDate>Fri, 23 Aug 2019 11:35:13 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/cmdx/</guid>
+      <guid>https://techblog.szksh.cloud/cmdx/</guid>
       <description>最近自作した OSS, cmdx の紹介です。
 https://github.com/suzuki-shunsuke/cmdx
 cmdx は task runner です。
@@ -28,10 +28,10 @@ $ cmdx -l init, i - setup git hooks coverage, c - test a package (fzf is require
     
     <item>
       <title>Drone Extension のリスク</title>
-      <link>https://techblog-szksh-cloud.github.io/risk-of-drone-extension/</link>
+      <link>https://techblog.szksh.cloud/risk-of-drone-extension/</link>
       <pubDate>Thu, 15 Aug 2019 07:54:23 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/risk-of-drone-extension/</guid>
+      <guid>https://techblog.szksh.cloud/risk-of-drone-extension/</guid>
       <description>Drone v1 では Extension という仕組みが導入されました。
 これは文字通り Drone を拡張する仕組みで、仕様に従って作れば自由に Drone を拡張できます。
 https://docs.drone.io/extensions/overview/
@@ -44,10 +44,10 @@ Extension は非常に面白い仕組みだと思いますが、 Drone を運用
     
     <item>
       <title>Drone v1 で gRPC が使われなくなった</title>
-      <link>https://techblog-szksh-cloud.github.io/drone-v1-deprecate-grpc/</link>
+      <link>https://techblog.szksh.cloud/drone-v1-deprecate-grpc/</link>
       <pubDate>Thu, 15 Aug 2019 07:39:18 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/drone-v1-deprecate-grpc/</guid>
+      <guid>https://techblog.szksh.cloud/drone-v1-deprecate-grpc/</guid>
       <description>v0.8 では server - agent 間の通信に gPRC が使われていましたが、 v1 では使われなくなりました。
 理由  https://discourse.drone.io/t/curious-about-decision-to-drop-grpc/3987  gRPC関連のトラブルの問い合わせが多すぎてサポートしきれないので止めた    v1 での通信方法  https://discourse.drone.io/t/drone-agents-keep-closing-connections-with-499-code/5197/2  agent がロングポーリングしている 30秒後、なんのビルドもなければコネクションを切って、再接続する(張りっぱなしにしてると、LBやファイアウォールにコネクション切られるため)     自分も v0.8 から Drone を運用していて最近 v1 に upgrade しましたが、 v0.8 では gRPC 関連のトラブルが頻発していました。 server のログでは絶えず gRPC 関連のエラーを吐いていましたし、 server - agent 間の TCP connection が切れっぱなしになって戻らくなって agent 数がどんどん減っていったり ビルドが pending のままになったり、色々ありました。
 関連する issue はあり、幾つか対策を打ってみたりしましたが、結局解決しませんでした。
@@ -56,20 +56,20 @@ Extension は非常に面白い仕組みだと思いますが、 Drone を運用
     
     <item>
       <title>Golang での時刻の扱い方を整理する</title>
-      <link>https://techblog-szksh-cloud.github.io/golang-time/</link>
+      <link>https://techblog.szksh.cloud/golang-time/</link>
       <pubDate>Wed, 14 Aug 2019 20:28:56 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/golang-time/</guid>
+      <guid>https://techblog.szksh.cloud/golang-time/</guid>
       <description>今更ながら Golang での時刻の扱い方について改めて整理してみました。
 まとめ  time.Local は明示的に設定する(基本UTC) DB などには 基本UTC で永続化する 出力時に必要になったらタイムゾーンを変更する  location は出力時に問題になるので出力時に location を明示的に指定する 逆に言うと出力時以外は問題にならないので無理に location を UTC にしなくても良いかもしれない サードパーティ(ex. ORM) に time.Time を渡す場合は location に注意が必要   文字列として時刻の入力を受け付ける場合は location を明示的にセットする サードパーティが time.Local に依存する場合、 time.Local を明示的に UTC にしたりする必要があるかもしれない アプリケーションで利用する location が分かっている場合、location を取得するヘルパー関数を定義する time.LoadLocation は環境依存なので予め location が分かっているなら使わないほうがよい 文字列を time.Time に変換する場合、time.ParseInLocation で Location を指定して time.Time に変換後、time.Time.UTC() で UTC に変換する time.Time を文字列に変換する場合、time.In で location を変換後、time.Time.Format で文字列に変換する  グローバルな location https://golang.org/pkg/time/#Location</description>
     </item>
     
     <item>
       <title>Drone v1 では Jsonnet が extension なしで使える</title>
-      <link>https://techblog-szksh-cloud.github.io/drone-jsonnet/</link>
+      <link>https://techblog.szksh.cloud/drone-jsonnet/</link>
       <pubDate>Fri, 02 Aug 2019 23:02:57 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/drone-jsonnet/</guid>
+      <guid>https://techblog.szksh.cloud/drone-jsonnet/</guid>
       <description>Drone では v1 から冗長な YAML を DRY にする一つの手として、 Jsonnet の利用が推奨されています。 これについては過去のブログでも触れています。
 https://techblog.szksh.cloud/drone-jsonnet-generator/
 しかし、 v1 の rc の時点では Jsonnet の活用には Jsonnet Extension が必要でした。

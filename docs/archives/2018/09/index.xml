@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>2018/09 on melody</title>
-    <link>https://techblog-szksh-cloud.github.io/archives/2018/09/</link>
+    <link>https://techblog.szksh.cloud/archives/2018/09/</link>
     <description>Recent content in 2018/09 on melody</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>jp</language><atom:link href="https://techblog-szksh-cloud.github.io/archives/2018/09/index.xml" rel="self" type="application/rss+xml" />
+    <language>jp</language><atom:link href="https://techblog.szksh.cloud/archives/2018/09/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>metabase を使って drone の利用状況を可視化する</title>
-      <link>https://techblog-szksh-cloud.github.io/visualize-drone-usage-by-metabase/</link>
+      <link>https://techblog.szksh.cloud/visualize-drone-usage-by-metabase/</link>
       <pubDate>Sun, 30 Sep 2018 22:55:57 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/visualize-drone-usage-by-metabase/</guid>
+      <guid>https://techblog.szksh.cloud/visualize-drone-usage-by-metabase/</guid>
       <description>drone OSS 0.8.5 で検証しています。
 https://drone.io/ と https://www.metabase.com/ の話です。
 drone の利用状況を可視化したかったので、 drone の DB(MySQL) のデータを metabase で可視化しました。
@@ -21,10 +21,10 @@ drone の利用状況を可視化したかったので、 drone の DB(MySQL) �
     
     <item>
       <title>drone の管理のために portainer を導入した</title>
-      <link>https://techblog-szksh-cloud.github.io/use-portainer-for-drone-admin/</link>
+      <link>https://techblog.szksh.cloud/use-portainer-for-drone-admin/</link>
       <pubDate>Sun, 30 Sep 2018 21:56:42 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/use-portainer-for-drone-admin/</guid>
+      <guid>https://techblog.szksh.cloud/use-portainer-for-drone-admin/</guid>
       <description>drone OSS 0.8.5 で検証しています。
 https://drone.io/ と https://portainer.io/ の話です。
 drone はかなり安定したシステムだと思いますが、 ユーザーが好きなイメージで好きなコマンドを実行できる以上、トラブルが起こることはあります。
@@ -41,10 +41,10 @@ docker API でエラーが出て、コンテナを操作できない これは�
     
     <item>
       <title>drone で非rootユーザーで実行されるImageを使えない</title>
-      <link>https://techblog-szksh-cloud.github.io/drone-cant-use-nonroot-image/</link>
+      <link>https://techblog.szksh.cloud/drone-cant-use-nonroot-image/</link>
       <pubDate>Sun, 30 Sep 2018 21:42:16 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/drone-cant-use-nonroot-image/</guid>
+      <guid>https://techblog.szksh.cloud/drone-cant-use-nonroot-image/</guid>
       <description>drone で非rootユーザーで実行されるDocker Imageを使おうとするとbuildに失敗します。
 /bin/sh: 3: cannot create /root/.netrc: Permission denied これについては drone の開発者が回答しています。
  https://discourse.drone.io/t/solved-netrc-permission-denied/171/2 https://discourse.drone.io/t/solved-netrc-permission-denied/171/4  結論を言うと、 他のイメージを使うか、 rootで実行されるようにイメージを修正する必要がありそうです。</description>
@@ -52,10 +52,10 @@ docker API でエラーが出て、コンテナを操作できない これは�
     
     <item>
       <title>drone の step を実行するか否かをタグ名で判定する方法</title>
-      <link>https://techblog-szksh-cloud.github.io/drone-tag-conditional-step/</link>
+      <link>https://techblog.szksh.cloud/drone-tag-conditional-step/</link>
       <pubDate>Sun, 30 Sep 2018 21:30:06 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/drone-tag-conditional-step/</guid>
+      <guid>https://techblog.szksh.cloud/drone-tag-conditional-step/</guid>
       <description>drone 0.8.5 で検証しています。
 tag 名による判定方法はドキュメントには書いてないので書いておきます。
 when: ref: refs/tags/foo-* # タグ名が foo-* ならステップを実行 グロブ * には / は含まれないことには注意してください。
@@ -65,10 +65,10 @@ when: ref: refs/tags/foo-* # タグ名が foo-* ならステップを実行 グ�
     
     <item>
       <title>drone の project visibility とは</title>
-      <link>https://techblog-szksh-cloud.github.io/drone-project-visibility/</link>
+      <link>https://techblog.szksh.cloud/drone-project-visibility/</link>
       <pubDate>Sun, 30 Sep 2018 20:32:20 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/drone-project-visibility/</guid>
+      <guid>https://techblog.szksh.cloud/drone-project-visibility/</guid>
       <description>恐らく公式ドキュメントに説明がない気がするので書いておきます。 と言っても、以下のissueに全部書いてありますが。
 https://github.com/drone/drone/issues/2042
 droneの web ui からリポジトリごとに設定できます。 そのリポジトリが誰に見えるかの設定です。
@@ -77,10 +77,10 @@ droneの web ui からリポジトリごとに設定できます。 そのリポ
     
     <item>
       <title>drone の matrix build が27個しか実行されない</title>
-      <link>https://techblog-szksh-cloud.github.io/drone-matrix-build-run-only-27/</link>
+      <link>https://techblog.szksh.cloud/drone-matrix-build-run-only-27/</link>
       <pubDate>Sun, 30 Sep 2018 20:26:11 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/drone-matrix-build-run-only-27/</guid>
+      <guid>https://techblog.szksh.cloud/drone-matrix-build-run-only-27/</guid>
       <description>drone 0.8.5 で検証しています。
 matrix: ZOO: - 1 - 2 - 3 - 4 FOO: - 1 - 2 - 3 - 4 - 5 - 6 - 7 - 8 BAR: - 1 - 2 上記の場合、本来 4 * 8 * 2 = 64 個実行されるはずのmatrix builds が27個しか実行されなかったのでソースコードを確認したところ、 27個しか実行されないようにハードコードされていました。
  https://github.com/cncd/pipeline/blob/d4e09fd3021a16408bc3ebdd3500efd28f51e72c/pipeline/frontend/yaml/matrix/matrix.go#L11 https://github.com/cncd/pipeline/blob/d4e09fd3021a16408bc3ebdd3500efd28f51e72c/pipeline/frontend/yaml/matrix/matrix.go#L93  関係ある部分だけ抽出すると以下のような感じになります。
@@ -89,10 +89,10 @@ limitAxis = 25 axisList := []Axis{} for p := 0; p &amp;lt; perm; p++ { axisList 
     
     <item>
       <title>drone の build の timeout が変更できない</title>
-      <link>https://techblog-szksh-cloud.github.io/drone-build-timeout/</link>
+      <link>https://techblog.szksh.cloud/drone-build-timeout/</link>
       <pubDate>Sun, 30 Sep 2018 20:16:28 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/drone-build-timeout/</guid>
+      <guid>https://techblog.szksh.cloud/drone-build-timeout/</guid>
       <description>drone 0.8.5 で検証しています。
 drone の build の タイムアウトの設定はリポジトリの settings から変更できそうですが、 実は drone の admin しか変更できません。
 ブラウザのデベロッパーツールを使うと、この Timeout の設定を変更した際に
@@ -102,10 +102,10 @@ PATCH /api/repos/:owner/:name にリクエストが飛んでいるので、そ�
     
     <item>
       <title>Drone の build 実行時の認証方法</title>
-      <link>https://techblog-szksh-cloud.github.io/drone-git-authentication/</link>
+      <link>https://techblog.szksh.cloud/drone-git-authentication/</link>
       <pubDate>Sun, 30 Sep 2018 19:44:27 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/drone-git-authentication/</guid>
+      <guid>https://techblog.szksh.cloud/drone-git-authentication/</guid>
       <description>drone の build における GitHub (GitHub前提で書きますが、GitHub以外でも同じだと思います) の認証の話(どうやって認証しているか)について書いておこうと思います。 drone の build は clone step で対象のリポジトリを GitHub から clone してきています。 この際に何かしらの方法で認証しているはずです。
 結論を言うと、
 あるリポジトリAのbuildでは、 リポジトリAの drone連携を有効化したユーザー Bの access token を .netrc に書き込んで認証しています。 よってユーザーBにcloneする権限があるリポジトリはcloneできるし、 ユーザーBにcloneする権限がないリポジトリはcloneできません。 つまり、 誰が連携を有効化するかが重要 になります(これについては後述します)。 なお、drone連携の有効化はそのリポジトリのowner以上でないと出来ません。
@@ -116,10 +116,10 @@ drone上でリポジトリの連携を有効化すると、 リポジトリのHo
     
     <item>
       <title>Drone と Circle CI の workspace の扱いの違いについて</title>
-      <link>https://techblog-szksh-cloud.github.io/drone-circle-volume-difference/</link>
+      <link>https://techblog.szksh.cloud/drone-circle-volume-difference/</link>
       <pubDate>Sun, 30 Sep 2018 19:27:59 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/drone-circle-volume-difference/</guid>
+      <guid>https://techblog.szksh.cloud/drone-circle-volume-difference/</guid>
       <description>drone は同じ pipeline の step 間で同じ workspace を docker の volume としてマウントすることで workspace を共有します。
 http://docs.drone.io/workspace/
 circle ci はデフォルトで job 間で workspace を共有しません。 persist_to_workspace を指定することで共有する事ができます。
@@ -135,20 +135,20 @@ circle ci の場合は archive, unarchive する分、volume 共有に比べて�
     
     <item>
       <title>drone exec を並列実行した際のdocker network name の衝突について</title>
-      <link>https://techblog-szksh-cloud.github.io/drone-exec-network-name-collision/</link>
+      <link>https://techblog.szksh.cloud/drone-exec-network-name-collision/</link>
       <pubDate>Sun, 30 Sep 2018 18:52:34 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/drone-exec-network-name-collision/</guid>
+      <guid>https://techblog.szksh.cloud/drone-exec-network-name-collision/</guid>
       <description>drone exec を並列実行すると docker network name が衝突することがあります。
 $ drone exec --local &amp;amp; drone exec --local [1] 42934 2018/06/06 01:58:12 Error response from daemon: network drone_default is ambiguous (4 matches found on name) 2018/06/06 01:58:12 Error response from daemon: Conflict. The container name &amp;quot;/drone_step_0&amp;quot; is already in use by container &amp;quot;464a29b0726d6ff1a352d81df9c837330501085be550bb16abac3d338dfad887&amp;quot;. You have to remove (or rename) that container to be able to reuse that name. [1] + exit 1 drone exec --local drone は pipeline 実行時に network を作成し、pipeline が終了すると network を削除します。</description>
     </item>
     
     <item>
       <title>go-gencfg - viperの個々のアプリケーション用のラッパーのコードジェネレータ</title>
-      <link>https://techblog-szksh-cloud.github.io/go-gencfg/</link>
+      <link>https://techblog.szksh.cloud/go-gencfg/</link>
       <pubDate>Thu, 06 Sep 2018 23:59:35 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/go-gencfg/</guid>
+      <guid>https://techblog.szksh.cloud/go-gencfg/</guid>
       <description>自作のOSS go-gencfg を紹介します。 Golang で viper という汎用的な設定管理ライブラリがありますが、 特定のアプリケーション用に viper のラッパーを生成するCLIツールです。
 使い方や開発の背景を書こうかと思いましたが、だいたい README に書いてあるので そちらを御覧ください。
 https://github.com/suzuki-shunsuke/go-gencfg/blob/master/README.md</description>

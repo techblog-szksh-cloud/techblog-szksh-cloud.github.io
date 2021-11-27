@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>graylog on melody</title>
-    <link>https://techblog-szksh-cloud.github.io/tags/graylog/</link>
+    <link>https://techblog.szksh.cloud/tags/graylog/</link>
     <description>Recent content in graylog on melody</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>jp</language>
-    <lastBuildDate>Fri, 25 Jan 2019 22:38:28 +0900</lastBuildDate><atom:link href="https://techblog-szksh-cloud.github.io/tags/graylog/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 25 Jan 2019 22:38:28 +0900</lastBuildDate><atom:link href="https://techblog.szksh.cloud/tags/graylog/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Terraform Providerで import を実装する方法</title>
-      <link>https://techblog-szksh-cloud.github.io/terraform-provider-graylog-import/</link>
+      <link>https://techblog.szksh.cloud/terraform-provider-graylog-import/</link>
       <pubDate>Fri, 25 Jan 2019 22:38:28 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/terraform-provider-graylog-import/</guid>
+      <guid>https://techblog.szksh.cloud/terraform-provider-graylog-import/</guid>
       <description>terraform provider graylog で alert condition と stream rule の import を実装しました。
  https://github.com/suzuki-shunsuke/go-graylog/pull/59 https://github.com/suzuki-shunsuke/go-graylog/pull/60  そこで import を実装する方法を紹介したいと思います。
 terraform でリソースをimportするにはリソースがimportをサポートしている必要があります。 schema.Resource の Importer フィールドですね。リソースがIDだけでGet出来る場合、schema.ImportStatePassthroughを使えば終わりです。 一方、Graylogのalert condition や stream rule はIDだけでなく、stream id も必要になります。 terraform import コマンドは1つの引数しか取らないため、サポートできないのでは？と以前まで思っていました。 そういった場合、次のようにStateFuncを実装すればサポートできます。
@@ -24,10 +24,10 @@ https://godoc.org/github.com/hashicorp/terraform/helper/schema#ImportStatePassth
     
     <item>
       <title>GraylogのAlertの課題</title>
-      <link>https://techblog-szksh-cloud.github.io/graylog-alert-issue/</link>
+      <link>https://techblog.szksh.cloud/graylog-alert-issue/</link>
       <pubDate>Wed, 19 Dec 2018 21:02:11 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/graylog-alert-issue/</guid>
+      <guid>https://techblog.szksh.cloud/graylog-alert-issue/</guid>
       <description>Graylogを運用してきて感じているAlert機能周りの課題をリストアップします。 自分のGraylogの理解が不十分で勘違いしている部分もあるかもしれませんが、ご了承ください。 Graylogのバージョンは 2.5.0 です。 ここでいう「メンション」とは、Slackのようなチャットツールのメンションを指します。 リストの詳細を書きだしてみたものの、リストだけでだいたい言いたいことが言えてしまっていたのと、単なる愚痴っぽくなってしまったので、 リストだけに留めます。
 2018-12-31 追記 元々 Alert Condition, Notification の APIがないと勘違いしていたのですが、 実はちゃんとあったので terraform で管理できるように go-graylog を更新しました。
  https://github.com/suzuki-shunsuke/go-graylog/pull/50 https://github.com/suzuki-shunsuke/go-graylog/pull/52 https://github.com/suzuki-shunsuke/go-graylog/blob/v11.0.0/docs/resources/alarm_callback.md https://github.com/suzuki-shunsuke/go-graylog/blob/v11.0.0/docs/resources/alert_condition.md  課題リスト  APIでAlert Condition, Notificationを管理できない  APIがないので terraform でサポートも出来ない 数が増えるとWeb UIでは管理が辛い・修正漏れや設定ミスが出やすい   Condition, NotificationがStreamに紐づく  ConditionによってNotificationを変えられない  条件に応じてアラートの文面・通知先・メンション先・メンションの有無を変えられない (正確にはテンプレートエンジンで頑張ればある程度対応できるかもしれないが、個人的にはテンプレートそのものを切り替えたい)   ConditionやNotificationを複数のStreamで使い回せない   (少なくとも標準機能では)時間帯によってアラートの挙動を変更できない  夜中にはアラートを飛ばさない・メンションをつけないといったことが出来ない 一時的にアラートを止められない   Pluginを使うにしてもどれを使ったら良いか分からない  もっとGraylogがメジャーになれば状況も変わるかもしれない    </description>
@@ -35,10 +35,10 @@ https://godoc.org/github.com/hashicorp/terraform/helper/schema#ImportStatePassth
     
     <item>
       <title>Graylog の Terraform を CI/CDで実行する</title>
-      <link>https://techblog-szksh-cloud.github.io/graylog-terraform-ci/</link>
+      <link>https://techblog.szksh.cloud/graylog-terraform-ci/</link>
       <pubDate>Fri, 07 Dec 2018 08:22:49 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/graylog-terraform-ci/</guid>
+      <guid>https://techblog.szksh.cloud/graylog-terraform-ci/</guid>
       <description>以前 Graylog を Terraform で管理する記事を書きました。
 https://suzuki-shunsuke.github.io/graylog-terraform/
 今回はそれを CI/CD で実行できるようにした話です。
@@ -51,10 +51,10 @@ resource &amp;quot;graylog_role&amp;quot; &amp;quot;terraform&amp;quot; { name =
     
     <item>
       <title>GraylogをTerraformで管理する</title>
-      <link>https://techblog-szksh-cloud.github.io/graylog-terraform/</link>
+      <link>https://techblog.szksh.cloud/graylog-terraform/</link>
       <pubDate>Sat, 01 Dec 2018 14:56:00 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/graylog-terraform/</guid>
+      <guid>https://techblog.szksh.cloud/graylog-terraform/</guid>
       <description>Graylogのリソースを terraform で管理するために作った terraform provider を紹介します。 Graylogとは何かはこちらを読んでください。
 Graylogには様々なリソースがあります。
  User Role Input Index Set Stream Stream Rule Dashboard Alert etc  これらのリソースはWeb UIから作成したり出来るわけですが、 Web UIでポチポチするのは疲れますし、ソースコードで管理したいものです(Infrastructure as Code)。 また、Web UIからでは細かな権限管理は出来ず(限られた権限管理しか出来ない)、APIを使ってする必要があります。
@@ -72,10 +72,10 @@ https://github.com/suzuki-shunsuke/example/tree/master/graylog-terraform
     
     <item>
       <title>Graylog で log を管理する</title>
-      <link>https://techblog-szksh-cloud.github.io/graylog/</link>
+      <link>https://techblog.szksh.cloud/graylog/</link>
       <pubDate>Tue, 27 Nov 2018 16:40:33 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/graylog/</guid>
+      <guid>https://techblog.szksh.cloud/graylog/</guid>
       <description>Java 製の OSS ログ管理システム Graylog の紹介です。 Graylog については幾つかに分けて記事を書きたいと思います。 今回はGraylogの入門的な内容になります。
 なお、本記事中で「現在」「現時点」といった場合、特に断りがなければ記事執筆時点 2018-11-27 を指します。
 Graylog のバージョン 検証に用いるGraylogのバージョンは 2.4.6 になります。

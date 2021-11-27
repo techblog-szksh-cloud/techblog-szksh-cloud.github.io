@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>2020/01 on melody</title>
-    <link>https://techblog-szksh-cloud.github.io/archives/2020/01/</link>
+    <link>https://techblog.szksh.cloud/archives/2020/01/</link>
     <description>Recent content in 2020/01 on melody</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>jp</language><atom:link href="https://techblog-szksh-cloud.github.io/archives/2020/01/index.xml" rel="self" type="application/rss+xml" />
+    <language>jp</language><atom:link href="https://techblog.szksh.cloud/archives/2020/01/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Terraform ハンズオン with MySQL Provider</title>
-      <link>https://techblog-szksh-cloud.github.io/terraform-hands-on-with-mysql-provider/</link>
+      <link>https://techblog.szksh.cloud/terraform-hands-on-with-mysql-provider/</link>
       <pubDate>Fri, 17 Jan 2020 09:14:08 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/terraform-hands-on-with-mysql-provider/</guid>
+      <guid>https://techblog.szksh.cloud/terraform-hands-on-with-mysql-provider/</guid>
       <description>Terraform を勉強するには実際に使ってみるのが一番手っ取り早いですが、 では手頃な題材はあるかと言われると少し難しいです。
 公式の Getting Started では AWS が使われていますが、 AWS のアカウントやクレデンシャルが必要ですしお金もかかってしまいます(無料枠はありますが)。 もう少し手軽なものが欲しいところです。
 そこで公式の Provider で丁度いいものはないか探したところ、 MySQL Provider が良さそうでした。 MySQL のユーザーや Database を Terraform で管理したいとは自分は思いませんが、 Terraform の入門で遊ぶにはちょうどよいでしょう。
@@ -24,10 +24,10 @@ $ mkdir workspace $ cd workspace Terraform のバージョンと tfenv Terraform
     
     <item>
       <title>Terraform 入門</title>
-      <link>https://techblog-szksh-cloud.github.io/terraform-getting-started/</link>
+      <link>https://techblog.szksh.cloud/terraform-getting-started/</link>
       <pubDate>Thu, 16 Jan 2020 09:25:05 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/terraform-getting-started/</guid>
+      <guid>https://techblog.szksh.cloud/terraform-getting-started/</guid>
       <description>参考  10分で理解するTerraform | Qiita Terraform入門資料(v0.12.0対応) ~基本知識から設計や運用、知っておくべきtipsまで~ | Qiita AWSでTerraformに入門 | Developers.io Terraform職人入門: 日々の運用で学んだ知見を淡々とまとめる | Qiita  手を動かしたい方は Terraform ハンズオン with MySQL Provider も参考にしてください。
 前提  執筆時点 (2020/01/05) で Terraform の最新バージョンは v0.12.18 です  Terraform とは Terraform は Infrastructure as Code を実現する汎用的なCLIツールです。 インフラの状態を設定ファイルに定義し、コマンドを実行することで、 実際のインフラの状態と設定ファイルの差分を検知し、設定ファイルに記述されたとおりになるようにインフラを変更(CRUD)します。
 Hashicorp という企業がホストしている OSS になります。 Go で書かれています。 https://github.com/hashicorp/terraform
@@ -40,10 +40,10 @@ tfenv は Terraform のバージョン管理ツールです。 pyenv や rbenv �
     
     <item>
       <title>Terraform の State Locking の概要</title>
-      <link>https://techblog-szksh-cloud.github.io/terraform-state-locking/</link>
+      <link>https://techblog.szksh.cloud/terraform-state-locking/</link>
       <pubDate>Fri, 10 Jan 2020 16:18:05 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/terraform-state-locking/</guid>
+      <guid>https://techblog.szksh.cloud/terraform-state-locking/</guid>
       <description>Terraform の State Locking という機能の概要について説明します。 ただし、自分もちゃんと理解しているわけではないので、推測も混じります。 基本的には公式ドキュメントに書いてある内容なのでそちらをご参照ください。
 State Locking とは terraform plan などのコマンドは State を変更する場合があります。 その処理は atomic ではないため、同時に複数のコマンドが State を書き換えようとすると不整合が生じる可能性があります。
  例えば S3 backend の state を state rm で更新する場合を考えます。 これはコマンド内部で

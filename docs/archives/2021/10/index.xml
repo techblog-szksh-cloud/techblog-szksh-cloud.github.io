@@ -2,26 +2,26 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>2021/10 on melody</title>
-    <link>https://techblog-szksh-cloud.github.io/archives/2021/10/</link>
+    <link>https://techblog.szksh.cloud/archives/2021/10/</link>
     <description>Recent content in 2021/10 on melody</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>jp</language><atom:link href="https://techblog-szksh-cloud.github.io/archives/2021/10/index.xml" rel="self" type="application/rss+xml" />
+    <language>jp</language><atom:link href="https://techblog.szksh.cloud/archives/2021/10/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>2021-10 やったこと</title>
-      <link>https://techblog-szksh-cloud.github.io/what-i-did-2021-10/</link>
+      <link>https://techblog.szksh.cloud/what-i-did-2021-10/</link>
       <pubDate>Tue, 26 Oct 2021 20:43:03 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/what-i-did-2021-10/</guid>
+      <guid>https://techblog.szksh.cloud/what-i-did-2021-10/</guid>
       <description>Job  AWS SSO の導入  Google アカウントで AWS へサインインできるように設定 AWS SSO の Terraform 管理 ssosync を Lambda で定期実行 開発者向けの移行ガイドの作成し、実際に案内 terraform, kubectl などのツールで AWS にアクセスできるかの検証   AWS WAF の COUNT, BLOCK の log を Firehose, Lambda で抽出 akoi を aqua にリプレース  Blog  2021-10-13: HashiTalks Japan 2021 で弊プロダクトの Terraform Platform について登壇しました  OSS https://github.com/pulls?q=is%3Aclosed+is%3Apublic+is%3Apr+author%3Asuzuki-shunsuke+archived%3Afalse+created%3A2021-10-01..2021-10-31+
  Profile などの更新: https://github.com/suzuki-shunsuke/suzuki-shunsuke GitHub Actions の開発 自作ツールを Homebrew でインストールできるようにした aqua: v0.7.3 =&amp;gt; v0.7.10  aqua-registry: v0.</description>
     </item>
     
     <item>
       <title>2021-09 やったこと</title>
-      <link>https://techblog-szksh-cloud.github.io/what-i-did-2021-09/</link>
+      <link>https://techblog.szksh.cloud/what-i-did-2021-09/</link>
       <pubDate>Sat, 02 Oct 2021 21:46:15 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/what-i-did-2021-09/</guid>
+      <guid>https://techblog.szksh.cloud/what-i-did-2021-09/</guid>
       <description>仕事 今月は有休消化やシルバーウィークもあり、稼働が少なく、あまり仕事が進まなかったです。
  AWS SSO や Organizations を導入するためのロードマップの策定 AWS SSO の検証  登壇  2021-09-30 HashiTalks Japan 2021 (youtube)  Terraform Platform in Quipper (youtube) Talk (30 min)    新たに作った OSS  aqua-renovate-config  Renovate Configuration to update packages and registries of aqua    Blog  English  Tips about Renovate 2021-09-08 aqua - Declarative CLI Version Manager   https://techblog.szksh.cloud/archives/2021/09/  2021-09-25 aqua で組織・チームのツール群を管理 2021-09-05 aqua の設定ファイルをインタラクティブに生成する generate コマンド 2021-09-04 aqua v0.</description>
     </item>

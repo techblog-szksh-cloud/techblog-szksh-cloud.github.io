@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>2020/12 on melody</title>
-    <link>https://techblog-szksh-cloud.github.io/archives/2020/12/</link>
+    <link>https://techblog.szksh.cloud/archives/2020/12/</link>
     <description>Recent content in 2020/12 on melody</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>jp</language><atom:link href="https://techblog-szksh-cloud.github.io/archives/2020/12/index.xml" rel="self" type="application/rss+xml" />
+    <language>jp</language><atom:link href="https://techblog.szksh.cloud/archives/2020/12/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>2019-10 から今(2020-12-31)に至るまで仕事でやっていること</title>
-      <link>https://techblog-szksh-cloud.github.io/my-work-2020/</link>
+      <link>https://techblog.szksh.cloud/my-work-2020/</link>
       <pubDate>Thu, 31 Dec 2020 11:00:40 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/my-work-2020/</guid>
+      <guid>https://techblog.szksh.cloud/my-work-2020/</guid>
       <description>2019-10-01 から今の職場で SRE として働いています。 その中で自分がどういうことをやっているかという話をします。
 2020-12-31 現在の内容です。
 要約  プロダクト横断的な SRE チームで、プロダクトのプラットフォームを運用・開発している 特に CI/CD の改善が得意 developer に CI/CD をいわばサービスとして提供しており、 DX の改善に取り組んでいる Monorepo の負の側面(CIが遅い、関係ないTestがこけるetc)の解消にも取り組んでいる 自分が直面している課題を解決する OSS を色々開発している  キーワード  SRE Monorepo CI/CD Developer Experience Terraform Go / Shell script k8s CircleCI / CodeBuild Conftest Renovate  より具体的にやっていることを書いた記事  個人ブログ  https://techblog.szksh.cloud/job-2020-10-01-10-31/ https://techblog.szksh.cloud/job-2020-07-01-09-30/ https://techblog.szksh.cloud/job-2020-04-01-06-30/ https://techblog.szksh.cloud/job-2020-01-01-03-31/ https://techblog.szksh.cloud/job-2019-10-01-12-31/   会社ブログ  Renovate の Tips Terraform の CI/CD を CodeBuild に移行した話 巨大な .circleci/config.yml を分割した話 Docker Hub の Rate Limit 問題に対応した話 CI の修正をリリース前に本番と同じ条件下で検証出来る仕組みを構築した話    何をやっているか プロダクト横断的な SRE チームで、プロダクトのプラットフォームを運用・開発しています。</description>
@@ -19,20 +19,20 @@
     
     <item>
       <title>仕事でやったこと 2020-11-01 ~ 2020-11-30</title>
-      <link>https://techblog-szksh-cloud.github.io/job-2020-11-01-11-30/</link>
+      <link>https://techblog.szksh.cloud/job-2020-11-01-11-30/</link>
       <pubDate>Wed, 30 Dec 2020 05:44:14 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/job-2020-11-01-11-30/</guid>
+      <guid>https://techblog.szksh.cloud/job-2020-11-01-11-30/</guid>
       <description>2020-11-01 から 2020-11-30 にかけて仕事でやったことを書ける範囲で書きます。
  github-ci-monitor を導入し、 CI の失敗を通知  https://github.com/suzuki-shunsuke/github-ci-monitor   Terraform  Upgrade AWS Provider: Renovate で自動更新する仕組みの改善 Upgrade Terraform from v0.12 to v0.13 tfsec の導入 PR の label によって CI(plan/apply) の実行対象を追加できるようにした CircleCI から CodeBuild への移行 tfmigrate の検証   Monorepo の CI の高速化 (CircleCI)  k8s manifest の test を、変更があったものに対してだけ実行するようにした   kube-linter の導入 Renovate  https://blog.studysapuri.jp/entry/2020/12/10/080000 additionalBranchPrefix によるブランチの分割 depName を使ったリファクタリング   .circleci/config.yml の分割 ブログの執筆  Docker Hub の Rate Limit 問題に対応した話    </description>
     </item>
     
     <item>
       <title>Renovate の PR に便利なリンクを追加</title>
-      <link>https://techblog-szksh-cloud.github.io/renovate-add-compare/</link>
+      <link>https://techblog.szksh.cloud/renovate-add-compare/</link>
       <pubDate>Mon, 28 Dec 2020 14:32:31 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/renovate-add-compare/</guid>
+      <guid>https://techblog.szksh.cloud/renovate-add-compare/</guid>
       <description>Renovate による PR をレビューする際、差分がなんなのか分かりづらいときがあります。 例えば data source が github-release の場合、 PR の description に Release Note が含まれており、コードの差分も link があるので便利です。 一方 helm data source の場合、 そういったものがなく差分がなんなのか分からないことがあります。 そういう場合、 prBodyNotes を利用して link を追加すると便利です。
 例えば、 datadog helm chart の場合
 { &amp;#34;datasources&amp;#34;: [&amp;#34;helm&amp;#34;], &amp;#34;packageNames&amp;#34;: [&amp;#34;datadog&amp;#34;], &amp;#34;prBodyNotes&amp;#34;: [ &amp;#34;[compare](https://github.com/DataDog/helm-charts/compare/datadog-{{currentVersion}}...datadog-{{newVersion}})&amp;#34; ] } とすると、 PR の description にリンクが追加されます。地味ですが便利です。 Release page へのリンクを追加しても便利かもしれませんね。
@@ -42,10 +42,10 @@ template で使える変数は https://docs.renovatebot.com/templates/ を参照
     
     <item>
       <title>Renovate と Dependabot の比較</title>
-      <link>https://techblog-szksh-cloud.github.io/compare-renovate-dependabot/</link>
+      <link>https://techblog.szksh.cloud/compare-renovate-dependabot/</link>
       <pubDate>Sat, 05 Dec 2020 12:37:17 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/compare-renovate-dependabot/</guid>
+      <guid>https://techblog.szksh.cloud/compare-renovate-dependabot/</guid>
       <description>普段 Renovate を主に使っている自分が、 Dependabot と Renovate の違いについて調べてみました。 普段 Renovate を主に使っているので、 Renovate 寄りの内容になっています。 気分を害する人がいましたら申し訳ありません。 Dependabot の理解が浅いので間違ってたら指摘してもらえると助かります。 2020-12-01 時点の情報です。
 設定項目の数  https://docs.github.com/en/free-pro-team@latest/github/administering-a-repository/configuration-options-for-dependency-updates#directory https://docs.renovatebot.com/configuration-options/  まずは設定のドキュメントを見比べると、 Renovate のほうが設定項目が多いです。 Renovate はよく言うと設定項目が多く、柔軟な設定ができるといえる一方、すべての設定を理解し使いこなすのは難しいです。 決して日本語の情報も多くないので、色々試行錯誤したりすることもあります。 Dependabot の場合、設定がそんなに多くなく割と分かりやすい印象があります。
 scheduling  https://docs.github.com/en/free-pro-team@latest/github/administering-a-repository/configuration-options-for-dependency-updates#scheduleinterval https://docs.renovatebot.com/configuration-options/#prhourlylimit https://docs.renovatebot.com/configuration-options/#schedule  Dependabot は schedule の設定が必須です。 Renovate でも schedule の設定は出来ます。
@@ -58,10 +58,10 @@ Renovate は .circleci/config.yml などの update もサポート  https://docs
     
     <item>
       <title>Terraform の Docker Provider の Collaborator になりました</title>
-      <link>https://techblog-szksh-cloud.github.io/collaborator-of-terraform-docker-provider/</link>
+      <link>https://techblog.szksh.cloud/collaborator-of-terraform-docker-provider/</link>
       <pubDate>Thu, 03 Dec 2020 09:07:32 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/collaborator-of-terraform-docker-provider/</guid>
+      <guid>https://techblog.szksh.cloud/collaborator-of-terraform-docker-provider/</guid>
       <description>先日 kreuzwerker/terraform-provider-docker の Collaborator になりました。 kreuzwerker/terraform-provider-docker は Terraform の Docker Provider であり、 Docker コンテナや image, network などを管理できます。 元々は Hashicorp の Official Provider であった terraform-providers/terraform-provider-docker が kreuzwerker/terraform-provider-docker に移管され、 Community Provider になりました。 元のリポジトリは hashicorp org に移され archive されています。
 Collaborator になった経緯 リポジトリが移管される際に、メンテナを募集していて過去に contribution していた自分にも声をかけていただきました。
 https://github.com/hashicorp/terraform-provider-docker/issues/306

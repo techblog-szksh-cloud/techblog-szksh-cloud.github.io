@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>drone on melody</title>
-    <link>https://techblog-szksh-cloud.github.io/tags/drone/</link>
+    <link>https://techblog.szksh.cloud/tags/drone/</link>
     <description>Recent content in drone on melody</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>jp</language>
-    <lastBuildDate>Thu, 15 Aug 2019 07:54:23 +0900</lastBuildDate><atom:link href="https://techblog-szksh-cloud.github.io/tags/drone/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 15 Aug 2019 07:54:23 +0900</lastBuildDate><atom:link href="https://techblog.szksh.cloud/tags/drone/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Drone Extension のリスク</title>
-      <link>https://techblog-szksh-cloud.github.io/risk-of-drone-extension/</link>
+      <link>https://techblog.szksh.cloud/risk-of-drone-extension/</link>
       <pubDate>Thu, 15 Aug 2019 07:54:23 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/risk-of-drone-extension/</guid>
+      <guid>https://techblog.szksh.cloud/risk-of-drone-extension/</guid>
       <description>Drone v1 では Extension という仕組みが導入されました。
 これは文字通り Drone を拡張する仕組みで、仕様に従って作れば自由に Drone を拡張できます。
 https://docs.drone.io/extensions/overview/
@@ -25,10 +25,10 @@ Extension は非常に面白い仕組みだと思いますが、 Drone を運用
     
     <item>
       <title>Drone v1 で gRPC が使われなくなった</title>
-      <link>https://techblog-szksh-cloud.github.io/drone-v1-deprecate-grpc/</link>
+      <link>https://techblog.szksh.cloud/drone-v1-deprecate-grpc/</link>
       <pubDate>Thu, 15 Aug 2019 07:39:18 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/drone-v1-deprecate-grpc/</guid>
+      <guid>https://techblog.szksh.cloud/drone-v1-deprecate-grpc/</guid>
       <description>v0.8 では server - agent 間の通信に gPRC が使われていましたが、 v1 では使われなくなりました。
 理由  https://discourse.drone.io/t/curious-about-decision-to-drop-grpc/3987  gRPC関連のトラブルの問い合わせが多すぎてサポートしきれないので止めた    v1 での通信方法  https://discourse.drone.io/t/drone-agents-keep-closing-connections-with-499-code/5197/2  agent がロングポーリングしている 30秒後、なんのビルドもなければコネクションを切って、再接続する(張りっぱなしにしてると、LBやファイアウォールにコネクション切られるため)     自分も v0.8 から Drone を運用していて最近 v1 に upgrade しましたが、 v0.8 では gRPC 関連のトラブルが頻発していました。 server のログでは絶えず gRPC 関連のエラーを吐いていましたし、 server - agent 間の TCP connection が切れっぱなしになって戻らくなって agent 数がどんどん減っていったり ビルドが pending のままになったり、色々ありました。
 関連する issue はあり、幾つか対策を打ってみたりしましたが、結局解決しませんでした。
@@ -37,10 +37,10 @@ Extension は非常に面白い仕組みだと思いますが、 Drone を運用
     
     <item>
       <title>Drone v1 では Jsonnet が extension なしで使える</title>
-      <link>https://techblog-szksh-cloud.github.io/drone-jsonnet/</link>
+      <link>https://techblog.szksh.cloud/drone-jsonnet/</link>
       <pubDate>Fri, 02 Aug 2019 23:02:57 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/drone-jsonnet/</guid>
+      <guid>https://techblog.szksh.cloud/drone-jsonnet/</guid>
       <description>Drone では v1 から冗長な YAML を DRY にする一つの手として、 Jsonnet の利用が推奨されています。 これについては過去のブログでも触れています。
 https://techblog.szksh.cloud/drone-jsonnet-generator/
 しかし、 v1 の rc の時点では Jsonnet の活用には Jsonnet Extension が必要でした。
@@ -54,10 +54,10 @@ https://engineering.linecorp.com/ja/blog/go-oss-ci-cd-platform-drone-1-0-0-rc-1/
     
     <item>
       <title>Drone で「ビルド実行時にパラメータを渡す」っぽいことをする</title>
-      <link>https://techblog-szksh-cloud.github.io/how-to-imitate-jenkins-parameterized-build-at-drone/</link>
+      <link>https://techblog.szksh.cloud/how-to-imitate-jenkins-parameterized-build-at-drone/</link>
       <pubDate>Thu, 20 Jun 2019 17:50:11 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/how-to-imitate-jenkins-parameterized-build-at-drone/</guid>
+      <guid>https://techblog.szksh.cloud/how-to-imitate-jenkins-parameterized-build-at-drone/</guid>
       <description>Jenkins では parameterized build という機能で、ビルド実行時に Web UI からパラメータを指定することができます。
 Drone では基本的に Git のイベントをフックして動くので「ビルドを実行時に手動でパラメータを設定する」ということは出来ません。
 自分は基本的にできなくても構わないと思っていますが、 こういった機能がないから Drone を使わないという人も中にはいるので、 Drone でもちょっとした工夫でそれっぽいことは出来るんじゃないかと思い、簡単なサンプルを書いてみました。
@@ -82,10 +82,10 @@ https://github.com/suzuki-shunsuke/example-drone-build-parameter/blob/master/bui
     
     <item>
       <title>Drone v0.8 の .drone.yml を v1 の .drone.jsonnet に変換するツールを作った</title>
-      <link>https://techblog-szksh-cloud.github.io/drone-jsonnet-generator/</link>
+      <link>https://techblog.szksh.cloud/drone-jsonnet-generator/</link>
       <pubDate>Wed, 12 Jun 2019 07:40:45 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/drone-jsonnet-generator/</guid>
+      <guid>https://techblog.szksh.cloud/drone-jsonnet-generator/</guid>
       <description>Drone v0.8 の .drone.yml を v1 の .drone.jsonnet に変換するツールを作ったので紹介します。
 https://github.com/suzuki-shunsuke/drone-jsonnet-generator
 背景 https://docs.drone.io/user-guide/pipeline/migrating/
@@ -99,10 +99,10 @@ https://docs.drone.io/user-guide/pipeline/migrating/
     
     <item>
       <title>.drone.jsonnet と .drone.yml を比較する Drone plugin を作った</title>
-      <link>https://techblog-szksh-cloud.github.io/drone-plugin-jsonnet-check/</link>
+      <link>https://techblog.szksh.cloud/drone-plugin-jsonnet-check/</link>
       <pubDate>Sat, 01 Jun 2019 08:34:10 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/drone-plugin-jsonnet-check/</guid>
+      <guid>https://techblog.szksh.cloud/drone-plugin-jsonnet-check/</guid>
       <description>久しぶりに Drone plugin を作ったので紹介します。
 https://www.github.com/suzuki-shunsuke/drone-plugin-jsonnet-check
 .drone.jsonnet から .drone.yml を生成していて、両方を Git で管理している場合に、 .drone.jsonnet と .drone.yml の状態が一致しているかテストするための plugin です。
@@ -114,10 +114,10 @@ https://docs.drone.io/user-guide/pipeline/migrating/
     
     <item>
       <title>metabase を使って drone の利用状況を可視化する</title>
-      <link>https://techblog-szksh-cloud.github.io/visualize-drone-usage-by-metabase/</link>
+      <link>https://techblog.szksh.cloud/visualize-drone-usage-by-metabase/</link>
       <pubDate>Sun, 30 Sep 2018 22:55:57 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/visualize-drone-usage-by-metabase/</guid>
+      <guid>https://techblog.szksh.cloud/visualize-drone-usage-by-metabase/</guid>
       <description>drone OSS 0.8.5 で検証しています。
 https://drone.io/ と https://www.metabase.com/ の話です。
 drone の利用状況を可視化したかったので、 drone の DB(MySQL) のデータを metabase で可視化しました。
@@ -127,10 +127,10 @@ drone の利用状況を可視化したかったので、 drone の DB(MySQL) �
     
     <item>
       <title>drone の管理のために portainer を導入した</title>
-      <link>https://techblog-szksh-cloud.github.io/use-portainer-for-drone-admin/</link>
+      <link>https://techblog.szksh.cloud/use-portainer-for-drone-admin/</link>
       <pubDate>Sun, 30 Sep 2018 21:56:42 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/use-portainer-for-drone-admin/</guid>
+      <guid>https://techblog.szksh.cloud/use-portainer-for-drone-admin/</guid>
       <description>drone OSS 0.8.5 で検証しています。
 https://drone.io/ と https://portainer.io/ の話です。
 drone はかなり安定したシステムだと思いますが、 ユーザーが好きなイメージで好きなコマンドを実行できる以上、トラブルが起こることはあります。
@@ -147,10 +147,10 @@ docker API でエラーが出て、コンテナを操作できない これは�
     
     <item>
       <title>drone の step を実行するか否かをタグ名で判定する方法</title>
-      <link>https://techblog-szksh-cloud.github.io/drone-tag-conditional-step/</link>
+      <link>https://techblog.szksh.cloud/drone-tag-conditional-step/</link>
       <pubDate>Sun, 30 Sep 2018 21:30:06 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/drone-tag-conditional-step/</guid>
+      <guid>https://techblog.szksh.cloud/drone-tag-conditional-step/</guid>
       <description>drone 0.8.5 で検証しています。
 tag 名による判定方法はドキュメントには書いてないので書いておきます。
 when: ref: refs/tags/foo-* # タグ名が foo-* ならステップを実行 グロブ * には / は含まれないことには注意してください。
@@ -160,10 +160,10 @@ when: ref: refs/tags/foo-* # タグ名が foo-* ならステップを実行 グ�
     
     <item>
       <title>drone の project visibility とは</title>
-      <link>https://techblog-szksh-cloud.github.io/drone-project-visibility/</link>
+      <link>https://techblog.szksh.cloud/drone-project-visibility/</link>
       <pubDate>Sun, 30 Sep 2018 20:32:20 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/drone-project-visibility/</guid>
+      <guid>https://techblog.szksh.cloud/drone-project-visibility/</guid>
       <description>恐らく公式ドキュメントに説明がない気がするので書いておきます。 と言っても、以下のissueに全部書いてありますが。
 https://github.com/drone/drone/issues/2042
 droneの web ui からリポジトリごとに設定できます。 そのリポジトリが誰に見えるかの設定です。
@@ -172,10 +172,10 @@ droneの web ui からリポジトリごとに設定できます。 そのリポ
     
     <item>
       <title>drone の build の timeout が変更できない</title>
-      <link>https://techblog-szksh-cloud.github.io/drone-build-timeout/</link>
+      <link>https://techblog.szksh.cloud/drone-build-timeout/</link>
       <pubDate>Sun, 30 Sep 2018 20:16:28 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/drone-build-timeout/</guid>
+      <guid>https://techblog.szksh.cloud/drone-build-timeout/</guid>
       <description>drone 0.8.5 で検証しています。
 drone の build の タイムアウトの設定はリポジトリの settings から変更できそうですが、 実は drone の admin しか変更できません。
 ブラウザのデベロッパーツールを使うと、この Timeout の設定を変更した際に
@@ -185,10 +185,10 @@ PATCH /api/repos/:owner/:name にリクエストが飛んでいるので、そ�
     
     <item>
       <title>Drone の build 実行時の認証方法</title>
-      <link>https://techblog-szksh-cloud.github.io/drone-git-authentication/</link>
+      <link>https://techblog.szksh.cloud/drone-git-authentication/</link>
       <pubDate>Sun, 30 Sep 2018 19:44:27 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/drone-git-authentication/</guid>
+      <guid>https://techblog.szksh.cloud/drone-git-authentication/</guid>
       <description>drone の build における GitHub (GitHub前提で書きますが、GitHub以外でも同じだと思います) の認証の話(どうやって認証しているか)について書いておこうと思います。 drone の build は clone step で対象のリポジトリを GitHub から clone してきています。 この際に何かしらの方法で認証しているはずです。
 結論を言うと、
 あるリポジトリAのbuildでは、 リポジトリAの drone連携を有効化したユーザー Bの access token を .netrc に書き込んで認証しています。 よってユーザーBにcloneする権限があるリポジトリはcloneできるし、 ユーザーBにcloneする権限がないリポジトリはcloneできません。 つまり、 誰が連携を有効化するかが重要 になります(これについては後述します)。 なお、drone連携の有効化はそのリポジトリのowner以上でないと出来ません。
@@ -199,10 +199,10 @@ drone上でリポジトリの連携を有効化すると、 リポジトリのHo
     
     <item>
       <title>Drone と Circle CI の workspace の扱いの違いについて</title>
-      <link>https://techblog-szksh-cloud.github.io/drone-circle-volume-difference/</link>
+      <link>https://techblog.szksh.cloud/drone-circle-volume-difference/</link>
       <pubDate>Sun, 30 Sep 2018 19:27:59 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/drone-circle-volume-difference/</guid>
+      <guid>https://techblog.szksh.cloud/drone-circle-volume-difference/</guid>
       <description>drone は同じ pipeline の step 間で同じ workspace を docker の volume としてマウントすることで workspace を共有します。
 http://docs.drone.io/workspace/
 circle ci はデフォルトで job 間で workspace を共有しません。 persist_to_workspace を指定することで共有する事ができます。
@@ -218,10 +218,10 @@ circle ci の場合は archive, unarchive する分、volume 共有に比べて�
     
     <item>
       <title>drone exec を並列実行した際のdocker network name の衝突について</title>
-      <link>https://techblog-szksh-cloud.github.io/drone-exec-network-name-collision/</link>
+      <link>https://techblog.szksh.cloud/drone-exec-network-name-collision/</link>
       <pubDate>Sun, 30 Sep 2018 18:52:34 +0900</pubDate>
       
-      <guid>https://techblog-szksh-cloud.github.io/drone-exec-network-name-collision/</guid>
+      <guid>https://techblog.szksh.cloud/drone-exec-network-name-collision/</guid>
       <description>drone exec を並列実行すると docker network name が衝突することがあります。
 $ drone exec --local &amp;amp; drone exec --local [1] 42934 2018/06/06 01:58:12 Error response from daemon: network drone_default is ambiguous (4 matches found on name) 2018/06/06 01:58:12 Error response from daemon: Conflict. The container name &amp;quot;/drone_step_0&amp;quot; is already in use by container &amp;quot;464a29b0726d6ff1a352d81df9c837330501085be550bb16abac3d338dfad887&amp;quot;. You have to remove (or rename) that container to be able to reuse that name. [1] + exit 1 drone exec --local drone は pipeline 実行時に network を作成し、pipeline が終了すると network を削除します。</description>
     </item>
