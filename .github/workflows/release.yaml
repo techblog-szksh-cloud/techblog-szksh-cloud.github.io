@@ -13,6 +13,7 @@ jobs:
         version: v0.7.16 # renovate: depName=suzuki-shunsuke/aqua
     - run: git clone --depth 1 https://github.com/suzuki-shunsuke/hugo_theme_beg themes/beg
     - run: hugo
+    - run: echo "techblog.szksh.cloud" > public/CNAME
     - uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
