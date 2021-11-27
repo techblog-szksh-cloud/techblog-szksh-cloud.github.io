@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>aqua の最近の update (v0.7.4 ~ v0.7.16) - melody</title>
+    
+<meta name="description" content="以前 aqua v0.7.3 がリリースされた際に aqua で組織・チームのツール群を管理 という記事を書きました。 あれからもうすぐ 2 ヶ月になり、最新バージョンは v0.7.16 になりました。 そこで v0.7.4 ~ v0.7.16 の間の更新と、関連 repository の更新を幾つか(全部ではない)紹介します。基本的に Release Note に書いてある内容です。 GitHub の Access Token が基本的に不要になりました Homebrew で install できるようになりました aqua.yaml がより簡潔に書けるようになりました aqua.yaml の packages を他のローカルのファイルから import できるようになりました aqua.yaml をディレクトリの階層的にネストできるようになりました aqua which コマンドをサポートしました github_archive, github_content type をサポートしました (advanced) バージョンによってパッケージの type が変更された場合にも対応できるようになりました Standard Registry の package の数が 139 =&amp;gt; 220 になりました。 aqua のための CircleCI Orb をリリースしました  GitHub の Access Token が基本的に不要になりました private repository から package をインストール場合は当然必要ですが、そうでなければ不要になりました。 これにより、 aqua を導入するハードルが下がりましたし、 GitHub API の Rate Limit に引っかかることが基本的になくなりました。">
+
+<meta property="og:title" content="aqua の最近の update (v0.7.4 ~ v0.7.16) - melody">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/">
+<meta property="og:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+<meta property="og:site_name" content="melody">
+<meta property="og:description" content="以前 aqua v0.7.3 がリリースされた際に aqua で組織・チームのツール群を管理 という記事を書きました。 あれからもうすぐ 2 ヶ月になり、最新バージョンは v0.7.16 になりました。 そこで v0.7.4 ~ v0.7.16 の間の更新と、関連 repository の更新を幾つか(全部ではない)紹介します。基本的に Release Note に書いてある内容です。 GitHub の Access Token が基本的に不要になりました Homebrew で install できるようになりました aqua.yaml がより簡潔に書けるようになりました aqua.yaml の packages を他のローカルのファイルから import できるようになりました aqua.yaml をディレクトリの階層的にネストできるようになりました aqua which コマンドをサポートしました github_archive, github_content type をサポートしました (advanced) バージョンによってパッケージの type が変更された場合にも対応できるようになりました Standard Registry の package の数が 139 =&amp;gt; 220 になりました。 aqua のための CircleCI Orb をリリースしました  GitHub の Access Token が基本的に不要になりました private repository から package をインストール場合は当然必要ですが、そうでなければ不要になりました。 これにより、 aqua を導入するハードルが下がりましたし、 GitHub API の Rate Limit に引っかかることが基本的になくなりました。">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="melody">
+<meta name="twitter:url" content="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/">
+<meta name="twitter:title" content="aqua の最近の update (v0.7.4 ~ v0.7.16) - melody">
+<meta name="twitter:description" content="以前 aqua v0.7.3 がリリースされた際に aqua で組織・チームのツール群を管理 という記事を書きました。 あれからもうすぐ 2 ヶ月になり、最新バージョンは v0.7.16 になりました。 そこで v0.7.4 ~ v0.7.16 の間の更新と、関連 repository の更新を幾つか(全部ではない)紹介します。基本的に Release Note に書いてある内容です。 GitHub の Access Token が基本的に不要になりました Homebrew で install できるようになりました aqua.yaml がより簡潔に書けるようになりました aqua.yaml の packages を他のローカルのファイルから import できるようになりました aqua.yaml をディレクトリの階層的にネストできるようになりました aqua which コマンドをサポートしました github_archive, github_content type をサポートしました (advanced) バージョンによってパッケージの type が変更された場合にも対応できるようになりました Standard Registry の package の数が 139 =&amp;gt; 220 になりました。 aqua のための CircleCI Orb をリリースしました  GitHub の Access Token が基本的に不要になりました private repository から package をインストール場合は当然必要ですが、そうでなければ不要になりました。 これにより、 aqua を導入するハードルが下がりましたし、 GitHub API の Rate Limit に引っかかることが基本的になくなりました。">
+<meta name="twitter:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https:\/\/techblog-szksh-cloud.github.io\/"
+    },
+    "headline": "aqua の最近の update (v0.7.4 ~ v0.7.16) - melody",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https:\/\/techblog-szksh-cloud.github.io\/images\/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2021-11-18T20:21:57JST",
+    "dateModified": "2021-11-18T20:21:57JST",
+    "author": {
+      "@type": "Person",
+      "name": "melody"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "melody",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https:\/\/techblog-szksh-cloud.github.io\/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "以前 aqua v0.7.3 がリリースされた際に aqua で組織・チームのツール群を管理 という記事を書きました。 あれからもうすぐ 2 ヶ月になり、最新バージョンは v0.7.16 になりました。 そこで v0.7.4 ~ v0.7.16 の間の更新と、関連 repository の更新を幾つか(全部ではない)紹介します。\n基本的に Release Note に書いてある内容です。\n GitHub の Access Token が基本的に不要になりました Homebrew で install できるようになりました aqua.yaml がより簡潔に書けるようになりました aqua.yaml の packages を他のローカルのファイルから import できるようになりました aqua.yaml をディレクトリの階層的にネストできるようになりました aqua which コマンドをサポートしました github_archive, github_content type をサポートしました (advanced) バージョンによってパッケージの type が変更された場合にも対応できるようになりました Standard Registry の package の数が 139 =\u0026gt; 220 になりました。 aqua のための CircleCI Orb をリリースしました  GitHub の Access Token が基本的に不要になりました private repository から package をインストール場合は当然必要ですが、そうでなければ不要になりました。 これにより、 aqua を導入するハードルが下がりましたし、 GitHub API の Rate Limit に引っかかることが基本的になくなりました。"
+  }
+</script>
+
+
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://techblog-szksh-cloud.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li class="active">aqua の最近の update (v0.7.4 ~ v0.7.16)</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2021-11-18T20:21:57JST">Nov 18, 2021</time></li>
+      
+      
+    </ul>
+
+    <h1 class="title">aqua の最近の update (v0.7.4 ~ v0.7.16)</h1>
+    
+    
+    <section>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/oss/">oss</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/aqua/">aqua</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </header>
+
+  
+
+  <div class="article-body"><p>以前 aqua <a href="https://github.com/suzuki-shunsuke/aqua/releases/tag/v0.7.3">v0.7.3</a> がリリースされた際に <a href="/aqua-global-configs/">aqua で組織・チームのツール群を管理</a> という記事を書きました。
+あれからもうすぐ 2 ヶ月になり、最新バージョンは <a href="https://github.com/suzuki-shunsuke/aqua/releases/tag/v0.7.16">v0.7.16</a> になりました。
+そこで v0.7.4 ~ v0.7.16 の間の更新と、関連 repository の更新を幾つか(全部ではない)紹介します。</p>
+<p>基本的に <a href="https://github.com/suzuki-shunsuke/aqua/releases">Release Note</a> に書いてある内容です。</p>
+<ul>
+<li>GitHub の Access Token が基本的に不要になりました</li>
+<li>Homebrew で install できるようになりました</li>
+<li>aqua.yaml がより簡潔に書けるようになりました</li>
+<li>aqua.yaml の packages を他のローカルのファイルから import できるようになりました</li>
+<li>aqua.yaml をディレクトリの階層的にネストできるようになりました</li>
+<li>aqua which コマンドをサポートしました</li>
+<li>github_archive, github_content type をサポートしました</li>
+<li>(advanced) バージョンによってパッケージの type が変更された場合にも対応できるようになりました</li>
+<li><a href="https://github.com/suzuki-shunsuke/aqua-registry">Standard Registry</a> の package の数が 139 =&gt; 220 になりました。</li>
+<li><a href="https://circleci.com/developer/orbs/orb/suzuki-shunsuke/aqua">aqua のための CircleCI Orb</a> をリリースしました</li>
+</ul>
+<h2 id="github-の-access-token-が基本的に不要になりました">GitHub の Access Token が基本的に不要になりました</h2>
+<p>private repository から package をインストール場合は当然必要ですが、そうでなければ不要になりました。
+これにより、 aqua を導入するハードルが下がりましたし、 GitHub API の Rate Limit に引っかかることが基本的になくなりました。</p>
+<p>余談ですが、 private repository のツールを簡単に install できるのも aqua の便利な点だなと思っています。</p>
+<h2 id="homebrew-で-install-できるようになりました">Homebrew で install できるようになりました</h2>
+<pre tabindex="0"><code>$ brew install suzuki-shunsuke/aqua/aqua
+</code></pre><p>Homebrew で install できるようにすることで、より手軽に導入してもらえるようになりました。</p>
+<p>ちなみに aqua を aqua で管理出来ないのかというと、現状できません(無限ループになってしまう)。</p>
+<h2 id="aquayaml-がより簡潔に書けるようになりました">aqua.yaml がより簡潔に書けるようになりました</h2>
+<p>AS IS</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">- <span style="color:#f92672">name</span>: <span style="color:#ae81ff">direnv/direnv</span>
+  <span style="color:#f92672">registry</span>: <span style="color:#ae81ff">standard</span>
+  <span style="color:#f92672">version: v2.28.0 # renovate</span>: <span style="color:#ae81ff">depName=direnv/direnv</span>
+</code></pre></div><p>TO BE</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">- <span style="color:#f92672">name</span>: <span style="color:#ae81ff">direnv/direnv@v2.28.0</span>
+</code></pre></div><ul>
+<li><code>registry: standard</code> が省略可能</li>
+<li>version を name に @ のあとに書ける
+<ul>
+<li>これにより、 <a href="https://docs.renovatebot.com/modules/manager/regex">Renovate の Regex Manager</a> 用にコメント <code># renovate: depName=direnv/direnv</code> を書く必要がなくなりました</li>
+</ul>
+</li>
+</ul>
+<p>これにより 1 行で書けるようになりました。
+ただ簡潔にかけて楽というだけでなく、 Renovate 用のコメントでパッケージ名を間違えて指定するリスクがなくなりました。</p>
+<p>e.g. パッケージ名を間違えている例</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">- <span style="color:#f92672">name</span>: <span style="color:#ae81ff">direnv/direnv</span>
+  <span style="color:#f92672">registry</span>: <span style="color:#ae81ff">standard</span>
+  <span style="color:#f92672">version: v2.28.0 # renovate</span>: <span style="color:#ae81ff">depName=cli/cli</span>
+</code></pre></div><p><a href="https://github.com/suzuki-shunsuke/aqua-renovate-config">aqua-renovate-config</a> を使えばコメントを書かなくても version を上げることが出来ます。</p>
+<h2 id="aquayaml-の-packages-を他のローカルのファイルから-import-できるようになりました">aqua.yaml の packages を他のローカルのファイルから import できるようになりました</h2>
+<p>e.g.</p>
+<p>ディレクトリ構成</p>
+<pre tabindex="0"><code>aqua.yaml
+aqua/
+  reviewdog.yaml
+  golangci-lint.yaml
+  ...
+</code></pre><p>aqua.yaml</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">packages</span>:
+- <span style="color:#f92672">import</span>: <span style="color:#ae81ff">aqua/*.yaml</span>
+</code></pre></div><p>aqua/reviewdog.yaml</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">packages</span>:
+- <span style="color:#f92672">name</span>: <span style="color:#ae81ff">reviewdog/reviewdog@v0.13.0</span>
+</code></pre></div><p>このようにファイルを分割することで、特定のパッケージが update された場合のみ CI で特定の job を実行するといったことがやりやすくなります。
+例えば GitHub Actions の <a href="https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#onpushpull_requestpaths"><code>on.&lt;push|pull_request&gt;.paths</code></a> の場合、</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">name</span>: <span style="color:#ae81ff">test</span>
+<span style="color:#f92672">on</span>:
+  <span style="color:#f92672">pull_request</span>:
+    <span style="color:#f92672">paths</span>:
+    - <span style="color:#e6db74">&#39;**.go&#39;</span>
+    - <span style="color:#ae81ff">aqua/golangci-lint.yaml</span>
+</code></pre></div><h2 id="aquayaml-をディレクトリの階層的にネストできるようになりました">aqua.yaml をディレクトリの階層的にネストできるようになりました</h2>
+<p>aqua はカレントディレクトリからルートディレクトリに遡って <code>^\.?aqua\.ya?ml$</code> を探索します。
+このとき、それまではファイルを一つ見つけた時点で探索をやめていましたが、全ての階層を探索するようになりました。
+同じパッケージが定義されていた場合、先に見つかった設定ファイルの version が優先されます。
+これにより、 Monorepo でも aqua が使いやすくなりました。
+Monorepo 直下に aqua.yaml を置きつつ、サブディレクトリに aqua.yaml を置いても、サブディレクトリ配下で Monorepo 直下の aqua.yaml も参照できるようになりました。</p>
+<h2 id="aqua-which-コマンドをサポートしました">aqua which コマンドをサポートしました</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-console" data-lang="console">$ which gh
+/Users/shunsuke-suzuki/.aqua/bin/gh
+<span style="color:#960050;background-color:#1e0010">
+</span><span style="color:#960050;background-color:#1e0010"></span>$ aqua which gh
+/Users/shunsuke-suzuki/.aqua/pkgs/github_release/github.com/cli/cli/v2.2.0/gh_2.2.0_macOS_amd64.tar.gz/gh_2.2.0_macOS_amd64/bin/gh
+</code></pre></div><p>aqua は <code>~/.aqua/bin</code> 配下にシンボリックリンクを作成し、コマンド実行時に動的にバージョンを決定し、インストールされたコマンドを実行します。
+よって <code>which</code> や <code>command -v</code> では実際に実行されるコマンドのパスが分かりませんが、 aqua which コマンドを使うとパスが分かります。
+ちなみに aqua で管理されてないコマンドでもパスを取得できます。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-console" data-lang="console">$ aqua which git
+/usr/local/bin/git
+</code></pre></div><p>少々変わった使い方ですが、 aqua でインストールされた実行ファイルを別のパスにコピーしたい場合に便利です。</p>
+<pre tabindex="0"><code>$ cp &quot;$(aqua which gh)&quot; src/gh
+</code></pre><h2 id="github_archive-github_content-type-をサポートしました">github_archive, github_content type をサポートしました</h2>
+<p>Standard Registry にある package をインストールしているだけの方は、そもそも package の type というものを気にする必要もないので
+あまり関係ない話かもしれませんが、 <code>http</code>, <code>github_release</code> package に加えて、 <code>github_archive</code>, <code>github_content</code> package もサポートされました。
+<code>github_archive</code> は GitHub Repository の Archive をパッケージとして扱うもので、 <a href="https://github.com/tfutils/tfenv">tfenv</a> を aqua でインストールする際なんかに使われています。
+<code>github_content</code> は GitHub Content API を使って GitHub Repository の単一ファイルをパッケージとして扱うものです。</p>
+<h2 id="advanced-バージョンによってパッケージの-type-が変更された場合にも対応できるようになりました">(advanced) バージョンによってパッケージの type が変更された場合にも対応できるようになりました</h2>
+<p>これまた advanced な内容で多くの方にはあまり関係ない裏側の仕組みの話ですが、パッケージによってはバージョンによって type が変わることがあります(かなりまれですが)。
+あとは repository の owner が変わったりなんかもありますが、そういった場合にも対応できるようになりました。
+ちなみに GitHub Release の asset のファイル名のフォーマットや、 asset のディレクトリ構成が変わることは時々ありますが、それらには元々対応できています。</p>
+<p>e.g.  <a href="https://github.com/suzuki-shunsuke/aqua-registry/blob/v0.10.7/registry.yaml#L486-L492">https://github.com/suzuki-shunsuke/aqua-registry/blob/v0.10.7/registry.yaml#L486-L492</a></p>
+<p><a href="https://github.com/suzuki-shunsuke/aqua/blob/v0.7.16/docs/registry_config.md#version_constraint-version_overrides">https://github.com/suzuki-shunsuke/aqua/blob/v0.7.16/docs/registry_config.md#version_constraint-version_overrides</a></p>
+<h2 id="standard-registry-package-の数が-139--220-になりました">Standard Registry package の数が 139 =&gt; 220 になりました。</h2>
+<p>Standard Registry は <a href="https://github.com/suzuki-shunsuke/aqua-registry/releases/tag/v0.8.6">v0.8.6</a> から <a href="https://github.com/suzuki-shunsuke/aqua-registry/releases/tag/v0.10.7">v0.10.7</a> になりましたが、その結果 package の数は 139 から 220 になりました。</p>
+<h2 id="aqua-のための-circleci-orb-をリリースしました">aqua のための CircleCI Orb をリリースしました</h2>
+<p>CircleCI で Orb を使って aqua を install したり aqua を使ってパッケージをインストールできるようになりました。
+aqua とパッケージを cache してくれます。</p>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/oss/">oss</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/aqua/">aqua</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

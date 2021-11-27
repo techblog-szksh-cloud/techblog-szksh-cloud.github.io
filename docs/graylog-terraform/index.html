@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/graylog-terraform/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>GraylogをTerraformで管理する - melody</title>
+    
+<meta name="description" content="Graylogのリソースを terraform で管理するために作った terraform provider を紹介します。 Graylogとは何かはこちらを読んでください。Graylogには様々なリソースがあります。 User Role Input Index Set Stream Stream Rule Dashboard Alert etc  これらのリソースはWeb UIから作成したり出来るわけですが、 Web UIでポチポチするのは疲れますし、ソースコードで管理したいものです(Infrastructure as Code)。 また、Web UIからでは細かな権限管理は出来ず(限られた権限管理しか出来ない)、APIを使ってする必要があります。APIを使って管理できるツールを探したものの見つからなかったので、 APIを使ってGraylog用のterraform providerを自作しています。https://github.com/suzuki-shunsuke/go-graylogGraylogのAPIの種類は非常に多く、残念ながらカバーできているのは一部だけですが、以下のようなものをサポートしています。 Alert Condition Alert Notification (Alarm Callback) Input User Role Index Set Stream Stream Rule Dashboard Ldap Setting  Role はサポートしているので権限管理は問題なく出来ます。 Dashboard Widget もサポートしたいです。出来れば Alert の設定も出来ると良いのですが、Alertに関するCRUD APIが提供されていない(GETのみ)ので、サポートできません。terraform を使った管理方法 以下では自分の管理方法を紹介します。https://github.com/suzuki-shunsuke/example/tree/master/graylog-terraformにサンプルが置いてあります。基本はプロジェクトごとに Index Set, Stream, Role といったリソースを作成 User に Role を付与  という流れになります。">
+
+<meta property="og:title" content="GraylogをTerraformで管理する - melody">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://techblog-szksh-cloud.github.io/graylog-terraform/">
+<meta property="og:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+<meta property="og:site_name" content="melody">
+<meta property="og:description" content="Graylogのリソースを terraform で管理するために作った terraform provider を紹介します。 Graylogとは何かはこちらを読んでください。Graylogには様々なリソースがあります。 User Role Input Index Set Stream Stream Rule Dashboard Alert etc  これらのリソースはWeb UIから作成したり出来るわけですが、 Web UIでポチポチするのは疲れますし、ソースコードで管理したいものです(Infrastructure as Code)。 また、Web UIからでは細かな権限管理は出来ず(限られた権限管理しか出来ない)、APIを使ってする必要があります。APIを使って管理できるツールを探したものの見つからなかったので、 APIを使ってGraylog用のterraform providerを自作しています。https://github.com/suzuki-shunsuke/go-graylogGraylogのAPIの種類は非常に多く、残念ながらカバーできているのは一部だけですが、以下のようなものをサポートしています。 Alert Condition Alert Notification (Alarm Callback) Input User Role Index Set Stream Stream Rule Dashboard Ldap Setting  Role はサポートしているので権限管理は問題なく出来ます。 Dashboard Widget もサポートしたいです。出来れば Alert の設定も出来ると良いのですが、Alertに関するCRUD APIが提供されていない(GETのみ)ので、サポートできません。terraform を使った管理方法 以下では自分の管理方法を紹介します。https://github.com/suzuki-shunsuke/example/tree/master/graylog-terraformにサンプルが置いてあります。基本はプロジェクトごとに Index Set, Stream, Role といったリソースを作成 User に Role を付与  という流れになります。">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="melody">
+<meta name="twitter:url" content="https://techblog-szksh-cloud.github.io/graylog-terraform/">
+<meta name="twitter:title" content="GraylogをTerraformで管理する - melody">
+<meta name="twitter:description" content="Graylogのリソースを terraform で管理するために作った terraform provider を紹介します。 Graylogとは何かはこちらを読んでください。Graylogには様々なリソースがあります。 User Role Input Index Set Stream Stream Rule Dashboard Alert etc  これらのリソースはWeb UIから作成したり出来るわけですが、 Web UIでポチポチするのは疲れますし、ソースコードで管理したいものです(Infrastructure as Code)。 また、Web UIからでは細かな権限管理は出来ず(限られた権限管理しか出来ない)、APIを使ってする必要があります。APIを使って管理できるツールを探したものの見つからなかったので、 APIを使ってGraylog用のterraform providerを自作しています。https://github.com/suzuki-shunsuke/go-graylogGraylogのAPIの種類は非常に多く、残念ながらカバーできているのは一部だけですが、以下のようなものをサポートしています。 Alert Condition Alert Notification (Alarm Callback) Input User Role Index Set Stream Stream Rule Dashboard Ldap Setting  Role はサポートしているので権限管理は問題なく出来ます。 Dashboard Widget もサポートしたいです。出来れば Alert の設定も出来ると良いのですが、Alertに関するCRUD APIが提供されていない(GETのみ)ので、サポートできません。terraform を使った管理方法 以下では自分の管理方法を紹介します。https://github.com/suzuki-shunsuke/example/tree/master/graylog-terraformにサンプルが置いてあります。基本はプロジェクトごとに Index Set, Stream, Role といったリソースを作成 User に Role を付与  という流れになります。">
+<meta name="twitter:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https:\/\/techblog-szksh-cloud.github.io\/"
+    },
+    "headline": "GraylogをTerraformで管理する - melody",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https:\/\/techblog-szksh-cloud.github.io\/images\/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2018-12-01T14:56:00JST",
+    "dateModified": "2018-12-01T14:56:00JST",
+    "author": {
+      "@type": "Person",
+      "name": "melody"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "melody",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https:\/\/techblog-szksh-cloud.github.io\/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "Graylogのリソースを terraform で管理するために作った terraform provider を紹介します。 Graylogとは何かはこちらを読んでください。\nGraylogには様々なリソースがあります。\n User Role Input Index Set Stream Stream Rule Dashboard Alert etc  これらのリソースはWeb UIから作成したり出来るわけですが、 Web UIでポチポチするのは疲れますし、ソースコードで管理したいものです(Infrastructure as Code)。 また、Web UIからでは細かな権限管理は出来ず(限られた権限管理しか出来ない)、APIを使ってする必要があります。\nAPIを使って管理できるツールを探したものの見つからなかったので、 APIを使ってGraylog用のterraform providerを自作しています。\nhttps:\/\/github.com\/suzuki-shunsuke\/go-graylog\nGraylogのAPIの種類は非常に多く、残念ながらカバーできているのは一部だけですが、以下のようなものをサポートしています。\n Alert Condition Alert Notification (Alarm Callback) Input User Role Index Set Stream Stream Rule Dashboard Ldap Setting  Role はサポートしているので権限管理は問題なく出来ます。 Dashboard Widget もサポートしたいです。\n出来れば Alert の設定も出来ると良いのですが、Alertに関するCRUD APIが提供されていない(GETのみ)ので、サポートできません。\nterraform を使った管理方法 以下では自分の管理方法を紹介します。\nhttps:\/\/github.com\/suzuki-shunsuke\/example\/tree\/master\/graylog-terraform\nにサンプルが置いてあります。\n基本はプロジェクトごとに\n Index Set, Stream, Role といったリソースを作成 User に Role を付与  という流れになります。"
+  }
+</script>
+
+
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://techblog-szksh-cloud.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li class="active">GraylogをTerraformで管理する</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-12-01T14:56:00JST">Dec 1, 2018</time></li>
+      
+      
+    </ul>
+
+    <h1 class="title">GraylogをTerraformで管理する</h1>
+    
+    
+    <section>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/oss/">oss</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/graylog/">graylog</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/terraform/">terraform</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </header>
+
+  
+
+  <div class="article-body"><p>Graylogのリソースを terraform で管理するために作った terraform provider を紹介します。
+<a href="https://www.graylog.org/">Graylog</a>とは何かは<a href="/graylog/">こちら</a>を読んでください。</p>
+<p>Graylogには様々なリソースがあります。</p>
+<ul>
+<li>User</li>
+<li>Role</li>
+<li>Input</li>
+<li>Index Set</li>
+<li>Stream</li>
+<li>Stream Rule</li>
+<li>Dashboard</li>
+<li>Alert</li>
+<li>etc</li>
+</ul>
+<p>これらのリソースはWeb UIから作成したり出来るわけですが、
+Web UIでポチポチするのは疲れますし、ソースコードで管理したいものです(Infrastructure as Code)。
+また、Web UIからでは細かな権限管理は出来ず(限られた権限管理しか出来ない)、APIを使ってする必要があります。</p>
+<p>APIを使って管理できるツールを探したものの見つからなかったので、
+APIを使ってGraylog用のterraform providerを自作しています。</p>
+<p><a href="https://github.com/suzuki-shunsuke/go-graylog">https://github.com/suzuki-shunsuke/go-graylog</a></p>
+<p>GraylogのAPIの種類は非常に多く、残念ながらカバーできているのは一部だけですが、以下のようなものをサポートしています。</p>
+<ul>
+<li>Alert Condition</li>
+<li>Alert Notification (Alarm Callback)</li>
+<li>Input</li>
+<li>User</li>
+<li>Role</li>
+<li>Index Set</li>
+<li>Stream</li>
+<li>Stream Rule</li>
+<li>Dashboard</li>
+<li>Ldap Setting</li>
+</ul>
+<p>Role はサポートしているので権限管理は問題なく出来ます。
+Dashboard Widget もサポートしたいです。</p>
+<p><del>出来れば Alert の設定も出来ると良いのですが、Alertに関するCRUD APIが提供されていない(GETのみ)ので、サポートできません。</del></p>
+<h2 id="terraform-を使った管理方法">terraform を使った管理方法</h2>
+<p>以下では自分の管理方法を紹介します。</p>
+<p><a href="https://github.com/suzuki-shunsuke/example/tree/master/graylog-terraform">https://github.com/suzuki-shunsuke/example/tree/master/graylog-terraform</a></p>
+<p>にサンプルが置いてあります。</p>
+<p>基本はプロジェクトごとに</p>
+<ol>
+<li>Index Set, Stream, Role といったリソースを作成</li>
+<li>User に Role を付与</li>
+</ol>
+<p>という流れになります。</p>
+<p>1のプロジェクトごとの設定は <a href="https://www.terraform.io/docs/modules/index.html">terraform の module</a> という形でまとめてしまい、プロジェクトごとにディレクトリを作成しています。</p>
+<h2 id="terraform-provider-の開発について">terraform provider の開発について</h2>
+<p>terraform provider の開発はドキュメントが少なく動かしつつ手探りで書いていたりしています。
+terraform provider の開発に興味のある方はこの辺を見てみると良いと思います。</p>
+<ul>
+<li><a href="https://www.terraform.io/docs/plugins/provider.html">https://www.terraform.io/docs/plugins/provider.html</a></li>
+<li><a href="https://www.terraform.io/guides/writing-custom-terraform-providers.html">https://www.terraform.io/guides/writing-custom-terraform-providers.html</a></li>
+<li><a href="https://godoc.org/github.com/hashicorp/terraform/helper/schema">https://godoc.org/github.com/hashicorp/terraform/helper/schema</a></li>
+<li><a href="https://godoc.org/github.com/hashicorp/terraform/helper/resource#TestCase">https://godoc.org/github.com/hashicorp/terraform/helper/resource#TestCase</a></li>
+</ul>
+<p>あとは <a href="https://github.com/terraform-providers/terraform-provider-google">https://github.com/terraform-providers/terraform-provider-google</a> のような公式の provider のソースコードも参考になります。</p>
+<h2 id="最後に">最後に</h2>
+<p>API を使って terraform provider を開発することで、Infrastructure as Code をある程度実現できました。</p>
+<ul>
+<li><del>Stream Rule と Dashboard をサポートできていない</del></li>
+<li><del>Alertに関するCRUD APIが提供されていない(GETのみ)ので、サポートできない</del></li>
+</ul>
+<p>という問題がクリア出来てないので、そこをクリアしたいです。</p>
+<p>また、</p>
+<ul>
+<li><del>まだ terraform を CI で出来ていない(ローカルから実行している)</del></li>
+<li>新しいプロジェクトやユーザーの追加の際に雛形を自動生成できるツールを作りたい(特に、新しく参画した人のためにあると良い)</li>
+</ul>
+<p>といった点も改善したいです(出来たら記事にしたいと思います)。</p>
+<h2 id="2018-12-03-追記">2018-12-03 追記</h2>
+<ul>
+<li>Stream Rule サポートしました</li>
+<li><a href="/graylog-terraform-ci">terraform を CI で実行するようにしました(気が向いたら記事書きます)</a></li>
+</ul>
+<h2 id="2018-12-31-追記">2018-12-31 追記</h2>
+<ul>
+<li>Alert Condition, Notification をサポートしました</li>
+</ul>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/oss/">oss</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/graylog/">graylog</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/terraform/">terraform</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

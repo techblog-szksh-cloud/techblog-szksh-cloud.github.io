@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/my-work-2020/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>2019-10 から今(2020-12-31)に至るまで仕事でやっていること - melody</title>
+    
+<meta name="description" content="2019-10-01 から今の職場で SRE として働いています。 その中で自分がどういうことをやっているかという話をします。2020-12-31 現在の内容です。要約  プロダクト横断的な SRE チームで、プロダクトのプラットフォームを運用・開発している 特に CI/CD の改善が得意 developer に CI/CD をいわばサービスとして提供しており、 DX の改善に取り組んでいる Monorepo の負の側面(CIが遅い、関係ないTestがこけるetc)の解消にも取り組んでいる 自分が直面している課題を解決する OSS を色々開発している  キーワード  SRE Monorepo CI/CD Developer Experience Terraform Go / Shell script k8s CircleCI / CodeBuild Conftest Renovate  より具体的にやっていることを書いた記事  個人ブログ  https://techblog.szksh.cloud/job-2020-10-01-10-31/ https://techblog.szksh.cloud/job-2020-07-01-09-30/ https://techblog.szksh.cloud/job-2020-04-01-06-30/ https://techblog.szksh.cloud/job-2020-01-01-03-31/ https://techblog.szksh.cloud/job-2019-10-01-12-31/   会社ブログ  Renovate の Tips Terraform の CI/CD を CodeBuild に移行した話 巨大な .circleci/config.yml を分割した話 Docker Hub の Rate Limit 問題に対応した話 CI の修正をリリース前に本番と同じ条件下で検証出来る仕組みを構築した話    何をやっているか プロダクト横断的な SRE チームで、プロダクトのプラットフォームを運用・開発しています。">
+
+<meta property="og:title" content="2019-10 から今(2020-12-31)に至るまで仕事でやっていること - melody">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://techblog-szksh-cloud.github.io/my-work-2020/">
+<meta property="og:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+<meta property="og:site_name" content="melody">
+<meta property="og:description" content="2019-10-01 から今の職場で SRE として働いています。 その中で自分がどういうことをやっているかという話をします。2020-12-31 現在の内容です。要約  プロダクト横断的な SRE チームで、プロダクトのプラットフォームを運用・開発している 特に CI/CD の改善が得意 developer に CI/CD をいわばサービスとして提供しており、 DX の改善に取り組んでいる Monorepo の負の側面(CIが遅い、関係ないTestがこけるetc)の解消にも取り組んでいる 自分が直面している課題を解決する OSS を色々開発している  キーワード  SRE Monorepo CI/CD Developer Experience Terraform Go / Shell script k8s CircleCI / CodeBuild Conftest Renovate  より具体的にやっていることを書いた記事  個人ブログ  https://techblog.szksh.cloud/job-2020-10-01-10-31/ https://techblog.szksh.cloud/job-2020-07-01-09-30/ https://techblog.szksh.cloud/job-2020-04-01-06-30/ https://techblog.szksh.cloud/job-2020-01-01-03-31/ https://techblog.szksh.cloud/job-2019-10-01-12-31/   会社ブログ  Renovate の Tips Terraform の CI/CD を CodeBuild に移行した話 巨大な .circleci/config.yml を分割した話 Docker Hub の Rate Limit 問題に対応した話 CI の修正をリリース前に本番と同じ条件下で検証出来る仕組みを構築した話    何をやっているか プロダクト横断的な SRE チームで、プロダクトのプラットフォームを運用・開発しています。">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="melody">
+<meta name="twitter:url" content="https://techblog-szksh-cloud.github.io/my-work-2020/">
+<meta name="twitter:title" content="2019-10 から今(2020-12-31)に至るまで仕事でやっていること - melody">
+<meta name="twitter:description" content="2019-10-01 から今の職場で SRE として働いています。 その中で自分がどういうことをやっているかという話をします。2020-12-31 現在の内容です。要約  プロダクト横断的な SRE チームで、プロダクトのプラットフォームを運用・開発している 特に CI/CD の改善が得意 developer に CI/CD をいわばサービスとして提供しており、 DX の改善に取り組んでいる Monorepo の負の側面(CIが遅い、関係ないTestがこけるetc)の解消にも取り組んでいる 自分が直面している課題を解決する OSS を色々開発している  キーワード  SRE Monorepo CI/CD Developer Experience Terraform Go / Shell script k8s CircleCI / CodeBuild Conftest Renovate  より具体的にやっていることを書いた記事  個人ブログ  https://techblog.szksh.cloud/job-2020-10-01-10-31/ https://techblog.szksh.cloud/job-2020-07-01-09-30/ https://techblog.szksh.cloud/job-2020-04-01-06-30/ https://techblog.szksh.cloud/job-2020-01-01-03-31/ https://techblog.szksh.cloud/job-2019-10-01-12-31/   会社ブログ  Renovate の Tips Terraform の CI/CD を CodeBuild に移行した話 巨大な .circleci/config.yml を分割した話 Docker Hub の Rate Limit 問題に対応した話 CI の修正をリリース前に本番と同じ条件下で検証出来る仕組みを構築した話    何をやっているか プロダクト横断的な SRE チームで、プロダクトのプラットフォームを運用・開発しています。">
+<meta name="twitter:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https:\/\/techblog-szksh-cloud.github.io\/"
+    },
+    "headline": "2019-10 から今(2020-12-31)に至るまで仕事でやっていること - melody",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https:\/\/techblog-szksh-cloud.github.io\/images\/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2020-12-31T11:00:40JST",
+    "dateModified": "2020-12-31T11:00:40JST",
+    "author": {
+      "@type": "Person",
+      "name": "melody"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "melody",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https:\/\/techblog-szksh-cloud.github.io\/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "2019-10-01 から今の職場で SRE として働いています。 その中で自分がどういうことをやっているかという話をします。\n2020-12-31 現在の内容です。\n要約  プロダクト横断的な SRE チームで、プロダクトのプラットフォームを運用・開発している 特に CI\/CD の改善が得意 developer に CI\/CD をいわばサービスとして提供しており、 DX の改善に取り組んでいる Monorepo の負の側面(CIが遅い、関係ないTestがこけるetc)の解消にも取り組んでいる 自分が直面している課題を解決する OSS を色々開発している  キーワード  SRE Monorepo CI\/CD Developer Experience Terraform Go \/ Shell script k8s CircleCI \/ CodeBuild Conftest Renovate  より具体的にやっていることを書いた記事  個人ブログ  https:\/\/techblog.szksh.cloud\/job-2020-10-01-10-31\/ https:\/\/techblog.szksh.cloud\/job-2020-07-01-09-30\/ https:\/\/techblog.szksh.cloud\/job-2020-04-01-06-30\/ https:\/\/techblog.szksh.cloud\/job-2020-01-01-03-31\/ https:\/\/techblog.szksh.cloud\/job-2019-10-01-12-31\/   会社ブログ  Renovate の Tips Terraform の CI\/CD を CodeBuild に移行した話 巨大な .circleci\/config.yml を分割した話 Docker Hub の Rate Limit 問題に対応した話 CI の修正をリリース前に本番と同じ条件下で検証出来る仕組みを構築した話    何をやっているか プロダクト横断的な SRE チームで、プロダクトのプラットフォームを運用・開発しています。"
+  }
+</script>
+
+
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://techblog-szksh-cloud.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li class="active">2019-10 から今(2020-12-31)に至るまで仕事でやっていること</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2020-12-31T11:00:40JST">Dec 31, 2020</time></li>
+      
+      
+    </ul>
+
+    <h1 class="title">2019-10 から今(2020-12-31)に至るまで仕事でやっていること</h1>
+    
+    
+    <section>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/job/">job</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </header>
+
+  
+
+  <div class="article-body"><p>2019-10-01 から今の職場で SRE として働いています。
+その中で自分がどういうことをやっているかという話をします。</p>
+<p>2020-12-31 現在の内容です。</p>
+<h2 id="要約">要約</h2>
+<ul>
+<li>プロダクト横断的な SRE チームで、プロダクトのプラットフォームを運用・開発している</li>
+<li>特に CI/CD の改善が得意</li>
+<li>developer に CI/CD をいわばサービスとして提供しており、 DX の改善に取り組んでいる</li>
+<li>Monorepo の負の側面(CIが遅い、関係ないTestがこけるetc)の解消にも取り組んでいる</li>
+<li>自分が直面している課題を解決する OSS を色々開発している</li>
+</ul>
+<h2 id="キーワード">キーワード</h2>
+<ul>
+<li>SRE</li>
+<li>Monorepo</li>
+<li>CI/CD</li>
+<li>Developer Experience</li>
+<li>Terraform</li>
+<li>Go / Shell script</li>
+<li>k8s</li>
+<li>CircleCI / CodeBuild</li>
+<li>Conftest</li>
+<li>Renovate</li>
+</ul>
+<h2 id="より具体的にやっていることを書いた記事">より具体的にやっていることを書いた記事</h2>
+<ul>
+<li>個人ブログ
+<ul>
+<li><a href="https://techblog.szksh.cloud/job-2020-10-01-10-31/">https://techblog.szksh.cloud/job-2020-10-01-10-31/</a></li>
+<li><a href="https://techblog.szksh.cloud/job-2020-07-01-09-30/">https://techblog.szksh.cloud/job-2020-07-01-09-30/</a></li>
+<li><a href="https://techblog.szksh.cloud/job-2020-04-01-06-30/">https://techblog.szksh.cloud/job-2020-04-01-06-30/</a></li>
+<li><a href="https://techblog.szksh.cloud/job-2020-01-01-03-31/">https://techblog.szksh.cloud/job-2020-01-01-03-31/</a></li>
+<li><a href="https://techblog.szksh.cloud/job-2019-10-01-12-31/">https://techblog.szksh.cloud/job-2019-10-01-12-31/</a></li>
+</ul>
+</li>
+<li>会社ブログ
+<ul>
+<li><a href="https://blog.studysapuri.jp/entry/2020/12/10/080000">Renovate の Tips</a></li>
+<li><a href="https://blog.studysapuri.jp/entry/2020/12/03/080000">Terraform の CI/CD を CodeBuild に移行した話</a></li>
+<li><a href="https://blog.studysapuri.jp/entry/2020/12/01/080000">巨大な .circleci/config.yml を分割した話</a></li>
+<li><a href="https://blog.studysapuri.jp/entry/2020/11/02/080000">Docker Hub の Rate Limit 問題に対応した話</a></li>
+<li><a href="https://blog.studysapuri.jp/entry/2020/04/06/080000">CI の修正をリリース前に本番と同じ条件下で検証出来る仕組みを構築した話</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="何をやっているか">何をやっているか</h2>
+<p>プロダクト横断的な SRE チームで、プロダクトのプラットフォームを運用・開発しています。</p>
+<p>SRE と一言で言っても、その領域は非常に多岐にわたります。
+組織によって <code>SRE</code> の実態は異なるでしょう。
+例えば SRE とは別にセキュリティの専門チームがあるような組織もあるとは思いますが、
+現職ではそのようなものはないのでそこも SRE が見ています。
+全ての領域に関して個人がスペシャリティを持つというのは非常に難しいので、
+全体的にある程度カバーしつつも特定の領域に対しスペシャリティを持つというのが割と現実的な話だと思います。</p>
+<p>自分の場合、 CI/CD の改善を強みとし、そこに主に取り組んでいます。
+プラットフォームを運用・開発していると言いましたが、それには CI/CD も含まれます。
+現職では Monorepo アーキテクチャが採用されています。
+Monorepo にすることで複数のサービスにまたがる変更を 1 つの Pull Request (以下PR) でまとめて出来たり、 CI/CD などの仕組みを共通化することが出来ます。
+現職では幾つかの Monorepo があります。</p>
+<ul>
+<li>アプリケーションのコードと k8s manifest の Monorepo</li>
+<li>Ansible の Monorepo</li>
+<li>Terraform の Monorepo</li>
+<li>などなど</li>
+</ul>
+<p>Monorepo の中で CI/CD に関しては SRE が ownership を持ち、言わばサービスとして developer に提供しています。
+といっても Jenkins や CircleCI のようなものを自作しているという意味ではありません。
+CI/CD には主に CircleCI を使っていますが、CIの設定や CI/CD で使われるスクリプトなどをメンテしています。
+全てを SRE が書くということではなく、むしろ developer が新しいサービスを追加する際に簡単に CI/CD をセットアップできるようにしています。</p>
+<p>例えば Terraform ではサービス・環境(staging, production, etc) ごとに State をディレクトリを分けていますが、新しいサービスを追加する際は、まずは generator を実行してコード生成し、そこに Terraform の configuration を書けば CI/CD で test や lint, apply が実行されるようになっています。
+元々新しいサービスの追加時には .circleci/config.yml に設定を書き足す必要がありましたが、
+最近 <a href="https://blog.studysapuri.jp/entry/2020/12/03/080000">Terraform の CI/CD を CircleCI から CodeBuild に移行した</a> ことでそれが一切不要になりました。日々進化しています。
+単に PR で terraform plan して master で terraform apply するだけなら簡単ですが、
+より DX の高いものにするのが自分の強み・専門性です。</p>
+<p>Lint や Test を導入したりもします。勿論 Rails などで書かれたアプリケーションのテストを書くということではなく(それを書くのは基本 developer)、例えば k8s のマニフェストのテストや Terraform の lint などです。
+Lint や Test は、導入して CI が失敗するようになったら終わり、ではありません。
+現職では developer が k8s のマニフェストや Terraform の configuration も書きますが、必ずしも全員がそれらに習熟しているわけではありません。
+失敗するようになっても、developer が失敗した原因を理解できなかったら、無駄に rerun してみて結局解決しなくて SRE に質問してくるだけです。
+そうではなく、 なぜ CI がこけたのか、どうすればいいのか、その lint はどういう経緯で導入されたのかなどを developer が自分で理解し、自己解決できるようにすることが重要です(勿論必要に応じて問い合わせが発生するのは仕方ないですし、遠慮はしてほしくはありません)。
+そこで PR にそれらの情報をコメントするようにしています。
+シェルスクリプトから簡単にコメントできるように OSS としてツールも開発しています(<a href="https://github.com/suzuki-shunsuke/github-comment">gihtub-comment</a>)。</p>
+<p>Monorepo では単純に全てのサービスのテスト・ビルド・デプロイを実行すると時間がかかったり、 PR に関係ないテストが落ちたりします。
+そのため、必要な job だけ実行するような仕組みが必要です。
+そのへんをコードを書かずにいい感じに出来るのが理想ではありますが、 Monorepo のエコシステムはそこまで醸成していないと思っており、自分たちである程度コードを書く必要があります。
+自分は Go や Shell Script でそういったコードを普段書きます。</p>
+<p>現職の Monorepo のうち、アプリケーションのコードと k8s manifest の Monorepo は非常に大きく、 CI/CD をナイーブに実装すると非常に時間がかかったり効率が悪かったりします。
+そういった問題点を見つけ出し、チューニングするといったこともやりました。</p>
+<p>その中で生まれた OSS もあります。
+自分が直面している課題を解決する OSS を開発するのが自分のライフワークです。</p>
+<p><a href="https://github.com/suzuki-shunsuke/profile#libraries">https://github.com/suzuki-shunsuke/profile#libraries</a></p>
+<p>仕事でも使っているツールを幾つか紹介します。</p>
+<ul>
+<li><a href="https://github.com/suzuki-shunsuke/github-comment">gihtub-comment</a> GitHub の PR, commit にコメントするツール</li>
+<li><a href="https://github.com/suzuki-shunsuke/circleci-config-merge">circleci-config-merge</a> 分割された .circleci/config.yml をマージ</li>
+<li><a href="https://github.com/suzuki-shunsuke/github-ci-monitor">github-ci-monitor</a> CI のステータスを DataDog でモニタリングする AWS SAM application</li>
+<li><a href="https://github.com/suzuki-shunsuke/matchfile">matchfile</a> Monorepo の CI で、特定のサービスが依存するファイルに変更があったか判定するのに便利</li>
+<li><a href="https://github.com/suzuki-shunsuke/ci-info">ci-info</a> GitHub API を使って CI の情報を取得</li>
+<li><a href="https://github.com/suzuki-shunsuke/dd-time">dd-time</a> コマンドの実行時間を DataDog に送る</li>
+<li><a href="https://github.com/suzuki-shunsuke/akoi">akoi</a> バイナリのバージョン管理</li>
+</ul>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/job/">job</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

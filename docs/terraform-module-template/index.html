@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/terraform-module-template/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>Terraform Module の Template という使い方 - melody</title>
+    
+<meta name="description" content="Terraform Module の使い方として Terraform Module のテンプレートをコピペして使うというアプローチを紹介します。Terraform の設定ファイル(以下 tfファイル) を書く際、毎回一から書くのは大変です。 多くの場合、既存のコードを再利用したほうが楽でしょう。Terraform のコードの再利用の仕組みとして、 Module があります。 Module は勿論便利なのですが、使い方には注意が必要で、「安易に Module 化するな。使うな」というふうな考え方もあるでしょう。 自分も基本的に同意見で、 Module を共用するようになると Module への変更がしづらくなったり、パラメータがどんどん増えて複雑になったりします。例えば次のように共用の local Module を作成するアプローチがあります。modules/ lambda-base/ README.md main.tf variables.tf outputs.tf services/ foo/ staging/ main.tf # リポジトリ直下の modules/lambda-base を参照 production/ main.tf # リポジトリ直下の modules/lambda-base を参照 こうすると modules 配下の Module を変更した際にその Module を使っているすべてのサービスに影響が出てしまい、 サービスのオーナーが様々だったり、曖昧だったり不在だったりすると変更が難しいですし、どんどん Module が複雑になったりします。Module を別のリポジトリでバージョニングして管理し、バージョンを指定するようにするというやり方もありますが、 結構複雑というか考えることが多いアプローチだとは思います。Terraform にそこまで詳しくない developer にも書いてもらうとなると、シンプルなアプローチにするのが望ましいでしょう(当然これは組織によりますが)。そこで Module のテンプレートを用意し、 Module を使いたくなったらそれをコピペして使うというアプローチがあります。 例えば lambda-base という Module の Template を foo というサービスの staging 環境と production 環境で使う場合、次のような感じになります。">
+
+<meta property="og:title" content="Terraform Module の Template という使い方 - melody">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://techblog-szksh-cloud.github.io/terraform-module-template/">
+<meta property="og:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+<meta property="og:site_name" content="melody">
+<meta property="og:description" content="Terraform Module の使い方として Terraform Module のテンプレートをコピペして使うというアプローチを紹介します。Terraform の設定ファイル(以下 tfファイル) を書く際、毎回一から書くのは大変です。 多くの場合、既存のコードを再利用したほうが楽でしょう。Terraform のコードの再利用の仕組みとして、 Module があります。 Module は勿論便利なのですが、使い方には注意が必要で、「安易に Module 化するな。使うな」というふうな考え方もあるでしょう。 自分も基本的に同意見で、 Module を共用するようになると Module への変更がしづらくなったり、パラメータがどんどん増えて複雑になったりします。例えば次のように共用の local Module を作成するアプローチがあります。modules/ lambda-base/ README.md main.tf variables.tf outputs.tf services/ foo/ staging/ main.tf # リポジトリ直下の modules/lambda-base を参照 production/ main.tf # リポジトリ直下の modules/lambda-base を参照 こうすると modules 配下の Module を変更した際にその Module を使っているすべてのサービスに影響が出てしまい、 サービスのオーナーが様々だったり、曖昧だったり不在だったりすると変更が難しいですし、どんどん Module が複雑になったりします。Module を別のリポジトリでバージョニングして管理し、バージョンを指定するようにするというやり方もありますが、 結構複雑というか考えることが多いアプローチだとは思います。Terraform にそこまで詳しくない developer にも書いてもらうとなると、シンプルなアプローチにするのが望ましいでしょう(当然これは組織によりますが)。そこで Module のテンプレートを用意し、 Module を使いたくなったらそれをコピペして使うというアプローチがあります。 例えば lambda-base という Module の Template を foo というサービスの staging 環境と production 環境で使う場合、次のような感じになります。">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="melody">
+<meta name="twitter:url" content="https://techblog-szksh-cloud.github.io/terraform-module-template/">
+<meta name="twitter:title" content="Terraform Module の Template という使い方 - melody">
+<meta name="twitter:description" content="Terraform Module の使い方として Terraform Module のテンプレートをコピペして使うというアプローチを紹介します。Terraform の設定ファイル(以下 tfファイル) を書く際、毎回一から書くのは大変です。 多くの場合、既存のコードを再利用したほうが楽でしょう。Terraform のコードの再利用の仕組みとして、 Module があります。 Module は勿論便利なのですが、使い方には注意が必要で、「安易に Module 化するな。使うな」というふうな考え方もあるでしょう。 自分も基本的に同意見で、 Module を共用するようになると Module への変更がしづらくなったり、パラメータがどんどん増えて複雑になったりします。例えば次のように共用の local Module を作成するアプローチがあります。modules/ lambda-base/ README.md main.tf variables.tf outputs.tf services/ foo/ staging/ main.tf # リポジトリ直下の modules/lambda-base を参照 production/ main.tf # リポジトリ直下の modules/lambda-base を参照 こうすると modules 配下の Module を変更した際にその Module を使っているすべてのサービスに影響が出てしまい、 サービスのオーナーが様々だったり、曖昧だったり不在だったりすると変更が難しいですし、どんどん Module が複雑になったりします。Module を別のリポジトリでバージョニングして管理し、バージョンを指定するようにするというやり方もありますが、 結構複雑というか考えることが多いアプローチだとは思います。Terraform にそこまで詳しくない developer にも書いてもらうとなると、シンプルなアプローチにするのが望ましいでしょう(当然これは組織によりますが)。そこで Module のテンプレートを用意し、 Module を使いたくなったらそれをコピペして使うというアプローチがあります。 例えば lambda-base という Module の Template を foo というサービスの staging 環境と production 環境で使う場合、次のような感じになります。">
+<meta name="twitter:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https:\/\/techblog-szksh-cloud.github.io\/"
+    },
+    "headline": "Terraform Module の Template という使い方 - melody",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https:\/\/techblog-szksh-cloud.github.io\/images\/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2021-04-03T11:04:25JST",
+    "dateModified": "2021-04-03T11:04:25JST",
+    "author": {
+      "@type": "Person",
+      "name": "melody"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "melody",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https:\/\/techblog-szksh-cloud.github.io\/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "Terraform Module の使い方として Terraform Module のテンプレートをコピペして使うというアプローチを紹介します。\nTerraform の設定ファイル(以下 tfファイル) を書く際、毎回一から書くのは大変です。 多くの場合、既存のコードを再利用したほうが楽でしょう。\nTerraform のコードの再利用の仕組みとして、 Module があります。 Module は勿論便利なのですが、使い方には注意が必要で、「安易に Module 化するな。使うな」というふうな考え方もあるでしょう。 自分も基本的に同意見で、 Module を共用するようになると Module への変更がしづらくなったり、パラメータがどんどん増えて複雑になったりします。\n例えば次のように共用の local Module を作成するアプローチがあります。\nmodules\/ lambda-base\/ README.md main.tf variables.tf outputs.tf services\/ foo\/ staging\/ main.tf # リポジトリ直下の modules\/lambda-base を参照 production\/ main.tf # リポジトリ直下の modules\/lambda-base を参照 こうすると modules 配下の Module を変更した際にその Module を使っているすべてのサービスに影響が出てしまい、 サービスのオーナーが様々だったり、曖昧だったり不在だったりすると変更が難しいですし、どんどん Module が複雑になったりします。\nModule を別のリポジトリでバージョニングして管理し、バージョンを指定するようにするというやり方もありますが、 結構複雑というか考えることが多いアプローチだとは思います。\nTerraform にそこまで詳しくない developer にも書いてもらうとなると、シンプルなアプローチにするのが望ましいでしょう(当然これは組織によりますが)。\nそこで Module のテンプレートを用意し、 Module を使いたくなったらそれをコピペして使うというアプローチがあります。 例えば lambda-base という Module の Template を foo というサービスの staging 環境と production 環境で使う場合、次のような感じになります。"
+  }
+</script>
+
+
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://techblog-szksh-cloud.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li class="active">Terraform Module の Template という使い方</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2021-04-03T11:04:25JST">Apr 3, 2021</time></li>
+      
+      
+    </ul>
+
+    <h1 class="title">Terraform Module の Template という使い方</h1>
+    
+    
+    <section>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/terraform/">terraform</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </header>
+
+  
+
+  <div class="article-body"><p>Terraform Module の使い方として Terraform Module のテンプレートをコピペして使うというアプローチを紹介します。</p>
+<p>Terraform の設定ファイル(以下 tfファイル) を書く際、毎回一から書くのは大変です。
+多くの場合、既存のコードを再利用したほうが楽でしょう。</p>
+<p>Terraform のコードの再利用の仕組みとして、 Module があります。
+Module は勿論便利なのですが、使い方には注意が必要で、「安易に Module 化するな。使うな」というふうな考え方もあるでしょう。
+自分も基本的に同意見で、 Module を共用するようになると Module への変更がしづらくなったり、パラメータがどんどん増えて複雑になったりします。</p>
+<p>例えば次のように共用の local Module を作成するアプローチがあります。</p>
+<pre tabindex="0"><code>modules/
+  lambda-base/
+    README.md
+    main.tf
+    variables.tf
+    outputs.tf
+services/
+  foo/
+    staging/
+      main.tf # リポジトリ直下の modules/lambda-base を参照
+    production/
+      main.tf # リポジトリ直下の modules/lambda-base を参照
+</code></pre><p>こうすると modules 配下の Module を変更した際にその Module を使っているすべてのサービスに影響が出てしまい、
+サービスのオーナーが様々だったり、曖昧だったり不在だったりすると変更が難しいですし、どんどん Module が複雑になったりします。</p>
+<p>Module を別のリポジトリでバージョニングして管理し、バージョンを指定するようにするというやり方もありますが、
+結構複雑というか考えることが多いアプローチだとは思います。</p>
+<p>Terraform にそこまで詳しくない developer にも書いてもらうとなると、シンプルなアプローチにするのが望ましいでしょう(当然これは組織によりますが)。</p>
+<p>そこで Module のテンプレートを用意し、 Module を使いたくなったらそれをコピペして使うというアプローチがあります。
+例えば <code>lambda-base</code> という Module の Template を foo というサービスの staging 環境と production 環境で使う場合、次のような感じになります。</p>
+<pre tabindex="0"><code>services/
+  foo/
+    staging/
+      modules/
+        lambda-base/ # templates からコピー
+      main.tf
+    production/
+      modules/
+        lambda-base/ # templates からコピー
+      main.tf
+templates/ # Module のテンプレートを置いておく
+  lambda-base/ # 中身は普通の Module
+    README.md
+    main.tf
+    variables.tf
+    outputs.tf
+</code></pre><p>こうすると 2 つの Module はそれぞれ独立しているため、変更がしやすくなりますし、シンプルに保つことが出来ます。</p>
+<h2 id="テンプレートエンジンとかは使わない">テンプレートエンジンとかは使わない</h2>
+<p>Module の Template をコピペする際に、コードに変数を埋め込んでコピペする際に置換したりとか、高度なテンプレートエンジンを使って動的に内容を変えたりといったことも考えられますが、
+個人的には複雑度が上がるのでやらないほうが良いかなと思っています。
+変数であれば Module の input variable として渡せばよいし、テンプレートエンジン使いたいのであれば、テンプレートを分けたり、 HCL で表現したりすればよいのではという気がします。</p>
+<h2 id="考えられるデメリット">考えられるデメリット</h2>
+<p>通常の Module と比べて、デメリットとしては以下のようなことが考えられます。</p>
+<ul>
+<li>コード量が増える(DRY じゃない)</li>
+<li>Module を一箇所で管理できない
+<ul>
+<li>一括して変更を加えることが出来ない</li>
+<li>設定を強制することができない</li>
+</ul>
+</li>
+</ul>
+<p>しかし、個人的にはこれは大した問題じゃないと思っています。</p>
+<p>コードが増えることに関しては、それはそうとしか言いようがありません。
+一括して変更を加えることが出来ないのは、トレードオフだと思っていて、むしろ対処のサービスを限定しながら Module に変更を加えられるというメリットのほうが大きいと思っています。
+設定を強制することができないのは、たしかにそれはあると思っていて、コピペした Module に一括して変更を加えたり Conftest などでテストする仕組みが必要かなと思います。</p>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/terraform/">terraform</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

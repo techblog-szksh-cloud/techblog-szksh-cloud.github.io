@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/test-ansible-on-docker/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>Dockerを使ってansible playbookをテストする - melody</title>
+    
+<meta name="description" content="ansible playbookを(VMの代わりに)Dockerコンテナに対して実行すると、効率よく動作確認できるというお話です。 ansible playbookの動作確認のためにvagrantでVMを起動したりしていると動作確認に時間がかかるし、容量も喰います。 Dockerコンテナを使って動作確認できればこれらの問題を解決できます。ただし、Dockerコンテナの場合、一部のansible のtaskが失敗することがあるので ansible playbookによってはDockerコンテナではテストにならない場合もあるかと思います。サンプル https://github.com/suzuki-shunsuke/example/tree/master/ansible/test-on-docker簡単なサンプルを用意しました。ansible playbookに加え、 docker-compose.yml test_docker.sh: 簡単なシェルスクリプト  を作成してあります。$ bash test_docker.sh とすることで動作確認できます。説明 スクリプトでやっていることは Docker Compose でコンテナを起動 コンテナのIDを取得し、inventory ファイルを作成 Docker Connection Pluginを使ってコンテナにplaybookを実行  です。Docker Connection Plugin を使うとDockerコンテナに対してansible playbookを実行できます。 https://docs.ansible.com/ansible/2.6/plugins/connection.html https://docs.ansible.com/ansible/2.6/plugins/connection/docker.html  また、Docker Hubで公開されている多くのDockerイメージのUSERは root ですが、 ansible playbookの動作確認としては都合が悪かったりします。そこで自分は非rootユーザーを作成したDocker Imageを使っています。https://hub.docker.com/r/suzukishunsuke/ansible-test-centos/関係ありそうなツール 今回は簡単なスクリプトとdocker-compose.ymlを用意しましたが、 もっとイケてるやり方がありそうなものです。Vagrant Docker Provider https://www.vagrantup.com/docs/docker/なんかあまり使えなさそうです。 Linux以外だと結局VMが必要で、既に非推奨な boot2docker をデフォルトでは使うらしくだめそうだなって思いました。 あまり調べてません。https://www.vagrantup.com/docs/docker/basics.html#host-vm By default, the host VM Vagrant spins up is backed by boot2docker, because it launches quickly and uses little resources.">
+
+<meta property="og:title" content="Dockerを使ってansible playbookをテストする - melody">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://techblog-szksh-cloud.github.io/test-ansible-on-docker/">
+<meta property="og:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+<meta property="og:site_name" content="melody">
+<meta property="og:description" content="ansible playbookを(VMの代わりに)Dockerコンテナに対して実行すると、効率よく動作確認できるというお話です。 ansible playbookの動作確認のためにvagrantでVMを起動したりしていると動作確認に時間がかかるし、容量も喰います。 Dockerコンテナを使って動作確認できればこれらの問題を解決できます。ただし、Dockerコンテナの場合、一部のansible のtaskが失敗することがあるので ansible playbookによってはDockerコンテナではテストにならない場合もあるかと思います。サンプル https://github.com/suzuki-shunsuke/example/tree/master/ansible/test-on-docker簡単なサンプルを用意しました。ansible playbookに加え、 docker-compose.yml test_docker.sh: 簡単なシェルスクリプト  を作成してあります。$ bash test_docker.sh とすることで動作確認できます。説明 スクリプトでやっていることは Docker Compose でコンテナを起動 コンテナのIDを取得し、inventory ファイルを作成 Docker Connection Pluginを使ってコンテナにplaybookを実行  です。Docker Connection Plugin を使うとDockerコンテナに対してansible playbookを実行できます。 https://docs.ansible.com/ansible/2.6/plugins/connection.html https://docs.ansible.com/ansible/2.6/plugins/connection/docker.html  また、Docker Hubで公開されている多くのDockerイメージのUSERは root ですが、 ansible playbookの動作確認としては都合が悪かったりします。そこで自分は非rootユーザーを作成したDocker Imageを使っています。https://hub.docker.com/r/suzukishunsuke/ansible-test-centos/関係ありそうなツール 今回は簡単なスクリプトとdocker-compose.ymlを用意しましたが、 もっとイケてるやり方がありそうなものです。Vagrant Docker Provider https://www.vagrantup.com/docs/docker/なんかあまり使えなさそうです。 Linux以外だと結局VMが必要で、既に非推奨な boot2docker をデフォルトでは使うらしくだめそうだなって思いました。 あまり調べてません。https://www.vagrantup.com/docs/docker/basics.html#host-vm By default, the host VM Vagrant spins up is backed by boot2docker, because it launches quickly and uses little resources.">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="melody">
+<meta name="twitter:url" content="https://techblog-szksh-cloud.github.io/test-ansible-on-docker/">
+<meta name="twitter:title" content="Dockerを使ってansible playbookをテストする - melody">
+<meta name="twitter:description" content="ansible playbookを(VMの代わりに)Dockerコンテナに対して実行すると、効率よく動作確認できるというお話です。 ansible playbookの動作確認のためにvagrantでVMを起動したりしていると動作確認に時間がかかるし、容量も喰います。 Dockerコンテナを使って動作確認できればこれらの問題を解決できます。ただし、Dockerコンテナの場合、一部のansible のtaskが失敗することがあるので ansible playbookによってはDockerコンテナではテストにならない場合もあるかと思います。サンプル https://github.com/suzuki-shunsuke/example/tree/master/ansible/test-on-docker簡単なサンプルを用意しました。ansible playbookに加え、 docker-compose.yml test_docker.sh: 簡単なシェルスクリプト  を作成してあります。$ bash test_docker.sh とすることで動作確認できます。説明 スクリプトでやっていることは Docker Compose でコンテナを起動 コンテナのIDを取得し、inventory ファイルを作成 Docker Connection Pluginを使ってコンテナにplaybookを実行  です。Docker Connection Plugin を使うとDockerコンテナに対してansible playbookを実行できます。 https://docs.ansible.com/ansible/2.6/plugins/connection.html https://docs.ansible.com/ansible/2.6/plugins/connection/docker.html  また、Docker Hubで公開されている多くのDockerイメージのUSERは root ですが、 ansible playbookの動作確認としては都合が悪かったりします。そこで自分は非rootユーザーを作成したDocker Imageを使っています。https://hub.docker.com/r/suzukishunsuke/ansible-test-centos/関係ありそうなツール 今回は簡単なスクリプトとdocker-compose.ymlを用意しましたが、 もっとイケてるやり方がありそうなものです。Vagrant Docker Provider https://www.vagrantup.com/docs/docker/なんかあまり使えなさそうです。 Linux以外だと結局VMが必要で、既に非推奨な boot2docker をデフォルトでは使うらしくだめそうだなって思いました。 あまり調べてません。https://www.vagrantup.com/docs/docker/basics.html#host-vm By default, the host VM Vagrant spins up is backed by boot2docker, because it launches quickly and uses little resources.">
+<meta name="twitter:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https:\/\/techblog-szksh-cloud.github.io\/"
+    },
+    "headline": "Dockerを使ってansible playbookをテストする - melody",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https:\/\/techblog-szksh-cloud.github.io\/images\/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2018-10-12T21:02:51JST",
+    "dateModified": "2018-10-12T21:02:51JST",
+    "author": {
+      "@type": "Person",
+      "name": "melody"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "melody",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https:\/\/techblog-szksh-cloud.github.io\/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "ansible playbookを(VMの代わりに)Dockerコンテナに対して実行すると、効率よく動作確認できるというお話です。 ansible playbookの動作確認のためにvagrantでVMを起動したりしていると動作確認に時間がかかるし、容量も喰います。 Dockerコンテナを使って動作確認できればこれらの問題を解決できます。\nただし、Dockerコンテナの場合、一部のansible のtaskが失敗することがあるので ansible playbookによってはDockerコンテナではテストにならない場合もあるかと思います。\nサンプル https:\/\/github.com\/suzuki-shunsuke\/example\/tree\/master\/ansible\/test-on-docker\n簡単なサンプルを用意しました。\nansible playbookに加え、\n docker-compose.yml test_docker.sh: 簡単なシェルスクリプト  を作成してあります。\n$ bash test_docker.sh とすることで動作確認できます。\n説明 スクリプトでやっていることは\n Docker Compose でコンテナを起動 コンテナのIDを取得し、inventory ファイルを作成 Docker Connection Pluginを使ってコンテナにplaybookを実行  です。\nDocker Connection Plugin を使うとDockerコンテナに対してansible playbookを実行できます。\n https:\/\/docs.ansible.com\/ansible\/2.6\/plugins\/connection.html https:\/\/docs.ansible.com\/ansible\/2.6\/plugins\/connection\/docker.html  また、Docker Hubで公開されている多くのDockerイメージのUSERは root ですが、 ansible playbookの動作確認としては都合が悪かったりします。\nそこで自分は非rootユーザーを作成したDocker Imageを使っています。\nhttps:\/\/hub.docker.com\/r\/suzukishunsuke\/ansible-test-centos\/\n関係ありそうなツール 今回は簡単なスクリプトとdocker-compose.ymlを用意しましたが、 もっとイケてるやり方がありそうなものです。\nVagrant Docker Provider https:\/\/www.vagrantup.com\/docs\/docker\/\nなんかあまり使えなさそうです。 Linux以外だと結局VMが必要で、既に非推奨な boot2docker をデフォルトでは使うらしくだめそうだなって思いました。 あまり調べてません。\nhttps:\/\/www.vagrantup.com\/docs\/docker\/basics.html#host-vm\n By default, the host VM Vagrant spins up is backed by boot2docker, because it launches quickly and uses little resources."
+  }
+</script>
+
+
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://techblog-szksh-cloud.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li class="active">Dockerを使ってansible playbookをテストする</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-10-12T21:02:51JST">Oct 12, 2018</time></li>
+      
+      
+    </ul>
+
+    <h1 class="title">Dockerを使ってansible playbookをテストする</h1>
+    
+    
+    <section>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/ansible/">ansible</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </header>
+
+  
+
+  <div class="article-body"><p>ansible playbookを(VMの代わりに)Dockerコンテナに対して実行すると、効率よく動作確認できるというお話です。
+ansible playbookの動作確認のためにvagrantでVMを起動したりしていると動作確認に時間がかかるし、容量も喰います。
+Dockerコンテナを使って動作確認できればこれらの問題を解決できます。</p>
+<p>ただし、Dockerコンテナの場合、一部のansible のtaskが失敗することがあるので
+ansible playbookによってはDockerコンテナではテストにならない場合もあるかと思います。</p>
+<h2 id="サンプル">サンプル</h2>
+<p><a href="https://github.com/suzuki-shunsuke/example/tree/master/ansible/test-on-docker">https://github.com/suzuki-shunsuke/example/tree/master/ansible/test-on-docker</a></p>
+<p>簡単なサンプルを用意しました。</p>
+<p>ansible playbookに加え、</p>
+<ul>
+<li>docker-compose.yml</li>
+<li>test_docker.sh: 簡単なシェルスクリプト</li>
+</ul>
+<p>を作成してあります。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-console" data-lang="console">$ bash test_docker.sh
+</code></pre></div><p>とすることで動作確認できます。</p>
+<h2 id="説明">説明</h2>
+<p>スクリプトでやっていることは</p>
+<ol>
+<li>Docker Compose でコンテナを起動</li>
+<li>コンテナのIDを取得し、inventory ファイルを作成</li>
+<li>Docker Connection Pluginを使ってコンテナにplaybookを実行</li>
+</ol>
+<p>です。</p>
+<p>Docker Connection Plugin を使うとDockerコンテナに対してansible playbookを実行できます。</p>
+<ul>
+<li><a href="https://docs.ansible.com/ansible/2.6/plugins/connection.html">https://docs.ansible.com/ansible/2.6/plugins/connection.html</a></li>
+<li><a href="https://docs.ansible.com/ansible/2.6/plugins/connection/docker.html">https://docs.ansible.com/ansible/2.6/plugins/connection/docker.html</a></li>
+</ul>
+<p>また、Docker Hubで公開されている多くのDockerイメージのUSERは root ですが、
+ansible playbookの動作確認としては都合が悪かったりします。</p>
+<p>そこで自分は非rootユーザーを作成したDocker Imageを使っています。</p>
+<p><a href="https://hub.docker.com/r/suzukishunsuke/ansible-test-centos/">https://hub.docker.com/r/suzukishunsuke/ansible-test-centos/</a></p>
+<h2 id="関係ありそうなツール">関係ありそうなツール</h2>
+<p>今回は簡単なスクリプトとdocker-compose.ymlを用意しましたが、
+もっとイケてるやり方がありそうなものです。</p>
+<h3 id="vagrant-docker-provider">Vagrant Docker Provider</h3>
+<p><a href="https://www.vagrantup.com/docs/docker/">https://www.vagrantup.com/docs/docker/</a></p>
+<p>なんかあまり使えなさそうです。
+Linux以外だと結局VMが必要で、既に非推奨な boot2docker をデフォルトでは使うらしくだめそうだなって思いました。
+あまり調べてません。</p>
+<p><a href="https://www.vagrantup.com/docs/docker/basics.html#host-vm">https://www.vagrantup.com/docs/docker/basics.html#host-vm</a></p>
+<blockquote>
+<p>By default, the host VM Vagrant spins up is backed by boot2docker, because it launches quickly and uses little resources.</p>
+</blockquote>
+<h3 id="ansible-container">Ansible Container</h3>
+<p><a href="https://docs.ansible.com/ansible-container/">https://docs.ansible.com/ansible-container/</a></p>
+<p>よく知りません。動作確認したいだけだとオーバースペックな印象は受けます。</p>
+<h3 id="packer">Packer</h3>
+<ul>
+<li><a href="https://www.packer.io/docs/builders/docker.html">https://www.packer.io/docs/builders/docker.html</a></li>
+<li><a href="https://www.packer.io/docs/provisioners/ansible.html">https://www.packer.io/docs/provisioners/ansible.html</a></li>
+</ul>
+<p>記事を書き終わってからそういえば Packer があったなと思い出しました。</p>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/ansible/">ansible</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

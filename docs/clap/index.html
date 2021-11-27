@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/clap/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>clap - 簡単にツールをインストールするためのツールを作った - melody</title>
+    
+<meta name="description" content="多分車輪の再生産だとは思いますが、簡単にツールをインストールするための CLI ツールを作りました。 tarball や zip をダウンロードして展開して指定したパスにインストールするツールです。https://github.com/suzuki-shunsuke/clapGo で書かれています。 ツールの名前(clap)には特別な意味や理由はなく、なんとなくです。CI で何かしらのツールをインストールすることがままあって、そのためのシェルスクリプトを都度書くのが割と面倒なのでツール化しました。このブログを書いている時点でバージョンは v0.1.0-1 で、最低限の機能しかありませんが、9割型ニーズを満たせるかなと思います。使い方は以下のようになっています。$ clap &amp;lt;URL&amp;gt; &amp;lt;インストールするファイルのアーカイブ内での相対パス&amp;gt;:&amp;lt;インストール先&amp;gt; [&amp;lt;インストールするファイルのアーカイブ内での相対パス&amp;gt;:&amp;lt;インストール先&amp;gt;...] 例えば conftest を /usr/local/bin にインストールする場合次のようになります。CONFTEST_VERSION=0.18.2 clap install https://github.com/instrumenta/conftest/releases/download/v${CONFTEST_VERSION}/conftest_${CONFTEST_VERSION}_Linux_x86_64.tar.gz conftest:/usr/local/bin/conftest chmod a&#43;x /usr/local/bin/conftest パーミッションの付与はやってくれないので必要に応じてやってください。 ファイルの圧縮形式は URL から自動で判別してくれます。上記の conftest のインストールを今までは次のようなシェルスクリプトを書いていました。#!/usr/bin/env bash  set -eu CONFTEST_VERSION=0.18.2 dirpath=$(mktemp -d) pushd &amp;#34;$dirpath&amp;#34; TARFILE=conftest_${CONFTEST_VERSION}_Linux_x86_64.tar.gz curl -OL https://github.com/instrumenta/conftest/releases/download/v${CONFTEST_VERSION}/${TARFILE} tar xvzf $TARFILE mv conftest /usr/local/bin/conftest chmod a&#43;x /usr/local/bin/conftest popd rm -R &amp;#34;$dirpath&amp;#34; 地味に面倒ですね。これをツール毎に書いて、しかも圧縮形式によって微妙に変えないといけません。">
+
+<meta property="og:title" content="clap - 簡単にツールをインストールするためのツールを作った - melody">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://techblog-szksh-cloud.github.io/clap/">
+<meta property="og:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+<meta property="og:site_name" content="melody">
+<meta property="og:description" content="多分車輪の再生産だとは思いますが、簡単にツールをインストールするための CLI ツールを作りました。 tarball や zip をダウンロードして展開して指定したパスにインストールするツールです。https://github.com/suzuki-shunsuke/clapGo で書かれています。 ツールの名前(clap)には特別な意味や理由はなく、なんとなくです。CI で何かしらのツールをインストールすることがままあって、そのためのシェルスクリプトを都度書くのが割と面倒なのでツール化しました。このブログを書いている時点でバージョンは v0.1.0-1 で、最低限の機能しかありませんが、9割型ニーズを満たせるかなと思います。使い方は以下のようになっています。$ clap &amp;lt;URL&amp;gt; &amp;lt;インストールするファイルのアーカイブ内での相対パス&amp;gt;:&amp;lt;インストール先&amp;gt; [&amp;lt;インストールするファイルのアーカイブ内での相対パス&amp;gt;:&amp;lt;インストール先&amp;gt;...] 例えば conftest を /usr/local/bin にインストールする場合次のようになります。CONFTEST_VERSION=0.18.2 clap install https://github.com/instrumenta/conftest/releases/download/v${CONFTEST_VERSION}/conftest_${CONFTEST_VERSION}_Linux_x86_64.tar.gz conftest:/usr/local/bin/conftest chmod a&#43;x /usr/local/bin/conftest パーミッションの付与はやってくれないので必要に応じてやってください。 ファイルの圧縮形式は URL から自動で判別してくれます。上記の conftest のインストールを今までは次のようなシェルスクリプトを書いていました。#!/usr/bin/env bash  set -eu CONFTEST_VERSION=0.18.2 dirpath=$(mktemp -d) pushd &amp;#34;$dirpath&amp;#34; TARFILE=conftest_${CONFTEST_VERSION}_Linux_x86_64.tar.gz curl -OL https://github.com/instrumenta/conftest/releases/download/v${CONFTEST_VERSION}/${TARFILE} tar xvzf $TARFILE mv conftest /usr/local/bin/conftest chmod a&#43;x /usr/local/bin/conftest popd rm -R &amp;#34;$dirpath&amp;#34; 地味に面倒ですね。これをツール毎に書いて、しかも圧縮形式によって微妙に変えないといけません。">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="melody">
+<meta name="twitter:url" content="https://techblog-szksh-cloud.github.io/clap/">
+<meta name="twitter:title" content="clap - 簡単にツールをインストールするためのツールを作った - melody">
+<meta name="twitter:description" content="多分車輪の再生産だとは思いますが、簡単にツールをインストールするための CLI ツールを作りました。 tarball や zip をダウンロードして展開して指定したパスにインストールするツールです。https://github.com/suzuki-shunsuke/clapGo で書かれています。 ツールの名前(clap)には特別な意味や理由はなく、なんとなくです。CI で何かしらのツールをインストールすることがままあって、そのためのシェルスクリプトを都度書くのが割と面倒なのでツール化しました。このブログを書いている時点でバージョンは v0.1.0-1 で、最低限の機能しかありませんが、9割型ニーズを満たせるかなと思います。使い方は以下のようになっています。$ clap &amp;lt;URL&amp;gt; &amp;lt;インストールするファイルのアーカイブ内での相対パス&amp;gt;:&amp;lt;インストール先&amp;gt; [&amp;lt;インストールするファイルのアーカイブ内での相対パス&amp;gt;:&amp;lt;インストール先&amp;gt;...] 例えば conftest を /usr/local/bin にインストールする場合次のようになります。CONFTEST_VERSION=0.18.2 clap install https://github.com/instrumenta/conftest/releases/download/v${CONFTEST_VERSION}/conftest_${CONFTEST_VERSION}_Linux_x86_64.tar.gz conftest:/usr/local/bin/conftest chmod a&#43;x /usr/local/bin/conftest パーミッションの付与はやってくれないので必要に応じてやってください。 ファイルの圧縮形式は URL から自動で判別してくれます。上記の conftest のインストールを今までは次のようなシェルスクリプトを書いていました。#!/usr/bin/env bash  set -eu CONFTEST_VERSION=0.18.2 dirpath=$(mktemp -d) pushd &amp;#34;$dirpath&amp;#34; TARFILE=conftest_${CONFTEST_VERSION}_Linux_x86_64.tar.gz curl -OL https://github.com/instrumenta/conftest/releases/download/v${CONFTEST_VERSION}/${TARFILE} tar xvzf $TARFILE mv conftest /usr/local/bin/conftest chmod a&#43;x /usr/local/bin/conftest popd rm -R &amp;#34;$dirpath&amp;#34; 地味に面倒ですね。これをツール毎に書いて、しかも圧縮形式によって微妙に変えないといけません。">
+<meta name="twitter:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https:\/\/techblog-szksh-cloud.github.io\/"
+    },
+    "headline": "clap - 簡単にツールをインストールするためのツールを作った - melody",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https:\/\/techblog-szksh-cloud.github.io\/images\/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2020-07-06T16:52:58JST",
+    "dateModified": "2020-07-06T16:52:58JST",
+    "author": {
+      "@type": "Person",
+      "name": "melody"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "melody",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https:\/\/techblog-szksh-cloud.github.io\/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "多分車輪の再生産だとは思いますが、簡単にツールをインストールするための CLI ツールを作りました。 tarball や zip をダウンロードして展開して指定したパスにインストールするツールです。\nhttps:\/\/github.com\/suzuki-shunsuke\/clap\nGo で書かれています。 ツールの名前(clap)には特別な意味や理由はなく、なんとなくです。\nCI で何かしらのツールをインストールすることがままあって、そのためのシェルスクリプトを都度書くのが割と面倒なのでツール化しました。\nこのブログを書いている時点でバージョンは v0.1.0-1 で、最低限の機能しかありませんが、9割型ニーズを満たせるかなと思います。\n使い方は以下のようになっています。\n$ clap \u0026lt;URL\u0026gt; \u0026lt;インストールするファイルのアーカイブ内での相対パス\u0026gt;:\u0026lt;インストール先\u0026gt; [\u0026lt;インストールするファイルのアーカイブ内での相対パス\u0026gt;:\u0026lt;インストール先\u0026gt;...] 例えば conftest を \/usr\/local\/bin にインストールする場合次のようになります。\nCONFTEST_VERSION=0.18.2 clap install https:\/\/github.com\/instrumenta\/conftest\/releases\/download\/v${CONFTEST_VERSION}\/conftest_${CONFTEST_VERSION}_Linux_x86_64.tar.gz conftest:\/usr\/local\/bin\/conftest chmod a\u002bx \/usr\/local\/bin\/conftest パーミッションの付与はやってくれないので必要に応じてやってください。 ファイルの圧縮形式は URL から自動で判別してくれます。\n上記の conftest のインストールを今までは次のようなシェルスクリプトを書いていました。\n#!\/usr\/bin\/env bash  set -eu CONFTEST_VERSION=0.18.2 dirpath=$(mktemp -d) pushd \u0026#34;$dirpath\u0026#34; TARFILE=conftest_${CONFTEST_VERSION}_Linux_x86_64.tar.gz curl -OL https:\/\/github.com\/instrumenta\/conftest\/releases\/download\/v${CONFTEST_VERSION}\/${TARFILE} tar xvzf $TARFILE mv conftest \/usr\/local\/bin\/conftest chmod a\u002bx \/usr\/local\/bin\/conftest popd rm -R \u0026#34;$dirpath\u0026#34; 地味に面倒ですね。これをツール毎に書いて、しかも圧縮形式によって微妙に変えないといけません。"
+  }
+</script>
+
+
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://techblog-szksh-cloud.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li class="active">clap - 簡単にツールをインストールするためのツールを作った</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2020-07-06T16:52:58JST">Jul 6, 2020</time></li>
+      
+      
+    </ul>
+
+    <h1 class="title">clap - 簡単にツールをインストールするためのツールを作った</h1>
+    
+    
+    <section>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/oss/">oss</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </header>
+
+  
+
+  <div class="article-body"><p>多分車輪の再生産だとは思いますが、簡単にツールをインストールするための CLI ツールを作りました。
+tarball や zip をダウンロードして展開して指定したパスにインストールするツールです。</p>
+<p><a href="https://github.com/suzuki-shunsuke/clap">https://github.com/suzuki-shunsuke/clap</a></p>
+<p>Go で書かれています。
+ツールの名前(clap)には特別な意味や理由はなく、なんとなくです。</p>
+<p>CI で何かしらのツールをインストールすることがままあって、そのためのシェルスクリプトを都度書くのが割と面倒なのでツール化しました。</p>
+<p>このブログを書いている時点でバージョンは v0.1.0-1 で、最低限の機能しかありませんが、9割型ニーズを満たせるかなと思います。</p>
+<p>使い方は以下のようになっています。</p>
+<pre tabindex="0"><code>$ clap &lt;URL&gt; &lt;インストールするファイルのアーカイブ内での相対パス&gt;:&lt;インストール先&gt; [&lt;インストールするファイルのアーカイブ内での相対パス&gt;:&lt;インストール先&gt;...]
+</code></pre><p>例えば <a href="https://github.com/open-policy-agent/conftest">conftest</a> を /usr/local/bin にインストールする場合次のようになります。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">CONFTEST_VERSION<span style="color:#f92672">=</span>0.18.2
+clap install https://github.com/instrumenta/conftest/releases/download/v<span style="color:#e6db74">${</span>CONFTEST_VERSION<span style="color:#e6db74">}</span>/conftest_<span style="color:#e6db74">${</span>CONFTEST_VERSION<span style="color:#e6db74">}</span>_Linux_x86_64.tar.gz conftest:/usr/local/bin/conftest
+chmod a+x /usr/local/bin/conftest
+</code></pre></div><p>パーミッションの付与はやってくれないので必要に応じてやってください。
+ファイルの圧縮形式は URL から自動で判別してくれます。</p>
+<p>上記の conftest のインストールを今までは次のようなシェルスクリプトを書いていました。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh"><span style="color:#75715e">#!/usr/bin/env bash
+</span><span style="color:#75715e"></span>
+set -eu
+
+CONFTEST_VERSION<span style="color:#f92672">=</span>0.18.2
+
+dirpath<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>mktemp -d<span style="color:#66d9ef">)</span>
+pushd <span style="color:#e6db74">&#34;</span>$dirpath<span style="color:#e6db74">&#34;</span>
+TARFILE<span style="color:#f92672">=</span>conftest_<span style="color:#e6db74">${</span>CONFTEST_VERSION<span style="color:#e6db74">}</span>_Linux_x86_64.tar.gz
+curl -OL https://github.com/instrumenta/conftest/releases/download/v<span style="color:#e6db74">${</span>CONFTEST_VERSION<span style="color:#e6db74">}</span>/<span style="color:#e6db74">${</span>TARFILE<span style="color:#e6db74">}</span>
+tar xvzf $TARFILE
+mv conftest /usr/local/bin/conftest
+chmod a+x /usr/local/bin/conftest
+popd
+rm -R <span style="color:#e6db74">&#34;</span>$dirpath<span style="color:#e6db74">&#34;</span>
+</code></pre></div><p>地味に面倒ですね。これをツール毎に書いて、しかも圧縮形式によって微妙に変えないといけません。</p>
+<p>clap 自体のインストールはどうするかというと、 <a href="https://github.com/suzuki-shunsuke/clap/releases">GitHub Releases で tarball の他にバイナリ単体でも配布</a>しているので簡単にインストールできます。</p>
+<pre tabindex="0"><code>CLAP_VERSION=0.1.0-1
+curl -L -o /usr/local/bin/clap https://github.com/suzuki-shunsuke/clap/releases/download/v${CLAP_VERSION}/clap_${CLAP_VERSION}_linux_amd64
+chmod a+x /usr/local/bin/clap
+</code></pre><p>以上、簡単な紹介でした。</p>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/oss/">oss</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

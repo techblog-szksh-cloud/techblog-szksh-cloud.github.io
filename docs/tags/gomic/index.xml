@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>gomic on melody</title>
+    <link>https://techblog-szksh-cloud.github.io/tags/gomic/</link>
+    <description>Recent content in gomic on melody</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>jp</language>
+    <lastBuildDate>Tue, 30 Oct 2018 08:35:16 +0900</lastBuildDate><atom:link href="https://techblog-szksh-cloud.github.io/tags/gomic/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>gomic - Goのモックジェネレータ</title>
+      <link>https://techblog-szksh-cloud.github.io/gomic/</link>
+      <pubDate>Tue, 30 Oct 2018 08:35:16 +0900</pubDate>
+      
+      <guid>https://techblog-szksh-cloud.github.io/gomic/</guid>
+      <description>自作のOSS gomic の紹介をします。
+ なぜわざわざこんなものを作ったのか 生成されたモックの簡単な使い方  を主に説明したいと思います。
+まとめ  gomic は Goのinterfaceを実装したモックを生成するCLIツール モックを手で書くのが辛すぎた &amp;amp; 既存ツールで満足できなかったため作った  自動生成できるコードは自動生成すべき   設定ファイルで管理するため、interfaceの更新に合わせてmockの更新が容易 生成されるモックはシンプルなAPIのみ提供するので学習コストが低い  gomic とは gomic は Goのinterfaceを実装したモックを生成するCLIツールです。 これによってモックを使ったテストの作成を効率化します。 単調な作業を自動化し、本来注力すべきことに注力できるようにするためのツールです。
+Goで書かれています。
+https://github.com/suzuki-shunsuke/gomic/releases からバイナリをダウンロードしてインストールできます。
+同様のツールは幾つかあります。
+ https://github.com/avelino/awesome-go#testing https://github.com/golang/mock (以下 gomock) https://github.com/gojuno/minimock (以下 minimock)  特に gomock は有名ですね。
+なぜ作ったのか 上述のように既に同様のツールはありますし、 gomock と minimock は試しました。 しかしあまり満足のいくものではなかったため、自分で作ることにしました。
+自分が欲しかったのは学習コストの低いシンプルなAPIです。 interfaceのメソッドを実装した関数をモックに渡すことで 簡単にメソッドの実装を切り替えたいのです。
+// Getwd メソッドのモック mock.SetFuncGetwd(func() (string, error) { return &amp;#34;/tmp&amp;#34;, nil }) mock.Getwd() // &amp;#34;/tmp&amp;#34;, nil これは非常にシンプルで分かりやすく、柔軟性のあるパターンです(minimockはこのパターンもサポートしています)。</description>
+    </item>
+    
+  </channel>
+</rss>

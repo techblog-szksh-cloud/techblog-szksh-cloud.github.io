@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/buildflow-task/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>buildflow の task の設定項目 - melody</title>
+    
+<meta name="description" content="buildflow というツールを開発しているので buildflow というタグをつけて何回かに分けてブログを書こうと思います。この記事では buildflow の task の基本的な設定項目などについて説明します。 数が多いので、個々の設定の詳細はまた別の記事に書きます。task には幾つか type がありますが、全ての type に共通するパラメータが以下になります。 name: task 名。 unique である必要はない。 Go の text/template が使える when: task を実行するか否か。 真偽値か Tengo script  when_file で外部ファイルを読み込める   dependency: task の依存関係の定義。 task 名のリストか、 Tengo script items: dynamic task の設定。 loop を使って複数の task を動的に生成できる  任意の list か map か、 Tengo script   input: Tengo script で task のコマンドのパラメータを生成できる  input_file で外部ファイルを読み込める   output: Tengo script で task の実行結果を整形できる。他の task が参照して挙動を変えたりできる  output_file で外部ファイルを読み込める   meta: ユーザーが自由にパラメータを定義できる map  上記の設定は name 以外はオプションです。">
+
+<meta property="og:title" content="buildflow の task の設定項目 - melody">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://techblog-szksh-cloud.github.io/buildflow-task/">
+<meta property="og:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+<meta property="og:site_name" content="melody">
+<meta property="og:description" content="buildflow というツールを開発しているので buildflow というタグをつけて何回かに分けてブログを書こうと思います。この記事では buildflow の task の基本的な設定項目などについて説明します。 数が多いので、個々の設定の詳細はまた別の記事に書きます。task には幾つか type がありますが、全ての type に共通するパラメータが以下になります。 name: task 名。 unique である必要はない。 Go の text/template が使える when: task を実行するか否か。 真偽値か Tengo script  when_file で外部ファイルを読み込める   dependency: task の依存関係の定義。 task 名のリストか、 Tengo script items: dynamic task の設定。 loop を使って複数の task を動的に生成できる  任意の list か map か、 Tengo script   input: Tengo script で task のコマンドのパラメータを生成できる  input_file で外部ファイルを読み込める   output: Tengo script で task の実行結果を整形できる。他の task が参照して挙動を変えたりできる  output_file で外部ファイルを読み込める   meta: ユーザーが自由にパラメータを定義できる map  上記の設定は name 以外はオプションです。">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="melody">
+<meta name="twitter:url" content="https://techblog-szksh-cloud.github.io/buildflow-task/">
+<meta name="twitter:title" content="buildflow の task の設定項目 - melody">
+<meta name="twitter:description" content="buildflow というツールを開発しているので buildflow というタグをつけて何回かに分けてブログを書こうと思います。この記事では buildflow の task の基本的な設定項目などについて説明します。 数が多いので、個々の設定の詳細はまた別の記事に書きます。task には幾つか type がありますが、全ての type に共通するパラメータが以下になります。 name: task 名。 unique である必要はない。 Go の text/template が使える when: task を実行するか否か。 真偽値か Tengo script  when_file で外部ファイルを読み込める   dependency: task の依存関係の定義。 task 名のリストか、 Tengo script items: dynamic task の設定。 loop を使って複数の task を動的に生成できる  任意の list か map か、 Tengo script   input: Tengo script で task のコマンドのパラメータを生成できる  input_file で外部ファイルを読み込める   output: Tengo script で task の実行結果を整形できる。他の task が参照して挙動を変えたりできる  output_file で外部ファイルを読み込める   meta: ユーザーが自由にパラメータを定義できる map  上記の設定は name 以外はオプションです。">
+<meta name="twitter:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https:\/\/techblog-szksh-cloud.github.io\/"
+    },
+    "headline": "buildflow の task の設定項目 - melody",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https:\/\/techblog-szksh-cloud.github.io\/images\/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2020-10-17T18:26:57JST",
+    "dateModified": "2020-10-17T18:26:57JST",
+    "author": {
+      "@type": "Person",
+      "name": "melody"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "melody",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https:\/\/techblog-szksh-cloud.github.io\/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "buildflow というツールを開発しているので buildflow というタグをつけて何回かに分けてブログを書こうと思います。\nこの記事では buildflow の task の基本的な設定項目などについて説明します。 数が多いので、個々の設定の詳細はまた別の記事に書きます。\ntask には幾つか type がありますが、全ての type に共通するパラメータが以下になります。\n name: task 名。 unique である必要はない。 Go の text\/template が使える when: task を実行するか否か。 真偽値か Tengo script  when_file で外部ファイルを読み込める   dependency: task の依存関係の定義。 task 名のリストか、 Tengo script items: dynamic task の設定。 loop を使って複数の task を動的に生成できる  任意の list か map か、 Tengo script   input: Tengo script で task のコマンドのパラメータを生成できる  input_file で外部ファイルを読み込める   output: Tengo script で task の実行結果を整形できる。他の task が参照して挙動を変えたりできる  output_file で外部ファイルを読み込める   meta: ユーザーが自由にパラメータを定義できる map  上記の設定は name 以外はオプションです。"
+  }
+</script>
+
+
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://techblog-szksh-cloud.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li class="active">buildflow の task の設定項目</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2020-10-17T18:26:57JST">Oct 17, 2020</time></li>
+      
+      
+    </ul>
+
+    <h1 class="title">buildflow の task の設定項目</h1>
+    
+    
+    <section>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/oss/">oss</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/buildflow/">buildflow</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </header>
+
+  
+
+  <div class="article-body"><p>buildflow というツールを開発しているので <code>buildflow</code> というタグをつけて何回かに分けてブログを書こうと思います。</p>
+<p>この記事では buildflow の task の基本的な設定項目などについて説明します。
+数が多いので、個々の設定の詳細はまた別の記事に書きます。</p>
+<p>task には幾つか type がありますが、全ての type に共通するパラメータが以下になります。</p>
+<ul>
+<li>name: task 名。 unique である必要はない。 Go の text/template が使える</li>
+<li>when: task を実行するか否か。 真偽値か Tengo script
+<ul>
+<li>when_file で外部ファイルを読み込める</li>
+</ul>
+</li>
+<li>dependency: task の依存関係の定義。 task 名のリストか、 Tengo script</li>
+<li>items: dynamic task の設定。 loop を使って複数の task を動的に生成できる
+<ul>
+<li>任意の list か map か、 Tengo script</li>
+</ul>
+</li>
+<li>input: Tengo script で task のコマンドのパラメータを生成できる
+<ul>
+<li>input_file で外部ファイルを読み込める</li>
+</ul>
+</li>
+<li>output: Tengo script で task の実行結果を整形できる。他の task が参照して挙動を変えたりできる
+<ul>
+<li>output_file で外部ファイルを読み込める</li>
+</ul>
+</li>
+<li>meta: ユーザーが自由にパラメータを定義できる map</li>
+</ul>
+<p>上記の設定は name 以外はオプションです。</p>
+<p>task の type としては以下のものがあります。</p>
+<ul>
+<li>command: 外部コマンドを実行</li>
+<li>read_file: ファイルを読み込む。ファイルの内容を他の task で参照できる</li>
+<li>write_file: ファイルを書き込む</li>
+</ul>
+<p>command の設定</p>
+<ul>
+<li>shell, shell_opts: コマンドの実行シェル。デフォルトは <code>/bin/sh -c</code></li>
+<li>command: コマンド。 Go の text/template で処理される
+<ul>
+<li>command_file で外部ファイルを読み込める</li>
+</ul>
+</li>
+<li>stdin: コマンドの標準入力。 Go の text/template で処理される
+<ul>
+<li>stdin_file で外部ファイルを読み込める</li>
+</ul>
+</li>
+<li>env: 環境変数。環境変数名と値は Go の text/template で処理される</li>
+</ul>
+<p>read_file の設定</p>
+<ul>
+<li>path: ファイルのパス。Go の text/template で処理される</li>
+<li>format: ファイルのフォーマット。オプション。 json と yaml をサポート。指定するとパースした結果を他の task が参照できる</li>
+</ul>
+<p>write_file の設定</p>
+<ul>
+<li>path: ファイルのパス。Go の text/template で処理される</li>
+<li>template: ファイルの内容。Go の text/template で処理される
+<ul>
+<li>template_file で外部ファイルを読み込める</li>
+</ul>
+</li>
+</ul>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/oss/">oss</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/buildflow/">buildflow</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/use-portainer-for-drone-admin/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>drone の管理のために portainer を導入した - melody</title>
+    
+<meta name="description" content="drone OSS 0.8.5 で検証しています。https://drone.io/ と https://portainer.io/ の話です。drone はかなり安定したシステムだと思いますが、 ユーザーが好きなイメージで好きなコマンドを実行できる以上、トラブルが起こることはあります。その結果、 特定の build がタイムアウトにならずに延々と実行され続けるなんてことがあります。その場合、 どのノードのどのコンテナでトラブルが起きているのか そのコンテナで何が起こっているのか  というのを知りたいのですが、 drone にはそういった管理機能はありません。そこで 複数のサーバで実行されている Docker コンテナを管理できるツールはないかと探したところ、 portainer が良さそうだったので導入しました。portainer を使うと複数のサーバのコンテナを一覧で見ることが出来、 コンテナを操作(削除、停止、再起動etc)出来ます。 コンテナのログや簡単なメトリックス(CPU, memory, network usage) が見れます。 コンテナだけでなく、network や volume, image といったリソースも管理できます。portainer の導入 公式ドキュメントに書いてありますが、 swarm cluster を構築してそこにデプロイすればよいです。 https://docs.docker.com/engine/swarm/swarm-tutorial/ https://portainer.readthedocs.io/en/stable/deployment.html#inside-a-swarm-cluster  困っていること 毎回検索で絞り込みしないといけない 検索で絞り込んだ後に特定のコンテナの詳細画面飛んだ後一覧に戻ると 検索がクリアされているのでもう一度検索しないといけないのが面倒です。もう少し高度な検索がしたい 自由入力の検索ボックスが1つあるだけで、特にクエリが書けるわけでもなさそうなので、 もう少し高度な検索がしたいです。 例えば Created At で 1時間以上前に特定のノードで作られたコンテナの一覧とか。docker API でエラーが出て、コンテナを操作できない これは多分不具合とかではなく自分の設定が良くないのだと思います。 この辺の issue が関係してそうですが、まだ解消できていません。">
+
+<meta property="og:title" content="drone の管理のために portainer を導入した - melody">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://techblog-szksh-cloud.github.io/use-portainer-for-drone-admin/">
+<meta property="og:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+<meta property="og:site_name" content="melody">
+<meta property="og:description" content="drone OSS 0.8.5 で検証しています。https://drone.io/ と https://portainer.io/ の話です。drone はかなり安定したシステムだと思いますが、 ユーザーが好きなイメージで好きなコマンドを実行できる以上、トラブルが起こることはあります。その結果、 特定の build がタイムアウトにならずに延々と実行され続けるなんてことがあります。その場合、 どのノードのどのコンテナでトラブルが起きているのか そのコンテナで何が起こっているのか  というのを知りたいのですが、 drone にはそういった管理機能はありません。そこで 複数のサーバで実行されている Docker コンテナを管理できるツールはないかと探したところ、 portainer が良さそうだったので導入しました。portainer を使うと複数のサーバのコンテナを一覧で見ることが出来、 コンテナを操作(削除、停止、再起動etc)出来ます。 コンテナのログや簡単なメトリックス(CPU, memory, network usage) が見れます。 コンテナだけでなく、network や volume, image といったリソースも管理できます。portainer の導入 公式ドキュメントに書いてありますが、 swarm cluster を構築してそこにデプロイすればよいです。 https://docs.docker.com/engine/swarm/swarm-tutorial/ https://portainer.readthedocs.io/en/stable/deployment.html#inside-a-swarm-cluster  困っていること 毎回検索で絞り込みしないといけない 検索で絞り込んだ後に特定のコンテナの詳細画面飛んだ後一覧に戻ると 検索がクリアされているのでもう一度検索しないといけないのが面倒です。もう少し高度な検索がしたい 自由入力の検索ボックスが1つあるだけで、特にクエリが書けるわけでもなさそうなので、 もう少し高度な検索がしたいです。 例えば Created At で 1時間以上前に特定のノードで作られたコンテナの一覧とか。docker API でエラーが出て、コンテナを操作できない これは多分不具合とかではなく自分の設定が良くないのだと思います。 この辺の issue が関係してそうですが、まだ解消できていません。">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="melody">
+<meta name="twitter:url" content="https://techblog-szksh-cloud.github.io/use-portainer-for-drone-admin/">
+<meta name="twitter:title" content="drone の管理のために portainer を導入した - melody">
+<meta name="twitter:description" content="drone OSS 0.8.5 で検証しています。https://drone.io/ と https://portainer.io/ の話です。drone はかなり安定したシステムだと思いますが、 ユーザーが好きなイメージで好きなコマンドを実行できる以上、トラブルが起こることはあります。その結果、 特定の build がタイムアウトにならずに延々と実行され続けるなんてことがあります。その場合、 どのノードのどのコンテナでトラブルが起きているのか そのコンテナで何が起こっているのか  というのを知りたいのですが、 drone にはそういった管理機能はありません。そこで 複数のサーバで実行されている Docker コンテナを管理できるツールはないかと探したところ、 portainer が良さそうだったので導入しました。portainer を使うと複数のサーバのコンテナを一覧で見ることが出来、 コンテナを操作(削除、停止、再起動etc)出来ます。 コンテナのログや簡単なメトリックス(CPU, memory, network usage) が見れます。 コンテナだけでなく、network や volume, image といったリソースも管理できます。portainer の導入 公式ドキュメントに書いてありますが、 swarm cluster を構築してそこにデプロイすればよいです。 https://docs.docker.com/engine/swarm/swarm-tutorial/ https://portainer.readthedocs.io/en/stable/deployment.html#inside-a-swarm-cluster  困っていること 毎回検索で絞り込みしないといけない 検索で絞り込んだ後に特定のコンテナの詳細画面飛んだ後一覧に戻ると 検索がクリアされているのでもう一度検索しないといけないのが面倒です。もう少し高度な検索がしたい 自由入力の検索ボックスが1つあるだけで、特にクエリが書けるわけでもなさそうなので、 もう少し高度な検索がしたいです。 例えば Created At で 1時間以上前に特定のノードで作られたコンテナの一覧とか。docker API でエラーが出て、コンテナを操作できない これは多分不具合とかではなく自分の設定が良くないのだと思います。 この辺の issue が関係してそうですが、まだ解消できていません。">
+<meta name="twitter:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https:\/\/techblog-szksh-cloud.github.io\/"
+    },
+    "headline": "drone の管理のために portainer を導入した - melody",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https:\/\/techblog-szksh-cloud.github.io\/images\/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2018-09-30T21:56:42JST",
+    "dateModified": "2018-09-30T21:56:42JST",
+    "author": {
+      "@type": "Person",
+      "name": "melody"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "melody",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https:\/\/techblog-szksh-cloud.github.io\/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "drone OSS 0.8.5 で検証しています。\nhttps:\/\/drone.io\/ と https:\/\/portainer.io\/ の話です。\ndrone はかなり安定したシステムだと思いますが、 ユーザーが好きなイメージで好きなコマンドを実行できる以上、トラブルが起こることはあります。\nその結果、 特定の build がタイムアウトにならずに延々と実行され続けるなんてことがあります。\nその場合、\n どのノードのどのコンテナでトラブルが起きているのか そのコンテナで何が起こっているのか  というのを知りたいのですが、 drone にはそういった管理機能はありません。\nそこで 複数のサーバで実行されている Docker コンテナを管理できるツールはないかと探したところ、 portainer が良さそうだったので導入しました。\nportainer を使うと複数のサーバのコンテナを一覧で見ることが出来、 コンテナを操作(削除、停止、再起動etc)出来ます。 コンテナのログや簡単なメトリックス(CPU, memory, network usage) が見れます。 コンテナだけでなく、network や volume, image といったリソースも管理できます。\nportainer の導入 公式ドキュメントに書いてありますが、 swarm cluster を構築してそこにデプロイすればよいです。\n https:\/\/docs.docker.com\/engine\/swarm\/swarm-tutorial\/ https:\/\/portainer.readthedocs.io\/en\/stable\/deployment.html#inside-a-swarm-cluster  困っていること 毎回検索で絞り込みしないといけない 検索で絞り込んだ後に特定のコンテナの詳細画面飛んだ後一覧に戻ると 検索がクリアされているのでもう一度検索しないといけないのが面倒です。\nもう少し高度な検索がしたい 自由入力の検索ボックスが1つあるだけで、特にクエリが書けるわけでもなさそうなので、 もう少し高度な検索がしたいです。 例えば Created At で 1時間以上前に特定のノードで作られたコンテナの一覧とか。\ndocker API でエラーが出て、コンテナを操作できない これは多分不具合とかではなく自分の設定が良くないのだと思います。 この辺の issue が関係してそうですが、まだ解消できていません。"
+  }
+</script>
+
+
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://techblog-szksh-cloud.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li class="active">drone の管理のために portainer を導入した</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-09-30T21:56:42JST">Sep 30, 2018</time></li>
+      
+      
+    </ul>
+
+    <h1 class="title">drone の管理のために portainer を導入した</h1>
+    
+    
+    <section>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/drone/">drone</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/portainer/">portainer</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </header>
+
+  
+
+  <div class="article-body"><p>drone OSS 0.8.5 で検証しています。</p>
+<p><a href="https://drone.io/">https://drone.io/</a> と <a href="https://portainer.io/">https://portainer.io/</a> の話です。</p>
+<p>drone はかなり安定したシステムだと思いますが、
+ユーザーが好きなイメージで好きなコマンドを実行できる以上、トラブルが起こることはあります。</p>
+<p>その結果、 特定の build がタイムアウトにならずに延々と実行され続けるなんてことがあります。</p>
+<p>その場合、</p>
+<ol>
+<li>どのノードのどのコンテナでトラブルが起きているのか</li>
+<li>そのコンテナで何が起こっているのか</li>
+</ol>
+<p>というのを知りたいのですが、 drone にはそういった管理機能はありません。</p>
+<p>そこで 複数のサーバで実行されている Docker コンテナを管理できるツールはないかと探したところ、
+<a href="https://portainer.readthedocs.io/en/stable/">portainer</a> が良さそうだったので導入しました。</p>
+<p>portainer を使うと複数のサーバのコンテナを一覧で見ることが出来、
+コンテナを操作(削除、停止、再起動etc)出来ます。
+コンテナのログや簡単なメトリックス(CPU, memory, network usage) が見れます。
+コンテナだけでなく、network や volume, image といったリソースも管理できます。</p>
+<h2 id="portainer-の導入">portainer の導入</h2>
+<p>公式ドキュメントに書いてありますが、 swarm cluster を構築してそこにデプロイすればよいです。</p>
+<ul>
+<li><a href="https://docs.docker.com/engine/swarm/swarm-tutorial/">https://docs.docker.com/engine/swarm/swarm-tutorial/</a></li>
+<li><a href="https://portainer.readthedocs.io/en/stable/deployment.html#inside-a-swarm-cluster">https://portainer.readthedocs.io/en/stable/deployment.html#inside-a-swarm-cluster</a></li>
+</ul>
+<h2 id="困っていること">困っていること</h2>
+<h3 id="毎回検索で絞り込みしないといけない">毎回検索で絞り込みしないといけない</h3>
+<p>検索で絞り込んだ後に特定のコンテナの詳細画面飛んだ後一覧に戻ると
+検索がクリアされているのでもう一度検索しないといけないのが面倒です。</p>
+<h3 id="もう少し高度な検索がしたい">もう少し高度な検索がしたい</h3>
+<p>自由入力の検索ボックスが1つあるだけで、特にクエリが書けるわけでもなさそうなので、
+もう少し高度な検索がしたいです。
+例えば Created At で 1時間以上前に特定のノードで作られたコンテナの一覧とか。</p>
+<h3 id="docker-api-でエラーが出てコンテナを操作できない">docker API でエラーが出て、コンテナを操作できない</h3>
+<p>これは多分不具合とかではなく自分の設定が良くないのだと思います。
+この辺の issue が関係してそうですが、まだ解消できていません。</p>
+<ul>
+<li><a href="https://github.com/portainer/portainer/issues/831">https://github.com/portainer/portainer/issues/831</a></li>
+<li><a href="https://github.com/portainer/portainer/issues/1897">https://github.com/portainer/portainer/issues/1897</a></li>
+</ul>
+<pre tabindex="0"><code>http error: Unable to proxy the request via the Docker socket (err=context canceled) (code=500)
+</code></pre><pre tabindex="0"><code>cron error: endpoint snapshot error (endpoint=primary, URL=tcp://tasks.agent:9001) (err=Cannot connect to the Docker daemon at tcp://tasks.agent:9001. Is the docker daemon running?)
+</code></pre><pre tabindex="0"><code>http error: Unable to execute cluster operation (err=Get https://192.160.0.16:9001/volumes: net/http: request canceled (Client.Timeout exceeded while awaiting headers)) (code=500)
+</code></pre></div>
+
+  <footer class="article-footer">
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/drone/">drone</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/portainer/">portainer</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

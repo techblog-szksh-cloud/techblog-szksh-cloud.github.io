@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/akoi/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>akoi - binary installer - melody</title>
+    
+<meta name="description" content="自作のOSS akoi の紹介をします。 なぜこんなものを作ったのか akoi と ansible を使ってサーバにバイナリをインストールする方法  について主に説明します。まとめ  akoi はバイナリファイルのインストーラ 設定ファイルで管理できる 冪等であり、効率よくインストールできる  並列インストール Accept-Ranges による分散ダウンロード   ansibleでサーバにバイナリをインストールするのを補助してくれる  ansible で真面目にバージョンコントロールして効率よくインストールするのは難しい(ほとんどの ansible role は出来ていない)    akoi とは akoi はバイナリファイルのインストーラです。 設定ファイルにインストールするファイルのダウンロードURLとインストール先を記述して管理します。 インストールするバイナリのバージョン管理が可能であり、既にインストールしてあるバージョンへの切り替えはシンボリックを作り直すだけなので一瞬で終わります。無駄にダウンロードをしたりはしません。 複数のバイナリを並列でインストールしたり、Accept-Ranges ヘッダによる分散ダウンロードをサポートしています。分散ダウンロードについてはhttps://qiita.com/codehex/items/d0a500ac387d39a34401が参考になります。Goで書かれています。https://github.com/suzuki-shunsuke/akoi/releases からバイナリをダウンロードしてインストールできます。詳細はREADMEを読んでください。なぜ作ったのか サーバにバイナリをインストールする ansible role を書くのが辛かったからです。 最近は色々なソフトウェアがGoで書かれ、バイナリで配布されています。 そういったバイナリをサーバへインストールするのは ansible で行っているという方も少なくないのではないでしょうか？ 有名なソフトウェアをインストールする ansible role は大抵Ansible Galaxy で公開されています。しかし、ほとんどの role は「真面目に」バージョン管理していません。 ここでいう「真面目に」とは バージョンを指定できる バージョンを変更できる 指定したバージョンが既にインストールされている場合は無駄にダウンロードしたりしない  といったことです。">
+
+<meta property="og:title" content="akoi - binary installer - melody">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://techblog-szksh-cloud.github.io/akoi/">
+<meta property="og:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+<meta property="og:site_name" content="melody">
+<meta property="og:description" content="自作のOSS akoi の紹介をします。 なぜこんなものを作ったのか akoi と ansible を使ってサーバにバイナリをインストールする方法  について主に説明します。まとめ  akoi はバイナリファイルのインストーラ 設定ファイルで管理できる 冪等であり、効率よくインストールできる  並列インストール Accept-Ranges による分散ダウンロード   ansibleでサーバにバイナリをインストールするのを補助してくれる  ansible で真面目にバージョンコントロールして効率よくインストールするのは難しい(ほとんどの ansible role は出来ていない)    akoi とは akoi はバイナリファイルのインストーラです。 設定ファイルにインストールするファイルのダウンロードURLとインストール先を記述して管理します。 インストールするバイナリのバージョン管理が可能であり、既にインストールしてあるバージョンへの切り替えはシンボリックを作り直すだけなので一瞬で終わります。無駄にダウンロードをしたりはしません。 複数のバイナリを並列でインストールしたり、Accept-Ranges ヘッダによる分散ダウンロードをサポートしています。分散ダウンロードについてはhttps://qiita.com/codehex/items/d0a500ac387d39a34401が参考になります。Goで書かれています。https://github.com/suzuki-shunsuke/akoi/releases からバイナリをダウンロードしてインストールできます。詳細はREADMEを読んでください。なぜ作ったのか サーバにバイナリをインストールする ansible role を書くのが辛かったからです。 最近は色々なソフトウェアがGoで書かれ、バイナリで配布されています。 そういったバイナリをサーバへインストールするのは ansible で行っているという方も少なくないのではないでしょうか？ 有名なソフトウェアをインストールする ansible role は大抵Ansible Galaxy で公開されています。しかし、ほとんどの role は「真面目に」バージョン管理していません。 ここでいう「真面目に」とは バージョンを指定できる バージョンを変更できる 指定したバージョンが既にインストールされている場合は無駄にダウンロードしたりしない  といったことです。">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="melody">
+<meta name="twitter:url" content="https://techblog-szksh-cloud.github.io/akoi/">
+<meta name="twitter:title" content="akoi - binary installer - melody">
+<meta name="twitter:description" content="自作のOSS akoi の紹介をします。 なぜこんなものを作ったのか akoi と ansible を使ってサーバにバイナリをインストールする方法  について主に説明します。まとめ  akoi はバイナリファイルのインストーラ 設定ファイルで管理できる 冪等であり、効率よくインストールできる  並列インストール Accept-Ranges による分散ダウンロード   ansibleでサーバにバイナリをインストールするのを補助してくれる  ansible で真面目にバージョンコントロールして効率よくインストールするのは難しい(ほとんどの ansible role は出来ていない)    akoi とは akoi はバイナリファイルのインストーラです。 設定ファイルにインストールするファイルのダウンロードURLとインストール先を記述して管理します。 インストールするバイナリのバージョン管理が可能であり、既にインストールしてあるバージョンへの切り替えはシンボリックを作り直すだけなので一瞬で終わります。無駄にダウンロードをしたりはしません。 複数のバイナリを並列でインストールしたり、Accept-Ranges ヘッダによる分散ダウンロードをサポートしています。分散ダウンロードについてはhttps://qiita.com/codehex/items/d0a500ac387d39a34401が参考になります。Goで書かれています。https://github.com/suzuki-shunsuke/akoi/releases からバイナリをダウンロードしてインストールできます。詳細はREADMEを読んでください。なぜ作ったのか サーバにバイナリをインストールする ansible role を書くのが辛かったからです。 最近は色々なソフトウェアがGoで書かれ、バイナリで配布されています。 そういったバイナリをサーバへインストールするのは ansible で行っているという方も少なくないのではないでしょうか？ 有名なソフトウェアをインストールする ansible role は大抵Ansible Galaxy で公開されています。しかし、ほとんどの role は「真面目に」バージョン管理していません。 ここでいう「真面目に」とは バージョンを指定できる バージョンを変更できる 指定したバージョンが既にインストールされている場合は無駄にダウンロードしたりしない  といったことです。">
+<meta name="twitter:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https:\/\/techblog-szksh-cloud.github.io\/"
+    },
+    "headline": "akoi - binary installer - melody",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https:\/\/techblog-szksh-cloud.github.io\/images\/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2018-10-31T08:56:04JST",
+    "dateModified": "2018-10-31T08:56:04JST",
+    "author": {
+      "@type": "Person",
+      "name": "melody"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "melody",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https:\/\/techblog-szksh-cloud.github.io\/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "自作のOSS akoi の紹介をします。\n なぜこんなものを作ったのか akoi と ansible を使ってサーバにバイナリをインストールする方法  について主に説明します。\nまとめ  akoi はバイナリファイルのインストーラ 設定ファイルで管理できる 冪等であり、効率よくインストールできる  並列インストール Accept-Ranges による分散ダウンロード   ansibleでサーバにバイナリをインストールするのを補助してくれる  ansible で真面目にバージョンコントロールして効率よくインストールするのは難しい(ほとんどの ansible role は出来ていない)    akoi とは akoi はバイナリファイルのインストーラです。 設定ファイルにインストールするファイルのダウンロードURLとインストール先を記述して管理します。 インストールするバイナリのバージョン管理が可能であり、既にインストールしてあるバージョンへの切り替えはシンボリックを作り直すだけなので一瞬で終わります。無駄にダウンロードをしたりはしません。 複数のバイナリを並列でインストールしたり、Accept-Ranges ヘッダによる分散ダウンロードをサポートしています。\n分散ダウンロードについては\nhttps:\/\/qiita.com\/codehex\/items\/d0a500ac387d39a34401\nが参考になります。\nGoで書かれています。\nhttps:\/\/github.com\/suzuki-shunsuke\/akoi\/releases からバイナリをダウンロードしてインストールできます。\n詳細はREADMEを読んでください。\nなぜ作ったのか サーバにバイナリをインストールする ansible role を書くのが辛かったからです。 最近は色々なソフトウェアがGoで書かれ、バイナリで配布されています。 そういったバイナリをサーバへインストールするのは ansible で行っているという方も少なくないのではないでしょうか？ 有名なソフトウェアをインストールする ansible role は大抵Ansible Galaxy で公開されています。\nしかし、ほとんどの role は「真面目に」バージョン管理していません。 ここでいう「真面目に」とは\n バージョンを指定できる バージョンを変更できる 指定したバージョンが既にインストールされている場合は無駄にダウンロードしたりしない  といったことです。"
+  }
+</script>
+
+
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://techblog-szksh-cloud.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li class="active">akoi - binary installer</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-10-31T08:56:04JST">Oct 31, 2018</time></li>
+      
+      
+    </ul>
+
+    <h1 class="title">akoi - binary installer</h1>
+    
+    
+    <section>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/oss/">oss</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/ansible/">ansible</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </header>
+
+  
+
+  <div class="article-body"><p>自作のOSS <a href="https://github.com/suzuki-shunsuke/akoi">akoi</a> の紹介をします。</p>
+<ul>
+<li>なぜこんなものを作ったのか</li>
+<li>akoi と ansible を使ってサーバにバイナリをインストールする方法</li>
+</ul>
+<p>について主に説明します。</p>
+<h2 id="まとめ">まとめ</h2>
+<ul>
+<li>akoi はバイナリファイルのインストーラ</li>
+<li>設定ファイルで管理できる</li>
+<li>冪等であり、効率よくインストールできる
+<ul>
+<li>並列インストール</li>
+<li>Accept-Ranges による分散ダウンロード</li>
+</ul>
+</li>
+<li>ansibleでサーバにバイナリをインストールするのを補助してくれる
+<ul>
+<li>ansible で真面目にバージョンコントロールして効率よくインストールするのは難しい(ほとんどの ansible role は出来ていない)</li>
+</ul>
+</li>
+</ul>
+<h2 id="akoi-とは">akoi とは</h2>
+<p>akoi はバイナリファイルのインストーラです。
+設定ファイルにインストールするファイルのダウンロードURLとインストール先を記述して管理します。
+インストールするバイナリのバージョン管理が可能であり、既にインストールしてあるバージョンへの切り替えはシンボリックを作り直すだけなので一瞬で終わります。無駄にダウンロードをしたりはしません。
+複数のバイナリを並列でインストールしたり、Accept-Ranges ヘッダによる分散ダウンロードをサポートしています。</p>
+<p>分散ダウンロードについては</p>
+<p><a href="https://qiita.com/codehex/items/d0a500ac387d39a34401">https://qiita.com/codehex/items/d0a500ac387d39a34401</a></p>
+<p>が参考になります。</p>
+<p>Goで書かれています。</p>
+<p><a href="https://github.com/suzuki-shunsuke/akoi/releases">https://github.com/suzuki-shunsuke/akoi/releases</a> からバイナリをダウンロードしてインストールできます。</p>
+<p>詳細は<a href="https://github.com/suzuki-shunsuke/akoi">README</a>を読んでください。</p>
+<h2 id="なぜ作ったのか">なぜ作ったのか</h2>
+<p>サーバにバイナリをインストールする ansible role を書くのが辛かったからです。
+最近は色々なソフトウェアがGoで書かれ、バイナリで配布されています。
+そういったバイナリをサーバへインストールするのは
+ansible で行っているという方も少なくないのではないでしょうか？
+有名なソフトウェアをインストールする ansible role は大抵<a href="https://galaxy.ansible.com">Ansible Galaxy</a> で公開されています。</p>
+<p>しかし、ほとんどの role は「真面目に」バージョン管理していません。
+ここでいう「真面目に」とは</p>
+<ol>
+<li>バージョンを指定できる</li>
+<li>バージョンを変更できる</li>
+<li>指定したバージョンが既にインストールされている場合は無駄にダウンロードしたりしない</li>
+</ol>
+<p>といったことです。</p>
+<p>これらを ansible でやろうとすると結構面倒なんです。</p>
+<p>既存のroleでよくあるのが</p>
+<ol>
+<li>バージョンにかかわらず既にインストールされていたらインストールしない(バージョン変更できない)</li>
+<li>1の問題を解決するため、強制的に再インストールするフラグがある(同じバージョンのものがインストールされていても無駄に再インストールする)</li>
+</ol>
+<p>だと思います。</p>
+<p>真面目にやろうとするとこんな感じになる気がします。</p>
+<p><a href="https://github.com/suzuki-shunsuke/ansible_role_akoi/blob/master/tasks/install_binary.yml">https://github.com/suzuki-shunsuke/ansible_role_akoi/blob/master/tasks/install_binary.yml</a></p>
+<p>これらのロジックはソフトウェアに関わらずほとんど共通です。
+それをソフトウェアごとに実装してテストしてなんてのは面倒です。</p>
+<p>そこで akoi を作る前に汎用的な ansible role として開発してみたのが</p>
+<p><a href="https://github.com/suzuki-shunsuke/ansible-role-general-installer">https://github.com/suzuki-shunsuke/ansible-role-general-installer</a></p>
+<p>です。</p>
+<p>しかしこれは ansible のバグでうまく動きませんでした。</p>
+<p><a href="https://github.com/ansible/ansible/issues/34736">https://github.com/ansible/ansible/issues/34736</a></p>
+<p>そこで作られたのが akoi です。
+結果的に ansible でやるより高速かつ汎用的なので作って良かったと思います。</p>
+<h2 id="akoi-と-ansible-を使ってサーバにバイナリをインストール">akoi と ansible を使ってサーバにバイナリをインストール</h2>
+<p>akoi を使うにしても ansible が不要になるという話ではなく、ansible でakoiのコマンドを実行する感じになります。
+<a href="https://github.com/suzuki-shunsuke/akoi#use-akoi-at-ansible">README</a> にも書きましたが、 akoiを ansible の shell モジュールから呼び出して標準出力をパースすることで task の <code>changed</code> を判定することができます。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">tasks</span>:
+- <span style="color:#f92672">name</span>: <span style="color:#ae81ff">install consul</span>
+  <span style="color:#f92672">shell</span>: <span style="color:#e6db74">&#34;/usr/local/bin/akoi install -f ansible 2&gt;&amp;1&#34;</span>
+  <span style="color:#f92672">register</span>: <span style="color:#ae81ff">result</span>
+  <span style="color:#f92672">changed_when</span>: <span style="color:#ae81ff">(result.stdout|from_json)[&#34;changed&#34;]</span>
+</code></pre></div><p>akoi を使ってソフトウェアをインストールために、そもそもどうやってサーバに akoi をインストールするかですが(各サーバに akoi をインストールする必要があります)、
+akoi をインストールする ansible role を提供しています。</p>
+<p><a href="https://github.com/suzuki-shunsuke/ansible_role_akoi">https://github.com/suzuki-shunsuke/ansible_role_akoi</a></p>
+<p>これで akoi を使ってバイナリをインストールできますが、ソフトウェアのセットアップはバイナリをインストールすれば終わりということではなく、ユーザーやグループを作成したり、設定ファイルを作成したり、systemd のサービスを起動したりと色々あります。</p>
+<p>自分はそれらの処理は別の ansible role として開発しています。</p>
+<ul>
+<li><a href="https://galaxy.ansible.com/suzuki-shunsuke/consul_config">suzuki-shunsuke.consul_config</a></li>
+<li><a href="https://galaxy.ansible.com/suzuki-shunsuke/prometheus_node_exporter_config">suzuki-shunsuke.prometheus_node_exporter_config</a></li>
+</ul>
+<p>バイナリのインストールは akoi でやり、それ以外の部分は別途 ansible role を開発するというスタイルです。
+それらの role ではいちいちバイナリをインストールする処理を書かなくて良いのでだいぶ開発が楽になりました。</p>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/oss/">oss</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/ansible/">ansible</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

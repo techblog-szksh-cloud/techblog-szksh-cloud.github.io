@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/golang-logging-error-handling-practice-0.2.0/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>go-error-handling-logging-practice v0.2 - melody</title>
+    
+<meta name="description" content="以前 Golang のロギング・エラーハンドリングについて書きました。 https://suzuki-shunsuke.github.io/golang-logging-error-handling-practice/ https://github.com/suzuki-shunsuke/go-error-handling-logging-practice  それを少し v0.1 から v0.2 に互換性を壊す形でアップデートしようかと思います。 本記事ではその変更点について書きます。変更点 関数のエラーに情報を付与する責務を関数に割り当てていたものを、呼び出し元に割り当てるようにします。具体的には元々func createUser(name string, age int) error { return errlog.Wrap(checkName(name), logrus.Fields{&amp;#34;age&amp;#34;: age}, &amp;#34;failed to create a user&amp;#34;) } だったものがfunc createUser(name string, age int) error { return errlog.Wrap(checkName(name), nil, &amp;#34;user name is invalid&amp;#34;) } になります。変更理由 メタ情報のフィールド名はコンテキストに依存します。 上記の例だとユーザー名というメタ情報のフィールド名は name より user_name や admin_name, owner_name としたほうが適切かもしれません。それは関数内部では分からず、呼び出し元でないと分かりません。呼び出し元でないとフィールド名の衝突が避けられないこともあるでしょう。メッセージに関しても同様のことが言えます。 また、元々 v0.1 ではユーザーが定義した関数と 標準関数やサードパーティのライブラリなど、プロジェクト外部で定義された関数 interface の関数やメソッド  を区別し、前者では関数側でエラーに情報を付与させる一方、後者では呼び出し元で情報を付与させるというふうにしていました。">
+
+<meta property="og:title" content="go-error-handling-logging-practice v0.2 - melody">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://techblog-szksh-cloud.github.io/golang-logging-error-handling-practice-0.2.0/">
+<meta property="og:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+<meta property="og:site_name" content="melody">
+<meta property="og:description" content="以前 Golang のロギング・エラーハンドリングについて書きました。 https://suzuki-shunsuke.github.io/golang-logging-error-handling-practice/ https://github.com/suzuki-shunsuke/go-error-handling-logging-practice  それを少し v0.1 から v0.2 に互換性を壊す形でアップデートしようかと思います。 本記事ではその変更点について書きます。変更点 関数のエラーに情報を付与する責務を関数に割り当てていたものを、呼び出し元に割り当てるようにします。具体的には元々func createUser(name string, age int) error { return errlog.Wrap(checkName(name), logrus.Fields{&amp;#34;age&amp;#34;: age}, &amp;#34;failed to create a user&amp;#34;) } だったものがfunc createUser(name string, age int) error { return errlog.Wrap(checkName(name), nil, &amp;#34;user name is invalid&amp;#34;) } になります。変更理由 メタ情報のフィールド名はコンテキストに依存します。 上記の例だとユーザー名というメタ情報のフィールド名は name より user_name や admin_name, owner_name としたほうが適切かもしれません。それは関数内部では分からず、呼び出し元でないと分かりません。呼び出し元でないとフィールド名の衝突が避けられないこともあるでしょう。メッセージに関しても同様のことが言えます。 また、元々 v0.1 ではユーザーが定義した関数と 標準関数やサードパーティのライブラリなど、プロジェクト外部で定義された関数 interface の関数やメソッド  を区別し、前者では関数側でエラーに情報を付与させる一方、後者では呼び出し元で情報を付与させるというふうにしていました。">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="melody">
+<meta name="twitter:url" content="https://techblog-szksh-cloud.github.io/golang-logging-error-handling-practice-0.2.0/">
+<meta name="twitter:title" content="go-error-handling-logging-practice v0.2 - melody">
+<meta name="twitter:description" content="以前 Golang のロギング・エラーハンドリングについて書きました。 https://suzuki-shunsuke.github.io/golang-logging-error-handling-practice/ https://github.com/suzuki-shunsuke/go-error-handling-logging-practice  それを少し v0.1 から v0.2 に互換性を壊す形でアップデートしようかと思います。 本記事ではその変更点について書きます。変更点 関数のエラーに情報を付与する責務を関数に割り当てていたものを、呼び出し元に割り当てるようにします。具体的には元々func createUser(name string, age int) error { return errlog.Wrap(checkName(name), logrus.Fields{&amp;#34;age&amp;#34;: age}, &amp;#34;failed to create a user&amp;#34;) } だったものがfunc createUser(name string, age int) error { return errlog.Wrap(checkName(name), nil, &amp;#34;user name is invalid&amp;#34;) } になります。変更理由 メタ情報のフィールド名はコンテキストに依存します。 上記の例だとユーザー名というメタ情報のフィールド名は name より user_name や admin_name, owner_name としたほうが適切かもしれません。それは関数内部では分からず、呼び出し元でないと分かりません。呼び出し元でないとフィールド名の衝突が避けられないこともあるでしょう。メッセージに関しても同様のことが言えます。 また、元々 v0.1 ではユーザーが定義した関数と 標準関数やサードパーティのライブラリなど、プロジェクト外部で定義された関数 interface の関数やメソッド  を区別し、前者では関数側でエラーに情報を付与させる一方、後者では呼び出し元で情報を付与させるというふうにしていました。">
+<meta name="twitter:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https:\/\/techblog-szksh-cloud.github.io\/"
+    },
+    "headline": "go-error-handling-logging-practice v0.2 - melody",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https:\/\/techblog-szksh-cloud.github.io\/images\/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2019-02-01T22:26:13JST",
+    "dateModified": "2019-02-01T22:26:13JST",
+    "author": {
+      "@type": "Person",
+      "name": "melody"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "melody",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https:\/\/techblog-szksh-cloud.github.io\/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "以前 Golang のロギング・エラーハンドリングについて書きました。\n https:\/\/suzuki-shunsuke.github.io\/golang-logging-error-handling-practice\/ https:\/\/github.com\/suzuki-shunsuke\/go-error-handling-logging-practice  それを少し v0.1 から v0.2 に互換性を壊す形でアップデートしようかと思います。 本記事ではその変更点について書きます。\n変更点 関数のエラーに情報を付与する責務を関数に割り当てていたものを、呼び出し元に割り当てるようにします。\n具体的には元々\nfunc createUser(name string, age int) error { return errlog.Wrap(checkName(name), logrus.Fields{\u0026#34;age\u0026#34;: age}, \u0026#34;failed to create a user\u0026#34;) } だったものが\nfunc createUser(name string, age int) error { return errlog.Wrap(checkName(name), nil, \u0026#34;user name is invalid\u0026#34;) } になります。\n変更理由 メタ情報のフィールド名はコンテキストに依存します。 上記の例だとユーザー名というメタ情報のフィールド名は name より user_name や admin_name, owner_name としたほうが適切かもしれません。それは関数内部では分からず、呼び出し元でないと分かりません。呼び出し元でないとフィールド名の衝突が避けられないこともあるでしょう。\nメッセージに関しても同様のことが言えます。 また、元々 v0.1 ではユーザーが定義した関数と\n 標準関数やサードパーティのライブラリなど、プロジェクト外部で定義された関数 interface の関数やメソッド  を区別し、前者では関数側でエラーに情報を付与させる一方、後者では呼び出し元で情報を付与させるというふうにしていました。"
+  }
+</script>
+
+
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://techblog-szksh-cloud.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li class="active">go-error-handling-logging-practice v0.2</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2019-02-01T22:26:13JST">Feb 1, 2019</time></li>
+      
+      
+    </ul>
+
+    <h1 class="title">go-error-handling-logging-practice v0.2</h1>
+    
+    
+  </header>
+
+  
+
+  <div class="article-body"><p>以前 Golang のロギング・エラーハンドリングについて書きました。</p>
+<ul>
+<li><a href="https://suzuki-shunsuke.github.io/golang-logging-error-handling-practice/">https://suzuki-shunsuke.github.io/golang-logging-error-handling-practice/</a></li>
+<li><a href="https://github.com/suzuki-shunsuke/go-error-handling-logging-practice">https://github.com/suzuki-shunsuke/go-error-handling-logging-practice</a></li>
+</ul>
+<p>それを少し v0.1 から v0.2 に互換性を壊す形でアップデートしようかと思います。
+本記事ではその変更点について書きます。</p>
+<h2 id="変更点">変更点</h2>
+<p><strong>関数のエラーに情報を付与する責務を関数に割り当てていたものを、呼び出し元に割り当てるようにします。</strong></p>
+<p>具体的には元々</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">createUser</span>(<span style="color:#a6e22e">name</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">age</span> <span style="color:#66d9ef">int</span>) <span style="color:#66d9ef">error</span> {
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">errlog</span>.<span style="color:#a6e22e">Wrap</span>(<span style="color:#a6e22e">checkName</span>(<span style="color:#a6e22e">name</span>), <span style="color:#a6e22e">logrus</span>.<span style="color:#a6e22e">Fields</span>{<span style="color:#e6db74">&#34;age&#34;</span>: <span style="color:#a6e22e">age</span>}, <span style="color:#e6db74">&#34;failed to create a user&#34;</span>)
+}
+</code></pre></div><p>だったものが</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">createUser</span>(<span style="color:#a6e22e">name</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">age</span> <span style="color:#66d9ef">int</span>) <span style="color:#66d9ef">error</span> {
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">errlog</span>.<span style="color:#a6e22e">Wrap</span>(<span style="color:#a6e22e">checkName</span>(<span style="color:#a6e22e">name</span>), <span style="color:#66d9ef">nil</span>, <span style="color:#e6db74">&#34;user name is invalid&#34;</span>)
+}
+</code></pre></div><p>になります。</p>
+<h2 id="変更理由">変更理由</h2>
+<p>メタ情報のフィールド名はコンテキストに依存します。
+上記の例だとユーザー名というメタ情報のフィールド名は <code>name</code> より <code>user_name</code> や <code>admin_name</code>, <code>owner_name</code> としたほうが適切かもしれません。それは関数内部では分からず、呼び出し元でないと分かりません。呼び出し元でないとフィールド名の衝突が避けられないこともあるでしょう。</p>
+<p>メッセージに関しても同様のことが言えます。
+また、元々 v0.1 ではユーザーが定義した関数と</p>
+<ul>
+<li>標準関数やサードパーティのライブラリなど、プロジェクト外部で定義された関数</li>
+<li>interface の関数やメソッド</li>
+</ul>
+<p>を区別し、前者では関数側でエラーに情報を付与させる一方、後者では呼び出し元で情報を付与させるというふうにしていました。</p>
+<p>v0.2 では両者を区別せず、どちらの場合でも呼び出し元に付与させるというふうにすることでよりルールがシンプルになります。</p>
+</div>
+
+  <footer class="article-footer">
+    
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

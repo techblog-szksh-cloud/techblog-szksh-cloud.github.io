@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>golang on melody</title>
+    <link>https://techblog-szksh-cloud.github.io/tags/golang/</link>
+    <description>Recent content in golang on melody</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>jp</language>
+    <lastBuildDate>Wed, 14 Aug 2019 20:28:56 +0900</lastBuildDate><atom:link href="https://techblog-szksh-cloud.github.io/tags/golang/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Golang での時刻の扱い方を整理する</title>
+      <link>https://techblog-szksh-cloud.github.io/golang-time/</link>
+      <pubDate>Wed, 14 Aug 2019 20:28:56 +0900</pubDate>
+      
+      <guid>https://techblog-szksh-cloud.github.io/golang-time/</guid>
+      <description>今更ながら Golang での時刻の扱い方について改めて整理してみました。
+まとめ  time.Local は明示的に設定する(基本UTC) DB などには 基本UTC で永続化する 出力時に必要になったらタイムゾーンを変更する  location は出力時に問題になるので出力時に location を明示的に指定する 逆に言うと出力時以外は問題にならないので無理に location を UTC にしなくても良いかもしれない サードパーティ(ex. ORM) に time.Time を渡す場合は location に注意が必要   文字列として時刻の入力を受け付ける場合は location を明示的にセットする サードパーティが time.Local に依存する場合、 time.Local を明示的に UTC にしたりする必要があるかもしれない アプリケーションで利用する location が分かっている場合、location を取得するヘルパー関数を定義する time.LoadLocation は環境依存なので予め location が分かっているなら使わないほうがよい 文字列を time.Time に変換する場合、time.ParseInLocation で Location を指定して time.Time に変換後、time.Time.UTC() で UTC に変換する time.Time を文字列に変換する場合、time.In で location を変換後、time.Time.Format で文字列に変換する  グローバルな location https://golang.org/pkg/time/#Location</description>
+    </item>
+    
+    <item>
+      <title>Flute - Golang HTTP client testing framework</title>
+      <link>https://techblog-szksh-cloud.github.io/fagott/</link>
+      <pubDate>Sun, 07 Jul 2019 08:20:00 +0900</pubDate>
+      
+      <guid>https://techblog-szksh-cloud.github.io/fagott/</guid>
+      <description>2019-07-17 追記 プロジェクト名が変わりました
+https://github.com/suzuki-shunsuke/flute/issues/20
+ Go の HTTP client のテストフレームワークを作ったので紹介します。
+https://github.com/suzuki-shunsuke/flute
+執筆時点のバージョンは v0.6.0 です。
+ リクエストパラメータのテスト HTTP サーバのモッキング  を目的としています。
+比較的実践的なサンプルとして、ユーザーを作成する簡単な API client とそのテストを書いたので参考にしてください。
+ https://github.com/suzuki-shunsuke/flute/blob/master/examples/create_user.go https://github.com/suzuki-shunsuke/flute/blob/master/examples/create_user_test.go#L17-L53  元々自分はこの目的のために h2non/gock を使っていました。 ただ、 gock だとリクエストがマッチしなかったときに、なぜマッチしないのかがわからず、調査に困るという問題がありました。
+そこで flute では request に対し、matcher と tester という概念を導入し、 matcher でマッチしたリクエストを tester でテストするというふうにしました。 テストでは内部で stretchr/testify の assert を使っており、テストに失敗したときになぜ失敗したのかが分かりやすく出力されるようになっています。
+例えば以下の例は、リクエストの Authorization header にトークンがセットされていなかった場合のエラーメッセージです。
+=== RUN TestClient_CreateUser --- FAIL: TestClient_CreateUser (0.00s) tester.go:168: Error Trace: tester.go:168 tester.go:32 transport.go:25 client.go:250 client.go:174 client.</description>
+    </item>
+    
+    <item>
+      <title>Goの設定管理で viper の代わりに confita を使う</title>
+      <link>https://techblog-szksh-cloud.github.io/use-confita/</link>
+      <pubDate>Sat, 16 Feb 2019 18:38:45 +0900</pubDate>
+      
+      <guid>https://techblog-szksh-cloud.github.io/use-confita/</guid>
+      <description>Golang の設定管理のライブラリといえば viper が有名ですが、 confita も良さそうだったので紹介したいと思います。
+confita の機能としては以下のようなものがあります。
+ 構造体に設定をマッピング flag や環境変数、設定ファイルに対応 複数の設定ファイルに対応  構造体に設定をマッピングすることで、https://github.com/go-playground/validator のようなライブラリを使って設定のバリデーションが出来ます。
+また viper は v1.3.1 の時点で複数の設定ファイルを扱いにくいです。
+ Viper can search multiple paths, but currently a single Viper instance only supports a single configuration file.
+ k8s で ConfigMap と Secret を設定ファイルとして扱う場合、複数のファイルを扱えないと不便です。 その点 confita は複数の設定ファイルを問題なく扱えます。
+以下はフラグで指定した複数の設定ファイルから設定を読み込む簡単なサンプルです。
+import ( &amp;#34;context&amp;#34; &amp;#34;gopkg.in/go-playground/validator.v9&amp;#34; &amp;#34;github.com/heetch/confita&amp;#34; &amp;#34;github.com/heetch/confita/backend&amp;#34; &amp;#34;github.com/heetch/confita/backend/file&amp;#34; flag &amp;#34;github.com/spf13/pflag&amp;#34; ) func loadConfig(ctx context.Context) (Config, error) { cps := flag.StringSliceP(&amp;#34;config&amp;#34;, &amp;#34;c&amp;#34;, nil, &amp;#34;configuration file path&amp;#34;) flag.</description>
+    </item>
+    
+    <item>
+      <title>Golang の好きなところ</title>
+      <link>https://techblog-szksh-cloud.github.io/golang-good-point/</link>
+      <pubDate>Sun, 10 Feb 2019 17:49:58 +0900</pubDate>
+      
+      <guid>https://techblog-szksh-cloud.github.io/golang-good-point/</guid>
+      <description>自分は 2017/8頃(曖昧)からメインで書く言語をPythonからGolangに変更しました。 Goを書き始めて割と早い段階でGoが一番好きになりました。 そこでなんで Go が好きなのかということを頑張って言語化しようと思います。
+若干他の言語と比較する部分もありますが、決して他の言語をディスったり、 他の言語より優れているということが言いたいわけではないのでご了承ください。
+ 依存するものが小さく、バイナリ1つインストールするだけで良い  Prometheus の exporter とかインストールするの簡単 Docker Imageも最小限になる   静的型付け  ビルド出来ている時点で一定の信頼性が担保されている よく知らないコードを読んだり修正するときとかだいぶ有り難い   GoDocが素晴らしい  何もしなくてもライブラリのドキュメントが出来上がっている   ライブラリの公開が容易  GitHubに公開するだけ npm や pypi のようなレジストリがないので楽   go test とか go vet, gofmt みたいに標準ツールが揃っている コーディング規約で悩む必要がない lintツールが充実している  gometalinter とか使っておけば OK lintできる環境を構築するのにそこまで頑張らなくて良い   エラーハンドリングが暗黙的に省略できないので信頼性が高い  Goのエラーハンドリング嫌いって人もいるし、v2で改善されるって話も聞くけど、自分はむしろ好き(面倒なのは理解できるけど)   言語仕様がシンプル(客観的な根拠はないし、難しい部分もあるけど、そんな気がする)  メタプログラミング使った、魔術的なコードになりにくい   interface 使ってコードを疎結合にするのが書いてて気持ちいい 並列処理が書きやすい  </description>
+    </item>
+    
+    <item>
+      <title>Golangにおけるエラーハンドリングとロギングのプラクティス</title>
+      <link>https://techblog-szksh-cloud.github.io/golang-logging-error-handling-practice/</link>
+      <pubDate>Tue, 25 Dec 2018 21:51:41 +0900</pubDate>
+      
+      <guid>https://techblog-szksh-cloud.github.io/golang-logging-error-handling-practice/</guid>
+      <description>2018-12-30 追記 この記事を元にドキュメントを書いてみました。
+https://github.com/suzuki-shunsuke/go-error-handling-logging-practice
+追記ここまで
+ Golang でエラーハンドリングとロギングをしてきて自分の中で固まりつつあるプラクティスを明文化します。 明文化することで以下のことを目指します。
+ 迷いをなくす コードの一貫性を保つ コーディング規約とすることでレビューの品質を上げる(自動化は出来ないけど) コードの品質を上げる(コードがゴチャつかなくなる) 適切にエラーをロギングする(必要十分な情報をログとして残す)  またエラーハンドリングとロギングのためのライブラリを自作しているのでそれも紹介します。
+https://github.com/suzuki-shunsuke/go-errlog
+ロギングに関する関連記事 この記事を書く前に軽くググってみただけでちゃんと読んでないのですが、 興味のある人は読んでみてください。
+ https://www.loggly.com/blog/think-differently-about-what-to-log-in-go-best-practices-examined/ https://dave.cheney.net/2015/11/05/lets-talk-about-logging https://postd.cc/go-best-practices-2016/#logging-and-instrumentation  ログレベルは分ける ログレベルでwarningとかいらないという意見もありますが、自分は必要だと思っています。 自分は以下のログレベルを使い分けます。
+ debug: あまり使わない。調査目的で一時的に埋め込むログ。調査が終わったら出力しないようにする。一時的でないものはinfoにする info: エラーでないログ。イベント、処理の開始時や終了を記録するのに使うことが多い warn: 4xx系のエラー。それが起こっただけではアラートを飛ばさないが、数が通常時より多い場合はバグかUIに問題があってユーザーが間違えやすくなっている可能性があるのでアラートを飛ばす error: 5xx系のエラー。アラートを飛ばす(閾値は調整) fatal: 処理継続が不可能な致命的なエラー。システムを止める  書いてから思いましたが、これに関しては標準的な使い分けのルールがありそうですね(要調査)。。
+logrus を使ってログを構造化する 前提としてwebシステムやバッチシステムなどを想定しています。CLIツールならば話は変わるでしょう。 JSONフォーマットで出力してfluentdでElasticsearchにフォワードするのが個人的によくあるパターンです。
+go-errlogもlogrusの使用を前提としています。
+ロギングのライブラリは他にも色々あるので、logrusで満足できない人は以下から探してみるとよいでしょう。
+https://github.com/avelino/awesome-go#logging
+エラーログは中央集権的に main に近い所で出力する エラーログをどこで出力するかですが、原則中央集権的に main に近い所で出力します。 因みに中央集権的という表現は echo の centralized error handling からもじっています。
+https://echo.labstack.com/guide/error-handling
+error が発生してもすぐログを吐くのではなく、error を関数の戻り値として返し、ロギングする責務を親に委譲します。 Goでは以下のようなイディオムがよく見られますね。
+if err != nil { return err } ロギングに必要な情報を戻り値のerrorに含める 上記のコードで問題なのは、エラーに関する情報が欠損することがあることです。</description>
+    </item>
+    
+    <item>
+      <title>gomic - Goのモックジェネレータ</title>
+      <link>https://techblog-szksh-cloud.github.io/gomic/</link>
+      <pubDate>Tue, 30 Oct 2018 08:35:16 +0900</pubDate>
+      
+      <guid>https://techblog-szksh-cloud.github.io/gomic/</guid>
+      <description>自作のOSS gomic の紹介をします。
+ なぜわざわざこんなものを作ったのか 生成されたモックの簡単な使い方  を主に説明したいと思います。
+まとめ  gomic は Goのinterfaceを実装したモックを生成するCLIツール モックを手で書くのが辛すぎた &amp;amp; 既存ツールで満足できなかったため作った  自動生成できるコードは自動生成すべき   設定ファイルで管理するため、interfaceの更新に合わせてmockの更新が容易 生成されるモックはシンプルなAPIのみ提供するので学習コストが低い  gomic とは gomic は Goのinterfaceを実装したモックを生成するCLIツールです。 これによってモックを使ったテストの作成を効率化します。 単調な作業を自動化し、本来注力すべきことに注力できるようにするためのツールです。
+Goで書かれています。
+https://github.com/suzuki-shunsuke/gomic/releases からバイナリをダウンロードしてインストールできます。
+同様のツールは幾つかあります。
+ https://github.com/avelino/awesome-go#testing https://github.com/golang/mock (以下 gomock) https://github.com/gojuno/minimock (以下 minimock)  特に gomock は有名ですね。
+なぜ作ったのか 上述のように既に同様のツールはありますし、 gomock と minimock は試しました。 しかしあまり満足のいくものではなかったため、自分で作ることにしました。
+自分が欲しかったのは学習コストの低いシンプルなAPIです。 interfaceのメソッドを実装した関数をモックに渡すことで 簡単にメソッドの実装を切り替えたいのです。
+// Getwd メソッドのモック mock.SetFuncGetwd(func() (string, error) { return &amp;#34;/tmp&amp;#34;, nil }) mock.Getwd() // &amp;#34;/tmp&amp;#34;, nil これは非常にシンプルで分かりやすく、柔軟性のあるパターンです(minimockはこのパターンもサポートしています)。</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+<link rel="alternate" type="application/rss+xml" title="RSS" href="https://techblog-szksh-cloud.github.io/tags/logging/index.xml">
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/tags/logging/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>logging - melody</title>
+    
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    
+    <header class="page-header">
+      <h1>logging</h1>
+    </header>
+    
+
+    <ul class="p-articles">
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-12-25T21:51:41JST">Dec 25, 2018</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/golang-logging-error-handling-practice/">Golangにおけるエラーハンドリングとロギングのプラクティス</a></h2>
+  </header>
+
+  
+  <div class="summary">2018-12-30 追記 この記事を元にドキュメントを書いてみました。
+https://github.com/suzuki-shunsuke/go-error-handling-logging-practice
+追記ここまで
+ Golang でエラーハンドリングとロギングをしてきて自分の中で固まりつつあるプラクティスを明文化します。 明文化することで以下のことを目指します。
+ 迷いをなくす コードの一貫性を保つ コーディング規約とすることでレビューの品質を上げる(自動化は出来ないけど) コードの品質を上げる(コードがゴチャつかなくなる) 適切にエラーをロギングする(必要十分な情報をログとして残す)  またエラーハンドリングとロギングのためのライブラリを自作しているのでそれも紹介します。
+https://github.com/suzuki-shunsuke/go-errlog
+ロギングに関する関連記事 この記事を書く前に軽くググってみただけでちゃんと読んでないのですが、 興味のある人は読んでみてください。
+ https://www.loggly.com/blog/think-differently-about-what-to-log-in-go-best-practices-examined/ https://dave.cheney.net/2015/11/05/lets-talk-about-logging https://postd.cc/go-best-practices-2016/#logging-and-instrumentation  ログレベルは分ける ログレベルでwarningとかいらないという意見もありますが、自分は必要だと思っています。 自分は以下のログレベルを使い分けます。
+ debug: あまり使わない。調査目的で一時的に埋め込むログ。調査が終わったら出力しないようにする。一時的でないものはinfoにする info: エラーでないログ。イベント、処理の開始時や終了を記録するのに使うことが多い warn: 4xx系のエラー。それが起こっただけではアラートを飛ばさないが、数が通常時より多い場合はバグかUIに問題があってユーザーが間違えやすくなっている可能性があるのでアラートを飛ばす error: 5xx系のエラー。アラートを飛ばす(閾値は調整) fatal: 処理継続が不可能な致命的なエラー。システムを止める  書いてから思いましたが、これに関しては標準的な使い分けのルールがありそうですね(要調査)。。
+logrus を使ってログを構造化する 前提としてwebシステムやバッチシステムなどを想定しています。CLIツールならば話は変わるでしょう。 JSONフォーマットで出力してfluentdでElasticsearchにフォワードするのが個人的によくあるパターンです。
+go-errlogもlogrusの使用を前提としています。
+ロギングのライブラリは他にも色々あるので、logrusで満足できない人は以下から探してみるとよいでしょう。
+https://github.com/avelino/awesome-go#logging
+エラーログは中央集権的に main に近い所で出力する エラーログをどこで出力するかですが、原則中央集権的に main に近い所で出力します。 因みに中央集権的という表現は echo の centralized error handling からもじっています。
+https://echo.labstack.com/guide/error-handling
+error が発生してもすぐログを吐くのではなく、error を関数の戻り値として返し、ロギングする責務を親に委譲します。 Goでは以下のようなイディオムがよく見られますね。
+if err != nil { return err } ロギングに必要な情報を戻り値のerrorに含める 上記のコードで問題なのは、エラーに関する情報が欠損することがあることです。</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/golang-logging-error-handling-practice/" title="Golangにおけるエラーハンドリングとロギングのプラクティス">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+    </ul>
+
+    
+
+
+  </div>
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

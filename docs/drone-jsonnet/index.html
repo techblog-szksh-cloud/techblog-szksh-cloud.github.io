@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/drone-jsonnet/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>Drone v1 では Jsonnet が extension なしで使える - melody</title>
+    
+<meta name="description" content="Drone では v1 から冗長な YAML を DRY にする一つの手として、 Jsonnet の利用が推奨されています。 これについては過去のブログでも触れています。https://techblog.szksh.cloud/drone-jsonnet-generator/しかし、 v1 の rc の時点では Jsonnet の活用には Jsonnet Extension が必要でした。https://engineering.linecorp.com/ja/blog/go-oss-ci-cd-platform-drone-1-0-0-rc-1/#title7-1しかし、 v1 の正式版では Jsonnet Extension がなくても Jsonnet が利用できるようになっています。まず Drone の管理者側で Drone server に環境変数 DRONE_JSONNET_ENABLED=true を設定する必要があります。そうしたら、ユーザー側は次のようにすることで jsonnet が使えます。 .drone.yml の代わりに .drone.jsonnet をコミットする (.drone.yml は不要) 各リポジトリの settings の Main &amp;gt; Configuration で設定ファイルのパスを変更する  こうすることでビルド実行時に自動で Jsonnet が YAML に変換され処理されるようです。いつから Jsonnet Extension は不要になったのか  https://github.com/drone/drone/compare/v1.0.0-rc.6...v1.0.0 https://github.com/drone/drone/commit/5013cfa993fa455fc56f10e45b9f36cf1d6dff57  v1 の rc ではサポートされてませんでしたが、正式版をリリースするタイミングで Jsonnet Extension が不要になっていたようです。">
+
+<meta property="og:title" content="Drone v1 では Jsonnet が extension なしで使える - melody">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://techblog-szksh-cloud.github.io/drone-jsonnet/">
+<meta property="og:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+<meta property="og:site_name" content="melody">
+<meta property="og:description" content="Drone では v1 から冗長な YAML を DRY にする一つの手として、 Jsonnet の利用が推奨されています。 これについては過去のブログでも触れています。https://techblog.szksh.cloud/drone-jsonnet-generator/しかし、 v1 の rc の時点では Jsonnet の活用には Jsonnet Extension が必要でした。https://engineering.linecorp.com/ja/blog/go-oss-ci-cd-platform-drone-1-0-0-rc-1/#title7-1しかし、 v1 の正式版では Jsonnet Extension がなくても Jsonnet が利用できるようになっています。まず Drone の管理者側で Drone server に環境変数 DRONE_JSONNET_ENABLED=true を設定する必要があります。そうしたら、ユーザー側は次のようにすることで jsonnet が使えます。 .drone.yml の代わりに .drone.jsonnet をコミットする (.drone.yml は不要) 各リポジトリの settings の Main &amp;gt; Configuration で設定ファイルのパスを変更する  こうすることでビルド実行時に自動で Jsonnet が YAML に変換され処理されるようです。いつから Jsonnet Extension は不要になったのか  https://github.com/drone/drone/compare/v1.0.0-rc.6...v1.0.0 https://github.com/drone/drone/commit/5013cfa993fa455fc56f10e45b9f36cf1d6dff57  v1 の rc ではサポートされてませんでしたが、正式版をリリースするタイミングで Jsonnet Extension が不要になっていたようです。">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="melody">
+<meta name="twitter:url" content="https://techblog-szksh-cloud.github.io/drone-jsonnet/">
+<meta name="twitter:title" content="Drone v1 では Jsonnet が extension なしで使える - melody">
+<meta name="twitter:description" content="Drone では v1 から冗長な YAML を DRY にする一つの手として、 Jsonnet の利用が推奨されています。 これについては過去のブログでも触れています。https://techblog.szksh.cloud/drone-jsonnet-generator/しかし、 v1 の rc の時点では Jsonnet の活用には Jsonnet Extension が必要でした。https://engineering.linecorp.com/ja/blog/go-oss-ci-cd-platform-drone-1-0-0-rc-1/#title7-1しかし、 v1 の正式版では Jsonnet Extension がなくても Jsonnet が利用できるようになっています。まず Drone の管理者側で Drone server に環境変数 DRONE_JSONNET_ENABLED=true を設定する必要があります。そうしたら、ユーザー側は次のようにすることで jsonnet が使えます。 .drone.yml の代わりに .drone.jsonnet をコミットする (.drone.yml は不要) 各リポジトリの settings の Main &amp;gt; Configuration で設定ファイルのパスを変更する  こうすることでビルド実行時に自動で Jsonnet が YAML に変換され処理されるようです。いつから Jsonnet Extension は不要になったのか  https://github.com/drone/drone/compare/v1.0.0-rc.6...v1.0.0 https://github.com/drone/drone/commit/5013cfa993fa455fc56f10e45b9f36cf1d6dff57  v1 の rc ではサポートされてませんでしたが、正式版をリリースするタイミングで Jsonnet Extension が不要になっていたようです。">
+<meta name="twitter:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https:\/\/techblog-szksh-cloud.github.io\/"
+    },
+    "headline": "Drone v1 では Jsonnet が extension なしで使える - melody",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https:\/\/techblog-szksh-cloud.github.io\/images\/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2019-08-02T23:02:57JST",
+    "dateModified": "2019-08-02T23:02:57JST",
+    "author": {
+      "@type": "Person",
+      "name": "melody"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "melody",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https:\/\/techblog-szksh-cloud.github.io\/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "Drone では v1 から冗長な YAML を DRY にする一つの手として、 Jsonnet の利用が推奨されています。 これについては過去のブログでも触れています。\nhttps:\/\/techblog.szksh.cloud\/drone-jsonnet-generator\/\nしかし、 v1 の rc の時点では Jsonnet の活用には Jsonnet Extension が必要でした。\nhttps:\/\/engineering.linecorp.com\/ja\/blog\/go-oss-ci-cd-platform-drone-1-0-0-rc-1\/#title7-1\nしかし、 v1 の正式版では Jsonnet Extension がなくても Jsonnet が利用できるようになっています。\nまず Drone の管理者側で Drone server に環境変数 DRONE_JSONNET_ENABLED=true を設定する必要があります。\nそうしたら、ユーザー側は次のようにすることで jsonnet が使えます。\n .drone.yml の代わりに .drone.jsonnet をコミットする (.drone.yml は不要) 各リポジトリの settings の Main \u0026gt; Configuration で設定ファイルのパスを変更する  こうすることでビルド実行時に自動で Jsonnet が YAML に変換され処理されるようです。\nいつから Jsonnet Extension は不要になったのか  https:\/\/github.com\/drone\/drone\/compare\/v1.0.0-rc.6...v1.0.0 https:\/\/github.com\/drone\/drone\/commit\/5013cfa993fa455fc56f10e45b9f36cf1d6dff57  v1 の rc ではサポートされてませんでしたが、正式版をリリースするタイミングで Jsonnet Extension が不要になっていたようです。"
+  }
+</script>
+
+
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://techblog-szksh-cloud.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li class="active">Drone v1 では Jsonnet が extension なしで使える</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2019-08-02T23:02:57JST">Aug 2, 2019</time></li>
+      
+      
+    </ul>
+
+    <h1 class="title">Drone v1 では Jsonnet が extension なしで使える</h1>
+    
+    
+    <section>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/drone/">drone</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </header>
+
+  
+
+  <div class="article-body"><p>Drone では v1 から冗長な YAML を DRY にする一つの手として、 Jsonnet の利用が推奨されています。
+これについては過去のブログでも触れています。</p>
+<p><a href="https://techblog.szksh.cloud/drone-jsonnet-generator/">https://techblog.szksh.cloud/drone-jsonnet-generator/</a></p>
+<p>しかし、 v1 の rc の時点では Jsonnet の活用には Jsonnet Extension が必要でした。</p>
+<p><a href="https://engineering.linecorp.com/ja/blog/go-oss-ci-cd-platform-drone-1-0-0-rc-1/#title7-1">https://engineering.linecorp.com/ja/blog/go-oss-ci-cd-platform-drone-1-0-0-rc-1/#title7-1</a></p>
+<p>しかし、 v1 の正式版では Jsonnet Extension がなくても Jsonnet が利用できるようになっています。</p>
+<p>まず Drone の管理者側で Drone server に環境変数 <code>DRONE_JSONNET_ENABLED=true</code> を設定する必要があります。</p>
+<p>そうしたら、ユーザー側は次のようにすることで jsonnet が使えます。</p>
+<ol>
+<li>.drone.yml の代わりに .drone.jsonnet をコミットする (.drone.yml は不要)</li>
+<li>各リポジトリの settings の Main &gt; Configuration で設定ファイルのパスを変更する</li>
+</ol>
+<p>こうすることでビルド実行時に自動で Jsonnet が YAML に変換され処理されるようです。</p>
+<h2 id="いつから-jsonnet-extension-は不要になったのか">いつから Jsonnet Extension は不要になったのか</h2>
+<ul>
+<li><a href="https://github.com/drone/drone/compare/v1.0.0-rc.6...v1.0.0">https://github.com/drone/drone/compare/v1.0.0-rc.6...v1.0.0</a></li>
+<li><a href="https://github.com/drone/drone/commit/5013cfa993fa455fc56f10e45b9f36cf1d6dff57">https://github.com/drone/drone/commit/5013cfa993fa455fc56f10e45b9f36cf1d6dff57</a></li>
+</ul>
+<p>v1 の rc ではサポートされてませんでしたが、正式版をリリースするタイミングで Jsonnet Extension が不要になっていたようです。</p>
+<h2 id="注意点">注意点</h2>
+<ul>
+<li>SaaS <a href="https://cloud.drone.io">https://cloud.drone.io</a> は 2019-08-02 時点で未対応</li>
+<li>Jsonnet は pipeline が 1 つでも <code>[]</code> で囲い、配列にする必要がある</li>
+<li>Jsonnet の Imports はサポートしていない</li>
+</ul>
+<h2 id="リファレンス">リファレンス</h2>
+<ul>
+<li><a href="https://discourse.drone.io/t/how-to-reduce-yaml-boilerplate/3704">https://discourse.drone.io/t/how-to-reduce-yaml-boilerplate/3704</a></li>
+</ul>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/drone/">drone</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

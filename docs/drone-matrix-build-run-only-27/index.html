@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/drone-matrix-build-run-only-27/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>drone の matrix build が27個しか実行されない - melody</title>
+    
+<meta name="description" content="drone 0.8.5 で検証しています。matrix: ZOO: - 1 - 2 - 3 - 4 FOO: - 1 - 2 - 3 - 4 - 5 - 6 - 7 - 8 BAR: - 1 - 2 上記の場合、本来 4 * 8 * 2 = 64 個実行されるはずのmatrix builds が27個しか実行されなかったのでソースコードを確認したところ、 27個しか実行されないようにハードコードされていました。 https://github.com/cncd/pipeline/blob/d4e09fd3021a16408bc3ebdd3500efd28f51e72c/pipeline/frontend/yaml/matrix/matrix.go#L11 https://github.com/cncd/pipeline/blob/d4e09fd3021a16408bc3ebdd3500efd28f51e72c/pipeline/frontend/yaml/matrix/matrix.go#L93  関係ある部分だけ抽出すると以下のような感じになります。limitAxis = 25 axisList := []Axis{} for p := 0; p &amp;lt; perm; p&#43;&#43; { axisList = append(axisList, axis) if p &amp;gt; limitAxis { break } } 制限をかけるのは仕方ないですが、 エラーも warning もなく正常終了し、でもよく見ると 27 個しか実行されていないので ユーザーとしては混乱しますね。 build の結果の画面の上の方に warning があると嬉しいです。">
+
+<meta property="og:title" content="drone の matrix build が27個しか実行されない - melody">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://techblog-szksh-cloud.github.io/drone-matrix-build-run-only-27/">
+<meta property="og:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+<meta property="og:site_name" content="melody">
+<meta property="og:description" content="drone 0.8.5 で検証しています。matrix: ZOO: - 1 - 2 - 3 - 4 FOO: - 1 - 2 - 3 - 4 - 5 - 6 - 7 - 8 BAR: - 1 - 2 上記の場合、本来 4 * 8 * 2 = 64 個実行されるはずのmatrix builds が27個しか実行されなかったのでソースコードを確認したところ、 27個しか実行されないようにハードコードされていました。 https://github.com/cncd/pipeline/blob/d4e09fd3021a16408bc3ebdd3500efd28f51e72c/pipeline/frontend/yaml/matrix/matrix.go#L11 https://github.com/cncd/pipeline/blob/d4e09fd3021a16408bc3ebdd3500efd28f51e72c/pipeline/frontend/yaml/matrix/matrix.go#L93  関係ある部分だけ抽出すると以下のような感じになります。limitAxis = 25 axisList := []Axis{} for p := 0; p &amp;lt; perm; p&#43;&#43; { axisList = append(axisList, axis) if p &amp;gt; limitAxis { break } } 制限をかけるのは仕方ないですが、 エラーも warning もなく正常終了し、でもよく見ると 27 個しか実行されていないので ユーザーとしては混乱しますね。 build の結果の画面の上の方に warning があると嬉しいです。">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="melody">
+<meta name="twitter:url" content="https://techblog-szksh-cloud.github.io/drone-matrix-build-run-only-27/">
+<meta name="twitter:title" content="drone の matrix build が27個しか実行されない - melody">
+<meta name="twitter:description" content="drone 0.8.5 で検証しています。matrix: ZOO: - 1 - 2 - 3 - 4 FOO: - 1 - 2 - 3 - 4 - 5 - 6 - 7 - 8 BAR: - 1 - 2 上記の場合、本来 4 * 8 * 2 = 64 個実行されるはずのmatrix builds が27個しか実行されなかったのでソースコードを確認したところ、 27個しか実行されないようにハードコードされていました。 https://github.com/cncd/pipeline/blob/d4e09fd3021a16408bc3ebdd3500efd28f51e72c/pipeline/frontend/yaml/matrix/matrix.go#L11 https://github.com/cncd/pipeline/blob/d4e09fd3021a16408bc3ebdd3500efd28f51e72c/pipeline/frontend/yaml/matrix/matrix.go#L93  関係ある部分だけ抽出すると以下のような感じになります。limitAxis = 25 axisList := []Axis{} for p := 0; p &amp;lt; perm; p&#43;&#43; { axisList = append(axisList, axis) if p &amp;gt; limitAxis { break } } 制限をかけるのは仕方ないですが、 エラーも warning もなく正常終了し、でもよく見ると 27 個しか実行されていないので ユーザーとしては混乱しますね。 build の結果の画面の上の方に warning があると嬉しいです。">
+<meta name="twitter:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https:\/\/techblog-szksh-cloud.github.io\/"
+    },
+    "headline": "drone の matrix build が27個しか実行されない - melody",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https:\/\/techblog-szksh-cloud.github.io\/images\/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2018-09-30T20:26:11JST",
+    "dateModified": "2018-09-30T20:26:11JST",
+    "author": {
+      "@type": "Person",
+      "name": "melody"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "melody",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https:\/\/techblog-szksh-cloud.github.io\/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "drone 0.8.5 で検証しています。\nmatrix: ZOO: - 1 - 2 - 3 - 4 FOO: - 1 - 2 - 3 - 4 - 5 - 6 - 7 - 8 BAR: - 1 - 2 上記の場合、本来 4 * 8 * 2 = 64 個実行されるはずのmatrix builds が27個しか実行されなかったのでソースコードを確認したところ、 27個しか実行されないようにハードコードされていました。\n https:\/\/github.com\/cncd\/pipeline\/blob\/d4e09fd3021a16408bc3ebdd3500efd28f51e72c\/pipeline\/frontend\/yaml\/matrix\/matrix.go#L11 https:\/\/github.com\/cncd\/pipeline\/blob\/d4e09fd3021a16408bc3ebdd3500efd28f51e72c\/pipeline\/frontend\/yaml\/matrix\/matrix.go#L93  関係ある部分だけ抽出すると以下のような感じになります。\nlimitAxis = 25 axisList := []Axis{} for p := 0; p \u0026lt; perm; p\u002b\u002b { axisList = append(axisList, axis) if p \u0026gt; limitAxis { break } } 制限をかけるのは仕方ないですが、 エラーも warning もなく正常終了し、でもよく見ると 27 個しか実行されていないので ユーザーとしては混乱しますね。 build の結果の画面の上の方に warning があると嬉しいです。"
+  }
+</script>
+
+
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://techblog-szksh-cloud.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li class="active">drone の matrix build が27個しか実行されない</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-09-30T20:26:11JST">Sep 30, 2018</time></li>
+      
+      
+    </ul>
+
+    <h1 class="title">drone の matrix build が27個しか実行されない</h1>
+    
+    
+  </header>
+
+  
+
+  <div class="article-body"><p>drone 0.8.5 で検証しています。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">matrix</span>:
+  <span style="color:#f92672">ZOO</span>:
+  - <span style="color:#ae81ff">1</span>
+  - <span style="color:#ae81ff">2</span>
+  - <span style="color:#ae81ff">3</span>
+  - <span style="color:#ae81ff">4</span>
+  <span style="color:#f92672">FOO</span>:
+  - <span style="color:#ae81ff">1</span>
+  - <span style="color:#ae81ff">2</span>
+  - <span style="color:#ae81ff">3</span>
+  - <span style="color:#ae81ff">4</span>
+  - <span style="color:#ae81ff">5</span>
+  - <span style="color:#ae81ff">6</span>
+  - <span style="color:#ae81ff">7</span>
+  - <span style="color:#ae81ff">8</span>
+  <span style="color:#f92672">BAR</span>:
+  - <span style="color:#ae81ff">1</span>
+  - <span style="color:#ae81ff">2</span>
+</code></pre></div><p>上記の場合、本来 4 * 8 * 2 = 64 個実行されるはずのmatrix builds が27個しか実行されなかったのでソースコードを確認したところ、
+27個しか実行されないようにハードコードされていました。</p>
+<ul>
+<li><a href="https://github.com/cncd/pipeline/blob/d4e09fd3021a16408bc3ebdd3500efd28f51e72c/pipeline/frontend/yaml/matrix/matrix.go#L11">https://github.com/cncd/pipeline/blob/d4e09fd3021a16408bc3ebdd3500efd28f51e72c/pipeline/frontend/yaml/matrix/matrix.go#L11</a></li>
+<li><a href="https://github.com/cncd/pipeline/blob/d4e09fd3021a16408bc3ebdd3500efd28f51e72c/pipeline/frontend/yaml/matrix/matrix.go#L93">https://github.com/cncd/pipeline/blob/d4e09fd3021a16408bc3ebdd3500efd28f51e72c/pipeline/frontend/yaml/matrix/matrix.go#L93</a></li>
+</ul>
+<p>関係ある部分だけ抽出すると以下のような感じになります。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">limitAxis</span> = <span style="color:#ae81ff">25</span>
+
+<span style="color:#a6e22e">axisList</span> <span style="color:#f92672">:=</span> []<span style="color:#a6e22e">Axis</span>{}
+<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">p</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">p</span> &lt; <span style="color:#a6e22e">perm</span>; <span style="color:#a6e22e">p</span><span style="color:#f92672">++</span> {
+	<span style="color:#a6e22e">axisList</span> = append(<span style="color:#a6e22e">axisList</span>, <span style="color:#a6e22e">axis</span>)
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">p</span> &gt; <span style="color:#a6e22e">limitAxis</span> {
+		<span style="color:#66d9ef">break</span>
+	}
+}
+</code></pre></div><p>制限をかけるのは仕方ないですが、
+エラーも warning もなく正常終了し、でもよく見ると 27 個しか実行されていないので
+ユーザーとしては混乱しますね。
+build の結果の画面の上の方に warning があると嬉しいです。</p>
+</div>
+
+  <footer class="article-footer">
+    
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

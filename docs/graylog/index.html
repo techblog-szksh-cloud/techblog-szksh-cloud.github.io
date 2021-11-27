@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/graylog/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>Graylog で log を管理する - melody</title>
+    
+<meta name="description" content="Java 製の OSS ログ管理システム Graylog の紹介です。 Graylog については幾つかに分けて記事を書きたいと思います。 今回はGraylogの入門的な内容になります。なお、本記事中で「現在」「現時点」といった場合、特に断りがなければ記事執筆時点 2018-11-27 を指します。Graylog のバージョン 検証に用いるGraylogのバージョンは 2.4.6 になります。OSSバージョンとEnterpriseバージョンがありますが、本記事ではOSSバージョンを使用します。Graylog とは  https://www.graylog.org/ https://github.com/Graylog2/graylog2-server  Kibana と Elasticsearch(以下ES) を使ったことがある人は、Kibanaに代わるものだと思っていただくとイメージしやすいかと思います。 ログはGraylogそのものが保持するのではなく、ESにインデキシングされます。 Kibana同様、ESに収集されたログを検索したり、ダッシュボードを作ったり出来ます。 ダッシュボードに関してはKibanaのほうが優れているようにも思えますが、 Graylogは認証・認可によりダッシュボードやログを操作できる人を制限・管理することが出来ます。Graylogでログを管理する場合、ユーザーは直接ESにはログを送らず、Graylogを経由して送ります。 ESに対するGraylog以外のアクセスを制限し直接ESにアクセスされるのを防ぐことが出来ます。Graylog は多機能なシステムであり、ログを整形したり、アラートを飛ばしたり、他のシステムにログをフォワードしたりすることも出来ます。 marketplace でサードパーティの plugin が公開されており、機能を拡張することが出来ます。 APIも提供されており、ある程度自動化が可能です。認証・認可 オンプレミスでログを管理する場合、社外からは勿論社内からのアクセスも制限したいです。 Graylog では LDAP や Active Directory によってアクセスを制限できます。 リソース毎に誰が何を出来るか設定できます。http://docs.graylog.org/en/2.5/pages/users_and_roles/external_auth.htmlログの収集 ログの収集をするには Graylog で幾つかのリソースを作成する必要があります。 Input Index Set Stream Stream Rule  Input はログの入力のフォーマットの設定であり、 どのポートでどういったフォーマットのログを受け付けるかという設定になります。 フォーマットは様々なものがサポートされています。 AWS Flow Logs AWS Cloud Watch Logs AWS Cloud Trail Beats CEF AMQP CEF Kafka CEF TCP CEF UDP Fake HTTP Message GELF AMQP GELF HTTP GELF Kafka GELF TCP GELF UDP JSON Path NetFlow UDP Raw AMQP Syslog AMQP Syslog Kafka Syslog TCP Syslog UDP  この設定はログを収集するアプリケーションごとに設定するというより、グローバルな設定なので、他のアプリケーションで既に同じ形式でログを収集していたら新たに設定する必要はありません。">
+
+<meta property="og:title" content="Graylog で log を管理する - melody">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://techblog-szksh-cloud.github.io/graylog/">
+<meta property="og:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+<meta property="og:site_name" content="melody">
+<meta property="og:description" content="Java 製の OSS ログ管理システム Graylog の紹介です。 Graylog については幾つかに分けて記事を書きたいと思います。 今回はGraylogの入門的な内容になります。なお、本記事中で「現在」「現時点」といった場合、特に断りがなければ記事執筆時点 2018-11-27 を指します。Graylog のバージョン 検証に用いるGraylogのバージョンは 2.4.6 になります。OSSバージョンとEnterpriseバージョンがありますが、本記事ではOSSバージョンを使用します。Graylog とは  https://www.graylog.org/ https://github.com/Graylog2/graylog2-server  Kibana と Elasticsearch(以下ES) を使ったことがある人は、Kibanaに代わるものだと思っていただくとイメージしやすいかと思います。 ログはGraylogそのものが保持するのではなく、ESにインデキシングされます。 Kibana同様、ESに収集されたログを検索したり、ダッシュボードを作ったり出来ます。 ダッシュボードに関してはKibanaのほうが優れているようにも思えますが、 Graylogは認証・認可によりダッシュボードやログを操作できる人を制限・管理することが出来ます。Graylogでログを管理する場合、ユーザーは直接ESにはログを送らず、Graylogを経由して送ります。 ESに対するGraylog以外のアクセスを制限し直接ESにアクセスされるのを防ぐことが出来ます。Graylog は多機能なシステムであり、ログを整形したり、アラートを飛ばしたり、他のシステムにログをフォワードしたりすることも出来ます。 marketplace でサードパーティの plugin が公開されており、機能を拡張することが出来ます。 APIも提供されており、ある程度自動化が可能です。認証・認可 オンプレミスでログを管理する場合、社外からは勿論社内からのアクセスも制限したいです。 Graylog では LDAP や Active Directory によってアクセスを制限できます。 リソース毎に誰が何を出来るか設定できます。http://docs.graylog.org/en/2.5/pages/users_and_roles/external_auth.htmlログの収集 ログの収集をするには Graylog で幾つかのリソースを作成する必要があります。 Input Index Set Stream Stream Rule  Input はログの入力のフォーマットの設定であり、 どのポートでどういったフォーマットのログを受け付けるかという設定になります。 フォーマットは様々なものがサポートされています。 AWS Flow Logs AWS Cloud Watch Logs AWS Cloud Trail Beats CEF AMQP CEF Kafka CEF TCP CEF UDP Fake HTTP Message GELF AMQP GELF HTTP GELF Kafka GELF TCP GELF UDP JSON Path NetFlow UDP Raw AMQP Syslog AMQP Syslog Kafka Syslog TCP Syslog UDP  この設定はログを収集するアプリケーションごとに設定するというより、グローバルな設定なので、他のアプリケーションで既に同じ形式でログを収集していたら新たに設定する必要はありません。">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="melody">
+<meta name="twitter:url" content="https://techblog-szksh-cloud.github.io/graylog/">
+<meta name="twitter:title" content="Graylog で log を管理する - melody">
+<meta name="twitter:description" content="Java 製の OSS ログ管理システム Graylog の紹介です。 Graylog については幾つかに分けて記事を書きたいと思います。 今回はGraylogの入門的な内容になります。なお、本記事中で「現在」「現時点」といった場合、特に断りがなければ記事執筆時点 2018-11-27 を指します。Graylog のバージョン 検証に用いるGraylogのバージョンは 2.4.6 になります。OSSバージョンとEnterpriseバージョンがありますが、本記事ではOSSバージョンを使用します。Graylog とは  https://www.graylog.org/ https://github.com/Graylog2/graylog2-server  Kibana と Elasticsearch(以下ES) を使ったことがある人は、Kibanaに代わるものだと思っていただくとイメージしやすいかと思います。 ログはGraylogそのものが保持するのではなく、ESにインデキシングされます。 Kibana同様、ESに収集されたログを検索したり、ダッシュボードを作ったり出来ます。 ダッシュボードに関してはKibanaのほうが優れているようにも思えますが、 Graylogは認証・認可によりダッシュボードやログを操作できる人を制限・管理することが出来ます。Graylogでログを管理する場合、ユーザーは直接ESにはログを送らず、Graylogを経由して送ります。 ESに対するGraylog以外のアクセスを制限し直接ESにアクセスされるのを防ぐことが出来ます。Graylog は多機能なシステムであり、ログを整形したり、アラートを飛ばしたり、他のシステムにログをフォワードしたりすることも出来ます。 marketplace でサードパーティの plugin が公開されており、機能を拡張することが出来ます。 APIも提供されており、ある程度自動化が可能です。認証・認可 オンプレミスでログを管理する場合、社外からは勿論社内からのアクセスも制限したいです。 Graylog では LDAP や Active Directory によってアクセスを制限できます。 リソース毎に誰が何を出来るか設定できます。http://docs.graylog.org/en/2.5/pages/users_and_roles/external_auth.htmlログの収集 ログの収集をするには Graylog で幾つかのリソースを作成する必要があります。 Input Index Set Stream Stream Rule  Input はログの入力のフォーマットの設定であり、 どのポートでどういったフォーマットのログを受け付けるかという設定になります。 フォーマットは様々なものがサポートされています。 AWS Flow Logs AWS Cloud Watch Logs AWS Cloud Trail Beats CEF AMQP CEF Kafka CEF TCP CEF UDP Fake HTTP Message GELF AMQP GELF HTTP GELF Kafka GELF TCP GELF UDP JSON Path NetFlow UDP Raw AMQP Syslog AMQP Syslog Kafka Syslog TCP Syslog UDP  この設定はログを収集するアプリケーションごとに設定するというより、グローバルな設定なので、他のアプリケーションで既に同じ形式でログを収集していたら新たに設定する必要はありません。">
+<meta name="twitter:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https:\/\/techblog-szksh-cloud.github.io\/"
+    },
+    "headline": "Graylog で log を管理する - melody",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https:\/\/techblog-szksh-cloud.github.io\/images\/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2018-11-27T16:40:33JST",
+    "dateModified": "2018-11-27T16:40:33JST",
+    "author": {
+      "@type": "Person",
+      "name": "melody"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "melody",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https:\/\/techblog-szksh-cloud.github.io\/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "Java 製の OSS ログ管理システム Graylog の紹介です。 Graylog については幾つかに分けて記事を書きたいと思います。 今回はGraylogの入門的な内容になります。\nなお、本記事中で「現在」「現時点」といった場合、特に断りがなければ記事執筆時点 2018-11-27 を指します。\nGraylog のバージョン 検証に用いるGraylogのバージョンは 2.4.6 になります。\nOSSバージョンとEnterpriseバージョンがありますが、本記事ではOSSバージョンを使用します。\nGraylog とは  https:\/\/www.graylog.org\/ https:\/\/github.com\/Graylog2\/graylog2-server  Kibana と Elasticsearch(以下ES) を使ったことがある人は、Kibanaに代わるものだと思っていただくとイメージしやすいかと思います。 ログはGraylogそのものが保持するのではなく、ESにインデキシングされます。 Kibana同様、ESに収集されたログを検索したり、ダッシュボードを作ったり出来ます。 ダッシュボードに関してはKibanaのほうが優れているようにも思えますが、 Graylogは認証・認可によりダッシュボードやログを操作できる人を制限・管理することが出来ます。\nGraylogでログを管理する場合、ユーザーは直接ESにはログを送らず、Graylogを経由して送ります。 ESに対するGraylog以外のアクセスを制限し直接ESにアクセスされるのを防ぐことが出来ます。\nGraylog は多機能なシステムであり、ログを整形したり、アラートを飛ばしたり、他のシステムにログをフォワードしたりすることも出来ます。 marketplace でサードパーティの plugin が公開されており、機能を拡張することが出来ます。 APIも提供されており、ある程度自動化が可能です。\n認証・認可 オンプレミスでログを管理する場合、社外からは勿論社内からのアクセスも制限したいです。 Graylog では LDAP や Active Directory によってアクセスを制限できます。 リソース毎に誰が何を出来るか設定できます。\nhttp:\/\/docs.graylog.org\/en\/2.5\/pages\/users_and_roles\/external_auth.html\nログの収集 ログの収集をするには Graylog で幾つかのリソースを作成する必要があります。\n Input Index Set Stream Stream Rule  Input はログの入力のフォーマットの設定であり、 どのポートでどういったフォーマットのログを受け付けるかという設定になります。 フォーマットは様々なものがサポートされています。\n AWS Flow Logs AWS Cloud Watch Logs AWS Cloud Trail Beats CEF AMQP CEF Kafka CEF TCP CEF UDP Fake HTTP Message GELF AMQP GELF HTTP GELF Kafka GELF TCP GELF UDP JSON Path NetFlow UDP Raw AMQP Syslog AMQP Syslog Kafka Syslog TCP Syslog UDP  この設定はログを収集するアプリケーションごとに設定するというより、グローバルな設定なので、他のアプリケーションで既に同じ形式でログを収集していたら新たに設定する必要はありません。"
+  }
+</script>
+
+
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://techblog-szksh-cloud.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li class="active">Graylog で log を管理する</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-11-27T16:40:33JST">Nov 27, 2018</time></li>
+      
+      
+    </ul>
+
+    <h1 class="title">Graylog で log を管理する</h1>
+    
+    
+    <section>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/oss/">oss</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/graylog/">graylog</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </header>
+
+  
+
+  <div class="article-body"><p>Java 製の OSS ログ管理システム Graylog の紹介です。
+Graylog については幾つかに分けて記事を書きたいと思います。
+今回はGraylogの入門的な内容になります。</p>
+<p>なお、本記事中で「現在」「現時点」といった場合、特に断りがなければ記事執筆時点 2018-11-27 を指します。</p>
+<h2 id="graylog-のバージョン">Graylog のバージョン</h2>
+<p>検証に用いるGraylogのバージョンは 2.4.6 になります。</p>
+<p>OSSバージョンとEnterpriseバージョンがありますが、本記事ではOSSバージョンを使用します。</p>
+<h2 id="graylog-とは">Graylog とは</h2>
+<ul>
+<li><a href="https://www.graylog.org/">https://www.graylog.org/</a></li>
+<li><a href="https://github.com/Graylog2/graylog2-server">https://github.com/Graylog2/graylog2-server</a></li>
+</ul>
+<p>Kibana と Elasticsearch(以下ES) を使ったことがある人は、Kibanaに代わるものだと思っていただくとイメージしやすいかと思います。
+ログはGraylogそのものが保持するのではなく、ESにインデキシングされます。
+Kibana同様、ESに収集されたログを検索したり、ダッシュボードを作ったり出来ます。
+ダッシュボードに関してはKibanaのほうが優れているようにも思えますが、
+Graylogは認証・認可によりダッシュボードやログを操作できる人を制限・管理することが出来ます。</p>
+<p>Graylogでログを管理する場合、ユーザーは直接ESにはログを送らず、Graylogを経由して送ります。
+ESに対するGraylog以外のアクセスを制限し直接ESにアクセスされるのを防ぐことが出来ます。</p>
+<p>Graylog は多機能なシステムであり、ログを整形したり、アラートを飛ばしたり、他のシステムにログをフォワードしたりすることも出来ます。
+<a href="http://docs.graylog.org/en/2.5/pages/marketplace.html">marketplace</a> でサードパーティの plugin が公開されており、機能を拡張することが出来ます。
+<a href="http://docs.graylog.org/en/2.5/pages/configuration/rest_api.html">API</a>も提供されており、ある程度自動化が可能です。</p>
+<h2 id="認証認可">認証・認可</h2>
+<p>オンプレミスでログを管理する場合、社外からは勿論社内からのアクセスも制限したいです。
+Graylog では LDAP や Active Directory によってアクセスを制限できます。
+リソース毎に誰が何を出来るか設定できます。</p>
+<p><a href="http://docs.graylog.org/en/2.5/pages/users_and_roles/external_auth.html">http://docs.graylog.org/en/2.5/pages/users_and_roles/external_auth.html</a></p>
+<h2 id="ログの収集">ログの収集</h2>
+<p>ログの収集をするには Graylog で幾つかのリソースを作成する必要があります。</p>
+<ul>
+<li>Input</li>
+<li>Index Set</li>
+<li>Stream</li>
+<li>Stream Rule</li>
+</ul>
+<p>Input はログの入力のフォーマットの設定であり、
+どのポートでどういったフォーマットのログを受け付けるかという設定になります。
+フォーマットは様々なものがサポートされています。</p>
+<ul>
+<li>AWS Flow Logs</li>
+<li>AWS Cloud Watch Logs</li>
+<li>AWS Cloud Trail</li>
+<li>Beats</li>
+<li>CEF AMQP</li>
+<li>CEF Kafka</li>
+<li>CEF TCP</li>
+<li>CEF UDP</li>
+<li>Fake HTTP Message</li>
+<li>GELF AMQP</li>
+<li>GELF HTTP</li>
+<li>GELF Kafka</li>
+<li>GELF TCP</li>
+<li>GELF UDP</li>
+<li>JSON Path</li>
+<li>NetFlow UDP</li>
+<li>Raw AMQP</li>
+<li>Syslog AMQP</li>
+<li>Syslog Kafka</li>
+<li>Syslog TCP</li>
+<li>Syslog UDP</li>
+</ul>
+<p>この設定はログを収集するアプリケーションごとに設定するというより、グローバルな設定なので、他のアプリケーションで既に同じ形式でログを収集していたら新たに設定する必要はありません。</p>
+<p><a href="http://docs.graylog.org/en/2.5/pages/streams.html#index-sets">Index Set</a>はESのIndexの論理的なセットです。
+GraylogはESの複数のIndexを1つのセットとして管理します。
+Index Setの設定で古いログを自動でcloseしたり削除したりする事ができるのでログの管理が楽になります。
+ESのログは収集しているだけだとどんどん肥大化していってしまうので、<a href="https://dev.classmethod.jp/server-side/elasticsearch/elastic-curator/">Curatorなどを使って古いものを消したりする必要がありますが</a>、そういったことをGraylogが自動でやってくれます。</p>
+<p><a href="http://docs.graylog.org/en/2.5/pages/streams.html">Stream</a> はGraylogに収集されたログを分類する仕組みです。
+Stream毎に検索したりダッシュボードを作ったりアラートを飛ばしたりログの閲覧を制限したりします。
+分類の仕方は自由ですが、自分はアプリケーション毎にStreamを作っています。
+Stream毎にStream Ruleを定義し、Stream Ruleの条件にマッチしたログはそのStreamに振り分けられます。
+自分はfluentdから送ったログの tag によってStreamを分けています。</p>
+<h2 id="ログを送る">ログを送る</h2>
+<p>公式ドキュメントに幾つかログの送り方が紹介されています。</p>
+<p><a href="http://docs.graylog.org/en/2.5/pages/sending_data.html">http://docs.graylog.org/en/2.5/pages/sending_data.html</a></p>
+<p>自分が主にやっているのが</p>
+<ul>
+<li><a href="https://docs.docker.com/config/containers/logging/gelf/">Docker の GELF log driver</a> を使う</li>
+<li>k8s の Pod で fluentd を side car として動かす(<a href="https://hub.docker.com/r/suzukishunsuke/fluentd-gelf/">fluentdにはout_gelf plugin をインストール</a>)</li>
+</ul>
+<p>ここまでやればログを<a href="http://docs.graylog.org/en/2.5/pages/queries.html">検索</a>したり出来ます。</p>
+<h2 id="alert">Alert</h2>
+<p><a href="http://docs.graylog.org/en/2.5/pages/streams/alerts.html">http://docs.graylog.org/en/2.5/pages/streams/alerts.html</a></p>
+<p>アラートの設定は</p>
+<ul>
+<li>Condition: アラートの条件</li>
+<li>Notification: アラート先(どこにアラートを飛ばすか)</li>
+</ul>
+<p>の2つに分かれます。それぞれStreamに関連づいた設定です。</p>
+<p>Condition では</p>
+<ul>
+<li>Field content condition</li>
+<li>Field aggregation condition</li>
+<li>Message count condition</li>
+</ul>
+<p>といった条件で設定できます。</p>
+<p>Notification は標準では</p>
+<ul>
+<li>HTTP(Webhook)</li>
+<li>Email</li>
+</ul>
+<p>の2種類しかないのですが、pluginで Slack などにも通知することが出来ます。
+自分は <a href="https://github.com/graylog-labs/graylog-plugin-slack">https://github.com/graylog-labs/graylog-plugin-slack</a> を使って Slack に通知しています。</p>
+<p>Notification のメッセージのテンプレートは自由に変えられますが、どういったテンプレートが良いかは難しいです。
+自分は次のような感じにしています。</p>
+<pre tabindex="0"><code>${alert_condition.title}
+
+${foreach backlog message}
+&lt;https://graylog.example.com/streams/${stream.id}/search?rangetype=absolute&amp;from=${message.timestamp}&amp;to=${message.timestamp} | link&gt; ${message.message}
+${end}
+</code></pre><p>graylog の URL は適宜置き換えてください。
+<code>link</code> の部分を変数(<code>${message.message}</code>とか)にするとリンクが壊れてしまうことがあったので固定文字列にしています。</p>
+<p>graylog-plugin-slack の設定で <code>Graylog URL (optional)</code>を設定しないと <code>${stream_url}</code> などが空になってしまうことに注意してください。
+自分は optional なので元々設定していなかったのでハマりました(ググっても分からなかった)。
+<code>Graylog URL</code>という設定は notification 毎に変えるようなものでもないのでglobalに設定できるとよいのですが、どうも出来なそうです。</p>
+<p>また、テンプレート中で使える変数の中にmessageのURLはないそうです。</p>
+<p><a href="https://community.graylog.org/t/message-url-in-alert-notification/1916">https://community.graylog.org/t/message-url-in-alert-notification/1916</a></p>
+<p>そのため、message.timestamp を from と to に指定して検索するという回りくどい(?)ことをしています。</p>
+<h2 id="ダッシュボードの作成">ダッシュボードの作成</h2>
+<p>ダッシュボードの作成は</p>
+<ol>
+<li>Dashboardページ: 空のDashboardを作る</li>
+<li>Stream ページ: クエリを実行したりしてグラフを作る</li>
+<li>Stream ページ: グラフをDashboardに追加する</li>
+<li>Dashboardページ: グラフを並び替えたりする</li>
+</ol>
+<p>詳細は割愛するので <a href="http://docs.graylog.org/en/2.5/pages/dashboards.html">http://docs.graylog.org/en/2.5/pages/dashboards.html</a> を読んでください。</p>
+<h2 id="権限管理">権限管理</h2>
+<p>Graylogの権限管理では User と Role という概念があり、
+Role の permissions としてどのリソースにどういった操作を許可するか定義し、
+User に Role を付与します。</p>
+<p><a href="http://docs.graylog.org/en/2.5/pages/users_and_roles/permission_system.html#permissions">http://docs.graylog.org/en/2.5/pages/users_and_roles/permission_system.html#permissions</a></p>
+<p>permissions として定義できるものは公式なドキュメントが見つからないのですが、APIで取得できます。</p>
+<p><a href="https://gist.github.com/suzuki-shunsuke/e371f1bd2716cde31d6fa89bf39f0e77">https://gist.github.com/suzuki-shunsuke/e371f1bd2716cde31d6fa89bf39f0e77</a></p>
+<p>例えば <code>streams:read</code> は全てのStreamをreadする権限となりますし、
+<code>streams:read:&lt;stream id&gt;</code> とすれば特定のStreamのみreadする権限となります。</p>
+<p>プロジェクトごとにroleを定義してプロジェクトの関係者に付与したり、アルバイトや正社員といった雇用形態に応じてroleを定義したり、色々な利用方法はあると思います。</p>
+<p>こういったRoleのpermissionの定義はWeb UIからも出来ますが、
+残念ながらWeb UIからではなくAPIを用いないと定義できないpermissionもあります。
+そのため、自分は Graylog APIを用いて terraform provider を開発し、terraform で Roleの作成を行っています。</p>
+<h2 id="最後に">最後に</h2>
+<p>以上、自分が主に使っているGraylogの機能を紹介しました。
+Graylogは多機能で自分が使っていない、分かっていない機能が色々あります。
+興味のある方は調べてみてください。</p>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/oss/">oss</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/graylog/">graylog</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

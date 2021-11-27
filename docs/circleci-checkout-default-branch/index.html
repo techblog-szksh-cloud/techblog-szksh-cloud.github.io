@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/circleci-checkout-default-branch/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>CircleCI の checkout の注意点 - melody</title>
+    
+<meta name="description" content="CircleCI の組み込みの command checkout の注意点について書きます。なお、ここに書かれている内容は 2020/04/24 時点のものであり、予告なしに checkout の挙動が変わる可能性があります。また、今回は話を簡略化するため、 checkout 実行時点で .git がない(つまりキャッシュしていない)ものとします。最初に結論 先に結論を書くと CircleCI ではローカルのデフォルトブランチを参照しないほうが良い($CIRCLE_BRANCH がデフォルトブランチである場合は除く)  履歴が origin と異なり、 $CIRCLE_BRANCH と同様になっているため   代わりに origin のデフォルトブランチを参照したほうが良い git branch -f &amp;lt;デフォルトブランチ&amp;gt; origin/&amp;lt;デフォルトブランチ&amp;gt; を実行してデフォルトブランチの履歴を修正するのもあり  checkout がなにをやっているか checkout でなにをやっているかは実際に使ってみて CircleCI の job の詳細画面(?) から確認できます。サンプル: https://app.circleci.com/pipelines/github/suzuki-shunsuke/test-circleci/73/workflows/5611059c-d6b1-4a34-91b5-45d6f149d408/jobs/96ここでは checkout の全てについては触れません。一部抜粋します。elif [ -n &amp;#34;$CIRCLE_BRANCH&amp;#34; ] then git reset --hard &amp;#34;$CIRCLE_SHA1&amp;#34; git checkout -q -B &amp;#34;$CIRCLE_BRANCH&amp;#34; fi git reset --hard などをしています。">
+
+<meta property="og:title" content="CircleCI の checkout の注意点 - melody">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://techblog-szksh-cloud.github.io/circleci-checkout-default-branch/">
+<meta property="og:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+<meta property="og:site_name" content="melody">
+<meta property="og:description" content="CircleCI の組み込みの command checkout の注意点について書きます。なお、ここに書かれている内容は 2020/04/24 時点のものであり、予告なしに checkout の挙動が変わる可能性があります。また、今回は話を簡略化するため、 checkout 実行時点で .git がない(つまりキャッシュしていない)ものとします。最初に結論 先に結論を書くと CircleCI ではローカルのデフォルトブランチを参照しないほうが良い($CIRCLE_BRANCH がデフォルトブランチである場合は除く)  履歴が origin と異なり、 $CIRCLE_BRANCH と同様になっているため   代わりに origin のデフォルトブランチを参照したほうが良い git branch -f &amp;lt;デフォルトブランチ&amp;gt; origin/&amp;lt;デフォルトブランチ&amp;gt; を実行してデフォルトブランチの履歴を修正するのもあり  checkout がなにをやっているか checkout でなにをやっているかは実際に使ってみて CircleCI の job の詳細画面(?) から確認できます。サンプル: https://app.circleci.com/pipelines/github/suzuki-shunsuke/test-circleci/73/workflows/5611059c-d6b1-4a34-91b5-45d6f149d408/jobs/96ここでは checkout の全てについては触れません。一部抜粋します。elif [ -n &amp;#34;$CIRCLE_BRANCH&amp;#34; ] then git reset --hard &amp;#34;$CIRCLE_SHA1&amp;#34; git checkout -q -B &amp;#34;$CIRCLE_BRANCH&amp;#34; fi git reset --hard などをしています。">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="melody">
+<meta name="twitter:url" content="https://techblog-szksh-cloud.github.io/circleci-checkout-default-branch/">
+<meta name="twitter:title" content="CircleCI の checkout の注意点 - melody">
+<meta name="twitter:description" content="CircleCI の組み込みの command checkout の注意点について書きます。なお、ここに書かれている内容は 2020/04/24 時点のものであり、予告なしに checkout の挙動が変わる可能性があります。また、今回は話を簡略化するため、 checkout 実行時点で .git がない(つまりキャッシュしていない)ものとします。最初に結論 先に結論を書くと CircleCI ではローカルのデフォルトブランチを参照しないほうが良い($CIRCLE_BRANCH がデフォルトブランチである場合は除く)  履歴が origin と異なり、 $CIRCLE_BRANCH と同様になっているため   代わりに origin のデフォルトブランチを参照したほうが良い git branch -f &amp;lt;デフォルトブランチ&amp;gt; origin/&amp;lt;デフォルトブランチ&amp;gt; を実行してデフォルトブランチの履歴を修正するのもあり  checkout がなにをやっているか checkout でなにをやっているかは実際に使ってみて CircleCI の job の詳細画面(?) から確認できます。サンプル: https://app.circleci.com/pipelines/github/suzuki-shunsuke/test-circleci/73/workflows/5611059c-d6b1-4a34-91b5-45d6f149d408/jobs/96ここでは checkout の全てについては触れません。一部抜粋します。elif [ -n &amp;#34;$CIRCLE_BRANCH&amp;#34; ] then git reset --hard &amp;#34;$CIRCLE_SHA1&amp;#34; git checkout -q -B &amp;#34;$CIRCLE_BRANCH&amp;#34; fi git reset --hard などをしています。">
+<meta name="twitter:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https:\/\/techblog-szksh-cloud.github.io\/"
+    },
+    "headline": "CircleCI の checkout の注意点 - melody",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https:\/\/techblog-szksh-cloud.github.io\/images\/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2020-04-24T16:53:01JST",
+    "dateModified": "2020-04-24T16:53:01JST",
+    "author": {
+      "@type": "Person",
+      "name": "melody"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "melody",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https:\/\/techblog-szksh-cloud.github.io\/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "CircleCI の組み込みの command checkout の注意点について書きます。\nなお、ここに書かれている内容は 2020\/04\/24 時点のものであり、予告なしに checkout の挙動が変わる可能性があります。\nまた、今回は話を簡略化するため、 checkout 実行時点で .git がない(つまりキャッシュしていない)ものとします。\n最初に結論 先に結論を書くと\n CircleCI ではローカルのデフォルトブランチを参照しないほうが良い($CIRCLE_BRANCH がデフォルトブランチである場合は除く)  履歴が origin と異なり、 $CIRCLE_BRANCH と同様になっているため   代わりに origin のデフォルトブランチを参照したほうが良い git branch -f \u0026lt;デフォルトブランチ\u0026gt; origin\/\u0026lt;デフォルトブランチ\u0026gt; を実行してデフォルトブランチの履歴を修正するのもあり  checkout がなにをやっているか checkout でなにをやっているかは実際に使ってみて CircleCI の job の詳細画面(?) から確認できます。\nサンプル: https:\/\/app.circleci.com\/pipelines\/github\/suzuki-shunsuke\/test-circleci\/73\/workflows\/5611059c-d6b1-4a34-91b5-45d6f149d408\/jobs\/96\nここでは checkout の全てについては触れません。一部抜粋します。\nelif [ -n \u0026#34;$CIRCLE_BRANCH\u0026#34; ] then git reset --hard \u0026#34;$CIRCLE_SHA1\u0026#34; git checkout -q -B \u0026#34;$CIRCLE_BRANCH\u0026#34; fi git reset --hard などをしています。"
+  }
+</script>
+
+
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://techblog-szksh-cloud.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li class="active">CircleCI の checkout の注意点</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2020-04-24T16:53:01JST">Apr 24, 2020</time></li>
+      
+      
+    </ul>
+
+    <h1 class="title">CircleCI の checkout の注意点</h1>
+    
+    
+    <section>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/circleci/">circleci</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </header>
+
+  
+
+  <div class="article-body"><p>CircleCI の組み込みの command <code>checkout</code> の注意点について書きます。</p>
+<p>なお、ここに書かれている内容は 2020/04/24 時点のものであり、予告なしに <code>checkout</code> の挙動が変わる可能性があります。</p>
+<p>また、今回は話を簡略化するため、 <code>checkout</code> 実行時点で <code>.git</code> がない(つまりキャッシュしていない)ものとします。</p>
+<h2 id="最初に結論">最初に結論</h2>
+<p>先に結論を書くと</p>
+<ul>
+<li>CircleCI ではローカルのデフォルトブランチを参照しないほうが良い($CIRCLE_BRANCH がデフォルトブランチである場合は除く)
+<ul>
+<li>履歴が origin と異なり、 $CIRCLE_BRANCH と同様になっているため</li>
+</ul>
+</li>
+<li>代わりに origin のデフォルトブランチを参照したほうが良い</li>
+<li><code>git branch -f &lt;デフォルトブランチ&gt; origin/&lt;デフォルトブランチ&gt;</code> を実行してデフォルトブランチの履歴を修正するのもあり</li>
+</ul>
+<h2 id="checkout-がなにをやっているか">checkout がなにをやっているか</h2>
+<p><code>checkout</code> でなにをやっているかは実際に使ってみて CircleCI の job の詳細画面(?) から確認できます。</p>
+<p>サンプル: <a href="https://app.circleci.com/pipelines/github/suzuki-shunsuke/test-circleci/73/workflows/5611059c-d6b1-4a34-91b5-45d6f149d408/jobs/96">https://app.circleci.com/pipelines/github/suzuki-shunsuke/test-circleci/73/workflows/5611059c-d6b1-4a34-91b5-45d6f149d408/jobs/96</a></p>
+<p>ここでは <code>checkout</code> の全てについては触れません。一部抜粋します。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh"><span style="color:#66d9ef">elif</span> <span style="color:#f92672">[</span> -n <span style="color:#e6db74">&#34;</span>$CIRCLE_BRANCH<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">]</span>
+<span style="color:#66d9ef">then</span>
+  git reset --hard <span style="color:#e6db74">&#34;</span>$CIRCLE_SHA1<span style="color:#e6db74">&#34;</span>
+  git checkout -q -B <span style="color:#e6db74">&#34;</span>$CIRCLE_BRANCH<span style="color:#e6db74">&#34;</span>
+<span style="color:#66d9ef">fi</span>
+</code></pre></div><p><code>git reset --hard</code> などをしています。</p>
+<h2 id="なぜこんなことをしているのか">なぜこんなことをしているのか？</h2>
+<p>なんでこんなことをしているのでしょうか？単に <code>git checkout $CIRCLE_BRANCH</code> とかじゃだめなんでしょうか？</p>
+<p>本当のところは CircleCI の中の人に聞かないとわかりませんが、自分なりに考えてみました。</p>
+<p>昔実行した job を rerun することを思い浮かべてみましょう。
+rerun するタイミングではすでに remote branch が削除されているかもしれません。そうなれば単に <code>git checkout</code> では失敗します。
+また、branch があったとしても $CIRCLE_SHA1 がその branch の HEAD とも限りません。
+force push で履歴が変更され、 $CIRCLE_SHA1 が CIRCLE_BRANCH の履歴上にないかもしれません。</p>
+<p>そういったケースを考慮し、このような実装になっているのだと思います。</p>
+<h2 id="注意点">注意点</h2>
+<p>しかし、 <code>git reset --hard</code> していることにより、一つ注意が必要です。
+<code>git reset --hard</code> は branch を $CIRCLE_BRANCH に切り替える前に実行しているため、
+実行しているブランチ(基本的にデフォルトブランチ)の履歴が変更されています。</p>
+<h2 id="ローカルで再現してみる">ローカルで再現してみる</h2>
+<p>CircleCI の rerun with SSH でも確認できますが、
+ローカルの適当なリポジトリで同様のコマンドを叩いてみることで簡単に再現できます。</p>
+<pre tabindex="0"><code>$ mkdir sample
+$ cd sample
+$ git init
+$ git commit --allow-empty -m &quot;master first commit&quot;
+$ export CIRCLE_BRANCH=feature/hello
+$ git checkout -b $CIRCLE_BRANCH
+$ git commit --allow-empty -m &quot;$CIRCLE_BRANCH first commit&quot;
+$ git log
+$ git checkout master  # clone 直後の状態
+$ export CIRCLE_SHA1=$(git rev-parse $CIRCLE_BRANCH)
+
+# ここから CircleCI 同様のコマンドを叩いてみる
+$ git reset --hard &quot;$CIRCLE_SHA1&quot;
+$ git checkout -q -B &quot;$CIRCLE_BRANCH&quot;
+</code></pre><p>ここで git log してみると master branch の履歴が $CIRCLE_BRANCH と同様になっているのが分かると思います。</p>
+<h2 id="何が困るのか">何が困るのか</h2>
+<p>デフォルトブランチ を参照しなければ特に困ることはないでしょう。
+一方でデフォルトブランチとの差分を検知して変更があったものだけビルドするとかそういうことをやっている場合には注意が必要です。</p>
+<pre tabindex="0"><code>$ git diff --name-only master $CIRCLE_BRANCH
+</code></pre><p>こうすると差分がないことになってしまいます。</p>
+<h2 id="回避方法">回避方法</h2>
+<p>master の代わりに origin/master を参照すれば良いでしょう。</p>
+<pre tabindex="0"><code>$ git diff --name-only origin/master $CIRCLE_BRANCH
+</code></pre><p>ただ、うっかりローカルのデフォルトブランチを参照してしまうことは十分考えられる上に別にエラーは起こらないので間違いに気づきにくいです。</p>
+<p>そこで checkout 直後にローカルのデフォルトブランチの履歴を origin と強制的に同じにしてしまうというテクニック(?)が考えられます。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">DEFAULT_BRANCH<span style="color:#f92672">=</span>master
+<span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>CIRCLE_BRANCH<span style="color:#66d9ef">:-</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> !<span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span>$DEFAULT_BRANCH<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
+  git branch -f <span style="color:#e6db74">&#34;</span>$DEFAULT_BRANCH<span style="color:#e6db74">&#34;</span> <span style="color:#e6db74">&#34;origin/</span>$DEFAULT_BRANCH<span style="color:#e6db74">&#34;</span>
+<span style="color:#66d9ef">fi</span>
+</code></pre></div><p>こうすれば間違えてローカルのデフォルトブランチを参照してしまっても安心です。
+とはいえ、コードを部分的に移植したりする際にも危険(間違いに気づきにくい)なので、 origin を参照することを推奨します。</p>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/circleci/">circleci</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+<link rel="alternate" type="application/rss+xml" title="RSS" href="https://techblog-szksh-cloud.github.io/archives/2020/10/index.xml">
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/archives/2020/10/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>2020/10 - melody</title>
+    
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    
+    <header class="page-header">
+      <h1>2020/10</h1>
+    </header>
+    
+
+    <ul class="p-articles">
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2020-10-17T18:09:19JST">Oct 17, 2020</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/buildflow-build-phase-task/">buildflow の build, phase, task について</a></h2>
+  </header>
+
+  
+  <div class="summary">buildflow というツールを開発しているので buildflow というタグをつけて何回かに分けてブログを書こうと思います。
+この記事では buildflow の概念である build, phase, task について書きたいと思います。
+buildflow には Build, Phase, Task という概念があります。 CircleCI の Pipeline, Workflow, Job みたいなものと思ってもらえるとよいと思います。
+$ buildflow run で 1 つの build が実行されます。 build は複数の phase からなり、 phase が 1 つずつ順に実行されます。 phase は複数の task からなり、 task が全て終了すると、その phase も終了となります。 task は並列に実行したり、依存関係を定義したりできます。 task では外部コマンドを実行したりできます。
+設定ファイルでは phases, tasks をそれぞれ配列で指定します。
+--- phases: - name: setup tasks: - name: hello command: command: echo hello - name: foo command: command: echo foo - name: build tasks: - name: hello command: command: echo hello - name: foo command: command: echo foo dependency: - hello - name: post build tasks: - name: hello command: command: echo hello 上の例では 3 つの phase setup, build, post build が順に実行されます。 デフォルトではどれかの phase が失敗するとそれ以降の phase は実行されません(この挙動は変えられます)。</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/buildflow-build-phase-task/" title="buildflow の build, phase, task について">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2020-10-17T17:18:34JST">Oct 17, 2020</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/buildflow-tengo/">buildflow での Tengo の使い方</a></h2>
+  </header>
+
+  
+  <div class="summary">buildflow というツールを開発しているので buildflow というタグをつけて何回かに分けてブログを書こうかなと思います。
+この記事では buildflow で Tengo というスクリプト言語をどのように使っているか書きたいと思います。
+https://github.com/d5/tengo
+buildflow の設定では task.when や task.dependency, task.input などで Tengo script が使えますが、 1 つの共通のルールがあります。 result という変数を宣言し、 script の実行結果をその変数に持たせるというルールです。 これは Tengo の仕様とかではなく、 buildflow 特有のルールです。 もっとも単純な例だと次のような感じです。
+result := true task.input, output などだと result の値が Task.Input, Task.Output として参照できるようになります。
+--- phases: - name: main tasks: - name: hello input: |result := { foo: &#34;bar&#34; } command: command: &#39;echo &#34;{{.Task.Input.foo}}&#34;&#39; when: &#34;result := true&#34; Tengo の標準ライブラリ Tengo には標準ライブラリがあります。 buildflow では全ての標準ライブラリが使えます。</div>
+
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2020-10-17T16:06:31JST">Oct 17, 2020</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/buildflow-1/">buildflow というワークフローエンジンのようなタスクランナーのようなツールを作っている</a></h2>
+  </header>
+
+  
+  <div class="summary">buildflow というツールを開発しているので紹介します。 buildflow というタグをつけて何回かに分けてブログを書こうかなと思います。 1本目のこの記事では
+ どんなツールか Hello World 特徴  について簡単に説明します。
+どんなツールか https://github.com/suzuki-shunsuke/buildflow
+ワークフローを実行するための CLI ツールです。 ワークフローエンジンと言うと Airflow とか Azkaban, Argo Workflows のようなツールをイメージするかと思いますが、 それらとは目的も機能も違います。 一部の CI サービスではワークフローのローカル実行をサポートしてたりしますが、そんなイメージで良いかもしれません。 buildflow では task と task の依存関係を設定ファイルに定義し、コマンドを実行するとローカルでタスクが実行されます。 そういうとタスクランナーといったほうがいいのかもしれませんが、個別のタスクを指定して実行するような機能はないので、タスクランナーとも違う気がします。
+CI サービス上で実行することを目的として開発しています(汎用的なツールなので他の目的でも使えるとは思います)。
+Hello World まだどんなツールかピンと来てない人もいるかもしれないので、簡単な Hello World をやってみましょう。
+GitHub Releases からバイナリをダウンロードしてください。
+次のような設定ファイル .buildflow.yaml を用意します。
+--- phases: - name: main tasks: - name: hello command: command: echo hello 次のコマンドを実行すると task が実行されます。
+$ buildflow run ============== = Phase: main = ============== 07:50:46UTC | hello | + /bin/sh -c echo hello 07:50:46UTC | hello | 07:50:46UTC | hello | hello 07:50:46UTC | hello | ================ = Phase Result: main = ================ status: succeeded task: hello status: succeeded exit code: 0 start time: 2020-10-17T07:50:46Z end time: 2020-10-17T07:50:46Z duration: 4.</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/buildflow-1/" title="buildflow というワークフローエンジンのようなタスクランナーのようなツールを作っている">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+    </ul>
+
+    
+<nav>
+  <ul class="pager">
+
+    
+    <li><a href="/archives/2020/10/">Previous</a></li>
+    
+
+    
+    <li class="disabled"><a href="#">Next</a></li>
+    
+
+  </ul>
+</nav>
+
+
+
+  </div>
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

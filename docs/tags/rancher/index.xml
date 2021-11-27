@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>rancher on melody</title>
+    <link>https://techblog-szksh-cloud.github.io/tags/rancher/</link>
+    <description>Recent content in rancher on melody</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>jp</language>
+    <lastBuildDate>Sat, 16 Mar 2019 21:17:05 +0900</lastBuildDate><atom:link href="https://techblog-szksh-cloud.github.io/tags/rancher/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Rancherでusername が重複してログインできなくなった場合の解消方法</title>
+      <link>https://techblog-szksh-cloud.github.io/rancher-duplicated-user-name/</link>
+      <pubDate>Sat, 16 Mar 2019 21:17:05 +0900</pubDate>
+      
+      <guid>https://techblog-szksh-cloud.github.io/rancher-duplicated-user-name/</guid>
+      <description>先日起こった Rancher のトラブルの解消方法について紹介したいと思います。 Rancher のバージョンは v2.1.6 です。 admin ユーザーでログインしようとしたところ、エラーが起こりました。 最初パスワードが間違っているのかと思い、パスワードリセットしたものの、解消しませんでした。
+https://rancher.com/docs/rancher/v2.x/en/faq/technical/#how-can-i-reset-the-admin-password
+エラーメッセージをよく見ると 500 エラーでした。そこで rancher のコンテナのログを見ました。
+[ERROR] API error response 500 for POST /v3-public/localProviders/local?action=login. Cause: found more than one users with username admin username が admin のユーザーが複数人いるからログインに失敗しているようです。 であれば、ユーザーを rename ないし delete すれば解消しそうです。 しかし Admin 権限を持っているのが admin しかいないため、ユーザーを rename したり delete するのが難しいです。
+どうすればよいかと思って調べてたところ rancher のコンテナ内で kubectl コマンドを使うことで Rancher の Custom Resource を操作できそうなことを知りました。
+https://qiita.com/yamamoto-febc/items/498b911611dd25351ad7
+そこで 2 人いる admin の片方を rename することで解消しました。
+# rancher のコンテナに入る $ docker exec -ti rancher bash # CRDの一覧 $ kubectl get crd # ユーザー一覧 $ kubectl get users.</description>
+    </item>
+    
+  </channel>
+</rss>

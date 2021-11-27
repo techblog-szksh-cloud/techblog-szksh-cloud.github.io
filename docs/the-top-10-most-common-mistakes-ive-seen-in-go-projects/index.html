@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/the-top-10-most-common-mistakes-ive-seen-in-go-projects/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>The Top 10 Most Common Mistakes I’ve Seen in Go Projects を読んでみて - melody</title>
+    
+<meta name="description" content="The Top 10 Most Common Mistakes I’ve Seen in Go Projects という記事を読んで面白かったのでメモります。 翻訳ではないです。メモなので、原文を読んでください。 Unknown Enum Value: Unknown であることを表す enum の値は 0 にしよう。値がセットされていない場合に Unknown として扱えるから Benchmarking: ベンチマークを取るのは難しい。コンパイラの最適化によってベンチマークの結果が不適切になる場合がある Pointers! Pointers Everywhere!: パフォーマンスの観点から基本的にはポインタを使うべきではない。変数を共有する必要がある場合のみ、ポインタを使う Breaking a for/switch or a for/select: for, switch が入れ子になっている場合、switch の中で break しても for から抜けられない。抜けたければ labeled break を使う Errors Management Slice Initialization Context Management Not Using the -race Option: go test コマンドでは -race オプションをつけよう Using a Filename as an Input: 引数としてファイル名を渡すのではなく、 io.">
+
+<meta property="og:title" content="The Top 10 Most Common Mistakes I’ve Seen in Go Projects を読んでみて - melody">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://techblog-szksh-cloud.github.io/the-top-10-most-common-mistakes-ive-seen-in-go-projects/">
+<meta property="og:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+<meta property="og:site_name" content="melody">
+<meta property="og:description" content="The Top 10 Most Common Mistakes I’ve Seen in Go Projects という記事を読んで面白かったのでメモります。 翻訳ではないです。メモなので、原文を読んでください。 Unknown Enum Value: Unknown であることを表す enum の値は 0 にしよう。値がセットされていない場合に Unknown として扱えるから Benchmarking: ベンチマークを取るのは難しい。コンパイラの最適化によってベンチマークの結果が不適切になる場合がある Pointers! Pointers Everywhere!: パフォーマンスの観点から基本的にはポインタを使うべきではない。変数を共有する必要がある場合のみ、ポインタを使う Breaking a for/switch or a for/select: for, switch が入れ子になっている場合、switch の中で break しても for から抜けられない。抜けたければ labeled break を使う Errors Management Slice Initialization Context Management Not Using the -race Option: go test コマンドでは -race オプションをつけよう Using a Filename as an Input: 引数としてファイル名を渡すのではなく、 io.">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="melody">
+<meta name="twitter:url" content="https://techblog-szksh-cloud.github.io/the-top-10-most-common-mistakes-ive-seen-in-go-projects/">
+<meta name="twitter:title" content="The Top 10 Most Common Mistakes I’ve Seen in Go Projects を読んでみて - melody">
+<meta name="twitter:description" content="The Top 10 Most Common Mistakes I’ve Seen in Go Projects という記事を読んで面白かったのでメモります。 翻訳ではないです。メモなので、原文を読んでください。 Unknown Enum Value: Unknown であることを表す enum の値は 0 にしよう。値がセットされていない場合に Unknown として扱えるから Benchmarking: ベンチマークを取るのは難しい。コンパイラの最適化によってベンチマークの結果が不適切になる場合がある Pointers! Pointers Everywhere!: パフォーマンスの観点から基本的にはポインタを使うべきではない。変数を共有する必要がある場合のみ、ポインタを使う Breaking a for/switch or a for/select: for, switch が入れ子になっている場合、switch の中で break しても for から抜けられない。抜けたければ labeled break を使う Errors Management Slice Initialization Context Management Not Using the -race Option: go test コマンドでは -race オプションをつけよう Using a Filename as an Input: 引数としてファイル名を渡すのではなく、 io.">
+<meta name="twitter:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https:\/\/techblog-szksh-cloud.github.io\/"
+    },
+    "headline": "The Top 10 Most Common Mistakes I’ve Seen in Go Projects を読んでみて - melody",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https:\/\/techblog-szksh-cloud.github.io\/images\/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2019-07-21T18:13:53JST",
+    "dateModified": "2019-07-21T18:13:53JST",
+    "author": {
+      "@type": "Person",
+      "name": "melody"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "melody",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https:\/\/techblog-szksh-cloud.github.io\/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "The Top 10 Most Common Mistakes I’ve Seen in Go Projects という記事を読んで面白かったのでメモります。 翻訳ではないです。メモなので、原文を読んでください。\n Unknown Enum Value: Unknown であることを表す enum の値は 0 にしよう。値がセットされていない場合に Unknown として扱えるから Benchmarking: ベンチマークを取るのは難しい。コンパイラの最適化によってベンチマークの結果が不適切になる場合がある Pointers! Pointers Everywhere!: パフォーマンスの観点から基本的にはポインタを使うべきではない。変数を共有する必要がある場合のみ、ポインタを使う Breaking a for\/switch or a for\/select: for, switch が入れ子になっている場合、switch の中で break しても for から抜けられない。抜けたければ labeled break を使う Errors Management Slice Initialization Context Management Not Using the -race Option: go test コマンドでは -race オプションをつけよう Using a Filename as an Input: 引数としてファイル名を渡すのではなく、 io."
+  }
+</script>
+
+
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://techblog-szksh-cloud.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li class="active">The Top 10 Most Common Mistakes I’ve Seen in Go Projects を読んでみて</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2019-07-21T18:13:53JST">Jul 21, 2019</time></li>
+      
+      
+    </ul>
+
+    <h1 class="title">The Top 10 Most Common Mistakes I’ve Seen in Go Projects を読んでみて</h1>
+    
+    
+    <section>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/go/">go</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </header>
+
+  
+
+  <div class="article-body"><p><a href="https://itnext.io/the-top-10-most-common-mistakes-ive-seen-in-go-projects-4b79d4f6cd65">The Top 10 Most Common Mistakes I’ve Seen in Go Projects</a> という記事を読んで面白かったのでメモります。
+翻訳ではないです。メモなので、原文を読んでください。</p>
+<ol>
+<li>Unknown Enum Value: Unknown であることを表す enum の値は 0 にしよう。値がセットされていない場合に Unknown として扱えるから</li>
+<li>Benchmarking: ベンチマークを取るのは難しい。コンパイラの最適化によってベンチマークの結果が不適切になる場合がある</li>
+<li>Pointers! Pointers Everywhere!: パフォーマンスの観点から基本的にはポインタを使うべきではない。変数を共有する必要がある場合のみ、ポインタを使う</li>
+<li>Breaking a for/switch or a for/select: for, switch が入れ子になっている場合、switch の中で break しても for から抜けられない。抜けたければ labeled break を使う</li>
+<li>Errors Management</li>
+<li>Slice Initialization</li>
+<li>Context Management</li>
+<li>Not Using the -race Option: <code>go test</code> コマンドでは <code>-race</code> オプションをつけよう</li>
+<li>Using a Filename as an Input: 引数としてファイル名を渡すのではなく、 io.Reader や io.Writer を渡そう</li>
+<li>Goroutines and Loop Variables</li>
+</ol>
+<h2 id="pointers-pointers-everywhere">Pointers! Pointers Everywhere!</h2>
+<p>変数はヒープかスタックに割り当てられる。</p>
+<ul>
+<li>スタック: 関数内の変数は、関数が返されると、スタックからポップされる</li>
+<li>ヒープ: 共有変数、グローバル変数</li>
+</ul>
+<p>関数で生成した構造体を返すと、スタックで管理され、返された時点でポップされる。
+関数内で生成したポインタを返すと、それは Heap で管理される。
+スタックで管理すると、関数が返された時点でポップされてしまい、関数の外でポインタが指す値にアクセスできなくなるため。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">getFooValue</span>() <span style="color:#a6e22e">foo</span> {
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">result</span> <span style="color:#a6e22e">foo</span>
+	<span style="color:#75715e">// Do something
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">result</span>
+}
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">getFooPointer</span>() <span style="color:#f92672">*</span><span style="color:#a6e22e">foo</span> {
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">result</span> <span style="color:#a6e22e">foo</span>
+	<span style="color:#75715e">// Do something
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">result</span>
+}
+</code></pre></div><p>スタックのほうが効率が良い理由</p>
+<ul>
+<li>ガベージコレクタが不要
+<ul>
+<li>関数を抜けた時点でスタックからポップされる</li>
+<li>未使用の変数を回収する複雑な処理が不要</li>
+</ul>
+</li>
+<li>スタックの変数は一つの goroutine に属するため、共有のための同期が不要だから</li>
+</ul>
+<p>よって基本的にはポインタを使うべきではない。変数を共有する必要がある場合のみ、ポインタを使う。</p>
+<h2 id="error-management">Error Management</h2>
+<ul>
+<li>エラーは一回だけハンドリングされるべき。エラーはロギングされるか、プロパゲートされるべき(ロギングしつつプロパゲートはだめ)</li>
+<li>pkg/errors を使うと根本的なエラーの型を見て条件分岐できる
+<ul>
+<li>自分が作ってる <a href="https://github.com/suzuki-shunsuke/go-errlog">go-errlog</a> の v0.9.1 だとそれは出来ない。改善すべきか</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">switch</span> <span style="color:#a6e22e">errors</span>.<span style="color:#a6e22e">Cause</span>(<span style="color:#a6e22e">err</span>).(<span style="color:#66d9ef">type</span>) {
+<span style="color:#66d9ef">default</span>:
+	<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">WithError</span>(<span style="color:#a6e22e">err</span>).<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;unable to server HTTP POST request for customer %s&#34;</span>, <span style="color:#a6e22e">customer</span>.<span style="color:#a6e22e">ID</span>)
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">Status</span>{<span style="color:#a6e22e">ok</span>: <span style="color:#66d9ef">false</span>}
+<span style="color:#66d9ef">case</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">DBError</span>:
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">retry</span>(<span style="color:#a6e22e">customer</span>)
+}
+</code></pre></div><h2 id="slice-initialization">Slice Initialization</h2>
+<p><a href="https://tour.golang.org/moretypes/11">https://tour.golang.org/moretypes/11</a></p>
+<ul>
+<li>slice には length と capacity がある</li>
+<li>length は slice が保持する要素の数</li>
+<li>capacity は slice の裏にある配列の要素数を slice の最初の要素から数えたもの</li>
+</ul>
+<p><a href="https://golang.org/ref/spec#Making_slices_maps_and_channels">https://golang.org/ref/spec#Making_slices_maps_and_channels</a></p>
+<p>slice の場合</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">make(<span style="color:#a6e22e">T</span>, <span style="color:#a6e22e">n</span>) <span style="color:#75715e">// length, capacity 共に n
+</span><span style="color:#75715e"></span>make(<span style="color:#a6e22e">T</span>, <span style="color:#a6e22e">n</span>, <span style="color:#a6e22e">m</span>) <span style="color:#75715e">// length は n, capacity は m
+</span></code></pre></div><p><a href="https://play.golang.org/p/R1CF1e1K3L6">https://play.golang.org/p/R1CF1e1K3L6</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">a</span> <span style="color:#f92672">:=</span> make([]<span style="color:#66d9ef">int</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">10</span>)
+<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(len(<span style="color:#a6e22e">a</span>), cap(<span style="color:#a6e22e">a</span>)) <span style="color:#75715e">// 0, 10
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">a</span> = append(<span style="color:#a6e22e">a</span>, <span style="color:#ae81ff">1</span>)
+<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(len(<span style="color:#a6e22e">a</span>), cap(<span style="color:#a6e22e">a</span>)) <span style="color:#75715e">// 1, 10
+</span></code></pre></div><p><code>append</code> はコストが高いからインデックスを指定したほうが良いというが、
+<code>make</code> でスライスを生成していれば、<code>append</code> してもそこまでコストは高くない。
+若干インデックスを指定したほうが効率が良いが、一貫性という観点では <code>append</code> を使ったほうがよいかもしれない。</p>
+<h2 id="goroutines-and-loop-variables">Goroutines and Loop Variables</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">ints</span> <span style="color:#f92672">:=</span> []<span style="color:#66d9ef">int</span>{<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>}
+<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">ints</span> {
+	<span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
+		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%v\n&#34;</span>, <span style="color:#a6e22e">i</span>)
+	}()
+}
+</code></pre></div><p>これだと全ての goroutine で同じ i を共有してしまう。関数の引数として渡すか、for ループ内の変数として定義する。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">ints</span> <span style="color:#f92672">:=</span> []<span style="color:#66d9ef">int</span>{<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>}
+<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">ints</span> {
+	<span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">i</span> <span style="color:#66d9ef">int</span>) {
+		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%v\n&#34;</span>, <span style="color:#a6e22e">i</span>)
+	}(<span style="color:#a6e22e">i</span>)
+}
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">ints</span> <span style="color:#f92672">:=</span> []<span style="color:#66d9ef">int</span>{<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>}
+<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">ints</span> {
+	<span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">i</span> <span style="color:#75715e">// 初見だと奇妙に見えるが、正しい。
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
+		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%v\n&#34;</span>, <span style="color:#a6e22e">i</span>)
+	}()
+}
+</code></pre></div></div>
+
+  <footer class="article-footer">
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/go/">go</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

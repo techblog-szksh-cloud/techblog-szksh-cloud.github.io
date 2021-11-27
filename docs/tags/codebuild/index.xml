@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>codebuild on melody</title>
+    <link>https://techblog-szksh-cloud.github.io/tags/codebuild/</link>
+    <description>Recent content in codebuild on melody</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>jp</language>
+    <lastBuildDate>Mon, 16 Aug 2021 09:10:51 +0900</lastBuildDate><atom:link href="https://techblog-szksh-cloud.github.io/tags/codebuild/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AWS CodeBuild を実行する Github App を作る</title>
+      <link>https://techblog-szksh-cloud.github.io/github-app-for-codebuild/</link>
+      <pubDate>Mon, 16 Aug 2021 09:10:51 +0900</pubDate>
+      
+      <guid>https://techblog-szksh-cloud.github.io/github-app-for-codebuild/</guid>
+      <description>GitHub Repository の CI に CodeBuild を使う場合、 CodeBuild の Webhook integration (以下 CodeBuild GitHub integration と呼ぶことにします) を使うのが一番自然でしょう。 基本的なユースケースならこれでよいのですが、 GitHub App を活用することでより高度な CI を実現することができます。
+解決したい課題  Batch Build の課題  起動・終了が遅い 全 build が成功した Batch Build を Retry できない Web UI がわかりにくい  余計な build が起動する build 単体を Retry できない   build ごとに条件設定とかできない buildspec を動的に生成できない   CodeBuild GitHub integration の課題  Build Project ごとに Repository Webhook が 1 つ作られる  webhook 1 repository あたり 20 個までしか作れない (これを裏付ける客観的なソースはないですが) webhook の数が増えると build の動作が不安定になるのを観測しています   Filter の条件が限られている(例えば PR label で filter とかできない) 複数の build を実行できない(Batch Build も 1 つとみなした場合の話)   CodeBuild の課題  Retry した場合 webhook で起動したときの環境変数が設定されない    GitHub App Amazon API Gateway と Lambda を使って GitHub App を構築します。 Lambda で webhook を受け取り、 AWS SDK を使って build を実行します。</description>
+    </item>
+    
+    <item>
+      <title>AWS CodeBuild 良さそう</title>
+      <link>https://techblog-szksh-cloud.github.io/codebuild-1/</link>
+      <pubDate>Sun, 02 Aug 2020 13:21:37 +0900</pubDate>
+      
+      <guid>https://techblog-szksh-cloud.github.io/codebuild-1/</guid>
+      <description>AWS CodeBuild を検証しているんですが、結構良いですね。 現状 Jenkins や CircleCI で実行しているジョブや CI/CD を一部移行したいなと思いました。
+一部と言っているのは、単純に全部いきなり移行するのは難しいから共存する前提で考えるくらいの意味です。
+なお、これを書いている時点ではまだ軽く検証しているだけなので、CodeBuild の理解は浅いです。
+特徴としては
+ Managed AWS 以外のサービスに AWS の credential を登録しなくて良い  Secret を AWS Secrets Manager で管理できる Secret を至るところに設定するのではなく、 AWS Secrets Manager か何かで一元管理するのが理想 Role 作って Build Project の Service Role として指定するだけなら credential を扱う必要がなくて楽で安心   VPC 内で実行できる GitHub 連携も簡単  Webhook の設定で PR の細かなイベント(merge とか reopen とか)に対応しているのも良い PR を merge したときも PR で変更されたファイルによって Webhook をフィルタできるのが良い   変更されたファイルによって実行するBuild Project を変更するようなロジックを実現できる(monorepo で特に有効)  といった点が挙げられます。</description>
+    </item>
+    
+  </channel>
+</rss>

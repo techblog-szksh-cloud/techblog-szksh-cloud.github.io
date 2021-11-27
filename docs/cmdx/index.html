@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/cmdx/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>cmdx - task runner - melody</title>
+    
+<meta name="description" content="最近自作した OSS, cmdx の紹介です。https://github.com/suzuki-shunsuke/cmdxcmdx は task runner です。task runner の定義はググってもわからなかったので、 cmdx を task runner と呼ぶのが適切かわかりませんが、 ここではプロジェクト固有のタスク 依存するライブラリのインストール ビルド テスト コード整形 lint etc  などを管理するものとします。類似するものとしては以下のようなものがあります。 Make npm scripts Task tj/robo mumoshu/variant  使い方 詳細は README を読んでください。$ cmdx -i で設定ファイルの雛形を生成します。そして設定ファイルに task を定義していきます。 設定に関しては README を参照してください。そうすると cmdx -l でタスクの一覧とその説明が見れます。例えば次は cmdx のリポジトリでの実行結果です。$ cmdx -l init, i - setup git hooks coverage, c - test a package (fzf is required) test, t - test fmt - format the go code vet, v - go vet lint, l - lint the go code release, r - release the new version durl - check dead links (durl is required) ci-local - run the Drone pipeline at localhost (drone-cli is required) これにより新しくプロジェクトに参画した人もどのような task があるのか直ぐわかります。 例えば test を実行したければ cmdx t を実行すればいいことがわかります。 cmdx help test とすればここのタスクのより詳細なヘルプが見れます。">
+
+<meta property="og:title" content="cmdx - task runner - melody">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://techblog-szksh-cloud.github.io/cmdx/">
+<meta property="og:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+<meta property="og:site_name" content="melody">
+<meta property="og:description" content="最近自作した OSS, cmdx の紹介です。https://github.com/suzuki-shunsuke/cmdxcmdx は task runner です。task runner の定義はググってもわからなかったので、 cmdx を task runner と呼ぶのが適切かわかりませんが、 ここではプロジェクト固有のタスク 依存するライブラリのインストール ビルド テスト コード整形 lint etc  などを管理するものとします。類似するものとしては以下のようなものがあります。 Make npm scripts Task tj/robo mumoshu/variant  使い方 詳細は README を読んでください。$ cmdx -i で設定ファイルの雛形を生成します。そして設定ファイルに task を定義していきます。 設定に関しては README を参照してください。そうすると cmdx -l でタスクの一覧とその説明が見れます。例えば次は cmdx のリポジトリでの実行結果です。$ cmdx -l init, i - setup git hooks coverage, c - test a package (fzf is required) test, t - test fmt - format the go code vet, v - go vet lint, l - lint the go code release, r - release the new version durl - check dead links (durl is required) ci-local - run the Drone pipeline at localhost (drone-cli is required) これにより新しくプロジェクトに参画した人もどのような task があるのか直ぐわかります。 例えば test を実行したければ cmdx t を実行すればいいことがわかります。 cmdx help test とすればここのタスクのより詳細なヘルプが見れます。">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="melody">
+<meta name="twitter:url" content="https://techblog-szksh-cloud.github.io/cmdx/">
+<meta name="twitter:title" content="cmdx - task runner - melody">
+<meta name="twitter:description" content="最近自作した OSS, cmdx の紹介です。https://github.com/suzuki-shunsuke/cmdxcmdx は task runner です。task runner の定義はググってもわからなかったので、 cmdx を task runner と呼ぶのが適切かわかりませんが、 ここではプロジェクト固有のタスク 依存するライブラリのインストール ビルド テスト コード整形 lint etc  などを管理するものとします。類似するものとしては以下のようなものがあります。 Make npm scripts Task tj/robo mumoshu/variant  使い方 詳細は README を読んでください。$ cmdx -i で設定ファイルの雛形を生成します。そして設定ファイルに task を定義していきます。 設定に関しては README を参照してください。そうすると cmdx -l でタスクの一覧とその説明が見れます。例えば次は cmdx のリポジトリでの実行結果です。$ cmdx -l init, i - setup git hooks coverage, c - test a package (fzf is required) test, t - test fmt - format the go code vet, v - go vet lint, l - lint the go code release, r - release the new version durl - check dead links (durl is required) ci-local - run the Drone pipeline at localhost (drone-cli is required) これにより新しくプロジェクトに参画した人もどのような task があるのか直ぐわかります。 例えば test を実行したければ cmdx t を実行すればいいことがわかります。 cmdx help test とすればここのタスクのより詳細なヘルプが見れます。">
+<meta name="twitter:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https:\/\/techblog-szksh-cloud.github.io\/"
+    },
+    "headline": "cmdx - task runner - melody",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https:\/\/techblog-szksh-cloud.github.io\/images\/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2019-08-23T11:35:13JST",
+    "dateModified": "2019-08-23T11:35:13JST",
+    "author": {
+      "@type": "Person",
+      "name": "melody"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "melody",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https:\/\/techblog-szksh-cloud.github.io\/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "最近自作した OSS, cmdx の紹介です。\nhttps:\/\/github.com\/suzuki-shunsuke\/cmdx\ncmdx は task runner です。\ntask runner の定義はググってもわからなかったので、 cmdx を task runner と呼ぶのが適切かわかりませんが、 ここではプロジェクト固有のタスク\n 依存するライブラリのインストール ビルド テスト コード整形 lint etc  などを管理するものとします。\n類似するものとしては以下のようなものがあります。\n Make npm scripts Task tj\/robo mumoshu\/variant  使い方 詳細は README を読んでください。\n$ cmdx -i で設定ファイルの雛形を生成します。\nそして設定ファイルに task を定義していきます。 設定に関しては README を参照してください。\nそうすると cmdx -l でタスクの一覧とその説明が見れます。\n例えば次は cmdx のリポジトリでの実行結果です。\n$ cmdx -l init, i - setup git hooks coverage, c - test a package (fzf is required) test, t - test fmt - format the go code vet, v - go vet lint, l - lint the go code release, r - release the new version durl - check dead links (durl is required) ci-local - run the Drone pipeline at localhost (drone-cli is required) これにより新しくプロジェクトに参画した人もどのような task があるのか直ぐわかります。 例えば test を実行したければ cmdx t を実行すればいいことがわかります。 cmdx help test とすればここのタスクのより詳細なヘルプが見れます。"
+  }
+</script>
+
+
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://techblog-szksh-cloud.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li class="active">cmdx - task runner</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2019-08-23T11:35:13JST">Aug 23, 2019</time></li>
+      
+      
+    </ul>
+
+    <h1 class="title">cmdx - task runner</h1>
+    
+    
+    <section>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/oss/">oss</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </header>
+
+  
+
+  <div class="article-body"><p>最近自作した OSS, cmdx の紹介です。</p>
+<p><a href="https://github.com/suzuki-shunsuke/cmdx">https://github.com/suzuki-shunsuke/cmdx</a></p>
+<p>cmdx は task runner です。</p>
+<p><code>task runner</code> の定義はググってもわからなかったので、 cmdx を <code>task runner</code> と呼ぶのが適切かわかりませんが、
+ここではプロジェクト固有のタスク</p>
+<ul>
+<li>依存するライブラリのインストール</li>
+<li>ビルド</li>
+<li>テスト</li>
+<li>コード整形</li>
+<li>lint</li>
+<li>etc</li>
+</ul>
+<p>などを管理するものとします。</p>
+<p>類似するものとしては以下のようなものがあります。</p>
+<ul>
+<li>Make</li>
+<li><a href="https://docs.npmjs.com/misc/scripts">npm scripts</a></li>
+<li><a href="https://taskfile.dev/">Task</a></li>
+<li><a href="https://github.com/tj/robo">tj/robo</a></li>
+<li><a href="https://github.com/mumoshu/variant">mumoshu/variant</a></li>
+</ul>
+<h2 id="使い方">使い方</h2>
+<p>詳細は <a href="https://github.com/suzuki-shunsuke/cmdx/blob/master/README.md">README</a> を読んでください。</p>
+<pre tabindex="0"><code>$ cmdx -i
+</code></pre><p>で設定ファイルの雛形を生成します。</p>
+<p>そして設定ファイルに task を定義していきます。
+設定に関しては <a href="https://github.com/suzuki-shunsuke/cmdx/blob/master/README.md">README</a> を参照してください。</p>
+<p>そうすると <code>cmdx -l</code> でタスクの一覧とその説明が見れます。</p>
+<p>例えば次は <a href="https://github.com/suzuki-shunsuke/cmdx">cmdx</a> のリポジトリでの実行結果です。</p>
+<pre tabindex="0"><code>$ cmdx -l
+init, i - setup git hooks
+coverage, c - test a package (fzf is required)
+test, t - test
+fmt - format the go code
+vet, v - go vet
+lint, l - lint the go code
+release, r - release the new version
+durl - check dead links (durl is required)
+ci-local - run the Drone pipeline at localhost (drone-cli is required)
+</code></pre><p>これにより新しくプロジェクトに参画した人もどのような task があるのか直ぐわかります。
+例えば test を実行したければ <code>cmdx t</code> を実行すればいいことがわかります。
+<code>cmdx help test</code> とすればここのタスクのより詳細なヘルプが見れます。</p>
+<p>ドキュメントに task について書いても、ドキュメントがちゃんと更新されずドキュメントと実態が乖離するなんてことはよくありますが、
+cmdx の設定ファイルからヘルプを生成することで乖離しにくくなります(実際に使われてない task が残ってたり、task の description や usage が間違ってたら駄目ですが)。</p>
+<h2 id="なぜ-cmdx-か">なぜ cmdx か</h2>
+<p>自分は今まで task runner として基本的に npm scripts を使ってきていて、ブログにも書いています。</p>
+<p><a href="https://techblog.szksh.cloud/use-npm/">JS以外でのnpmの活用</a></p>
+<p>しかし、 npm scripts に対しては以下のような不満がありました。</p>
+<ul>
+<li>security alert が定期的に飛んできて対応が面倒くさい
+<ul>
+<li>これは husky や commitlint などを使っているのが原因なのであって、 npm scripts の問題ではないですが</li>
+</ul>
+</li>
+<li>task に対するヘルプメッセージがない
+<ul>
+<li>今までは README に書いてたが、本来は help コマンドで自動生成・サポートされるべきだと思っている</li>
+</ul>
+</li>
+</ul>
+<p>他のツールによってこれらの不満は解消できるのですが、他のツールにもそれぞれ微妙に不満があり、
+完全に自分のニーズに合うものがなかったので作ることにしました。</p>
+<p>一例ですが、 npm scripts は</p>
+<ul>
+<li>設定ファイル (package.json) を探索</li>
+<li>設定ファイルのあるディレクトリでコマンドを実行</li>
+</ul>
+<p>します。これにより</p>
+<ul>
+<li>カレントディレクトリを意識する必要がない
+<ul>
+<li>設定ファイルのパスを指定する必要がない</li>
+<li>コマンドの実行ディレクトリがカレントディレクトリに依存しない(逆に言うとカレントディレクトリに依存した処理を実行しにくいという面もありますが)</li>
+</ul>
+</li>
+</ul>
+<p>という良さがあり、 これが意外と他のツールではサポートされてなく(例えば Make だったら <code>-F</code> オプションで Makefile のパスを指定する必要がある)、不満でした。</p>
+<p>また、 Make や Task では task の依存関係を定義し、一回のコマンドで複数のタスクを実行できますが、
+cmdx ではそのような機能はサポートしていません。
+自分が普段そのような機能をあまり必要としていないからです。</p>
+<p>cmdx では上のような npm scripts の不満を解消するだけでなく、折角なので幾つか細かな機能を追加しています。</p>
+<ul>
+<li>シェルスクリプトだと面倒なオプション引数をサポート</li>
+<li>リッチなプロンプトのサポート</li>
+<li>タイムアウト</li>
+<li>etc</li>
+</ul>
+<p>cmdx から npm scripts に乗り換えた場合の問題点としては husky や commitlint のようなツールが使えなくなることですが、
+必須のツールでもないので許容しています。</p>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/oss/">oss</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

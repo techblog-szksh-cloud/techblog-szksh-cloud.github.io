@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/how-to-host-hugo-at-github-pages/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>Hugo製ブログをGitHub PagesへCIでデプロイ - melody</title>
+    
+<meta name="description" content="https://gohugo.io/ と https://pages.github.com/ の話です。 master に push したら GitHub Pages に circle ciでデプロイするようにする方法の紹介です。前提  テーマは master branch に含めない(CIでcloneする) buildしたものは gh-pages ブランチにデプロイ  コード .circleci/config.yml--- version: 2 jobs: build: docker: - image: suzukishunsuke/hugo-ci:0.1.2 steps: - checkout - run: git config user.name &amp;#34;***&amp;#34; - run: git config user.email &amp;#34;***@example.com&amp;#34; # --depth 1 で高速化 - run: git clone --depth 1 https://github.com/suzuki-shunsuke/tale-hugo themes/tale - run: hugo - run: sh release.sh workflows: version: 2 build: jobs: - build: filters: branches: only: master release.">
+
+<meta property="og:title" content="Hugo製ブログをGitHub PagesへCIでデプロイ - melody">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://techblog-szksh-cloud.github.io/how-to-host-hugo-at-github-pages/">
+<meta property="og:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+<meta property="og:site_name" content="melody">
+<meta property="og:description" content="https://gohugo.io/ と https://pages.github.com/ の話です。 master に push したら GitHub Pages に circle ciでデプロイするようにする方法の紹介です。前提  テーマは master branch に含めない(CIでcloneする) buildしたものは gh-pages ブランチにデプロイ  コード .circleci/config.yml--- version: 2 jobs: build: docker: - image: suzukishunsuke/hugo-ci:0.1.2 steps: - checkout - run: git config user.name &amp;#34;***&amp;#34; - run: git config user.email &amp;#34;***@example.com&amp;#34; # --depth 1 で高速化 - run: git clone --depth 1 https://github.com/suzuki-shunsuke/tale-hugo themes/tale - run: hugo - run: sh release.sh workflows: version: 2 build: jobs: - build: filters: branches: only: master release.">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="melody">
+<meta name="twitter:url" content="https://techblog-szksh-cloud.github.io/how-to-host-hugo-at-github-pages/">
+<meta name="twitter:title" content="Hugo製ブログをGitHub PagesへCIでデプロイ - melody">
+<meta name="twitter:description" content="https://gohugo.io/ と https://pages.github.com/ の話です。 master に push したら GitHub Pages に circle ciでデプロイするようにする方法の紹介です。前提  テーマは master branch に含めない(CIでcloneする) buildしたものは gh-pages ブランチにデプロイ  コード .circleci/config.yml--- version: 2 jobs: build: docker: - image: suzukishunsuke/hugo-ci:0.1.2 steps: - checkout - run: git config user.name &amp;#34;***&amp;#34; - run: git config user.email &amp;#34;***@example.com&amp;#34; # --depth 1 で高速化 - run: git clone --depth 1 https://github.com/suzuki-shunsuke/tale-hugo themes/tale - run: hugo - run: sh release.sh workflows: version: 2 build: jobs: - build: filters: branches: only: master release.">
+<meta name="twitter:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https:\/\/techblog-szksh-cloud.github.io\/"
+    },
+    "headline": "Hugo製ブログをGitHub PagesへCIでデプロイ - melody",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https:\/\/techblog-szksh-cloud.github.io\/images\/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2018-10-01T08:04:16JST",
+    "dateModified": "2018-10-01T08:04:16JST",
+    "author": {
+      "@type": "Person",
+      "name": "melody"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "melody",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https:\/\/techblog-szksh-cloud.github.io\/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "https:\/\/gohugo.io\/ と https:\/\/pages.github.com\/ の話です。 master に push したら GitHub Pages に circle ciでデプロイするようにする方法の紹介です。\n前提  テーマは master branch に含めない(CIでcloneする) buildしたものは gh-pages ブランチにデプロイ  コード .circleci\/config.yml\n--- version: 2 jobs: build: docker: - image: suzukishunsuke\/hugo-ci:0.1.2 steps: - checkout - run: git config user.name \u0026#34;***\u0026#34; - run: git config user.email \u0026#34;***@example.com\u0026#34; # --depth 1 で高速化 - run: git clone --depth 1 https:\/\/github.com\/suzuki-shunsuke\/tale-hugo themes\/tale - run: hugo - run: sh release.sh workflows: version: 2 build: jobs: - build: filters: branches: only: master release."
+  }
+</script>
+
+
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://techblog-szksh-cloud.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li class="active">Hugo製ブログをGitHub PagesへCIでデプロイ</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-10-01T08:04:16JST">Oct 1, 2018</time></li>
+      
+      
+    </ul>
+
+    <h1 class="title">Hugo製ブログをGitHub PagesへCIでデプロイ</h1>
+    
+    
+    <section>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/hugo/">hugo</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </header>
+
+  
+
+  <div class="article-body"><p><a href="https://gohugo.io/">https://gohugo.io/</a> と <a href="https://pages.github.com/">https://pages.github.com/</a> の話です。
+master に push したら GitHub Pages に circle ciでデプロイするようにする方法の紹介です。</p>
+<h2 id="前提">前提</h2>
+<ul>
+<li>テーマは master branch に含めない(CIでcloneする)</li>
+<li>buildしたものは gh-pages ブランチにデプロイ</li>
+</ul>
+<h2 id="コード">コード</h2>
+<p>.circleci/config.yml</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">---
+<span style="color:#f92672">version</span>: <span style="color:#ae81ff">2</span>
+<span style="color:#f92672">jobs</span>:
+  <span style="color:#f92672">build</span>:
+    <span style="color:#f92672">docker</span>:
+    - <span style="color:#f92672">image</span>: <span style="color:#ae81ff">suzukishunsuke/hugo-ci:0.1.2</span>
+    <span style="color:#f92672">steps</span>:
+    - <span style="color:#ae81ff">checkout</span>
+    - <span style="color:#f92672">run</span>: <span style="color:#ae81ff">git config user.name &#34;***&#34;</span>
+    - <span style="color:#f92672">run</span>: <span style="color:#ae81ff">git config user.email &#34;***@example.com&#34;</span>
+    <span style="color:#75715e"># --depth 1 で高速化</span>
+    - <span style="color:#f92672">run</span>: <span style="color:#ae81ff">git clone --depth 1 https://github.com/suzuki-shunsuke/tale-hugo themes/tale</span>
+    - <span style="color:#f92672">run</span>: <span style="color:#ae81ff">hugo</span>
+    - <span style="color:#f92672">run</span>: <span style="color:#ae81ff">sh release.sh</span>
+<span style="color:#f92672">workflows</span>:
+  <span style="color:#f92672">version</span>: <span style="color:#ae81ff">2</span>
+  <span style="color:#f92672">build</span>:
+    <span style="color:#f92672">jobs</span>:
+    - <span style="color:#f92672">build</span>:
+        <span style="color:#f92672">filters</span>:
+          <span style="color:#f92672">branches</span>:
+            <span style="color:#f92672">only</span>: <span style="color:#ae81ff">master</span>
+</code></pre></div><p>release.sh</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">git checkout gh-pages
+mv .git .circleci public
+cd public
+
+<span style="color:#75715e"># 生成物に差分があったときのみデプロイ</span>
+git status --porcelain
+<span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> -n <span style="color:#e6db74">&#34;`git status --porcelain`&#34;</span> <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
+  git add .
+  git commit -m <span style="color:#e6db74">&#34;update&#34;</span>
+  git push origin gh-pages
+<span style="color:#66d9ef">fi</span>
+</code></pre></div><p>hugo をインストールした Docker Image を用意しておきます。</p>
+<p><a href="https://hub.docker.com/r/suzukishunsuke/hugo-ci/">https://hub.docker.com/r/suzukishunsuke/hugo-ci/</a></p>
+<p>ビルドしたものを gh-pages ブランチにデプロイする方法を工夫していて、
+<code>.git</code> を <code>public</code> ディレクトリに移動しています。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">git checkout gh-pages
+mv .git .circleci public
+cd public
+</code></pre></div><p>あと、ビルドされたものに差分があったときのみデプロイするようにしています。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh"><span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> -n <span style="color:#e6db74">&#34;`git status --porcelain`&#34;</span> <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
+</code></pre></div></div>
+
+  <footer class="article-footer">
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/hugo/">hugo</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

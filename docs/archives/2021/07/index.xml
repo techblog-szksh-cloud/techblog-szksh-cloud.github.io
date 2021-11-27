@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>2021/07 on melody</title>
+    <link>https://techblog-szksh-cloud.github.io/archives/2021/07/</link>
+    <description>Recent content in 2021/07 on melody</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>jp</language><atom:link href="https://techblog-szksh-cloud.github.io/archives/2021/07/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>2021-07 やったこと</title>
+      <link>https://techblog-szksh-cloud.github.io/what-i-did-2021-07/</link>
+      <pubDate>Wed, 28 Jul 2021 06:58:45 +0900</pubDate>
+      
+      <guid>https://techblog-szksh-cloud.github.io/what-i-did-2021-07/</guid>
+      <description>今まで仕事に限定して書いてきましたが、 OSS 活動なんかにも触れてもいいんじゃないかと思ったので分かる範囲で書きます。
+仕事  Docker Image を Docker Hub から ECR へ移行 Terraform  .terraform.lock.hcl を CI の中で自動で更新(commit, push)できるようにした  Terraform に詳しくない人も使うので、自動化したほうが良いと判断   tfmigrate を CI に導入 (in progress) Terraform Modules を Terraform の Monorepo とは別リポジトリで管理して versioning するようにした Route53 の管理を Roadworker から Terraform へ移行 tfmigrate を使ったリファクタリング    Event  Open Policy Agent Rego Knowledge Sharing Meetup で登壇  https://gist.github.com/suzuki-shunsuke/9372337aa62a6f8394bb136582ec068e    OSS Contribution AWS AppConfig を Terraform で管理できるようにする PR が無事マージされました。</description>
+    </item>
+    
+    <item>
+      <title>仕事でやったこと 2021-06-01 ~ 2021-06-30</title>
+      <link>https://techblog-szksh-cloud.github.io/job-2021-06-01-06-30/</link>
+      <pubDate>Tue, 13 Jul 2021 05:47:11 +0900</pubDate>
+      
+      <guid>https://techblog-szksh-cloud.github.io/job-2021-06-01-06-30/</guid>
+      <description> GCP を Terraform で管理するための developer support miam を Terraform に移行 Docker Hub から ECR への移行  </description>
+    </item>
+    
+    <item>
+      <title>OPA で Table Driven Tests っぽいことをしてみる</title>
+      <link>https://techblog-szksh-cloud.github.io/opa-table-driven-test/</link>
+      <pubDate>Fri, 09 Jul 2021 19:38:55 +0900</pubDate>
+      
+      <guid>https://techblog-szksh-cloud.github.io/opa-table-driven-test/</guid>
+      <description>OPA で Table Driven Tests っぽく Policy を Test する方法について考えたので紹介します。
+背景 先日 Open Policy Agent Rego Knowledge Sharing Meetup で発表する機会を頂きました。 発表の資料はこちら。 普段他社の事例を聞いたり OPA について話たりする機会がないので、非常に貴重な時間になりました。
+その中で deeeet さんが Table Driven Tests っぽくテストしたいというようなことをおっしゃっていました。
+だいたいこの辺: https://youtu.be/0YpJhrz6L0A?t=2990
+その話を受けて改めて自分で考えてみたところ、できなくはないんじゃないかなという気がしたのでちょっとやってみることにしました。
+サンプル せっかくなので簡単なサンプルを GitHub に用意しました。
+https://github.com/suzuki-shunsuke/example-opa-table-driven-tests
+今回は aws_cloud_watch_log_group の retention_in_days が設定されていることをチェックする Rule の Test をします。
+ Rule: https://github.com/suzuki-shunsuke/example-opa-table-driven-tests/blob/main/policy/cloudwatch_log_retention_in_days.rego Policy Test: https://github.com/suzuki-shunsuke/example-opa-table-driven-tests/blob/main/policy/cloudwatch_log_retention_in_days_test.rego  テストケースを seeds という list で定義し、どれか一つでも false だったら fail するようにしています。 テストケースの中身は
+ msg: テストケースを示すメッセージ。テストが失敗したときの trace に含める resource: rule の input exp: rule の評価結果の期待値  になっています。</description>
+    </item>
+    
+  </channel>
+</rss>

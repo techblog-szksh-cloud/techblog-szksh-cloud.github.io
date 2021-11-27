@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/risk-of-drone-extension/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>Drone Extension のリスク - melody</title>
+    
+<meta name="description" content="Drone v1 では Extension という仕組みが導入されました。これは文字通り Drone を拡張する仕組みで、仕様に従って作れば自由に Drone を拡張できます。https://docs.drone.io/extensions/overview/全てを本体でやるのではなく、拡張する仕組みを提供し、あとはコミュニティに委ねるというのが Drone の一つの方針とも言えると思います。Extension は非常に面白い仕組みだと思いますが、 Drone を運用する立場からすると中々頭が痛い仕組みな気がしてて、 自分は導入に対し慎重な立場です。 単なる杞憂で済めば良いのですが、その懸念について書きたいと思います。根本は Drone Extension 固有の問題と言うより、一般的な拡張機構全般に言えることだと思います。 ただし、 Drone Extension は全てのビルドに影響を及ぼす、 CI/CDシステムが動かなくなるとサービスのリリースに影響を及ぼしかねないということからよりリスクの高いものになっています。 本体の drone/drone と比べ、開発は活発ではなく、サードパーティの extension はいつ開発が止まってもおかしくない 本体の drone/drone と比べ、ドキュメントやサポート体制が貧弱だと思われる(drone に関しては https://discourse.drone.io でサポートされているが、サードパーティの extension では難しい) ユーザーからの extension に関する要望を受け付けるようになると、管理者の負担になる extension のクォリティはマチマチであり、例外処理が甘かったり、ちゃんとエラーを吐かないものもあるだろう トラブルシューティングが難しいと思われる extension の仕組み上、extension を必要としないビルドにも影響を及ぼしうる 一度追加し、依存しだすと消すのが難しくなる extension が落ちると全 build に影響するので、耐障害性(冗長化)、モニタリングが必要 etc  勿論、上記の懸念点は Extension によって提供される機能とトレードオフであり、 Extension の導入方針は Drone が運用される環境によって大きく依存すると思います。例えば全員が顔見知りのような小さな組織で特定のサービス専用に Drone を使っていてかつ Drone の運用体制(人員)に十分余裕があるなら 積極的に Extension を導入しても問題ないかもしれません。">
+
+<meta property="og:title" content="Drone Extension のリスク - melody">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://techblog-szksh-cloud.github.io/risk-of-drone-extension/">
+<meta property="og:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+<meta property="og:site_name" content="melody">
+<meta property="og:description" content="Drone v1 では Extension という仕組みが導入されました。これは文字通り Drone を拡張する仕組みで、仕様に従って作れば自由に Drone を拡張できます。https://docs.drone.io/extensions/overview/全てを本体でやるのではなく、拡張する仕組みを提供し、あとはコミュニティに委ねるというのが Drone の一つの方針とも言えると思います。Extension は非常に面白い仕組みだと思いますが、 Drone を運用する立場からすると中々頭が痛い仕組みな気がしてて、 自分は導入に対し慎重な立場です。 単なる杞憂で済めば良いのですが、その懸念について書きたいと思います。根本は Drone Extension 固有の問題と言うより、一般的な拡張機構全般に言えることだと思います。 ただし、 Drone Extension は全てのビルドに影響を及ぼす、 CI/CDシステムが動かなくなるとサービスのリリースに影響を及ぼしかねないということからよりリスクの高いものになっています。 本体の drone/drone と比べ、開発は活発ではなく、サードパーティの extension はいつ開発が止まってもおかしくない 本体の drone/drone と比べ、ドキュメントやサポート体制が貧弱だと思われる(drone に関しては https://discourse.drone.io でサポートされているが、サードパーティの extension では難しい) ユーザーからの extension に関する要望を受け付けるようになると、管理者の負担になる extension のクォリティはマチマチであり、例外処理が甘かったり、ちゃんとエラーを吐かないものもあるだろう トラブルシューティングが難しいと思われる extension の仕組み上、extension を必要としないビルドにも影響を及ぼしうる 一度追加し、依存しだすと消すのが難しくなる extension が落ちると全 build に影響するので、耐障害性(冗長化)、モニタリングが必要 etc  勿論、上記の懸念点は Extension によって提供される機能とトレードオフであり、 Extension の導入方針は Drone が運用される環境によって大きく依存すると思います。例えば全員が顔見知りのような小さな組織で特定のサービス専用に Drone を使っていてかつ Drone の運用体制(人員)に十分余裕があるなら 積極的に Extension を導入しても問題ないかもしれません。">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="melody">
+<meta name="twitter:url" content="https://techblog-szksh-cloud.github.io/risk-of-drone-extension/">
+<meta name="twitter:title" content="Drone Extension のリスク - melody">
+<meta name="twitter:description" content="Drone v1 では Extension という仕組みが導入されました。これは文字通り Drone を拡張する仕組みで、仕様に従って作れば自由に Drone を拡張できます。https://docs.drone.io/extensions/overview/全てを本体でやるのではなく、拡張する仕組みを提供し、あとはコミュニティに委ねるというのが Drone の一つの方針とも言えると思います。Extension は非常に面白い仕組みだと思いますが、 Drone を運用する立場からすると中々頭が痛い仕組みな気がしてて、 自分は導入に対し慎重な立場です。 単なる杞憂で済めば良いのですが、その懸念について書きたいと思います。根本は Drone Extension 固有の問題と言うより、一般的な拡張機構全般に言えることだと思います。 ただし、 Drone Extension は全てのビルドに影響を及ぼす、 CI/CDシステムが動かなくなるとサービスのリリースに影響を及ぼしかねないということからよりリスクの高いものになっています。 本体の drone/drone と比べ、開発は活発ではなく、サードパーティの extension はいつ開発が止まってもおかしくない 本体の drone/drone と比べ、ドキュメントやサポート体制が貧弱だと思われる(drone に関しては https://discourse.drone.io でサポートされているが、サードパーティの extension では難しい) ユーザーからの extension に関する要望を受け付けるようになると、管理者の負担になる extension のクォリティはマチマチであり、例外処理が甘かったり、ちゃんとエラーを吐かないものもあるだろう トラブルシューティングが難しいと思われる extension の仕組み上、extension を必要としないビルドにも影響を及ぼしうる 一度追加し、依存しだすと消すのが難しくなる extension が落ちると全 build に影響するので、耐障害性(冗長化)、モニタリングが必要 etc  勿論、上記の懸念点は Extension によって提供される機能とトレードオフであり、 Extension の導入方針は Drone が運用される環境によって大きく依存すると思います。例えば全員が顔見知りのような小さな組織で特定のサービス専用に Drone を使っていてかつ Drone の運用体制(人員)に十分余裕があるなら 積極的に Extension を導入しても問題ないかもしれません。">
+<meta name="twitter:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https:\/\/techblog-szksh-cloud.github.io\/"
+    },
+    "headline": "Drone Extension のリスク - melody",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https:\/\/techblog-szksh-cloud.github.io\/images\/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2019-08-15T07:54:23JST",
+    "dateModified": "2019-08-15T07:54:23JST",
+    "author": {
+      "@type": "Person",
+      "name": "melody"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "melody",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https:\/\/techblog-szksh-cloud.github.io\/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "Drone v1 では Extension という仕組みが導入されました。\nこれは文字通り Drone を拡張する仕組みで、仕様に従って作れば自由に Drone を拡張できます。\nhttps:\/\/docs.drone.io\/extensions\/overview\/\n全てを本体でやるのではなく、拡張する仕組みを提供し、あとはコミュニティに委ねるというのが Drone の一つの方針とも言えると思います。\nExtension は非常に面白い仕組みだと思いますが、 Drone を運用する立場からすると中々頭が痛い仕組みな気がしてて、 自分は導入に対し慎重な立場です。 単なる杞憂で済めば良いのですが、その懸念について書きたいと思います。\n根本は Drone Extension 固有の問題と言うより、一般的な拡張機構全般に言えることだと思います。 ただし、 Drone Extension は全てのビルドに影響を及ぼす、 CI\/CDシステムが動かなくなるとサービスのリリースに影響を及ぼしかねないということからよりリスクの高いものになっています。\n 本体の drone\/drone と比べ、開発は活発ではなく、サードパーティの extension はいつ開発が止まってもおかしくない 本体の drone\/drone と比べ、ドキュメントやサポート体制が貧弱だと思われる(drone に関しては https:\/\/discourse.drone.io でサポートされているが、サードパーティの extension では難しい) ユーザーからの extension に関する要望を受け付けるようになると、管理者の負担になる extension のクォリティはマチマチであり、例外処理が甘かったり、ちゃんとエラーを吐かないものもあるだろう トラブルシューティングが難しいと思われる extension の仕組み上、extension を必要としないビルドにも影響を及ぼしうる 一度追加し、依存しだすと消すのが難しくなる extension が落ちると全 build に影響するので、耐障害性(冗長化)、モニタリングが必要 etc  勿論、上記の懸念点は Extension によって提供される機能とトレードオフであり、 Extension の導入方針は Drone が運用される環境によって大きく依存すると思います。\n例えば全員が顔見知りのような小さな組織で特定のサービス専用に Drone を使っていてかつ Drone の運用体制(人員)に十分余裕があるなら 積極的に Extension を導入しても問題ないかもしれません。"
+  }
+</script>
+
+
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://techblog-szksh-cloud.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li class="active">Drone Extension のリスク</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2019-08-15T07:54:23JST">Aug 15, 2019</time></li>
+      
+      
+    </ul>
+
+    <h1 class="title">Drone Extension のリスク</h1>
+    
+    
+    <section>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/drone/">drone</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </header>
+
+  
+
+  <div class="article-body"><p>Drone v1 では Extension という仕組みが導入されました。</p>
+<p>これは文字通り Drone を拡張する仕組みで、仕様に従って作れば自由に Drone を拡張できます。</p>
+<p><a href="https://docs.drone.io/extensions/overview/">https://docs.drone.io/extensions/overview/</a></p>
+<p>全てを本体でやるのではなく、拡張する仕組みを提供し、あとはコミュニティに委ねるというのが Drone の一つの方針とも言えると思います。</p>
+<p>Extension は非常に面白い仕組みだと思いますが、 Drone を運用する立場からすると中々頭が痛い仕組みな気がしてて、
+自分は導入に対し慎重な立場です。
+単なる杞憂で済めば良いのですが、その懸念について書きたいと思います。</p>
+<p>根本は Drone Extension 固有の問題と言うより、一般的な拡張機構全般に言えることだと思います。
+ただし、 Drone Extension は全てのビルドに影響を及ぼす、
+CI/CDシステムが動かなくなるとサービスのリリースに影響を及ぼしかねないということからよりリスクの高いものになっています。</p>
+<ul>
+<li>本体の drone/drone と比べ、開発は活発ではなく、サードパーティの extension はいつ開発が止まってもおかしくない</li>
+<li>本体の drone/drone と比べ、ドキュメントやサポート体制が貧弱だと思われる(drone に関しては <a href="https://discourse.drone.io">https://discourse.drone.io</a> でサポートされているが、サードパーティの extension では難しい)</li>
+<li>ユーザーからの extension に関する要望を受け付けるようになると、管理者の負担になる</li>
+<li>extension のクォリティはマチマチであり、例外処理が甘かったり、ちゃんとエラーを吐かないものもあるだろう</li>
+<li>トラブルシューティングが難しいと思われる</li>
+<li>extension の仕組み上、extension を必要としないビルドにも影響を及ぼしうる</li>
+<li>一度追加し、依存しだすと消すのが難しくなる</li>
+<li>extension が落ちると全 build に影響するので、耐障害性(冗長化)、モニタリングが必要</li>
+<li>etc</li>
+</ul>
+<p>勿論、上記の懸念点は Extension によって提供される機能とトレードオフであり、
+Extension の導入方針は Drone が運用される環境によって大きく依存すると思います。</p>
+<p>例えば全員が顔見知りのような小さな組織で特定のサービス専用に Drone を使っていてかつ Drone の運用体制(人員)に十分余裕があるなら
+積極的に Extension を導入しても問題ないかもしれません。</p>
+<p>一方大きな組織で色々なサービスで同じ Drone を使っていてかつ Drone の運用体制が不十分(人手不足)ならば、 Extension の導入には慎重にならざるを得ないのではないかと思います。</p>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/drone/">drone</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

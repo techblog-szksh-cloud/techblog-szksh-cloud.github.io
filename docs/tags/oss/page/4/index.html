@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+<link rel="alternate" type="application/rss+xml" title="RSS" href="https://techblog-szksh-cloud.github.io/tags/oss/index.xml">
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/tags/oss/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>oss - melody</title>
+    
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    
+    <header class="page-header">
+      <h1>oss</h1>
+    </header>
+    
+
+    <ul class="p-articles">
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2019-11-30T13:54:47JST">Nov 30, 2019</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/dd-time/">dd-time - コマンドの実行時間を Datadog に送るツール</a></h2>
+  </header>
+
+  
+  <div class="summary">コマンドの実行時間を Datadog に送る dd-time というツールを作りました。
+このツールは circle-dd-bench にインスパイアされていますが、 CircleCI 以外でも需要あると思ったり、他にも幾つか改善したい部分があったので自作することにしました。
+circle-dd-bench については circle-dd-bench の作者が書いたブログ https://blog.yuyat.jp/post/circle-dd-bench/ も参考にしてください。
+dd-time は Go 製なので GitHub Releases からバイナリをダウンロードしてインストールすれば使えます。
+使い方はシンプルで実行時間を計測したいコマンドの前に dd-time -- をつけるだけです。 例えば Docker image のビルドの時間を計測したい場合次のような感じになります。
+$ dd-time -t command:docker-build -- docker build . Datadog の API key を環境変数 DATADOG_API_KEY として設定する必要があります。 こうすると Datadog の Post timeseries points API を使い、command_execution_time というメトリックス名(変更可能)でコマンドの実行時間が送られます。
+メトリックスの名前や host, tags はそれぞれ --metric-name (-m), --host, --tag (-t) で指定できます。 --tag は複数回指定可能で、 key:value というフォーマットで指定します。
+CircleCI で実行した場合、 CircleCI のビルドイン環境変数が tag として勝手に設定されますが、 CircleCI 以外でも使えます。</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/dd-time/" title="dd-time - コマンドの実行時間を Datadog に送るツール">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2019-11-04T10:00:21JST">Nov 4, 2019</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/go-timeout/">go-timeout - command の timeout</a></h2>
+  </header>
+
+  
+  <div class="summary">作ったのは 2ヶ月くらい前の話ですが、 Go の command の timeout を実装するためのライブラリを作ったので紹介します。
+https://github.com/suzuki-shunsuke/go-timeout
+基本的には https://github.com/Songmu/timeout をオススメしますが、これだと上手くいかないパターンがあったので自作しました。
+Go の command の timeout に関しては https://junkyard.song.mu/slides/gocon2019-spring/#24 がとても参考になります。
+上記のスライドでは
+ 標準ライブラリの exec.CommandContext でも停止できるが、 SIGKILL で強制的に停止することになる  子プロセスが停止しない   公式見解 では、SIGKILL 以外は標準ライブラリではサポートしない。サードパーティでやればよい Songmu/timeout 使えば SIGKILL 以外でより安全に停止できる  ということが丁寧に説明されています。
+自分は cmdx という task runner を開発していてその中で task の実行時に timeout を設定出来るようにしました。 当初 Songmu/timeout を使って実装したのですが、問題があることに気づきました。 それは、 command の中で fzf を使うと、上手く動かないというものでした。
+ https://github.com/suzuki-shunsuke/cmdx/issues/52 https://twitter.com/szkdash/status/1165529415238815745  正直この辺の挙動はちゃんと理解できていないのですが、 調べてみると Songmu/timeout だと syscall.SysProcAttr の Setpgid を true に設定していて、そうすると fzf が上手く動かないようでした。</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/go-timeout/" title="go-timeout - command の timeout">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2019-08-23T11:35:13JST">Aug 23, 2019</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/cmdx/">cmdx - task runner</a></h2>
+  </header>
+
+  
+  <div class="summary">最近自作した OSS, cmdx の紹介です。
+https://github.com/suzuki-shunsuke/cmdx
+cmdx は task runner です。
+task runner の定義はググってもわからなかったので、 cmdx を task runner と呼ぶのが適切かわかりませんが、 ここではプロジェクト固有のタスク
+ 依存するライブラリのインストール ビルド テスト コード整形 lint etc  などを管理するものとします。
+類似するものとしては以下のようなものがあります。
+ Make npm scripts Task tj/robo mumoshu/variant  使い方 詳細は README を読んでください。
+$ cmdx -i で設定ファイルの雛形を生成します。
+そして設定ファイルに task を定義していきます。 設定に関しては README を参照してください。
+そうすると cmdx -l でタスクの一覧とその説明が見れます。
+例えば次は cmdx のリポジトリでの実行結果です。
+$ cmdx -l init, i - setup git hooks coverage, c - test a package (fzf is required) test, t - test fmt - format the go code vet, v - go vet lint, l - lint the go code release, r - release the new version durl - check dead links (durl is required) ci-local - run the Drone pipeline at localhost (drone-cli is required) これにより新しくプロジェクトに参画した人もどのような task があるのか直ぐわかります。 例えば test を実行したければ cmdx t を実行すればいいことがわかります。 cmdx help test とすればここのタスクのより詳細なヘルプが見れます。</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/cmdx/" title="cmdx - task runner">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2019-07-07T08:20:00JST">Jul 7, 2019</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/fagott/">Flute - Golang HTTP client testing framework</a></h2>
+  </header>
+
+  
+  <div class="summary">2019-07-17 追記 プロジェクト名が変わりました
+https://github.com/suzuki-shunsuke/flute/issues/20
+ Go の HTTP client のテストフレームワークを作ったので紹介します。
+https://github.com/suzuki-shunsuke/flute
+執筆時点のバージョンは v0.6.0 です。
+ リクエストパラメータのテスト HTTP サーバのモッキング  を目的としています。
+比較的実践的なサンプルとして、ユーザーを作成する簡単な API client とそのテストを書いたので参考にしてください。
+ https://github.com/suzuki-shunsuke/flute/blob/master/examples/create_user.go https://github.com/suzuki-shunsuke/flute/blob/master/examples/create_user_test.go#L17-L53  元々自分はこの目的のために h2non/gock を使っていました。 ただ、 gock だとリクエストがマッチしなかったときに、なぜマッチしないのかがわからず、調査に困るという問題がありました。
+そこで flute では request に対し、matcher と tester という概念を導入し、 matcher でマッチしたリクエストを tester でテストするというふうにしました。 テストでは内部で stretchr/testify の assert を使っており、テストに失敗したときになぜ失敗したのかが分かりやすく出力されるようになっています。
+例えば以下の例は、リクエストの Authorization header にトークンがセットされていなかった場合のエラーメッセージです。
+=== RUN TestClient_CreateUser --- FAIL: TestClient_CreateUser (0.00s) tester.go:168: Error Trace: tester.go:168 tester.go:32 transport.go:25 client.go:250 client.go:174 client.</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/fagott/" title="Flute - Golang HTTP client testing framework">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2019-06-12T07:40:45JST">Jun 12, 2019</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/drone-jsonnet-generator/">Drone v0.8 の .drone.yml を v1 の .drone.jsonnet に変換するツールを作った</a></h2>
+  </header>
+
+  
+  <div class="summary">Drone v0.8 の .drone.yml を v1 の .drone.jsonnet に変換するツールを作ったので紹介します。
+https://github.com/suzuki-shunsuke/drone-jsonnet-generator
+背景 https://docs.drone.io/user-guide/pipeline/migrating/
+Drone は v0.8 から v1 で .drone.yml のフォーマットが大きく変わっています。 Drone v1 ではビルド実行時に自動で変換しているため、v0.8 の .drone.yml でもそのまま動きます(matrix builds も動きます)。
+そのため、Drone v0.8 から v1 に移行する際、すぐに .drone.yml を修正しなくても問題ないのですが、 v1 独自の機能が出てきた場合 v0.8 のフォーマットの場合利用できないかもしれませんし、 いつまでも古いままだと気持ち悪いので出来るならフォーマットを変換したいです。
+drone-cli ではフォーマットを変換する drone convert というコマンドが提供されています。
+ただし、 drone convert は matrix build を multiple pipeline に変換するのですが、 非常に冗長になります。 そのため、jsonnet を利用することが推奨されています。
+https://docs.drone.io/user-guide/pipeline/migrating/
+ The above syntax can be quite verbose if you are testing a large number of variations.</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/drone-jsonnet-generator/" title="Drone v0.8 の .drone.yml を v1 の .drone.jsonnet に変換するツールを作った">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2019-05-23T11:43:18JST">May 23, 2019</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/go-jsoneq/">go-jsoneq - 2つの値がJSONとして等しいか比較するGoライブラリ</a></h2>
+  </header>
+
+  
+  <div class="summary">https://github.com/suzuki-shunsuke/go-jsoneq
+2つの値がJSONとして等しいか比較するGoライブラリを開発したので紹介します。
+「2つの値がJSONとして等しい」とは、2つの値をそれぞれJSON文字列に変換したら、2つが表現するデータがおなじになるという意味です。
+struct { Foo string `json:&#34;foo&#34;` }{ Foo: &#34;bar&#34;, } と
+map[string]interface{}{&#34;foo&#34;: &#34;bar&#34;} を JSON に変換したらともに
+{&#34;foo&#34;: &#34;bar&#34;} になりますね。
+json.Marshaler のテストや、 実際の JSON 文字列から構造体を定義したときにちゃんと定義できているかチェックするのに使えると思います。
+jsoneq.Equal でやっていることは単純です。
+ json.Marshal で []byte に変換 json.Unmarshal で []byte を map, array と primitive な型からなるオブジェクト(?)に変換 reflect.DeepEqual で比較  引数が []byte の場合は 1 は飛ばします。
+GoDoc やサンプルを見れば使い方は簡単にわかると思います。
+以上、簡単ですが、自作ライブラリの紹介でした。</div>
+
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2019-04-28T21:25:00JST">Apr 28, 2019</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/durl/">durl - 壊れたURLを検知するCLIツール</a></h2>
+  </header>
+
+  
+  <div class="summary">結構前に開発したツールですが、まだ記事にしてなかったので紹介します。
+https://github.com/suzuki-shunsuke/durl
+ファイル中の URL が壊れていないかチェックするツールです。 ファイル中の URL を抽出し、HTTPリクエストを投げてステータスコードが 2xx でないものがあった場合、異常終了します。
+なお、ページ内リンク(アンカー)が壊れているものについては検知できません。
+インストール Go製で、バイナリを GitHub Releases で公開しています。
+https://github.com/suzuki-shunsuke/durl/releases
+Docker イメージ https://quay.io/repository/suzuki_shunsuke/durl
+busybox ベースの Docker イメージも提供しています。 CI で使うのに便利です。
+使い方 durl init で設定ファイル .durl.yml を生成します。
+$ durl init durl check に対象ファイルパスのリストを標準入力として渡してください。 find コマンドなどと組み合わせると良いです。
+https://github.com/suzuki-shunsuke/go-errlog/blob/v0.9.0/scripts/durl.sh#L9
+find . \ -type d -name node_modules -prune -o \ -type d -name .git -prune -o \ -type d -name vendor -prune -o \ -type f -print | \ grep -v package-lock.</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/durl/" title="durl - 壊れたURLを検知するCLIツール">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-12-01T14:56:00JST">Dec 1, 2018</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/graylog-terraform/">GraylogをTerraformで管理する</a></h2>
+  </header>
+
+  
+  <div class="summary">Graylogのリソースを terraform で管理するために作った terraform provider を紹介します。 Graylogとは何かはこちらを読んでください。
+Graylogには様々なリソースがあります。
+ User Role Input Index Set Stream Stream Rule Dashboard Alert etc  これらのリソースはWeb UIから作成したり出来るわけですが、 Web UIでポチポチするのは疲れますし、ソースコードで管理したいものです(Infrastructure as Code)。 また、Web UIからでは細かな権限管理は出来ず(限られた権限管理しか出来ない)、APIを使ってする必要があります。
+APIを使って管理できるツールを探したものの見つからなかったので、 APIを使ってGraylog用のterraform providerを自作しています。
+https://github.com/suzuki-shunsuke/go-graylog
+GraylogのAPIの種類は非常に多く、残念ながらカバーできているのは一部だけですが、以下のようなものをサポートしています。
+ Alert Condition Alert Notification (Alarm Callback) Input User Role Index Set Stream Stream Rule Dashboard Ldap Setting  Role はサポートしているので権限管理は問題なく出来ます。 Dashboard Widget もサポートしたいです。
+出来れば Alert の設定も出来ると良いのですが、Alertに関するCRUD APIが提供されていない(GETのみ)ので、サポートできません。
+terraform を使った管理方法 以下では自分の管理方法を紹介します。
+https://github.com/suzuki-shunsuke/example/tree/master/graylog-terraform
+にサンプルが置いてあります。
+基本はプロジェクトごとに
+ Index Set, Stream, Role といったリソースを作成 User に Role を付与  という流れになります。</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/graylog-terraform/" title="GraylogをTerraformで管理する">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-11-27T16:40:33JST">Nov 27, 2018</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/graylog/">Graylog で log を管理する</a></h2>
+  </header>
+
+  
+  <div class="summary">Java 製の OSS ログ管理システム Graylog の紹介です。 Graylog については幾つかに分けて記事を書きたいと思います。 今回はGraylogの入門的な内容になります。
+なお、本記事中で「現在」「現時点」といった場合、特に断りがなければ記事執筆時点 2018-11-27 を指します。
+Graylog のバージョン 検証に用いるGraylogのバージョンは 2.4.6 になります。
+OSSバージョンとEnterpriseバージョンがありますが、本記事ではOSSバージョンを使用します。
+Graylog とは  https://www.graylog.org/ https://github.com/Graylog2/graylog2-server  Kibana と Elasticsearch(以下ES) を使ったことがある人は、Kibanaに代わるものだと思っていただくとイメージしやすいかと思います。 ログはGraylogそのものが保持するのではなく、ESにインデキシングされます。 Kibana同様、ESに収集されたログを検索したり、ダッシュボードを作ったり出来ます。 ダッシュボードに関してはKibanaのほうが優れているようにも思えますが、 Graylogは認証・認可によりダッシュボードやログを操作できる人を制限・管理することが出来ます。
+Graylogでログを管理する場合、ユーザーは直接ESにはログを送らず、Graylogを経由して送ります。 ESに対するGraylog以外のアクセスを制限し直接ESにアクセスされるのを防ぐことが出来ます。
+Graylog は多機能なシステムであり、ログを整形したり、アラートを飛ばしたり、他のシステムにログをフォワードしたりすることも出来ます。 marketplace でサードパーティの plugin が公開されており、機能を拡張することが出来ます。 APIも提供されており、ある程度自動化が可能です。
+認証・認可 オンプレミスでログを管理する場合、社外からは勿論社内からのアクセスも制限したいです。 Graylog では LDAP や Active Directory によってアクセスを制限できます。 リソース毎に誰が何を出来るか設定できます。
+http://docs.graylog.org/en/2.5/pages/users_and_roles/external_auth.html
+ログの収集 ログの収集をするには Graylog で幾つかのリソースを作成する必要があります。
+ Input Index Set Stream Stream Rule  Input はログの入力のフォーマットの設定であり、 どのポートでどういったフォーマットのログを受け付けるかという設定になります。 フォーマットは様々なものがサポートされています。
+ AWS Flow Logs AWS Cloud Watch Logs AWS Cloud Trail Beats CEF AMQP CEF Kafka CEF TCP CEF UDP Fake HTTP Message GELF AMQP GELF HTTP GELF Kafka GELF TCP GELF UDP JSON Path NetFlow UDP Raw AMQP Syslog AMQP Syslog Kafka Syslog TCP Syslog UDP  この設定はログを収集するアプリケーションごとに設定するというより、グローバルな設定なので、他のアプリケーションで既に同じ形式でログを収集していたら新たに設定する必要はありません。</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/graylog/" title="Graylog で log を管理する">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-10-31T08:56:04JST">Oct 31, 2018</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/akoi/">akoi - binary installer</a></h2>
+  </header>
+
+  
+  <div class="summary">自作のOSS akoi の紹介をします。
+ なぜこんなものを作ったのか akoi と ansible を使ってサーバにバイナリをインストールする方法  について主に説明します。
+まとめ  akoi はバイナリファイルのインストーラ 設定ファイルで管理できる 冪等であり、効率よくインストールできる  並列インストール Accept-Ranges による分散ダウンロード   ansibleでサーバにバイナリをインストールするのを補助してくれる  ansible で真面目にバージョンコントロールして効率よくインストールするのは難しい(ほとんどの ansible role は出来ていない)    akoi とは akoi はバイナリファイルのインストーラです。 設定ファイルにインストールするファイルのダウンロードURLとインストール先を記述して管理します。 インストールするバイナリのバージョン管理が可能であり、既にインストールしてあるバージョンへの切り替えはシンボリックを作り直すだけなので一瞬で終わります。無駄にダウンロードをしたりはしません。 複数のバイナリを並列でインストールしたり、Accept-Ranges ヘッダによる分散ダウンロードをサポートしています。
+分散ダウンロードについては
+https://qiita.com/codehex/items/d0a500ac387d39a34401
+が参考になります。
+Goで書かれています。
+https://github.com/suzuki-shunsuke/akoi/releases からバイナリをダウンロードしてインストールできます。
+詳細はREADMEを読んでください。
+なぜ作ったのか サーバにバイナリをインストールする ansible role を書くのが辛かったからです。 最近は色々なソフトウェアがGoで書かれ、バイナリで配布されています。 そういったバイナリをサーバへインストールするのは ansible で行っているという方も少なくないのではないでしょうか？ 有名なソフトウェアをインストールする ansible role は大抵Ansible Galaxy で公開されています。
+しかし、ほとんどの role は「真面目に」バージョン管理していません。 ここでいう「真面目に」とは
+ バージョンを指定できる バージョンを変更できる 指定したバージョンが既にインストールされている場合は無駄にダウンロードしたりしない  といったことです。</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/akoi/" title="akoi - binary installer">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+    </ul>
+
+    
+<nav>
+  <ul class="pager">
+
+    
+    <li><a href="/tags/oss/page/3/">Previous</a></li>
+    
+
+    
+    <li><a href="/tags/oss/page/5/">Next</a></li>
+    
+
+  </ul>
+</nav>
+
+
+
+  </div>
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/drone-git-authentication/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>Drone の build 実行時の認証方法 - melody</title>
+    
+<meta name="description" content="drone の build における GitHub (GitHub前提で書きますが、GitHub以外でも同じだと思います) の認証の話(どうやって認証しているか)について書いておこうと思います。 drone の build は clone step で対象のリポジトリを GitHub から clone してきています。 この際に何かしらの方法で認証しているはずです。結論を言うと、あるリポジトリAのbuildでは、 リポジトリAの drone連携を有効化したユーザー Bの access token を .netrc に書き込んで認証しています。 よってユーザーBにcloneする権限があるリポジトリはcloneできるし、 ユーザーBにcloneする権限がないリポジトリはcloneできません。 つまり、 誰が連携を有効化するかが重要 になります(これについては後述します)。 なお、drone連携の有効化はそのリポジトリのowner以上でないと出来ません。drone上でリポジトリの連携を有効化すると、 リポジトリのHookが作成されます。 リポジトリの settings &amp;gt; Hooks から確認できます。 この Hook の Payload URL を見ると access_token クエリがあると思います。 JWTのようですね。これはリポジトリの連携を有効化したユーザーのtokenです。このtokenが GitHub から drone への webhook のパラメータとして送られてくるので、 drone 側で認証し、認証したユーザーのGitHub のaccess token を取得し、 build 時にコンテナの /root/.netrc に書き込むようです。.netrcに書き込まれているのは試しに個人の private repository で .">
+
+<meta property="og:title" content="Drone の build 実行時の認証方法 - melody">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://techblog-szksh-cloud.github.io/drone-git-authentication/">
+<meta property="og:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+<meta property="og:site_name" content="melody">
+<meta property="og:description" content="drone の build における GitHub (GitHub前提で書きますが、GitHub以外でも同じだと思います) の認証の話(どうやって認証しているか)について書いておこうと思います。 drone の build は clone step で対象のリポジトリを GitHub から clone してきています。 この際に何かしらの方法で認証しているはずです。結論を言うと、あるリポジトリAのbuildでは、 リポジトリAの drone連携を有効化したユーザー Bの access token を .netrc に書き込んで認証しています。 よってユーザーBにcloneする権限があるリポジトリはcloneできるし、 ユーザーBにcloneする権限がないリポジトリはcloneできません。 つまり、 誰が連携を有効化するかが重要 になります(これについては後述します)。 なお、drone連携の有効化はそのリポジトリのowner以上でないと出来ません。drone上でリポジトリの連携を有効化すると、 リポジトリのHookが作成されます。 リポジトリの settings &amp;gt; Hooks から確認できます。 この Hook の Payload URL を見ると access_token クエリがあると思います。 JWTのようですね。これはリポジトリの連携を有効化したユーザーのtokenです。このtokenが GitHub から drone への webhook のパラメータとして送られてくるので、 drone 側で認証し、認証したユーザーのGitHub のaccess token を取得し、 build 時にコンテナの /root/.netrc に書き込むようです。.netrcに書き込まれているのは試しに個人の private repository で .">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="melody">
+<meta name="twitter:url" content="https://techblog-szksh-cloud.github.io/drone-git-authentication/">
+<meta name="twitter:title" content="Drone の build 実行時の認証方法 - melody">
+<meta name="twitter:description" content="drone の build における GitHub (GitHub前提で書きますが、GitHub以外でも同じだと思います) の認証の話(どうやって認証しているか)について書いておこうと思います。 drone の build は clone step で対象のリポジトリを GitHub から clone してきています。 この際に何かしらの方法で認証しているはずです。結論を言うと、あるリポジトリAのbuildでは、 リポジトリAの drone連携を有効化したユーザー Bの access token を .netrc に書き込んで認証しています。 よってユーザーBにcloneする権限があるリポジトリはcloneできるし、 ユーザーBにcloneする権限がないリポジトリはcloneできません。 つまり、 誰が連携を有効化するかが重要 になります(これについては後述します)。 なお、drone連携の有効化はそのリポジトリのowner以上でないと出来ません。drone上でリポジトリの連携を有効化すると、 リポジトリのHookが作成されます。 リポジトリの settings &amp;gt; Hooks から確認できます。 この Hook の Payload URL を見ると access_token クエリがあると思います。 JWTのようですね。これはリポジトリの連携を有効化したユーザーのtokenです。このtokenが GitHub から drone への webhook のパラメータとして送られてくるので、 drone 側で認証し、認証したユーザーのGitHub のaccess token を取得し、 build 時にコンテナの /root/.netrc に書き込むようです。.netrcに書き込まれているのは試しに個人の private repository で .">
+<meta name="twitter:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https:\/\/techblog-szksh-cloud.github.io\/"
+    },
+    "headline": "Drone の build 実行時の認証方法 - melody",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https:\/\/techblog-szksh-cloud.github.io\/images\/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2018-09-30T19:44:27JST",
+    "dateModified": "2018-09-30T19:44:27JST",
+    "author": {
+      "@type": "Person",
+      "name": "melody"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "melody",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https:\/\/techblog-szksh-cloud.github.io\/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "drone の build における GitHub (GitHub前提で書きますが、GitHub以外でも同じだと思います) の認証の話(どうやって認証しているか)について書いておこうと思います。 drone の build は clone step で対象のリポジトリを GitHub から clone してきています。 この際に何かしらの方法で認証しているはずです。\n結論を言うと、\nあるリポジトリAのbuildでは、 リポジトリAの drone連携を有効化したユーザー Bの access token を .netrc に書き込んで認証しています。 よってユーザーBにcloneする権限があるリポジトリはcloneできるし、 ユーザーBにcloneする権限がないリポジトリはcloneできません。 つまり、 誰が連携を有効化するかが重要 になります(これについては後述します)。 なお、drone連携の有効化はそのリポジトリのowner以上でないと出来ません。\ndrone上でリポジトリの連携を有効化すると、 リポジトリのHookが作成されます。 リポジトリの settings \u0026gt; Hooks から確認できます。 この Hook の Payload URL を見ると access_token クエリがあると思います。 JWTのようですね。これはリポジトリの連携を有効化したユーザーのtokenです。\nこのtokenが GitHub から drone への webhook のパラメータとして送られてくるので、 drone 側で認証し、認証したユーザーのGitHub のaccess token を取得し、 build 時にコンテナの \/root\/.netrc に書き込むようです。\n.netrcに書き込まれているのは試しに個人の private repository で ."
+  }
+</script>
+
+
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://techblog-szksh-cloud.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li class="active">Drone の build 実行時の認証方法</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-09-30T19:44:27JST">Sep 30, 2018</time></li>
+      
+      
+    </ul>
+
+    <h1 class="title">Drone の build 実行時の認証方法</h1>
+    
+    
+    <section>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/drone/">drone</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </header>
+
+  
+
+  <div class="article-body"><p>drone の build における GitHub (GitHub前提で書きますが、GitHub以外でも同じだと思います) の認証の話(どうやって認証しているか)について書いておこうと思います。
+drone の build は clone step で対象のリポジトリを GitHub から clone してきています。
+この際に何かしらの方法で認証しているはずです。</p>
+<p>結論を言うと、</p>
+<p>あるリポジトリAのbuildでは、
+リポジトリAの <strong>drone連携を有効化したユーザー</strong> Bの access token を <strong>.netrc</strong> に書き込んで認証しています。
+よってユーザーBにcloneする権限があるリポジトリはcloneできるし、
+ユーザーBにcloneする権限がないリポジトリはcloneできません。
+つまり、 <strong>誰が連携を有効化するかが重要</strong> になります(これについては後述します)。
+なお、drone連携の有効化はそのリポジトリのowner以上でないと出来ません。</p>
+<p>drone上でリポジトリの連携を有効化すると、
+リポジトリのHookが作成されます。
+リポジトリの settings &gt; Hooks から確認できます。
+この Hook の Payload URL を見ると access_token クエリがあると思います。
+JWTのようですね。これはリポジトリの連携を有効化したユーザーのtokenです。</p>
+<p>このtokenが GitHub から drone への webhook のパラメータとして送られてくるので、
+drone 側で認証し、認証したユーザーのGitHub  のaccess token を取得し、
+build 時にコンテナの /root/.netrc に書き込むようです。</p>
+<p>.netrcに書き込まれているのは試しに個人の private repository で .netrc をcatしてみればわかります。
+他人も見えるrepositoryでcatすると悪用されかねないので気をつけましょう。</p>
+<pre tabindex="0"><code>pipeline:
+netrc:
+image: alpine:3.6
+commands:
+- cat ~/.netrc
+</code></pre><pre tabindex="0"><code>+ cat ~/.netrc
+machine gihub.com
+login **************
+password x-oauth-basic
+</code></pre><h2 id="cloneステップ以外での-netrcの活用">cloneステップ以外での .netrcの活用</h2>
+<p>.netrc のおかげで難しいこと考えずに clone 出来ているわけですが、この .netrc は当然 clone ステップ以外でも使えます。
+例えば private repository の ansible role の install です。</p>
+<p>roles.yml</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">- <span style="color:#f92672">src</span>: <span style="color:#ae81ff">https://github.com/&lt;owner&gt;/&lt;repo&gt;</span>
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">foo.bar</span>
+  <span style="color:#f92672">scm</span>: <span style="color:#ae81ff">git</span>
+</code></pre></div><p>.drone.yml</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">commands</span>:
+- <span style="color:#ae81ff">ansible-galaxy install -r roles.yml</span>
+</code></pre></div><h2 id="誰が連携を有効化するべきか">誰が連携を有効化するべきか</h2>
+<p>結論を言うと、ベストな方法は分かりません。</p>
+<p>連携を有効化した人が退職してしまったり、organizationから抜けてしまった場合、急にビルドが失敗するリスクがあります。
+理想を言えば特定の個人のアカウントで連携するのではなく、連携用のアカウントを用意するのが良いのかもしれませんが、
+それはそれで運用が難しいかもしれません。</p>
+<p>drone API ないし CLI で有効化は出来るので、CIで連携を自動化することは可能だと思います。</p>
+<ul>
+<li><a href="https://0-8-0.docs.drone.io/cli-repository-add/">https://0-8-0.docs.drone.io/cli-repository-add/</a></li>
+<li><a href="https://0-8-0.docs.drone.io/api-repo-create/">https://0-8-0.docs.drone.io/api-repo-create/</a></li>
+</ul>
+<p>自分のところではまだそこまでやってなく、個人で有効化してしまっているのですが、
+自動化したらまた記事にでもしたいと思います。</p>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/drone/">drone</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/golang-time/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>Golang での時刻の扱い方を整理する - melody</title>
+    
+<meta name="description" content="今更ながら Golang での時刻の扱い方について改めて整理してみました。まとめ  time.Local は明示的に設定する(基本UTC) DB などには 基本UTC で永続化する 出力時に必要になったらタイムゾーンを変更する  location は出力時に問題になるので出力時に location を明示的に指定する 逆に言うと出力時以外は問題にならないので無理に location を UTC にしなくても良いかもしれない サードパーティ(ex. ORM) に time.Time を渡す場合は location に注意が必要   文字列として時刻の入力を受け付ける場合は location を明示的にセットする サードパーティが time.Local に依存する場合、 time.Local を明示的に UTC にしたりする必要があるかもしれない アプリケーションで利用する location が分かっている場合、location を取得するヘルパー関数を定義する time.LoadLocation は環境依存なので予め location が分かっているなら使わないほうがよい 文字列を time.Time に変換する場合、time.ParseInLocation で Location を指定して time.Time に変換後、time.Time.UTC() で UTC に変換する time.Time を文字列に変換する場合、time.In で location を変換後、time.Time.Format で文字列に変換する  グローバルな location https://golang.org/pkg/time/#Location">
+
+<meta property="og:title" content="Golang での時刻の扱い方を整理する - melody">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://techblog-szksh-cloud.github.io/golang-time/">
+<meta property="og:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+<meta property="og:site_name" content="melody">
+<meta property="og:description" content="今更ながら Golang での時刻の扱い方について改めて整理してみました。まとめ  time.Local は明示的に設定する(基本UTC) DB などには 基本UTC で永続化する 出力時に必要になったらタイムゾーンを変更する  location は出力時に問題になるので出力時に location を明示的に指定する 逆に言うと出力時以外は問題にならないので無理に location を UTC にしなくても良いかもしれない サードパーティ(ex. ORM) に time.Time を渡す場合は location に注意が必要   文字列として時刻の入力を受け付ける場合は location を明示的にセットする サードパーティが time.Local に依存する場合、 time.Local を明示的に UTC にしたりする必要があるかもしれない アプリケーションで利用する location が分かっている場合、location を取得するヘルパー関数を定義する time.LoadLocation は環境依存なので予め location が分かっているなら使わないほうがよい 文字列を time.Time に変換する場合、time.ParseInLocation で Location を指定して time.Time に変換後、time.Time.UTC() で UTC に変換する time.Time を文字列に変換する場合、time.In で location を変換後、time.Time.Format で文字列に変換する  グローバルな location https://golang.org/pkg/time/#Location">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="melody">
+<meta name="twitter:url" content="https://techblog-szksh-cloud.github.io/golang-time/">
+<meta name="twitter:title" content="Golang での時刻の扱い方を整理する - melody">
+<meta name="twitter:description" content="今更ながら Golang での時刻の扱い方について改めて整理してみました。まとめ  time.Local は明示的に設定する(基本UTC) DB などには 基本UTC で永続化する 出力時に必要になったらタイムゾーンを変更する  location は出力時に問題になるので出力時に location を明示的に指定する 逆に言うと出力時以外は問題にならないので無理に location を UTC にしなくても良いかもしれない サードパーティ(ex. ORM) に time.Time を渡す場合は location に注意が必要   文字列として時刻の入力を受け付ける場合は location を明示的にセットする サードパーティが time.Local に依存する場合、 time.Local を明示的に UTC にしたりする必要があるかもしれない アプリケーションで利用する location が分かっている場合、location を取得するヘルパー関数を定義する time.LoadLocation は環境依存なので予め location が分かっているなら使わないほうがよい 文字列を time.Time に変換する場合、time.ParseInLocation で Location を指定して time.Time に変換後、time.Time.UTC() で UTC に変換する time.Time を文字列に変換する場合、time.In で location を変換後、time.Time.Format で文字列に変換する  グローバルな location https://golang.org/pkg/time/#Location">
+<meta name="twitter:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https:\/\/techblog-szksh-cloud.github.io\/"
+    },
+    "headline": "Golang での時刻の扱い方を整理する - melody",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https:\/\/techblog-szksh-cloud.github.io\/images\/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2019-08-14T20:28:56JST",
+    "dateModified": "2019-08-14T20:28:56JST",
+    "author": {
+      "@type": "Person",
+      "name": "melody"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "melody",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https:\/\/techblog-szksh-cloud.github.io\/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "今更ながら Golang での時刻の扱い方について改めて整理してみました。\nまとめ  time.Local は明示的に設定する(基本UTC) DB などには 基本UTC で永続化する 出力時に必要になったらタイムゾーンを変更する  location は出力時に問題になるので出力時に location を明示的に指定する 逆に言うと出力時以外は問題にならないので無理に location を UTC にしなくても良いかもしれない サードパーティ(ex. ORM) に time.Time を渡す場合は location に注意が必要   文字列として時刻の入力を受け付ける場合は location を明示的にセットする サードパーティが time.Local に依存する場合、 time.Local を明示的に UTC にしたりする必要があるかもしれない アプリケーションで利用する location が分かっている場合、location を取得するヘルパー関数を定義する time.LoadLocation は環境依存なので予め location が分かっているなら使わないほうがよい 文字列を time.Time に変換する場合、time.ParseInLocation で Location を指定して time.Time に変換後、time.Time.UTC() で UTC に変換する time.Time を文字列に変換する場合、time.In で location を変換後、time.Time.Format で文字列に変換する  グローバルな location https:\/\/golang.org\/pkg\/time\/#Location"
+  }
+</script>
+
+
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://techblog-szksh-cloud.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li class="active">Golang での時刻の扱い方を整理する</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2019-08-14T20:28:56JST">Aug 14, 2019</time></li>
+      
+      
+    </ul>
+
+    <h1 class="title">Golang での時刻の扱い方を整理する</h1>
+    
+    
+    <section>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/golang/">golang</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </header>
+
+  
+
+  <div class="article-body"><p>今更ながら Golang での時刻の扱い方について改めて整理してみました。</p>
+<h2 id="まとめ">まとめ</h2>
+<ul>
+<li>time.Local は明示的に設定する(基本UTC)</li>
+<li>DB などには 基本UTC で永続化する</li>
+<li>出力時に必要になったらタイムゾーンを変更する
+<ul>
+<li>location は出力時に問題になるので出力時に location を明示的に指定する</li>
+<li>逆に言うと出力時以外は問題にならないので無理に location を UTC にしなくても良いかもしれない</li>
+<li>サードパーティ(ex. ORM) に time.Time を渡す場合は location に注意が必要</li>
+</ul>
+</li>
+<li>文字列として時刻の入力を受け付ける場合は location を明示的にセットする</li>
+<li>サードパーティが time.Local に依存する場合、 time.Local を明示的に UTC にしたりする必要があるかもしれない</li>
+<li>アプリケーションで利用する location が分かっている場合、location を取得するヘルパー関数を定義する</li>
+<li><code>time.LoadLocation</code> は環境依存なので予め location が分かっているなら使わないほうがよい</li>
+<li>文字列を time.Time に変換する場合、<code>time.ParseInLocation</code> で Location を指定して time.Time に変換後、time.Time.UTC() で UTC に変換する</li>
+<li>time.Time を文字列に変換する場合、time.In で location を変換後、time.Time.Format で文字列に変換する</li>
+</ul>
+<h2 id="グローバルな-location">グローバルな location</h2>
+<p><a href="https://golang.org/pkg/time/#Location">https://golang.org/pkg/time/#Location</a></p>
+<blockquote>
+<p>Local represents the system&rsquo;s local time zone.</p>
+</blockquote>
+<h2 id="location-を設定する">location を設定する</h2>
+<p><a href="https://crieit.net/posts/Go-time-LoadLocation">https://crieit.net/posts/Go-time-LoadLocation</a> に書いてあるとおり、
+<code>time.LoadLocation</code> を下手に呼び出すと環境によっては <code>unknown time zone</code> エラーが起こるため
+次のように time.FixedZone で Location を生成します。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">jp</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">FixedZone</span>(<span style="color:#e6db74">&#34;Asia/Tokyo&#34;</span>, <span style="color:#ae81ff">9</span><span style="color:#f92672">*</span><span style="color:#ae81ff">60</span><span style="color:#f92672">*</span><span style="color:#ae81ff">60</span>)
+</code></pre></div><p>FixedZone という関数名が紛らわしい気もしますが、新しい Location を生成しているだけで副作用はありません。</p>
+<p>ちなみに time.FixedZone に渡す文字列は &ldquo;foo&rdquo; みたいな適当な文字列でも動くようです。</p>
+<p><a href="https://golang.org/pkg/time/#FixedZone">https://golang.org/pkg/time/#FixedZone</a></p>
+<p><a href="https://github.com/golang/go/blob/9e277f7d554455e16ba3762541c53e9bfc1d8188/src/time/zoneinfo.go#L263-L308">https://github.com/golang/go/blob/9e277f7d554455e16ba3762541c53e9bfc1d8188/src/time/zoneinfo.go#L263-L308</a></p>
+<p>アプリケーションで利用する location が決まっている場合、次のように location を返すヘルパー関数を用意すると良さそうです。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">location</span>
+
+<span style="color:#f92672">import</span> (
+	<span style="color:#e6db74">&#34;time&#34;</span>
+)
+
+<span style="color:#66d9ef">var</span> (
+	<span style="color:#a6e22e">jp</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Location</span>
+)
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">init</span>() {
+	<span style="color:#a6e22e">jp</span> = <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">FixedZone</span>(<span style="color:#e6db74">&#34;Asia/Tokyo&#34;</span>, <span style="color:#ae81ff">9</span><span style="color:#f92672">*</span><span style="color:#ae81ff">60</span><span style="color:#f92672">*</span><span style="color:#ae81ff">60</span>)
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">JP</span>() <span style="color:#f92672">*</span><span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Location</span> {
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">jp</span>
+}
+</code></pre></div><h2 id="厳密に-utc-な-location-を取得する">厳密に UTC な Location を取得する</h2>
+<p>厳密に言うと、<code>time.UTC</code> は変更可能なので UTC だとは限りません。
+そのため、本来 <code>time.UTC</code> はゲッター関数であるべきだったんじゃないかなという気もします。</p>
+<p>厳密に UTC な Location を取得するにはヘルパー関数を書くと良さそうです。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">location</span>
+
+<span style="color:#f92672">import</span> (
+	<span style="color:#e6db74">&#34;time&#34;</span>
+)
+
+<span style="color:#66d9ef">var</span> (
+	<span style="color:#a6e22e">utc</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Location</span>
+)
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">init</span>() {
+	<span style="color:#a6e22e">utc</span> = <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">FixedZone</span>(<span style="color:#e6db74">&#34;UTC&#34;</span>, <span style="color:#ae81ff">0</span>)
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">UTC</span>() <span style="color:#f92672">*</span><span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Location</span> {
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">utc</span>
+}
+</code></pre></div><h2 id="動作環境に依存しないコードにするために">動作環境に依存しないコードにするために</h2>
+<p>動作環境によって <code>time.Local</code> の値が違うことで結果が変わってしまう場合があります。
+それを防ぐために、プログラムの最初に <code>time.Local</code> を UTC にするという手もありそうです。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Local</span> = <span style="color:#a6e22e">location</span>.<span style="color:#a6e22e">UTC</span>()
+</code></pre></div><p>ただし、それでもグローバル変数である以上、行儀の悪いサードパーティのライブラリによって変更されるかもしれませんし、
+必要な箇所で location を明示的に指定してグローバル変数に依存しないようなコードを書くことを心がけたほうが良い気もします。</p>
+<h2 id="文字列を-timetime-に変換する">文字列を time.Time に変換する</h2>
+<ul>
+<li><a href="https://golang.org/pkg/time/#Parse">https://golang.org/pkg/time/#Parse</a></li>
+<li><a href="https://golang.org/pkg/time/#ParseInLocation">https://golang.org/pkg/time/#ParseInLocation</a></li>
+</ul>
+<blockquote>
+<p>ParseInLocation is like Parse but differs in two important ways.
+First, in the absence of time zone information, Parse interprets a time as UTC;
+ParseInLocation interprets the time as in the given location.
+Second, when given a zone offset or abbreviation, Parse tries to match it against the Local location;
+ParseInLocation uses the given location.</p>
+</blockquote>
+<p>ParseInLocation と Parse の違い</p>
+<ul>
+<li>文字列に location の情報がない場合、 Parse は UTC として扱う</li>
+<li>zone offset が指定された場合、 Parse は Local location からの offset として扱う
+<ul>
+<li>ParseInLocation で明示的に Location を指定したほうが良さそう</li>
+</ul>
+</li>
+</ul>
+<p>予め location がわかっている場合 time.ParseInLocation で location を指定して time.Time に変換した後 time.Time.In で UTC にするのが良さそうです。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">t</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">ParseInLocation</span>(<span style="color:#e6db74">&#34;2006-01-02T15:04:05&#34;</span>, <span style="color:#e6db74">&#34;2019-08-13T21:30:00&#34;</span>, <span style="color:#a6e22e">jp</span>)
+<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+}
+<span style="color:#a6e22e">t</span> = <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">UTC</span>()
+</code></pre></div><h2 id="timetime-の-location-を変更する">time.Time の Location を変更する</h2>
+<p><a href="https://golang.org/pkg/time/#Time.In">https://golang.org/pkg/time/#Time.In</a></p>
+<blockquote>
+<p>In returns a copy of t representing the same time instant,
+but with the copy&rsquo;s location information set to loc for display purposes.</p>
+</blockquote>
+<p>time.Time.In は time.Time の Location だけ変更したコピーを返します。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+
+<span style="color:#f92672">import</span> (
+	<span style="color:#e6db74">&#34;fmt&#34;</span>
+	<span style="color:#e6db74">&#34;time&#34;</span>
+)
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+	<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Local</span> = <span style="color:#a6e22e">location</span>.<span style="color:#a6e22e">UTC</span>()
+	<span style="color:#a6e22e">t</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>()
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">t</span>) <span style="color:#75715e">// 2019-08-14 12:08:44.150725 +0000 UTC m=+0.000212031
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">t2</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">In</span>(<span style="color:#a6e22e">location</span>.<span style="color:#a6e22e">JP</span>())
+	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">t2</span>) <span style="color:#75715e">// 2019-08-14 21:08:44.150725 +0900 Asia/Tokyo
+</span><span style="color:#75715e"></span>}
+</code></pre></div><h2 id="timetime-を文字列に変換する">time.Time を文字列に変換する</h2>
+<p><a href="https://golang.org/pkg/time/#Time.Format">https://golang.org/pkg/time/#Time.Format</a></p>
+<p>time.Time.In で location を変更した後 time.Time.Format で文字列に変換するのが良さそうです。</p>
+<h2 id="timenow-の-location">time.Now の location</h2>
+<p>Location は <code>time.Local</code> になります。</p>
+<p><a href="https://golang.org/pkg/time/#Now">https://golang.org/pkg/time/#Now</a></p>
+<h2 id="他のパッケージの-location-の扱い">他のパッケージの location の扱い</h2>
+<h3 id="log">log</h3>
+<p>log パッケージで出力される時刻のフォーマットと location は log.SetFlags によってある程度変更できます。</p>
+<p>デフォルトは 日時を time.Local で出力します。
+log.LUTC をセットすることで UTC になります。</p>
+<ul>
+<li><a href="https://golang.org/pkg/log/#SetFlags">https://golang.org/pkg/log/#SetFlags</a></li>
+<li><a href="https://golang.org/pkg/log/#pkg-constants">https://golang.org/pkg/log/#pkg-constants</a></li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">SetFlags</span>(<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Flags</span>() | <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">LUTC</span>)
+</code></pre></div><h3 id="logrus">logrus</h3>
+<p><a href="https://github.com/Sirupsen/logrus">logrus</a> のログの時刻の location も time.Local なようです。</p>
+<h3 id="robfigcron">robfig/cron</h3>
+<p><a href="https://github.com/robfig/cron">https://github.com/robfig/cron</a></p>
+<blockquote>
+<p>All interpretation and scheduling is done in the machine&rsquo;s local time zone (as provided by the Go time package (<a href="http://www.golang.org/pkg/time)">http://www.golang.org/pkg/time)</a>.</p>
+</blockquote>
+<p>time.Local なようです。</p>
+<h3 id="go-sql-drivermisql">go-sql-driver/misql</h3>
+<ul>
+<li><a href="https://github.com/go-sql-driver/mysql#timetime-support">https://github.com/go-sql-driver/mysql#timetime-support</a></li>
+<li><a href="https://www.sambaiz.net/article/189/">https://www.sambaiz.net/article/189/</a></li>
+</ul>
+<h3 id="gorm">gorm</h3>
+<p><a href="https://github.com/jinzhu/gorm/wiki/How-To-Do-Time">https://github.com/jinzhu/gorm/wiki/How-To-Do-Time</a></p>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/golang/">golang</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

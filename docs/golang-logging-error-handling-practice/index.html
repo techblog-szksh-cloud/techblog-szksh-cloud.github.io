@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/golang-logging-error-handling-practice/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>Golangにおけるエラーハンドリングとロギングのプラクティス - melody</title>
+    
+<meta name="description" content="2018-12-30 追記 この記事を元にドキュメントを書いてみました。https://github.com/suzuki-shunsuke/go-error-handling-logging-practice追記ここまで Golang でエラーハンドリングとロギングをしてきて自分の中で固まりつつあるプラクティスを明文化します。 明文化することで以下のことを目指します。 迷いをなくす コードの一貫性を保つ コーディング規約とすることでレビューの品質を上げる(自動化は出来ないけど) コードの品質を上げる(コードがゴチャつかなくなる) 適切にエラーをロギングする(必要十分な情報をログとして残す)  またエラーハンドリングとロギングのためのライブラリを自作しているのでそれも紹介します。https://github.com/suzuki-shunsuke/go-errlogロギングに関する関連記事 この記事を書く前に軽くググってみただけでちゃんと読んでないのですが、 興味のある人は読んでみてください。 https://www.loggly.com/blog/think-differently-about-what-to-log-in-go-best-practices-examined/ https://dave.cheney.net/2015/11/05/lets-talk-about-logging https://postd.cc/go-best-practices-2016/#logging-and-instrumentation  ログレベルは分ける ログレベルでwarningとかいらないという意見もありますが、自分は必要だと思っています。 自分は以下のログレベルを使い分けます。 debug: あまり使わない。調査目的で一時的に埋め込むログ。調査が終わったら出力しないようにする。一時的でないものはinfoにする info: エラーでないログ。イベント、処理の開始時や終了を記録するのに使うことが多い warn: 4xx系のエラー。それが起こっただけではアラートを飛ばさないが、数が通常時より多い場合はバグかUIに問題があってユーザーが間違えやすくなっている可能性があるのでアラートを飛ばす error: 5xx系のエラー。アラートを飛ばす(閾値は調整) fatal: 処理継続が不可能な致命的なエラー。システムを止める  書いてから思いましたが、これに関しては標準的な使い分けのルールがありそうですね(要調査)。。logrus を使ってログを構造化する 前提としてwebシステムやバッチシステムなどを想定しています。CLIツールならば話は変わるでしょう。 JSONフォーマットで出力してfluentdでElasticsearchにフォワードするのが個人的によくあるパターンです。go-errlogもlogrusの使用を前提としています。ロギングのライブラリは他にも色々あるので、logrusで満足できない人は以下から探してみるとよいでしょう。https://github.com/avelino/awesome-go#loggingエラーログは中央集権的に main に近い所で出力する エラーログをどこで出力するかですが、原則中央集権的に main に近い所で出力します。 因みに中央集権的という表現は echo の centralized error handling からもじっています。https://echo.labstack.com/guide/error-handlingerror が発生してもすぐログを吐くのではなく、error を関数の戻り値として返し、ロギングする責務を親に委譲します。 Goでは以下のようなイディオムがよく見られますね。if err != nil { return err } ロギングに必要な情報を戻り値のerrorに含める 上記のコードで問題なのは、エラーに関する情報が欠損することがあることです。">
+
+<meta property="og:title" content="Golangにおけるエラーハンドリングとロギングのプラクティス - melody">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://techblog-szksh-cloud.github.io/golang-logging-error-handling-practice/">
+<meta property="og:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+<meta property="og:site_name" content="melody">
+<meta property="og:description" content="2018-12-30 追記 この記事を元にドキュメントを書いてみました。https://github.com/suzuki-shunsuke/go-error-handling-logging-practice追記ここまで Golang でエラーハンドリングとロギングをしてきて自分の中で固まりつつあるプラクティスを明文化します。 明文化することで以下のことを目指します。 迷いをなくす コードの一貫性を保つ コーディング規約とすることでレビューの品質を上げる(自動化は出来ないけど) コードの品質を上げる(コードがゴチャつかなくなる) 適切にエラーをロギングする(必要十分な情報をログとして残す)  またエラーハンドリングとロギングのためのライブラリを自作しているのでそれも紹介します。https://github.com/suzuki-shunsuke/go-errlogロギングに関する関連記事 この記事を書く前に軽くググってみただけでちゃんと読んでないのですが、 興味のある人は読んでみてください。 https://www.loggly.com/blog/think-differently-about-what-to-log-in-go-best-practices-examined/ https://dave.cheney.net/2015/11/05/lets-talk-about-logging https://postd.cc/go-best-practices-2016/#logging-and-instrumentation  ログレベルは分ける ログレベルでwarningとかいらないという意見もありますが、自分は必要だと思っています。 自分は以下のログレベルを使い分けます。 debug: あまり使わない。調査目的で一時的に埋め込むログ。調査が終わったら出力しないようにする。一時的でないものはinfoにする info: エラーでないログ。イベント、処理の開始時や終了を記録するのに使うことが多い warn: 4xx系のエラー。それが起こっただけではアラートを飛ばさないが、数が通常時より多い場合はバグかUIに問題があってユーザーが間違えやすくなっている可能性があるのでアラートを飛ばす error: 5xx系のエラー。アラートを飛ばす(閾値は調整) fatal: 処理継続が不可能な致命的なエラー。システムを止める  書いてから思いましたが、これに関しては標準的な使い分けのルールがありそうですね(要調査)。。logrus を使ってログを構造化する 前提としてwebシステムやバッチシステムなどを想定しています。CLIツールならば話は変わるでしょう。 JSONフォーマットで出力してfluentdでElasticsearchにフォワードするのが個人的によくあるパターンです。go-errlogもlogrusの使用を前提としています。ロギングのライブラリは他にも色々あるので、logrusで満足できない人は以下から探してみるとよいでしょう。https://github.com/avelino/awesome-go#loggingエラーログは中央集権的に main に近い所で出力する エラーログをどこで出力するかですが、原則中央集権的に main に近い所で出力します。 因みに中央集権的という表現は echo の centralized error handling からもじっています。https://echo.labstack.com/guide/error-handlingerror が発生してもすぐログを吐くのではなく、error を関数の戻り値として返し、ロギングする責務を親に委譲します。 Goでは以下のようなイディオムがよく見られますね。if err != nil { return err } ロギングに必要な情報を戻り値のerrorに含める 上記のコードで問題なのは、エラーに関する情報が欠損することがあることです。">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="melody">
+<meta name="twitter:url" content="https://techblog-szksh-cloud.github.io/golang-logging-error-handling-practice/">
+<meta name="twitter:title" content="Golangにおけるエラーハンドリングとロギングのプラクティス - melody">
+<meta name="twitter:description" content="2018-12-30 追記 この記事を元にドキュメントを書いてみました。https://github.com/suzuki-shunsuke/go-error-handling-logging-practice追記ここまで Golang でエラーハンドリングとロギングをしてきて自分の中で固まりつつあるプラクティスを明文化します。 明文化することで以下のことを目指します。 迷いをなくす コードの一貫性を保つ コーディング規約とすることでレビューの品質を上げる(自動化は出来ないけど) コードの品質を上げる(コードがゴチャつかなくなる) 適切にエラーをロギングする(必要十分な情報をログとして残す)  またエラーハンドリングとロギングのためのライブラリを自作しているのでそれも紹介します。https://github.com/suzuki-shunsuke/go-errlogロギングに関する関連記事 この記事を書く前に軽くググってみただけでちゃんと読んでないのですが、 興味のある人は読んでみてください。 https://www.loggly.com/blog/think-differently-about-what-to-log-in-go-best-practices-examined/ https://dave.cheney.net/2015/11/05/lets-talk-about-logging https://postd.cc/go-best-practices-2016/#logging-and-instrumentation  ログレベルは分ける ログレベルでwarningとかいらないという意見もありますが、自分は必要だと思っています。 自分は以下のログレベルを使い分けます。 debug: あまり使わない。調査目的で一時的に埋め込むログ。調査が終わったら出力しないようにする。一時的でないものはinfoにする info: エラーでないログ。イベント、処理の開始時や終了を記録するのに使うことが多い warn: 4xx系のエラー。それが起こっただけではアラートを飛ばさないが、数が通常時より多い場合はバグかUIに問題があってユーザーが間違えやすくなっている可能性があるのでアラートを飛ばす error: 5xx系のエラー。アラートを飛ばす(閾値は調整) fatal: 処理継続が不可能な致命的なエラー。システムを止める  書いてから思いましたが、これに関しては標準的な使い分けのルールがありそうですね(要調査)。。logrus を使ってログを構造化する 前提としてwebシステムやバッチシステムなどを想定しています。CLIツールならば話は変わるでしょう。 JSONフォーマットで出力してfluentdでElasticsearchにフォワードするのが個人的によくあるパターンです。go-errlogもlogrusの使用を前提としています。ロギングのライブラリは他にも色々あるので、logrusで満足できない人は以下から探してみるとよいでしょう。https://github.com/avelino/awesome-go#loggingエラーログは中央集権的に main に近い所で出力する エラーログをどこで出力するかですが、原則中央集権的に main に近い所で出力します。 因みに中央集権的という表現は echo の centralized error handling からもじっています。https://echo.labstack.com/guide/error-handlingerror が発生してもすぐログを吐くのではなく、error を関数の戻り値として返し、ロギングする責務を親に委譲します。 Goでは以下のようなイディオムがよく見られますね。if err != nil { return err } ロギングに必要な情報を戻り値のerrorに含める 上記のコードで問題なのは、エラーに関する情報が欠損することがあることです。">
+<meta name="twitter:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https:\/\/techblog-szksh-cloud.github.io\/"
+    },
+    "headline": "Golangにおけるエラーハンドリングとロギングのプラクティス - melody",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https:\/\/techblog-szksh-cloud.github.io\/images\/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2018-12-25T21:51:41JST",
+    "dateModified": "2018-12-25T21:51:41JST",
+    "author": {
+      "@type": "Person",
+      "name": "melody"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "melody",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https:\/\/techblog-szksh-cloud.github.io\/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "2018-12-30 追記 この記事を元にドキュメントを書いてみました。\nhttps:\/\/github.com\/suzuki-shunsuke\/go-error-handling-logging-practice\n追記ここまで\n Golang でエラーハンドリングとロギングをしてきて自分の中で固まりつつあるプラクティスを明文化します。 明文化することで以下のことを目指します。\n 迷いをなくす コードの一貫性を保つ コーディング規約とすることでレビューの品質を上げる(自動化は出来ないけど) コードの品質を上げる(コードがゴチャつかなくなる) 適切にエラーをロギングする(必要十分な情報をログとして残す)  またエラーハンドリングとロギングのためのライブラリを自作しているのでそれも紹介します。\nhttps:\/\/github.com\/suzuki-shunsuke\/go-errlog\nロギングに関する関連記事 この記事を書く前に軽くググってみただけでちゃんと読んでないのですが、 興味のある人は読んでみてください。\n https:\/\/www.loggly.com\/blog\/think-differently-about-what-to-log-in-go-best-practices-examined\/ https:\/\/dave.cheney.net\/2015\/11\/05\/lets-talk-about-logging https:\/\/postd.cc\/go-best-practices-2016\/#logging-and-instrumentation  ログレベルは分ける ログレベルでwarningとかいらないという意見もありますが、自分は必要だと思っています。 自分は以下のログレベルを使い分けます。\n debug: あまり使わない。調査目的で一時的に埋め込むログ。調査が終わったら出力しないようにする。一時的でないものはinfoにする info: エラーでないログ。イベント、処理の開始時や終了を記録するのに使うことが多い warn: 4xx系のエラー。それが起こっただけではアラートを飛ばさないが、数が通常時より多い場合はバグかUIに問題があってユーザーが間違えやすくなっている可能性があるのでアラートを飛ばす error: 5xx系のエラー。アラートを飛ばす(閾値は調整) fatal: 処理継続が不可能な致命的なエラー。システムを止める  書いてから思いましたが、これに関しては標準的な使い分けのルールがありそうですね(要調査)。。\nlogrus を使ってログを構造化する 前提としてwebシステムやバッチシステムなどを想定しています。CLIツールならば話は変わるでしょう。 JSONフォーマットで出力してfluentdでElasticsearchにフォワードするのが個人的によくあるパターンです。\ngo-errlogもlogrusの使用を前提としています。\nロギングのライブラリは他にも色々あるので、logrusで満足できない人は以下から探してみるとよいでしょう。\nhttps:\/\/github.com\/avelino\/awesome-go#logging\nエラーログは中央集権的に main に近い所で出力する エラーログをどこで出力するかですが、原則中央集権的に main に近い所で出力します。 因みに中央集権的という表現は echo の centralized error handling からもじっています。\nhttps:\/\/echo.labstack.com\/guide\/error-handling\nerror が発生してもすぐログを吐くのではなく、error を関数の戻り値として返し、ロギングする責務を親に委譲します。 Goでは以下のようなイディオムがよく見られますね。\nif err != nil { return err } ロギングに必要な情報を戻り値のerrorに含める 上記のコードで問題なのは、エラーに関する情報が欠損することがあることです。"
+  }
+</script>
+
+
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://techblog-szksh-cloud.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li class="active">Golangにおけるエラーハンドリングとロギングのプラクティス</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-12-25T21:51:41JST">Dec 25, 2018</time></li>
+      
+      
+    </ul>
+
+    <h1 class="title">Golangにおけるエラーハンドリングとロギングのプラクティス</h1>
+    
+    
+    <section>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/golang/">golang</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/logging/">logging</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </header>
+
+  
+
+  <div class="article-body"><h2 id="2018-12-30-追記">2018-12-30 追記</h2>
+<p>この記事を元にドキュメントを書いてみました。</p>
+<p><a href="https://github.com/suzuki-shunsuke/go-error-handling-logging-practice">https://github.com/suzuki-shunsuke/go-error-handling-logging-practice</a></p>
+<p>追記ここまで</p>
+<hr>
+<p>Golang でエラーハンドリングとロギングをしてきて自分の中で固まりつつあるプラクティスを明文化します。
+明文化することで以下のことを目指します。</p>
+<ul>
+<li>迷いをなくす</li>
+<li>コードの一貫性を保つ</li>
+<li>コーディング規約とすることでレビューの品質を上げる(自動化は出来ないけど)</li>
+<li>コードの品質を上げる(コードがゴチャつかなくなる)</li>
+<li>適切にエラーをロギングする(必要十分な情報をログとして残す)</li>
+</ul>
+<p>またエラーハンドリングとロギングのためのライブラリを自作しているのでそれも紹介します。</p>
+<p><a href="https://github.com/suzuki-shunsuke/go-errlog">https://github.com/suzuki-shunsuke/go-errlog</a></p>
+<h2 id="ロギングに関する関連記事">ロギングに関する関連記事</h2>
+<p>この記事を書く前に軽くググってみただけでちゃんと読んでないのですが、
+興味のある人は読んでみてください。</p>
+<ul>
+<li><a href="https://www.loggly.com/blog/think-differently-about-what-to-log-in-go-best-practices-examined/">https://www.loggly.com/blog/think-differently-about-what-to-log-in-go-best-practices-examined/</a></li>
+<li><a href="https://dave.cheney.net/2015/11/05/lets-talk-about-logging">https://dave.cheney.net/2015/11/05/lets-talk-about-logging</a></li>
+<li><a href="https://postd.cc/go-best-practices-2016/#logging-and-instrumentation">https://postd.cc/go-best-practices-2016/#logging-and-instrumentation</a></li>
+</ul>
+<h2 id="ログレベルは分ける">ログレベルは分ける</h2>
+<p>ログレベルでwarningとかいらないという意見もありますが、自分は必要だと思っています。
+自分は以下のログレベルを使い分けます。</p>
+<ul>
+<li>debug: あまり使わない。調査目的で一時的に埋め込むログ。調査が終わったら出力しないようにする。一時的でないものはinfoにする</li>
+<li>info: エラーでないログ。イベント、処理の開始時や終了を記録するのに使うことが多い</li>
+<li>warn: 4xx系のエラー。それが起こっただけではアラートを飛ばさないが、数が通常時より多い場合はバグかUIに問題があってユーザーが間違えやすくなっている可能性があるのでアラートを飛ばす</li>
+<li>error: 5xx系のエラー。アラートを飛ばす(閾値は調整)</li>
+<li>fatal: 処理継続が不可能な致命的なエラー。システムを止める</li>
+</ul>
+<p>書いてから思いましたが、これに関しては標準的な使い分けのルールがありそうですね(要調査)。。</p>
+<h2 id="logrus-を使ってログを構造化する">logrus を使ってログを構造化する</h2>
+<p>前提としてwebシステムやバッチシステムなどを想定しています。CLIツールならば話は変わるでしょう。
+JSONフォーマットで出力してfluentdでElasticsearchにフォワードするのが個人的によくあるパターンです。</p>
+<p>go-errlogもlogrusの使用を前提としています。</p>
+<p>ロギングのライブラリは他にも色々あるので、logrusで満足できない人は以下から探してみるとよいでしょう。</p>
+<p><a href="https://github.com/avelino/awesome-go#logging">https://github.com/avelino/awesome-go#logging</a></p>
+<h2 id="エラーログは中央集権的に-main-に近い所で出力する">エラーログは中央集権的に main に近い所で出力する</h2>
+<p>エラーログをどこで出力するかですが、原則中央集権的に main に近い所で出力します。
+因みに中央集権的という表現は echo の centralized error handling からもじっています。</p>
+<p><a href="https://echo.labstack.com/guide/error-handling">https://echo.labstack.com/guide/error-handling</a></p>
+<p>error が発生してもすぐログを吐くのではなく、error を関数の戻り値として返し、ロギングする責務を親に委譲します。
+Goでは以下のようなイディオムがよく見られますね。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+}
+</code></pre></div><h2 id="ロギングに必要な情報を戻り値のerrorに含める">ロギングに必要な情報を戻り値のerrorに含める</h2>
+<p>上記のコードで問題なのは、エラーに関する情報が欠損することがあることです。</p>
+<p>これに関しては以下の記事が参考になります。</p>
+<p><a href="https://deeeet.com/writing/2016/04/25/go-pkg-errors/">https://deeeet.com/writing/2016/04/25/go-pkg-errors/</a></p>
+<p>エラーに関する情報には2種類あると個人的に考えていて「メッセージ」と「メタ情報」なんて風に脳内で呼んでたりします。</p>
+<ul>
+<li>メッセージ: エラーの原因を示すhuman readable なテキスト(<a href="https://github.com/pkg/errors">pkg/errors</a>はこれに対応している)
+<ul>
+<li>リストになる</li>
+</ul>
+</li>
+<li>メタ情報: エラーに関する構造化されたデータ
+<ul>
+<li>ハッシュになる</li>
+</ul>
+</li>
+</ul>
+<p>例えば foo というユーザー名が既に使われていてユーザーの作成に失敗した場合</p>
+<ul>
+<li>メッセージ
+<ul>
+<li>username is already used</li>
+<li>invalid username</li>
+<li>failed to create a user</li>
+</ul>
+</li>
+<li>メタ情報
+<ul>
+<li>username: foo</li>
+</ul>
+</li>
+</ul>
+<p>と言った感じになります。
+メッセージにメタ情報を含めて <code>&quot;foo&quot; is invalid username</code> といった風にも出来ますが、そうすると検索・集計しづらかったり、メッセージの生成に一手間かかったりするのでメッセージにはメタ情報を含めません。</p>
+<p>pkg/errors だとメタ情報には対応できないので自分でライブラリを作りました。</p>
+<p><a href="https://github.com/suzuki-shunsuke/go-errlog">https://github.com/suzuki-shunsuke/go-errlog</a></p>
+<p>こんな感じになります。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">return</span> <span style="color:#a6e22e">errlog</span>.<span style="color:#a6e22e">Wrap</span>(<span style="color:#a6e22e">err</span>, <span style="color:#a6e22e">logrus</span>.<span style="color:#a6e22e">Fields</span>{<span style="color:#e6db74">&#34;username&#34;</span>: <span style="color:#e6db74">&#34;foo&#34;</span>}, <span style="color:#e6db74">&#34;failed to create a user&#34;</span>)
+</code></pre></div><h2 id="error-に含める情報の責務">error に含める情報の責務</h2>
+<p>上記のように error に情報を含める場合、どこまで含めるかというのが問題になります。
+ここでプラクティスとして、
+<strong>関数がerrorを返す場合、その関数がもっている情報は全て含める責務があり、
+逆に子関数から返ってきたerrorには子関数に渡っている情報が含まれているので呼び出し元で付与する必要はない</strong>というふうにしています。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">createUser</span>(<span style="color:#a6e22e">name</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">age</span> <span style="color:#66d9ef">int</span>) <span style="color:#66d9ef">error</span> {
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">checkName</span>(<span style="color:#a6e22e">name</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">errlog</span>.<span style="color:#a6e22e">Wrap</span>(<span style="color:#a6e22e">err</span>, <span style="color:#a6e22e">logrus</span>.<span style="color:#a6e22e">Fields</span>{<span style="color:#e6db74">&#34;age&#34;</span>: <span style="color:#a6e22e">age</span>}, <span style="color:#e6db74">&#34;failed to create a user&#34;</span>)
+	}
+}
+</code></pre></div><p>つまり上のコードでは子関数に渡っているメタ情報<code>name</code>や、<code>invalid username</code> のようなメッセージを <code>errlog.Wrap</code> に渡す必要はありません。
+上記の例だとエラーに関係ない <code>age</code> も渡す必要はないのではないかとも考えられますが、原則ログに残すこととします。</p>
+<p>ただし、子関数が標準関数やサードパーティのライブラリなど、プロジェクト外部で定義された関数であれば話は別です。
+それらがどのようなエラーを返すかは保証がありません。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">if</span> <span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Open</span>(<span style="color:#a6e22e">filename</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">errlog</span>.<span style="color:#a6e22e">Wrap</span>(<span style="color:#a6e22e">err</span>, <span style="color:#a6e22e">logrus</span>.<span style="color:#a6e22e">Fields</span>{<span style="color:#e6db74">&#34;filename&#34;</span>: <span style="color:#a6e22e">filename</span>}, <span style="color:#e6db74">&#34;failed to open a file&#34;</span>, <span style="color:#e6db74">&#34;failed to create a user&#34;</span>)
+}
+</code></pre></div><p>上記の例だと、<code>os.Open</code>に渡したメタ情報 <code>filename</code> や os.Openに失敗したことを示す <code>failed to open a file</code> といったメッセージも<code>errlog.Wrap</code>に渡しています。</p>
+<p><code>errlog.Wrap</code> は複数のメッセージを渡せるようになっています。
+メッセージの順番は左からイベントが発生した順になるようにします。
+上記の例だと「ファイルのオープンに失敗」した結果、「ユーザの作成に失敗」するという順序になります。</p>
+<h2 id="エラーのロギングはシンプルに">エラーのロギングはシンプルに</h2>
+<p>go-errlogではシンプルにロギングを記述できます。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">logger</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">errlog</span>.<span style="color:#a6e22e">NewLogger</span>(<span style="color:#66d9ef">nil</span>)
+<span style="color:#75715e">// err != nil なら logging する
+</span><span style="color:#75715e">// err がメタ情報を持ってたら logrusで構造化してロギングする
+</span><span style="color:#75715e">// メッセージも pkg/errors のように一つのテキストに連結してロギング
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">logger</span>.<span style="color:#a6e22e">Fatal</span>(<span style="color:#a6e22e">createUser</span>(<span style="color:#e6db74">&#34;foo&#34;</span>, <span style="color:#ae81ff">10</span>))
+</code></pre></div><h2 id="その他-go-errlog-の機能">その他 go-errlog の機能</h2>
+<p>メタ情報やメッセージによって条件分岐したり出来るようにヘルパー関数を幾つか提供しています。</p>
+<ul>
+<li>CheckField</li>
+<li>HasField</li>
+<li>HasMsg</li>
+</ul>
+<p>詳細は<a href="https://godoc.org/github.com/suzuki-shunsuke/go-errlog">GoDoc</a>やソースコードを見てください。</p>
+<h2 id="最後に">最後に</h2>
+<p>色々書いてしまいましたが、一番言いたかったことは</p>
+<blockquote>
+<p><strong>関数がerrorを返す場合、その関数がもっている情報は全て含める責務があり、
+逆に子関数から返ってきたerrorには子関数に渡っている情報が含まれているので呼び出し元で付与する必要はない</strong>というふうにしています。</p>
+<p>ただし、子関数が標準関数やサードパーティのライブラリなど、プロジェクト外部で定義された関数であれば話は別です。</p>
+</blockquote>
+<p>の部分です。この辺は元々自分の中でルールが決まってなくてずっとモヤモヤしてて、
+コードを書くたびにぶれてたのですが、「こうすればいけるんじゃないか」と思いつき、その実装を補助するライブラリを開発し、
+実践したところ今の所そこそこうまく行っています。
+ただまだ日が浅いので少しずつブラッシュアップされていく部分もあると思いますが、
+その場合でも「なんとなく」ではなく、可能な限り明文化していくことで、迷いをなくし、コードとログの品質を上げていきたいと思います。</p>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/golang/">golang</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/logging/">logging</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

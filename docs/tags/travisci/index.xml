@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>travisci on melody</title>
+    <link>https://techblog-szksh-cloud.github.io/tags/travisci/</link>
+    <description>Recent content in travisci on melody</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>jp</language>
+    <lastBuildDate>Mon, 01 Oct 2018 07:23:15 +0900</lastBuildDate><atom:link href="https://techblog-szksh-cloud.github.io/tags/travisci/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>travis ci から circle ci への移行のすすめ</title>
+      <link>https://techblog-szksh-cloud.github.io/migrate-from-travis-ci-to-circle-ci/</link>
+      <pubDate>Mon, 01 Oct 2018 07:23:15 +0900</pubDate>
+      
+      <guid>https://techblog-szksh-cloud.github.io/migrate-from-travis-ci-to-circle-ci/</guid>
+      <description>travis ci と circle ci の無償SaaS 版を比較しています。
+OSS の CI では travis ci がよく使われる印象がありますが、 場合によっては circle CI に移行するとCIの時間が大幅に短くなったりして良いと思います。 ただし、複数バージョンで並列にテストしたい場合、circle ci の無償planだと並列に実行できないため、 travis でやったほうが速いかもしれません。
+Circle CI の良いところ  好きな Docker Image が使える ローカルでテストが出来る Pending 時間が travis ci に比べて短い気がする(主観) private repository の CI も出来る  好きな Docker Image が使えるのが大きいですね。 予め CI に必要なツールをインストールした Image を用意しておくことで大幅に高速化出来ますし、 ツールがインストールできなかったりバージョンが変わってしまったりするトラブルも避けられます。 同じImageを使ってローカルでテストできるのでローカルでの検証もしやすいです。
+自分の場合 Golang のツールの CI用に Docker Image を用意しています。
+https://hub.docker.com/r/suzukishunsuke/go-ci/</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/github-ci-monitor/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>github-ci-monitor: CI のステータスを DataDog で監視 - melody</title>
+    
+<meta name="description" content="自作の OSS github-ci-monitor の紹介です。GitHub リポジトリの CI のステータスを定期的に取得し、 DataDog に送ることで、 CI のステータスを監視するツールです。 現状は AWS Lambda で動かすことを想定していますが、他の方法でも動かせるようにするつもりです。Motivation モチベーションは、 PR をマージしたあとに CI がこけた場合に通知が欲しいというものです。 マージしたあとに CI が一瞬で終わるなら無事終わるのを見届けてもいいんですが、 数分かかると待ってるのも時間がもったいないです。 しばらくしたあとに結果を確認すればいいんですが、それも面倒くさいですし、普通に忘れます。 そうするとデプロイしたつもりが実は CI がこけてたなんてことが普通にあります。そういうことにすぐ気づけるよう、 Slack に通知がほしいと思っていました。仕組み 仕組みは単純です。GitHub API で各リポジトリのステータスを取得し、 DataDog API でステータスを送信しています。 DataDog API は Service Check API を使っています。 status は以下のようになります。 0: 正常 1: 異常 3: ステータスの取得に失敗  また以下の tag が付きます。 owner: リポジトリのオーナー repo: リポジトリ名 ref: ブランチ名  各リポジトリのステータスは現状 3 つをサポートしています。">
+
+<meta property="og:title" content="github-ci-monitor: CI のステータスを DataDog で監視 - melody">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://techblog-szksh-cloud.github.io/github-ci-monitor/">
+<meta property="og:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+<meta property="og:site_name" content="melody">
+<meta property="og:description" content="自作の OSS github-ci-monitor の紹介です。GitHub リポジトリの CI のステータスを定期的に取得し、 DataDog に送ることで、 CI のステータスを監視するツールです。 現状は AWS Lambda で動かすことを想定していますが、他の方法でも動かせるようにするつもりです。Motivation モチベーションは、 PR をマージしたあとに CI がこけた場合に通知が欲しいというものです。 マージしたあとに CI が一瞬で終わるなら無事終わるのを見届けてもいいんですが、 数分かかると待ってるのも時間がもったいないです。 しばらくしたあとに結果を確認すればいいんですが、それも面倒くさいですし、普通に忘れます。 そうするとデプロイしたつもりが実は CI がこけてたなんてことが普通にあります。そういうことにすぐ気づけるよう、 Slack に通知がほしいと思っていました。仕組み 仕組みは単純です。GitHub API で各リポジトリのステータスを取得し、 DataDog API でステータスを送信しています。 DataDog API は Service Check API を使っています。 status は以下のようになります。 0: 正常 1: 異常 3: ステータスの取得に失敗  また以下の tag が付きます。 owner: リポジトリのオーナー repo: リポジトリ名 ref: ブランチ名  各リポジトリのステータスは現状 3 つをサポートしています。">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="melody">
+<meta name="twitter:url" content="https://techblog-szksh-cloud.github.io/github-ci-monitor/">
+<meta name="twitter:title" content="github-ci-monitor: CI のステータスを DataDog で監視 - melody">
+<meta name="twitter:description" content="自作の OSS github-ci-monitor の紹介です。GitHub リポジトリの CI のステータスを定期的に取得し、 DataDog に送ることで、 CI のステータスを監視するツールです。 現状は AWS Lambda で動かすことを想定していますが、他の方法でも動かせるようにするつもりです。Motivation モチベーションは、 PR をマージしたあとに CI がこけた場合に通知が欲しいというものです。 マージしたあとに CI が一瞬で終わるなら無事終わるのを見届けてもいいんですが、 数分かかると待ってるのも時間がもったいないです。 しばらくしたあとに結果を確認すればいいんですが、それも面倒くさいですし、普通に忘れます。 そうするとデプロイしたつもりが実は CI がこけてたなんてことが普通にあります。そういうことにすぐ気づけるよう、 Slack に通知がほしいと思っていました。仕組み 仕組みは単純です。GitHub API で各リポジトリのステータスを取得し、 DataDog API でステータスを送信しています。 DataDog API は Service Check API を使っています。 status は以下のようになります。 0: 正常 1: 異常 3: ステータスの取得に失敗  また以下の tag が付きます。 owner: リポジトリのオーナー repo: リポジトリ名 ref: ブランチ名  各リポジトリのステータスは現状 3 つをサポートしています。">
+<meta name="twitter:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https:\/\/techblog-szksh-cloud.github.io\/"
+    },
+    "headline": "github-ci-monitor: CI のステータスを DataDog で監視 - melody",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https:\/\/techblog-szksh-cloud.github.io\/images\/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2020-11-01T17:51:44JST",
+    "dateModified": "2020-11-01T17:51:44JST",
+    "author": {
+      "@type": "Person",
+      "name": "melody"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "melody",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https:\/\/techblog-szksh-cloud.github.io\/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "自作の OSS github-ci-monitor の紹介です。\nGitHub リポジトリの CI のステータスを定期的に取得し、 DataDog に送ることで、 CI のステータスを監視するツールです。 現状は AWS Lambda で動かすことを想定していますが、他の方法でも動かせるようにするつもりです。\nMotivation モチベーションは、 PR をマージしたあとに CI がこけた場合に通知が欲しいというものです。 マージしたあとに CI が一瞬で終わるなら無事終わるのを見届けてもいいんですが、 数分かかると待ってるのも時間がもったいないです。 しばらくしたあとに結果を確認すればいいんですが、それも面倒くさいですし、普通に忘れます。 そうするとデプロイしたつもりが実は CI がこけてたなんてことが普通にあります。\nそういうことにすぐ気づけるよう、 Slack に通知がほしいと思っていました。\n仕組み 仕組みは単純です。\nGitHub API で各リポジトリのステータスを取得し、 DataDog API でステータスを送信しています。 DataDog API は Service Check API を使っています。 status は以下のようになります。\n 0: 正常 1: 異常 3: ステータスの取得に失敗  また以下の tag が付きます。\n owner: リポジトリのオーナー repo: リポジトリ名 ref: ブランチ名  各リポジトリのステータスは現状 3 つをサポートしています。"
+  }
+</script>
+
+
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://techblog-szksh-cloud.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li class="active">github-ci-monitor: CI のステータスを DataDog で監視</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2020-11-01T17:51:44JST">Nov 1, 2020</time></li>
+      
+      
+    </ul>
+
+    <h1 class="title">github-ci-monitor: CI のステータスを DataDog で監視</h1>
+    
+    
+    <section>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/oss/">oss</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </header>
+
+  
+
+  <div class="article-body"><p>自作の OSS <a href="https://github.com/suzuki-shunsuke/github-ci-monitor">github-ci-monitor</a> の紹介です。</p>
+<p>GitHub リポジトリの CI のステータスを定期的に取得し、 DataDog に送ることで、 CI のステータスを監視するツールです。
+現状は AWS Lambda で動かすことを想定していますが、他の方法でも動かせるようにするつもりです。</p>
+<h2 id="motivation">Motivation</h2>
+<p>モチベーションは、 PR をマージしたあとに CI がこけた場合に通知が欲しいというものです。
+マージしたあとに CI が一瞬で終わるなら無事終わるのを見届けてもいいんですが、
+数分かかると待ってるのも時間がもったいないです。
+しばらくしたあとに結果を確認すればいいんですが、それも面倒くさいですし、普通に忘れます。
+そうするとデプロイしたつもりが実は CI がこけてたなんてことが普通にあります。</p>
+<p>そういうことにすぐ気づけるよう、 Slack に通知がほしいと思っていました。</p>
+<h2 id="仕組み">仕組み</h2>
+<p>仕組みは単純です。</p>
+<p>GitHub API で各リポジトリのステータスを取得し、 DataDog API でステータスを送信しています。
+DataDog API は <a href="https://docs.datadoghq.com/ja/api/v1/service-checks/">Service Check API</a> を使っています。
+status は以下のようになります。</p>
+<ul>
+<li>0: 正常</li>
+<li>1: 異常</li>
+<li>3: ステータスの取得に失敗</li>
+</ul>
+<p>また以下の tag が付きます。</p>
+<ul>
+<li>owner: リポジトリのオーナー</li>
+<li>repo: リポジトリ名</li>
+<li>ref: ブランチ名</li>
+</ul>
+<p>各リポジトリのステータスは現状 3 つをサポートしています。</p>
+<ul>
+<li>Commit Status: <a href="https://docs.github.com/en/free-pro-team@latest/rest/reference/repos#get-the-combined-status-for-a-specific-reference">Get the combined status for a specific reference</a></li>
+<li>Check API:
+<ul>
+<li>Check Run: <a href="https://docs.github.com/en/free-pro-team@latest/rest/reference/checks#list-check-runs-for-a-git-reference">List check runs for a Git reference</a></li>
+<li>Check Suite: <a href="https://docs.github.com/en/free-pro-team@latest/rest/reference/checks#list-check-suites-for-a-git-reference">List check suites for a Git reference</a></li>
+</ul>
+</li>
+</ul>
+<p>それぞれ on/off を設定でき、複数指定した場合は、どれか 1 つでも失敗していたら status が 1 になります。</p>
+<h2 id="lambda-で動かす場合のアーキテクチャ">Lambda で動かす場合のアーキテクチャ</h2>
+<p>CloudWatch Events で定期的(5分毎とか)に Lambda Function を実行します。
+リポジトリのリストなどの設定は環境変数で渡し、 GitHub Access Token などのクレデンシャルは AWS Secrets Manager 経由で渡します。</p>
+<h2 id="実装方針">実装方針</h2>
+<p>CI がこけたら通知してほしいという要件を満たす方法は色々あると思います。</p>
+<p>まず CI の中でこけた場合に通知を飛ばすようにすることが考えられます。
+以下のようなメリットがあります(書いてみたら結構ありますね)。</p>
+<ul>
+<li>ツールをどっかで動かしたりツール自体を監視したりする必要がない</li>
+<li>より詳細なメッセージを送れる
+<ul>
+<li>コマンドの標準エラー出力を含めたり</li>
+<li>CI のリンク貼ったり、 PR の author をメンションしたりもしやすい</li>
+</ul>
+</li>
+<li>CI がこけたらリアルタイムで通知できる</li>
+<li>ポーリングと違い、無駄に API を叩く必要がない</li>
+</ul>
+<p>一方で、これを漏れなく実装するのはけっこう大変だと思います。
+例えば CircleCI だと全ての Job でちゃんとハンドリングしないといけなかったりすると思います。
+リポジトリが 1 個だけならそれでもいいですが、何十個もあるとなるとだいぶ大変だと思います。</p>
+<p>今回のツールのような方式だと対象のリポジトリの CI に一切手を加えずに実装できるのが大きいです。</p>
+<p>また、 CI の結果を取得する API として CI サービスが提供する API を使って取得することも考えられます。
+しかし、 GitHub API を使えば CI サービス毎に実装したりする必要がなくて楽です。</p>
+<p>Slack API を使ってメッセージを投稿するようなことも一瞬考えましたが、 DataDog を使うことで以下のメリットがあります。</p>
+<ul>
+<li>送信先やメッセージのテンプレートとかをツールで管理しなくて良い</li>
+<li>何度もメッセージを送らないように状態を DB で持たなくて良い</li>
+<li>アラートを一時的に止めたりするのも簡単</li>
+</ul>
+<p>また、時間軸でどれだけ CI が壊れた状態だったか、復旧するのにどのくらい時間がかかったか分かるのもなにかに使えるかもしれません。</p>
+<p>今回のツールに限らず、 Slack に直接通知するより DataDog や Sentry を経由したほうが上手くいくことも結構あると思っています。</p>
+<p>また、定期実行する方法としては Lambda 以外にも</p>
+<ul>
+<li>Jenkins</li>
+<li>適当なサーバで cron</li>
+<li>CI サービス</li>
+<li>k8s の CronJob</li>
+<li>k8s の Deployment</li>
+</ul>
+<p>など色々あると思います。そういう風にも実行できるようにバイナリを今後提供したいと思っています。
+Lambda を使うとインフラを管理しなくて良いのがメリットだと思います。</p>
+<p>また、 DataDog API で結果を送る push 型のアーキテクチャとは別に、
+DataDog Agent + Prometheus Exporter の pull 型もあるんじゃないかなと思います。
+そうするとツール側で DataDog API Key が不要になるというメリットがあります。
+こちらのパターンも今後実装してみたいと思います。</p>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/oss/">oss</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

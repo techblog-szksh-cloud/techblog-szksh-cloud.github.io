@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>gitops on melody</title>
+    <link>https://techblog-szksh-cloud.github.io/tags/gitops/</link>
+    <description>Recent content in gitops on melody</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>jp</language>
+    <lastBuildDate>Mon, 11 Jan 2021 16:24:44 +0900</lastBuildDate><atom:link href="https://techblog-szksh-cloud.github.io/tags/gitops/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>skaffold を使って GitOps する</title>
+      <link>https://techblog-szksh-cloud.github.io/gitops-skaffold/</link>
+      <pubDate>Mon, 11 Jan 2021 16:24:44 +0900</pubDate>
+      
+      <guid>https://techblog-szksh-cloud.github.io/gitops-skaffold/</guid>
+      <description>skaffold を用いてマニフェストを動的に生成しつつ GitOps する方法を考えたので紹介します。 なお、現時点ではあくまで考えてみただけで実際に導入したりはしていません。
+GitOps はマニフェストを Git リポジトリにコミットしないといけないわけですが、 Docker image をビルド、プッシュし、マニフェストの image tag を書き換えるという一連の処理をどうやってやるのがいいのか 個人的に考えていました。
+自分は FluxCD には詳しくないのですが、 FluxCD では registry をポーリングして自動で最新のタグに書き換える機能があるそうですね。
+https://toolkit.fluxcd.io/guides/image-update/
+ただし、まだ alpha であることと、 semver に従っていないといけないようです。 これだと master branch が update されるたびに image をビルドして sha でタグを付与するみたいな運用は難しそうです。
+Skaffold だとマニフェストの image tag を自動で書き換えてくれる機能があります。 加えて skaffold render コマンドを使うと manifest の apply はせずにファイルへの出力だけやってくれます。 出力された manifest を Git リポジトリに commit, push すれば GitOps が実現できそうです。
+How リポジトリを 2 つ用意します。
+ app: アプリケーションのコードとマニフェストを管理するリポジトリ manifest: GitOps が連携するマニフェストを管理するリポジトリ  app は Monorepo になっているとします。ディレクトリ構成は次のような感じをイメージしています。</description>
+    </item>
+    
+  </channel>
+</rss>

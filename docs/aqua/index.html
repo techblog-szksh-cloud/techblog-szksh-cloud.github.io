@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/aqua/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>aqua - CLI ツールのバージョン管理 - melody</title>
+    
+<meta name="description" content="2021-09-04 追記: aqua v0.1.0 から v0.5.0 での変更点aqua という OSS を開発しているので紹介します。記事の内容は aqua v0.1.0 に基づきます。将来的に仕様が変わる可能性があります。aqua とは aqua は CLI ツールのバージョン管理のための CLI です。 aqua で管理する主な対象は GitHub Release で公開されているツールです。 YAML の設定ファイルを書いてコマンドを実行すると指定したツールをインストールすることができます。例えば以下のような設定ファイルを書き、 aqua install というコマンドを実行すると jq, conftest などが GitHub Release からダウンロードされ、インストールされます。packages: - name: jq registry: inline version: jq-1.6 - name: conftest registry: inline version: v0.27.0 inline_registry: - name: jq type: github_release repo_owner: stedolan repo_name: jq asset: &amp;#39;jq-{{if eq .OS &amp;#34;darwin&amp;#34;}}osx-amd64{{else}}{{if eq .">
+
+<meta property="og:title" content="aqua - CLI ツールのバージョン管理 - melody">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://techblog-szksh-cloud.github.io/aqua/">
+<meta property="og:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+<meta property="og:site_name" content="melody">
+<meta property="og:description" content="2021-09-04 追記: aqua v0.1.0 から v0.5.0 での変更点aqua という OSS を開発しているので紹介します。記事の内容は aqua v0.1.0 に基づきます。将来的に仕様が変わる可能性があります。aqua とは aqua は CLI ツールのバージョン管理のための CLI です。 aqua で管理する主な対象は GitHub Release で公開されているツールです。 YAML の設定ファイルを書いてコマンドを実行すると指定したツールをインストールすることができます。例えば以下のような設定ファイルを書き、 aqua install というコマンドを実行すると jq, conftest などが GitHub Release からダウンロードされ、インストールされます。packages: - name: jq registry: inline version: jq-1.6 - name: conftest registry: inline version: v0.27.0 inline_registry: - name: jq type: github_release repo_owner: stedolan repo_name: jq asset: &amp;#39;jq-{{if eq .OS &amp;#34;darwin&amp;#34;}}osx-amd64{{else}}{{if eq .">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="melody">
+<meta name="twitter:url" content="https://techblog-szksh-cloud.github.io/aqua/">
+<meta name="twitter:title" content="aqua - CLI ツールのバージョン管理 - melody">
+<meta name="twitter:description" content="2021-09-04 追記: aqua v0.1.0 から v0.5.0 での変更点aqua という OSS を開発しているので紹介します。記事の内容は aqua v0.1.0 に基づきます。将来的に仕様が変わる可能性があります。aqua とは aqua は CLI ツールのバージョン管理のための CLI です。 aqua で管理する主な対象は GitHub Release で公開されているツールです。 YAML の設定ファイルを書いてコマンドを実行すると指定したツールをインストールすることができます。例えば以下のような設定ファイルを書き、 aqua install というコマンドを実行すると jq, conftest などが GitHub Release からダウンロードされ、インストールされます。packages: - name: jq registry: inline version: jq-1.6 - name: conftest registry: inline version: v0.27.0 inline_registry: - name: jq type: github_release repo_owner: stedolan repo_name: jq asset: &amp;#39;jq-{{if eq .OS &amp;#34;darwin&amp;#34;}}osx-amd64{{else}}{{if eq .">
+<meta name="twitter:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https:\/\/techblog-szksh-cloud.github.io\/"
+    },
+    "headline": "aqua - CLI ツールのバージョン管理 - melody",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https:\/\/techblog-szksh-cloud.github.io\/images\/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2021-08-28T09:07:38JST",
+    "dateModified": "2021-08-28T09:07:38JST",
+    "author": {
+      "@type": "Person",
+      "name": "melody"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "melody",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https:\/\/techblog-szksh-cloud.github.io\/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "2021-09-04 追記: aqua v0.1.0 から v0.5.0 での変更点\naqua という OSS を開発しているので紹介します。\n記事の内容は aqua v0.1.0 に基づきます。将来的に仕様が変わる可能性があります。\naqua とは aqua は CLI ツールのバージョン管理のための CLI です。 aqua で管理する主な対象は GitHub Release で公開されているツールです。 YAML の設定ファイルを書いてコマンドを実行すると指定したツールをインストールすることができます。\n例えば以下のような設定ファイルを書き、 aqua install というコマンドを実行すると jq, conftest などが GitHub Release からダウンロードされ、インストールされます。\npackages: - name: jq registry: inline version: jq-1.6 - name: conftest registry: inline version: v0.27.0 inline_registry: - name: jq type: github_release repo_owner: stedolan repo_name: jq asset: \u0026#39;jq-{{if eq .OS \u0026#34;darwin\u0026#34;}}osx-amd64{{else}}{{if eq ."
+  }
+</script>
+
+
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://techblog-szksh-cloud.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li class="active">aqua - CLI ツールのバージョン管理</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2021-08-28T09:07:38JST">Aug 28, 2021</time></li>
+      
+      
+    </ul>
+
+    <h1 class="title">aqua - CLI ツールのバージョン管理</h1>
+    
+    
+    <section>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/oss/">oss</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/aqua/">aqua</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </header>
+
+  
+
+  <div class="article-body"><p>2021-09-04 追記: <a href="/aqua-v0.5">aqua v0.1.0 から v0.5.0 での変更点</a></p>
+<p><a href="https://github.com/suzuki-shunsuke/aqua">aqua</a> という OSS を開発しているので紹介します。</p>
+<p>記事の内容は aqua v0.1.0 に基づきます。将来的に仕様が変わる可能性があります。</p>
+<h2 id="aqua-とは">aqua とは</h2>
+<p>aqua は CLI ツールのバージョン管理のための CLI です。
+aqua で管理する主な対象は GitHub Release で公開されているツールです。
+YAML の設定ファイルを書いてコマンドを実行すると指定したツールをインストールすることができます。</p>
+<p>例えば以下のような設定ファイルを書き、 <code>aqua install</code> というコマンドを実行すると
+<a href="https://stedolan.github.io/jq/">jq</a>, <a href="https://www.conftest.dev/">conftest</a> などが GitHub Release からダウンロードされ、インストールされます。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">packages</span>:
+- <span style="color:#f92672">name</span>: <span style="color:#ae81ff">jq</span>
+  <span style="color:#f92672">registry</span>: <span style="color:#ae81ff">inline</span>
+  <span style="color:#f92672">version</span>: <span style="color:#ae81ff">jq-1.6</span>
+- <span style="color:#f92672">name</span>: <span style="color:#ae81ff">conftest</span>
+  <span style="color:#f92672">registry</span>: <span style="color:#ae81ff">inline</span>
+  <span style="color:#f92672">version</span>: <span style="color:#ae81ff">v0.27.0</span>
+<span style="color:#f92672">inline_registry</span>:
+- <span style="color:#f92672">name</span>: <span style="color:#ae81ff">jq</span>
+  <span style="color:#f92672">type</span>: <span style="color:#ae81ff">github_release</span>
+  <span style="color:#f92672">repo_owner</span>: <span style="color:#ae81ff">stedolan</span>
+  <span style="color:#f92672">repo_name</span>: <span style="color:#ae81ff">jq</span>
+  <span style="color:#f92672">asset</span>: <span style="color:#e6db74">&#39;jq-{{if eq .OS &#34;darwin&#34;}}osx-amd64{{else}}{{if eq .OS &#34;linux&#34;}}linux64{{else}}win64.exe{{end}}{{end}}&#39;</span>
+  <span style="color:#f92672">files</span>:
+  - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">jq</span>
+- <span style="color:#f92672">name</span>: <span style="color:#ae81ff">conftest</span>
+  <span style="color:#f92672">type</span>: <span style="color:#ae81ff">github_release</span>
+  <span style="color:#f92672">repo_owner</span>: <span style="color:#ae81ff">open-policy-agent</span>
+  <span style="color:#f92672">repo_name</span>: <span style="color:#ae81ff">conftest</span>
+  <span style="color:#f92672">asset</span>: <span style="color:#e6db74">&#39;conftest_{{trimPrefix &#34;v&#34; .Package.Version}}_{{title .OS}}_x86_64.tar.gz&#39;</span>
+  <span style="color:#f92672">files</span>:
+  - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">conftest</span>
+</code></pre></div><p>ちなみに上記の設定ファイルの</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">  <span style="color:#f92672">asset</span>: <span style="color:#e6db74">&#39;conftest_{{trimPrefix &#34;v&#34; .Package.Version}}_{{title .OS}}_x86_64.tar.gz&#39;</span>
+</code></pre></div><p>の部分では Go の <a href="https://pkg.go.dev/text/template">text/template</a> と <a href="http://masterminds.github.io/sprig/">sprig</a> が使われています。</p>
+<p>ツールごとに URL を調べて download して tarball などを展開してインストールしてなどの面倒な作業を aqua で自動化できます。
+update も基本的に設定ファイルの version を更新するだけで OK です。</p>
+<p>aqua を使うと同じツールの複数のバージョンを管理してプロジェクトによってバージョンを切り替えるといったことも容易にできます。</p>
+<h2 id="3-つの主なユースケース">3 つの主なユースケース</h2>
+<p>aqua では以下の 3 つの主なユースケースを想定しています。</p>
+<ul>
+<li>CI/CD で必要なツールの管理</li>
+<li>ローカルでの開発に必要なプロジェクト(リポジトリ)固有のツールの管理</li>
+<li>特定のプロジェクト(リポジトリ)によらないツールの管理</li>
+</ul>
+<h3 id="ユースケース1-cicd-で必要なツールの管理">ユースケース1: CI/CD で必要なツールの管理</h3>
+<p>例えば Terraform の Monorepo の CI で以下のような様々なツールを使っていたとしましょう。</p>
+<ul>
+<li><a href="https://cli.github.com/">gh</a></li>
+<li><a href="https://stedolan.github.io/jq/">jq</a></li>
+<li><a href="https://tfsec.dev/">tfsec</a></li>
+<li><a href="https://github.com/terraform-linters/tflint">tflint</a></li>
+<li><a href="https://github.com/minamijoyo/tfmigrate">tfmigrate</a></li>
+<li><a href="https://github.com/suzuki-shunsuke/tfcmt">tfcmt</a></li>
+<li><a href="https://github.com/open-policy-agent/opa">opa</a></li>
+<li><a href="https://www.conftest.dev/">conftest</a></li>
+<li><a href="https://github.com/mvdan/sh">shfmt</a></li>
+<li><a href="https://github.com/koalaman/shellcheck">shellcheck</a></li>
+<li><a href="https://github.com/suzuki-shunsuke/github-comment">github-comment</a></li>
+</ul>
+<p>これらを1個1個 curl などを使ってインストールするコードを書くのは面倒ですが、
+aqua であれば設定ファイルを宣言的に書いて <code>aqua i</code> を実行すれば終わりです。
+新たにツールを追加する場合でも設定ファイルに追記すればよく、スクリプトを更新する必要はありません。
+バージョンを明示的に指定できるのでコードを変更してないのに急にツールが更新されることもありませんし、 <a href="https://docs.renovatebot.com/modules/manager/regex/">Renovate の Regex Manager</a> などを使えば更新を自動化することもできます。</p>
+<h3 id="ユースケース2-ローカルでの開発に必要なプロジェクトリポジトリ固有のツールの管理">ユースケース2: ローカルでの開発に必要なプロジェクト(リポジトリ)固有のツールの管理</h3>
+<p>あるリポジトリのローカルでの開発に必要なツールを aqua で管理することができます。
+リポジトリ直下に <code>aqua.yaml</code> を置いておけば OK です。
+バージョンも指定されているので、人によってバージョンが違ったりする問題も解消できます。
+<code>aqua.yaml</code> と同じディレクトリに <code>.aqua</code> が作成されるのでそれを .gitignore に追加し、 <code>.aqua/bin</code> を PATH に追加しましょう。
+direnv を使い、リポジトリ直下に .envrc を置いて <code>.aqua/bin</code> を PATH に追加すると便利です。</p>
+<pre tabindex="0"><code>aqua.yaml
+.aqua/bin
+.envrc
+</code></pre><p>.envrc</p>
+<pre tabindex="0"><code>PATH_add .aqua/bin
+</code></pre><p><code>.aqua/bin</code> を PATH に追加しなくても <code>aqua exec -- &lt;コマンド&gt; ...</code> で実行することもできます。</p>
+<h3 id="ユースケース3-特定のプロジェクトリポジトリによらないツールの管理">ユースケース3: 特定のプロジェクト(リポジトリ)によらないツールの管理</h3>
+<p>特定のプロジェクトによらずにツールを laptop にインストールしたい場合にも使えます。
+<code>~/.aqua/global/aqua.yaml</code> に設定ファイルを記述し、 <code>~/.aqua/global/.aqua/bin</code> を PATH に追加してください。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">export PATH<span style="color:#f92672">=</span>$HOME/.aqua/global/.aqua/bin:$PATH
+</code></pre></div><p>そして <code>~/.aqua/global</code> 配下で <code>aqua i</code> を実行すればインストールができます。
+<code>~/.aqua/global</code> を Git で管理して GitHub などでホスティングするのも良いでしょう。</p>
+<p><a href="https://github.com/suzuki-shunsuke/my-aqua-config">https://github.com/suzuki-shunsuke/my-aqua-config</a></p>
+<h2 id="akoi-との違い">akoi との違い</h2>
+<p>ところで、自分は aqua に似たツールとして <a href="http://github.com/suzuki-shunsuke/akoi">akoi</a> というツールを公開していて、自分もこれまでこのツールを使ってきました。
+aqua と akoi は「CLI ツールのバージョン管理」という目的・ゴールは同じです。
+akoi も結構便利なツールですが、 akoi が抱える様々な課題を解決するために aqua を開発しています。
+aqua は akoi のいわば後継ツールです。
+ただしコードは全く別物ですし、互換性もありません。</p>
+<h3 id="akoi-と比べた-aqua-の良い点">akoi と比べた aqua の良い点</h3>
+<ul>
+<li>GitHub Access Token を使ったインストールをサポート
+<ul>
+<li>private repository をサポート</li>
+<li>akoi は anonymous なアクセスなので rate limit に引っかかりやすい</li>
+</ul>
+</li>
+<li>管理対象のコマンド実行時にツールのインストールが可能</li>
+<li>設定ファイルを更新したあとに install コマンドを実行する必要がない
+<ul>
+<li>akoi は symbolic link を作り直すために install コマンドを実行する必要がある</li>
+</ul>
+</li>
+<li>管理対象のツールの実体を共有できる
+<ul>
+<li>project ごとにツールを install する必要がない(計算資源の効率化)</li>
+<li>akoi と違って ツールによって実体のインストール先は一意に決まるので、干渉することがなく安全に共有できる</li>
+</ul>
+</li>
+<li>事前に archive の中のパスを知っている必要がない
+<ul>
+<li>akoi は install 時に archive を展開してファイルをコピーし、シンボリックリンクを作成する
+<ul>
+<li>パスが間違っていると失敗し、 download からやり直しになる</li>
+<li>そのため、新しいツールを akoi で管理する場合はまず archive の構造を調べる必要がある</li>
+</ul>
+</li>
+<li>aqua は install したあとに ~/.aqua 配下を見て file.src を修正すれば良いし、間違っててコマンドの実行に失敗しても download のやり直しとかはない</li>
+</ul>
+</li>
+<li><code>bin_path</code>, <code>link_path</code> ような設定について考えなくて良い
+<ul>
+<li>akoi は設定ファイルでインストール先などを設定できるようになっている</li>
+<li>どう設定すべきか悩ましいし、リポジトリによって設定が違ったりして設定を統一するのが難しい</li>
+<li>aqua はインストール先などが設定できないのでユーザーが迷う必要がない</li>
+</ul>
+</li>
+</ul>
+<h4 id="管理対象のツールの実体を共有できる">管理対象のツールの実体を共有できる</h4>
+<p>aqua はツールの実体を AQUA_ROOT_DIR <code>~/.aqua</code> にインストールし、共有することができます。
+複数のリポジトリで同じバージョンの同じツールを使う場合に共有できるので、
+インストールにかかる時間を短縮できますし、無駄にディスク容量を消費することもありません。
+設定ファイルによって動的にバージョンを取得するので、共有していてもリポジトリごとに異なるバージョンを使うこともできます。</p>
+<p>安全に共有できるようにツールの実体のインストール先はダウンロード元によってユニークかつ一意に決まるようになっています。
+ユーザーがカスタマイズすることはできません(ルートディレクトリは変えられますが、ルート以下は変えられません)。</p>
+<p>例えば OSX で jq-1.6 のインストール先は以下になります。</p>
+<pre tabindex="0"><code>.aqua/pkgs/github_release/github.com/stedolan/jq/jq-1.6/jq-osx-amd64/jq-osx-amd64
+</code></pre><p>このように GitHub Release からインストールする場合</p>
+<ul>
+<li>リポジトリのオーナー</li>
+<li>リポジトリ名</li>
+<li>tag</li>
+<li>GitHub Release のアセット名</li>
+</ul>
+<p>などから一意に決まるため、あるリポジトリでは jq をフォークしたものを使うといった場合でも安全に共存することができます。</p>
+<h2 id="便利な---only-link-option">便利な <code>--only-link</code> option</h2>
+<p><code>aqua install</code> を実行するとツールごとに以下のことが実行されます。</p>
+<ol>
+<li><code>.aqua/bin</code> 配下にシンボリックリンクを作成</li>
+<li>ダウンロード</li>
+<li>tarball などの展開</li>
+<li>~/.aqua 配下にインストール</li>
+</ol>
+<p>aqua.yaml の packages に大量のツールが定義されていると、
+大量のツールが一度にインストールされることになり、
+並列で実行されるとはいえ、都合が悪いこともあるでしょう。</p>
+<p><code>--only-link</code> option をつけて実行すると、シンボリックリンクだけ作成しダウンロードなどは行わないので直ぐに終わります。</p>
+<pre tabindex="0"><code>$ aqua install --only-link
+</code></pre><p>その状態でツールを実行すると、ツールが自動でインストールされてから実行されるので
+本当に必要になってからインストールすることが可能であり、余計なインストールが発生しないので便利です。</p>
+<h2 id="コマンド実行時の自動インストール動的なバージョン切り替えの仕組み">コマンド実行時の自動インストール、動的なバージョン切り替えの仕組み</h2>
+<p>aqua は設定ファイルを更新すると <code>aqua install</code> 実行をしなくても更新が反映される、
+ツールがまだインストールされていなくてもツールを実行時に自動でインストールされるという機能があります。</p>
+<p>tfenv も .terraform-version を更新すればすぐ反映されますし、
+terraform コマンドを実行時にまだ指定したバージョンがインストールされてなかったら自動でインストールされますが、それに似ていますね
+(ただし tfenv の機能がどう実装されているかは調べてませんし、 aqua を実装する上で参考にしたりはしていません)。</p>
+<p>上記の機能が aqua でどう実現されているか簡単に説明します。</p>
+<p>例えば aqua で jq をインストールし、 <code>jq -h</code> を実行したとしましょう。
+jq を実行すると aqua-proxy を経由して <code>aqua exec -- jq -h</code> が実行されます。
+この辺の詳細は <a href="#aqua-proxy-%E3%81%A8%E3%81%AF">aqua-proxy とは</a> を参照してください。
+<code>aqua exec</code> は aqua の設定ファイルで指定されたバージョンがインストールされているかチェックし、まだインストールされていなかったらインストールし、コマンド <code>jq -h</code> を実行します。</p>
+<h2 id="aqua-proxy-とは">aqua-proxy とは</h2>
+<p><a href="https://github.com/suzuki-shunsuke/aqua-proxy">aqua-proxy</a> は aqua が内部的に依存しているツールです。
+コマンド実行時に aqua 及び aqua で管理するツールのバージョンを動的に変更するために作られました。
+aqua のために開発されており、 aqua 以外で使われることは想定していません。</p>
+<p>aqua-proxy は <code>aqua install</code> や <code>aqua exec</code> を実行した際に自動で <code>~/.aqua/bin/aqua-proxy</code> にインストールされます。
+aqua はツールをインストールする際に <code>.aqua/bin/&lt;ツール&gt;</code> から <code>~/.aqua/bin/aqua-proxy</code> へのシンボリックリンクを作成するので、 <code>&lt;ツール&gt;</code> を実行すると <code>~/.aqua/bin/aqua-proxy</code> が呼ばれます。</p>
+<p>aqua-proxy は <a href="https://pkg.go.dev/os#Args">os#Args</a> からツール名を取得し、
+<code>aqua exec -- &lt;ツール名&gt; ...</code> を実行します。
+これによりコマンド実行時に aqua 及び <code>&lt;ツール&gt;</code> のバージョンを動的に変更することを実現しています。</p>
+<p><code>.aqua/bin/&lt;ツール&gt;</code> から aqua-proxy へのシンボリックリンクは静的であり、 aqua-proxy のバージョンを切り替えることは難しいです。
+aqua-proxy の機能・責務が大きくなると aqua-proxy のバージョン管理や aqua との互換性を考えなくてはならなくなります。
+aqua-proxy のバージョンをほぼ気にしなくて良いよう、 aqua-proxy は最小限の機能・責務しか持たず、安定的であまり変更されないように設計されています。</p>
+<h2 id="プロセスツリーを確認してみる">プロセスツリーを確認してみる</h2>
+<p>既に説明したとおり <code>&lt;ツール&gt;</code> を実行した際には実はプロセスツリー的には
+<code>aqua-proxy =&gt; aqua =&gt; &lt;ツール&gt;</code> という風になっています。</p>
+<p><code>&lt;ツール&gt;</code> を直接実行した場合と挙動に違いが出ないように以下のようなことに気を配っています。</p>
+<ul>
+<li>SIGINT, SIGTERM などのシグナルが適切に <code>&lt;ツール&gt;</code> のプロセスまで伝達されるようにする</li>
+<li><code>&lt;ツール&gt;</code> の exit code が伝達されるようにする</li>
+</ul>
+<p>試しに fzf を実行してみて別のターミナルでプロセスツリーを確認してみます。</p>
+<pre tabindex="0"><code>$ ls | fzf
+</code></pre><p>fzf が起動しますが、そのままにしておいて別のターミナルでプロセスツリーを確認してみます。
+Mac の <code>pstree</code> を使っています。</p>
+<pre tabindex="0"><code>-+- 83548 foo fzf
+ \-+- 83549 foo aqua exec -- fzf
+   \--- 83550 foo /Users/foo/.aqua/pkgs/github_release/github.com/junegunn/fzf/0.27.2/fzf-0.27.2-darwin_amd64.zip/fzf
+</code></pre><p>紛らわしいのですが、最初のプロセスの実体は fzf ではなくて aqua-proxy です。 fzf が aqua-proxy へのシンボリックになっているのでこうなっています。
+ここで aqua-proxy に SIGTERM を送ると手元の Mac ではちゃんと子プロセスまで終了しました。</p>
+<pre tabindex="0"><code>$ kill 83548
+</code></pre><p>この辺のシグナルハンドリングは Windows だと正常に動かないかもしれません。</p>
+<p><a href="https://pkg.go.dev/os#Signal">https://pkg.go.dev/os#Signal</a></p>
+<blockquote>
+<p>The only signal values guaranteed to be present in the os package on all systems are os.Interrupt (send the process an interrupt) and os.Kill (force the process to exit).
+On Windows, sending os.Interrupt to a process with os.Process.Signal is not implemented;
+it will return an error instead of sending a signal.</p>
+</blockquote>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/oss/">oss</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/aqua/">aqua</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

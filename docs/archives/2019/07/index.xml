@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>2019/07 on melody</title>
+    <link>https://techblog-szksh-cloud.github.io/archives/2019/07/</link>
+    <description>Recent content in 2019/07 on melody</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>jp</language><atom:link href="https://techblog-szksh-cloud.github.io/archives/2019/07/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The Top 10 Most Common Mistakes I’ve Seen in Go Projects を読んでみて</title>
+      <link>https://techblog-szksh-cloud.github.io/the-top-10-most-common-mistakes-ive-seen-in-go-projects/</link>
+      <pubDate>Sun, 21 Jul 2019 18:13:53 +0900</pubDate>
+      
+      <guid>https://techblog-szksh-cloud.github.io/the-top-10-most-common-mistakes-ive-seen-in-go-projects/</guid>
+      <description>The Top 10 Most Common Mistakes I’ve Seen in Go Projects という記事を読んで面白かったのでメモります。 翻訳ではないです。メモなので、原文を読んでください。
+ Unknown Enum Value: Unknown であることを表す enum の値は 0 にしよう。値がセットされていない場合に Unknown として扱えるから Benchmarking: ベンチマークを取るのは難しい。コンパイラの最適化によってベンチマークの結果が不適切になる場合がある Pointers! Pointers Everywhere!: パフォーマンスの観点から基本的にはポインタを使うべきではない。変数を共有する必要がある場合のみ、ポインタを使う Breaking a for/switch or a for/select: for, switch が入れ子になっている場合、switch の中で break しても for から抜けられない。抜けたければ labeled break を使う Errors Management Slice Initialization Context Management Not Using the -race Option: go test コマンドでは -race オプションをつけよう Using a Filename as an Input: 引数としてファイル名を渡すのではなく、 io.</description>
+    </item>
+    
+    <item>
+      <title>Flute - Golang HTTP client testing framework</title>
+      <link>https://techblog-szksh-cloud.github.io/fagott/</link>
+      <pubDate>Sun, 07 Jul 2019 08:20:00 +0900</pubDate>
+      
+      <guid>https://techblog-szksh-cloud.github.io/fagott/</guid>
+      <description>2019-07-17 追記 プロジェクト名が変わりました
+https://github.com/suzuki-shunsuke/flute/issues/20
+ Go の HTTP client のテストフレームワークを作ったので紹介します。
+https://github.com/suzuki-shunsuke/flute
+執筆時点のバージョンは v0.6.0 です。
+ リクエストパラメータのテスト HTTP サーバのモッキング  を目的としています。
+比較的実践的なサンプルとして、ユーザーを作成する簡単な API client とそのテストを書いたので参考にしてください。
+ https://github.com/suzuki-shunsuke/flute/blob/master/examples/create_user.go https://github.com/suzuki-shunsuke/flute/blob/master/examples/create_user_test.go#L17-L53  元々自分はこの目的のために h2non/gock を使っていました。 ただ、 gock だとリクエストがマッチしなかったときに、なぜマッチしないのかがわからず、調査に困るという問題がありました。
+そこで flute では request に対し、matcher と tester という概念を導入し、 matcher でマッチしたリクエストを tester でテストするというふうにしました。 テストでは内部で stretchr/testify の assert を使っており、テストに失敗したときになぜ失敗したのかが分かりやすく出力されるようになっています。
+例えば以下の例は、リクエストの Authorization header にトークンがセットされていなかった場合のエラーメッセージです。
+=== RUN TestClient_CreateUser --- FAIL: TestClient_CreateUser (0.00s) tester.go:168: Error Trace: tester.go:168 tester.go:32 transport.go:25 client.go:250 client.go:174 client.</description>
+    </item>
+    
+  </channel>
+</rss>

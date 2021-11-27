@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/drone-plugin-jsonnet-check/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>.drone.jsonnet と .drone.yml を比較する Drone plugin を作った - melody</title>
+    
+<meta name="description" content="久しぶりに Drone plugin を作ったので紹介します。https://www.github.com/suzuki-shunsuke/drone-plugin-jsonnet-check.drone.jsonnet から .drone.yml を生成していて、両方を Git で管理している場合に、 .drone.jsonnet と .drone.yml の状態が一致しているかテストするための plugin です。Drone v1 では matrix builds が廃止され、multiple pipeline が導入されました。 matrix builds を drone convert コマンドで multiple pipeline に変換すると、pipeline の数が多いほど冗長でメンテナンス性が悪くなります。 そこで公式では jsonnet で記述して .drone.yml に変換する方法が推奨されています。https://docs.drone.io/user-guide/pipeline/migrating/ To simplify your configuration we recommend using jsonnet. $ drone jsonnet --format --stream jsonnet から yaml への変換は Jsonnet extension を使うと Drone がビルド実行時に自動で変換してくれるので .drone.yml を管理する必要はなくなりますが、 使っていない場合、 .drone.jsonnet と .">
+
+<meta property="og:title" content=".drone.jsonnet と .drone.yml を比較する Drone plugin を作った - melody">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://techblog-szksh-cloud.github.io/drone-plugin-jsonnet-check/">
+<meta property="og:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+<meta property="og:site_name" content="melody">
+<meta property="og:description" content="久しぶりに Drone plugin を作ったので紹介します。https://www.github.com/suzuki-shunsuke/drone-plugin-jsonnet-check.drone.jsonnet から .drone.yml を生成していて、両方を Git で管理している場合に、 .drone.jsonnet と .drone.yml の状態が一致しているかテストするための plugin です。Drone v1 では matrix builds が廃止され、multiple pipeline が導入されました。 matrix builds を drone convert コマンドで multiple pipeline に変換すると、pipeline の数が多いほど冗長でメンテナンス性が悪くなります。 そこで公式では jsonnet で記述して .drone.yml に変換する方法が推奨されています。https://docs.drone.io/user-guide/pipeline/migrating/ To simplify your configuration we recommend using jsonnet. $ drone jsonnet --format --stream jsonnet から yaml への変換は Jsonnet extension を使うと Drone がビルド実行時に自動で変換してくれるので .drone.yml を管理する必要はなくなりますが、 使っていない場合、 .drone.jsonnet と .">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="melody">
+<meta name="twitter:url" content="https://techblog-szksh-cloud.github.io/drone-plugin-jsonnet-check/">
+<meta name="twitter:title" content=".drone.jsonnet と .drone.yml を比較する Drone plugin を作った - melody">
+<meta name="twitter:description" content="久しぶりに Drone plugin を作ったので紹介します。https://www.github.com/suzuki-shunsuke/drone-plugin-jsonnet-check.drone.jsonnet から .drone.yml を生成していて、両方を Git で管理している場合に、 .drone.jsonnet と .drone.yml の状態が一致しているかテストするための plugin です。Drone v1 では matrix builds が廃止され、multiple pipeline が導入されました。 matrix builds を drone convert コマンドで multiple pipeline に変換すると、pipeline の数が多いほど冗長でメンテナンス性が悪くなります。 そこで公式では jsonnet で記述して .drone.yml に変換する方法が推奨されています。https://docs.drone.io/user-guide/pipeline/migrating/ To simplify your configuration we recommend using jsonnet. $ drone jsonnet --format --stream jsonnet から yaml への変換は Jsonnet extension を使うと Drone がビルド実行時に自動で変換してくれるので .drone.yml を管理する必要はなくなりますが、 使っていない場合、 .drone.jsonnet と .">
+<meta name="twitter:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https:\/\/techblog-szksh-cloud.github.io\/"
+    },
+    "headline": ".drone.jsonnet と .drone.yml を比較する Drone plugin を作った - melody",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https:\/\/techblog-szksh-cloud.github.io\/images\/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2019-06-01T08:34:10JST",
+    "dateModified": "2019-06-01T08:34:10JST",
+    "author": {
+      "@type": "Person",
+      "name": "melody"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "melody",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https:\/\/techblog-szksh-cloud.github.io\/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "久しぶりに Drone plugin を作ったので紹介します。\nhttps:\/\/www.github.com\/suzuki-shunsuke\/drone-plugin-jsonnet-check\n.drone.jsonnet から .drone.yml を生成していて、両方を Git で管理している場合に、 .drone.jsonnet と .drone.yml の状態が一致しているかテストするための plugin です。\nDrone v1 では matrix builds が廃止され、multiple pipeline が導入されました。 matrix builds を drone convert コマンドで multiple pipeline に変換すると、pipeline の数が多いほど冗長でメンテナンス性が悪くなります。 そこで公式では jsonnet で記述して .drone.yml に変換する方法が推奨されています。\nhttps:\/\/docs.drone.io\/user-guide\/pipeline\/migrating\/\n To simplify your configuration we recommend using jsonnet.\n $ drone jsonnet --format --stream jsonnet から yaml への変換は Jsonnet extension を使うと Drone がビルド実行時に自動で変換してくれるので .drone.yml を管理する必要はなくなりますが、 使っていない場合、 .drone.jsonnet と ."
+  }
+</script>
+
+
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://techblog-szksh-cloud.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li class="active">.drone.jsonnet と .drone.yml を比較する Drone plugin を作った</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2019-06-01T08:34:10JST">Jun 1, 2019</time></li>
+      
+      
+    </ul>
+
+    <h1 class="title">.drone.jsonnet と .drone.yml を比較する Drone plugin を作った</h1>
+    
+    
+    <section>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/drone/">drone</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </header>
+
+  
+
+  <div class="article-body"><p>久しぶりに <a href="https://docs.drone.io/plugins/">Drone plugin</a> を作ったので紹介します。</p>
+<p><a href="https://www.github.com/suzuki-shunsuke/drone-plugin-jsonnet-check">https://www.github.com/suzuki-shunsuke/drone-plugin-jsonnet-check</a></p>
+<p>.drone.jsonnet から .drone.yml を生成していて、両方を Git で管理している場合に、
+.drone.jsonnet と .drone.yml の状態が一致しているかテストするための plugin です。</p>
+<p>Drone v1 では matrix builds が廃止され、multiple pipeline が導入されました。
+matrix builds を <code>drone convert</code> コマンドで multiple pipeline に変換すると、pipeline の数が多いほど冗長でメンテナンス性が悪くなります。
+そこで公式では <a href="https://jsonnet.org">jsonnet</a> で記述して .drone.yml に変換する方法が推奨されています。</p>
+<p><a href="https://docs.drone.io/user-guide/pipeline/migrating/">https://docs.drone.io/user-guide/pipeline/migrating/</a></p>
+<blockquote>
+<p>To simplify your configuration we recommend using jsonnet.</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-console" data-lang="console">$ drone jsonnet --format --stream
+</code></pre></div><p>jsonnet から yaml への変換は <a href="https://docs.drone.io/extend/config/jsonnet/">Jsonnet extension</a> を使うと Drone がビルド実行時に自動で変換してくれるので .drone.yml を管理する必要はなくなりますが、
+使っていない場合、 .drone.jsonnet と .drone.yml を Git で管理し、自前で変換してコミットする必要があります。
+この作業をなにかしら自動化しないと .drone.jsonnet と .drone.yml に不整合が生じることもあり得ると思います。</p>
+<ul>
+<li>.drone.jsonnet を更新したけど .drone.yml を更新し忘れる</li>
+<li>.drone.yml を直接更新してしまった</li>
+</ul>
+<p>そこで CI で不整合が生じていないかテストするための plugin を作りました。</p>
+<p>最初は plugin ではなく、ただのサンプルコードとして公開しました。</p>
+<p><a href="https://github.com/suzuki-shunsuke/drone-jsonnet-convert-test">https://github.com/suzuki-shunsuke/drone-jsonnet-convert-test</a></p>
+<p>しかし、折角なので plugin にしました。</p>
+<p>やっていることは単純で、 .drone.jsonnet から YAML を生成し、 .drone.yml と diff を取っているだけです。</p>
+<p>使い方は README を見れば分かると思いますが、</p>
+<p><code>drone jsonnet</code> コマンドのオプションを plugin のパラメータとして渡せます。</p>
+<pre tabindex="0"><code class="language-jsonnet" data-lang="jsonnet">{
+  kind: &quot;pipeline&quot;,
+  name: &quot;test&quot;,
+  steps: [
+    {
+      name: &quot;test .drone.yml&quot;,
+      image: &quot;suzukishunsuke/jsonnet-check:v1.1.1-v0.1.0&quot;,
+      settings: {
+        format: true,
+      },
+    },
+  ],
+}
+</code></pre><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-console" data-lang="console">$ drone exec
+[test .drone.yml:0] + drone jsonnet --format --target /tmp/.drone.yml
+[test .drone.yml:1] + diff .drone.yml /tmp/.drone.yml
+[test .drone.yml:2] --- .drone.yml
+[test .drone.yml:3] +++ /tmp/.drone.yml
+[test .drone.yml:4] @@ -12,5 +12,4 @@
+[test .drone.yml:5]    settings:
+[test .drone.yml:6]      format: true
+[test .drone.yml:7]
+[test .drone.yml:8] -
+[test .drone.yml:9]  ...
+2019/06/01 00:33:27 test .drone.yml : exit code 1
+</code></pre></div><p>シェルスクリプトで実装しました。
+テストでは <a href="https://github.com/bats-core/bats-core">bats</a> を使っています。</p>
+<p>以上、簡単ですが、自作 Drone plugin の紹介でした。</p>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/drone/">drone</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

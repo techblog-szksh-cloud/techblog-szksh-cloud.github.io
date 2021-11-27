@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>2020/05 on melody</title>
+    <link>https://techblog-szksh-cloud.github.io/archives/2020/05/</link>
+    <description>Recent content in 2020/05 on melody</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>jp</language><atom:link href="https://techblog-szksh-cloud.github.io/archives/2020/05/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>CircleCI の run の実行時間を DataDog に送る</title>
+      <link>https://techblog-szksh-cloud.github.io/send-circleci-run-execution-time-to-datadog/</link>
+      <pubDate>Sat, 23 May 2020 14:20:53 +0900</pubDate>
+      
+      <guid>https://techblog-szksh-cloud.github.io/send-circleci-run-execution-time-to-datadog/</guid>
+      <description>小ネタです。
+dd-time を使って CircleCI の run を使ったコマンドの実行時間をどう計測したらいいのかちょっと考えました。
+以前、コマンドの実行時間を DataDog に送るツール dd-time を作りました。
+ https://techblog.szksh.cloud/dd-time/ https://github.com/suzuki-shunsuke/dd-time  これは基本的に以下のように引数として -- 以降に実行するコマンドを指定します。
+$ dd-time -m dd_time.execution_time -t command:docker-build -- docker build . 実行するスクリプトを標準入力で渡したい場合はこうします。
+$ curl https://example.com/install.sh | dd-time -m dd_time.execution_time -- sh もちろんシェルスクリプトである必要はなくて例えば Python だったらこうなります。
+$ curl https://example.com/setup.py | dd-time -m dd_time.execution_time -- python CircleCI の run では shell オプションで shell を指定できます。
+https://circleci.com/docs/2.0/configuration-reference/#run
+なので command 全体の時間を計測したい場合は、 shell を次のようにします。
+- run: name: test dd-time shell: /usr/local/bin/dd-time -m dd_time.</description>
+    </item>
+    
+  </channel>
+</rss>

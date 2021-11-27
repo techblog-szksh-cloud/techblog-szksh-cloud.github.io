@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>2021-07 やったこと - melody</title>
+    
+<meta name="description" content="今まで仕事に限定して書いてきましたが、 OSS 活動なんかにも触れてもいいんじゃないかと思ったので分かる範囲で書きます。仕事  Docker Image を Docker Hub から ECR へ移行 Terraform  .terraform.lock.hcl を CI の中で自動で更新(commit, push)できるようにした  Terraform に詳しくない人も使うので、自動化したほうが良いと判断   tfmigrate を CI に導入 (in progress) Terraform Modules を Terraform の Monorepo とは別リポジトリで管理して versioning するようにした Route53 の管理を Roadworker から Terraform へ移行 tfmigrate を使ったリファクタリング    Event  Open Policy Agent Rego Knowledge Sharing Meetup で登壇  https://gist.github.com/suzuki-shunsuke/9372337aa62a6f8394bb136582ec068e    OSS Contribution AWS AppConfig を Terraform で管理できるようにする PR が無事マージされました。">
+
+<meta property="og:title" content="2021-07 やったこと - melody">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/">
+<meta property="og:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+<meta property="og:site_name" content="melody">
+<meta property="og:description" content="今まで仕事に限定して書いてきましたが、 OSS 活動なんかにも触れてもいいんじゃないかと思ったので分かる範囲で書きます。仕事  Docker Image を Docker Hub から ECR へ移行 Terraform  .terraform.lock.hcl を CI の中で自動で更新(commit, push)できるようにした  Terraform に詳しくない人も使うので、自動化したほうが良いと判断   tfmigrate を CI に導入 (in progress) Terraform Modules を Terraform の Monorepo とは別リポジトリで管理して versioning するようにした Route53 の管理を Roadworker から Terraform へ移行 tfmigrate を使ったリファクタリング    Event  Open Policy Agent Rego Knowledge Sharing Meetup で登壇  https://gist.github.com/suzuki-shunsuke/9372337aa62a6f8394bb136582ec068e    OSS Contribution AWS AppConfig を Terraform で管理できるようにする PR が無事マージされました。">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="melody">
+<meta name="twitter:url" content="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/">
+<meta name="twitter:title" content="2021-07 やったこと - melody">
+<meta name="twitter:description" content="今まで仕事に限定して書いてきましたが、 OSS 活動なんかにも触れてもいいんじゃないかと思ったので分かる範囲で書きます。仕事  Docker Image を Docker Hub から ECR へ移行 Terraform  .terraform.lock.hcl を CI の中で自動で更新(commit, push)できるようにした  Terraform に詳しくない人も使うので、自動化したほうが良いと判断   tfmigrate を CI に導入 (in progress) Terraform Modules を Terraform の Monorepo とは別リポジトリで管理して versioning するようにした Route53 の管理を Roadworker から Terraform へ移行 tfmigrate を使ったリファクタリング    Event  Open Policy Agent Rego Knowledge Sharing Meetup で登壇  https://gist.github.com/suzuki-shunsuke/9372337aa62a6f8394bb136582ec068e    OSS Contribution AWS AppConfig を Terraform で管理できるようにする PR が無事マージされました。">
+<meta name="twitter:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https:\/\/techblog-szksh-cloud.github.io\/"
+    },
+    "headline": "2021-07 やったこと - melody",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https:\/\/techblog-szksh-cloud.github.io\/images\/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2021-07-28T06:58:45JST",
+    "dateModified": "2021-07-28T06:58:45JST",
+    "author": {
+      "@type": "Person",
+      "name": "melody"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "melody",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https:\/\/techblog-szksh-cloud.github.io\/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "今まで仕事に限定して書いてきましたが、 OSS 活動なんかにも触れてもいいんじゃないかと思ったので分かる範囲で書きます。\n仕事  Docker Image を Docker Hub から ECR へ移行 Terraform  .terraform.lock.hcl を CI の中で自動で更新(commit, push)できるようにした  Terraform に詳しくない人も使うので、自動化したほうが良いと判断   tfmigrate を CI に導入 (in progress) Terraform Modules を Terraform の Monorepo とは別リポジトリで管理して versioning するようにした Route53 の管理を Roadworker から Terraform へ移行 tfmigrate を使ったリファクタリング    Event  Open Policy Agent Rego Knowledge Sharing Meetup で登壇  https:\/\/gist.github.com\/suzuki-shunsuke\/9372337aa62a6f8394bb136582ec068e    OSS Contribution AWS AppConfig を Terraform で管理できるようにする PR が無事マージされました。"
+  }
+</script>
+
+
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://techblog-szksh-cloud.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li class="active">2021-07 やったこと</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2021-07-28T06:58:45JST">Jul 28, 2021</time></li>
+      
+      
+    </ul>
+
+    <h1 class="title">2021-07 やったこと</h1>
+    
+    
+    <section>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/job/">job</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/oss/">oss</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </header>
+
+  
+
+  <div class="article-body"><p>今まで仕事に限定して書いてきましたが、 OSS 活動なんかにも触れてもいいんじゃないかと思ったので分かる範囲で書きます。</p>
+<h2 id="仕事">仕事</h2>
+<ul>
+<li>Docker Image を Docker Hub から ECR へ移行</li>
+<li>Terraform
+<ul>
+<li>.terraform.lock.hcl を CI の中で自動で更新(commit, push)できるようにした
+<ul>
+<li>Terraform に詳しくない人も使うので、自動化したほうが良いと判断</li>
+</ul>
+</li>
+<li><a href="https://github.com/minamijoyo/tfmigrate">tfmigrate</a> を CI に導入</li>
+<li>(in progress) Terraform Modules を Terraform の Monorepo とは別リポジトリで管理して versioning するようにした</li>
+<li>Route53 の管理を <a href="https://github.com/codenize-tools/roadworker">Roadworker</a> から Terraform へ移行</li>
+<li>tfmigrate を使ったリファクタリング</li>
+</ul>
+</li>
+</ul>
+<h2 id="event">Event</h2>
+<ul>
+<li><a href="https://mercari.connpass.com/event/211073/">Open Policy Agent Rego Knowledge Sharing Meetup</a> で登壇
+<ul>
+<li><a href="https://gist.github.com/suzuki-shunsuke/9372337aa62a6f8394bb136582ec068e">https://gist.github.com/suzuki-shunsuke/9372337aa62a6f8394bb136582ec068e</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="oss-contribution">OSS Contribution</h2>
+<p>AWS AppConfig を Terraform で管理できるようにする PR が無事マージされました。</p>
+<ul>
+<li><a href="https://github.com/hashicorp/terraform-provider-aws/pull/20172">feat: add aws_appconfig_deployment</a></li>
+<li><a href="https://github.com/hashicorp/terraform-provider-aws/pull/20176">fix: add the attribute &ldquo;environment_id&rdquo; to aws_appconfig_environment</a></li>
+<li><a href="https://github.com/hashicorp/terraform-provider-aws/pull/19359">feat: support AppConfig Deployment Strategy</a></li>
+<li><a href="https://github.com/hashicorp/terraform-provider-aws/pull/19324">feat: support AppConfig Hosted Configuration Version</a></li>
+<li><a href="https://github.com/hashicorp/terraform-provider-aws/pull/19320">feat: add appconfig_configuration_profile</a></li>
+<li><a href="https://github.com/hashicorp/terraform-provider-aws/pull/19307">feat: add aws_appconfig_application and aws_appconfig_environment</a></li>
+</ul>
+<h2 id="新たに作った-oss">新たに作った OSS</h2>
+<ul>
+<li><a href="https://github.com/tfmigrator/cli">tfmigrator/cli</a>: CLI to Migrate Terraform Configuration and State with terraform state command and hcledit</li>
+<li><a href="https://github.com/suzuki-shunsuke/renovate-github-tags-datasource-repositories">Renovate github-tags Datasource Repositories</a></li>
+</ul>
+<h3 id="tfmigrator">tfmigrator</h3>
+<p>Terraform Configuration と State をマイグレーションする tfmigrator の CLI をリリースしました。
+tfmigrator には紆余曲折有り(?)、時系列的に</p>
+<ul>
+<li><a href="https://github.com/suzuki-shunsuke/tfmigrator">suzuki-shunsuke/tfmigrator</a> を開発。 CLI</li>
+<li>YAML の設定ファイルの表現力に限界を感じ、 suzuki-shunsuke/tfmigrator をフォークして Go のライブラリ <a href="https://github.com/tfmigrator/tfmigrator">tfmigrator/tfmigrator</a> を開発
+<ul>
+<li>簡単に CLI を実装できるように API も提供</li>
+<li>ついでに色々改良
+<ul>
+<li><a href="https://github.com/minamijoyo/hcledit">hcledit</a> のインストールが不要</li>
+<li>ファイルの in place の更新をサポート</li>
+<li>dry run のサポート</li>
+<li>複数のリソースをまとめて扱えるような API も提供 <a href="https://pkg.go.dev/github.com/tfmigrator/tfmigrator@v0.5.1/tfmigrator#QuickRunBatch">QuickRunBatch</a></li>
+<li>etc</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>実際に tfmigrator/tfmigrator を使ってみると Go を書くのがちょっと面倒くさい
+<ul>
+<li>そもそも複雑な rule を一度に適用しようとするのが間違っていると感じた</li>
+</ul>
+</li>
+<li>tfmigrator/tfmigrator を使い、 CLI も実装 tfmigrator/cli
+<ul>
+<li>やはり基本的なユースケースでは YAML 書くほうが楽</li>
+</ul>
+</li>
+</ul>
+<h3 id="renovate-github-tags-datasource-repositories">Renovate github-tags Datasource Repositories</h3>
+<p>Renovate の Datasource や Manager でサポートされていない package を Renovate で update するために、
+package ように GitHub Repository を作って package のバージョンに合わせて GitHub tag を更新し、
+<code>github-tags</code> Datasource として使おうというプロジェクトです。
+現状 AWS RDS や AWS Elasticache の engine version 用のリポジトリを作っています。
+tag は GitHub Actions を毎日定期実行することで更新します。
+詳細はリポジトリの README でも読んでください。</p>
+<h2 id="新しいバージョンをリリースした-oss">新しいバージョンをリリースした OSS</h2>
+<ul>
+<li><a href="https://github.com/suzuki-shunsuke/tfcmt">tfcmt</a>
+<ul>
+<li><a href="https://github.com/suzuki-shunsuke/tfcmt/releases/tag/v2.0.0-0">v2.0.0-0</a></li>
+<li><a href="https://github.com/suzuki-shunsuke/tfcmt/releases/tag/v1.1.0">v1.1.0</a>
+<ul>
+<li><a href="https://twitter.com/szkdash/status/1416263752475836416">https://twitter.com/szkdash/status/1416263752475836416</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>terraform v0.15.4 から Terraform 以外での変更も plan に出力されるようになって
+わかりにくいと感じたので、 tfcmt でテンプレート変数追加して見やすくできるようにしました。
+Refreshing state のログを除外したり、warning 目立たせたりもできて便利です。</p>
+<h2 id="blog">Blog</h2>
+<ul>
+<li><a href="https://techblog.szksh.cloud/archives/2021/07/">https://techblog.szksh.cloud/archives/2021/07/</a></li>
+</ul>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/job/">job</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/oss/">oss</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

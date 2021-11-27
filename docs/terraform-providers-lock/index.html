@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/terraform-providers-lock/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>terraform init で lock ファイルが更新される問題の対応 - melody</title>
+    
+<meta name="description" content="Terraform v0.14 で local で terraform init すると lock ファイルが更新されてしまう問題に対応しました。結論を最初に言うと、 100 以上の Terraform 環境をいい感じに v0.14 に upgrade した方法で紹介している方法で Renovate で Terraform Provider を update する際に terraform init -upgrade を実行して lock ファイルを更新してコミット・プッシュしているのですが、 その際に terraform providers lock -platform=darwin_amd64 を実行するようにしました。Terraform v0.14 で lock ファイル .terraform.lock.hcl が導入されました。 Renovate で Terraform Provider を update する際にも lock ファイルを更新する必要があるので、 terraform init -upgrade を実行して lock ファイルを更新してコミット・プッシュしています。 なのですが、ローカルで terraform init を実行するとなんか lock ファイルが更新されることが良くありました。しばらく放置していたのですが、 developer から「なんかファイル更新されたんだけど、これコミットしていいの？」と聞かれ、このまま放っておいて困惑させたりもやっとさせたりするのは良くないなと思い、調べてみました。lock ファイルについて .">
+
+<meta property="og:title" content="terraform init で lock ファイルが更新される問題の対応 - melody">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://techblog-szksh-cloud.github.io/terraform-providers-lock/">
+<meta property="og:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+<meta property="og:site_name" content="melody">
+<meta property="og:description" content="Terraform v0.14 で local で terraform init すると lock ファイルが更新されてしまう問題に対応しました。結論を最初に言うと、 100 以上の Terraform 環境をいい感じに v0.14 に upgrade した方法で紹介している方法で Renovate で Terraform Provider を update する際に terraform init -upgrade を実行して lock ファイルを更新してコミット・プッシュしているのですが、 その際に terraform providers lock -platform=darwin_amd64 を実行するようにしました。Terraform v0.14 で lock ファイル .terraform.lock.hcl が導入されました。 Renovate で Terraform Provider を update する際にも lock ファイルを更新する必要があるので、 terraform init -upgrade を実行して lock ファイルを更新してコミット・プッシュしています。 なのですが、ローカルで terraform init を実行するとなんか lock ファイルが更新されることが良くありました。しばらく放置していたのですが、 developer から「なんかファイル更新されたんだけど、これコミットしていいの？」と聞かれ、このまま放っておいて困惑させたりもやっとさせたりするのは良くないなと思い、調べてみました。lock ファイルについて .">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="melody">
+<meta name="twitter:url" content="https://techblog-szksh-cloud.github.io/terraform-providers-lock/">
+<meta name="twitter:title" content="terraform init で lock ファイルが更新される問題の対応 - melody">
+<meta name="twitter:description" content="Terraform v0.14 で local で terraform init すると lock ファイルが更新されてしまう問題に対応しました。結論を最初に言うと、 100 以上の Terraform 環境をいい感じに v0.14 に upgrade した方法で紹介している方法で Renovate で Terraform Provider を update する際に terraform init -upgrade を実行して lock ファイルを更新してコミット・プッシュしているのですが、 その際に terraform providers lock -platform=darwin_amd64 を実行するようにしました。Terraform v0.14 で lock ファイル .terraform.lock.hcl が導入されました。 Renovate で Terraform Provider を update する際にも lock ファイルを更新する必要があるので、 terraform init -upgrade を実行して lock ファイルを更新してコミット・プッシュしています。 なのですが、ローカルで terraform init を実行するとなんか lock ファイルが更新されることが良くありました。しばらく放置していたのですが、 developer から「なんかファイル更新されたんだけど、これコミットしていいの？」と聞かれ、このまま放っておいて困惑させたりもやっとさせたりするのは良くないなと思い、調べてみました。lock ファイルについて .">
+<meta name="twitter:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https:\/\/techblog-szksh-cloud.github.io\/"
+    },
+    "headline": "terraform init で lock ファイルが更新される問題の対応 - melody",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https:\/\/techblog-szksh-cloud.github.io\/images\/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2021-04-24T21:57:27JST",
+    "dateModified": "2021-04-24T21:57:27JST",
+    "author": {
+      "@type": "Person",
+      "name": "melody"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "melody",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https:\/\/techblog-szksh-cloud.github.io\/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "Terraform v0.14 で local で terraform init すると lock ファイルが更新されてしまう問題に対応しました。\n結論を最初に言うと、 100 以上の Terraform 環境をいい感じに v0.14 に upgrade した方法で紹介している方法で Renovate で Terraform Provider を update する際に terraform init -upgrade を実行して lock ファイルを更新してコミット・プッシュしているのですが、 その際に terraform providers lock -platform=darwin_amd64 を実行するようにしました。\nTerraform v0.14 で lock ファイル .terraform.lock.hcl が導入されました。 Renovate で Terraform Provider を update する際にも lock ファイルを更新する必要があるので、 terraform init -upgrade を実行して lock ファイルを更新してコミット・プッシュしています。 なのですが、ローカルで terraform init を実行するとなんか lock ファイルが更新されることが良くありました。しばらく放置していたのですが、 developer から「なんかファイル更新されたんだけど、これコミットしていいの？」と聞かれ、このまま放っておいて困惑させたりもやっとさせたりするのは良くないなと思い、調べてみました。\nlock ファイルについて ."
+  }
+</script>
+
+
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://techblog-szksh-cloud.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li class="active">terraform init で lock ファイルが更新される問題の対応</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2021-04-24T21:57:27JST">Apr 24, 2021</time></li>
+      
+      
+    </ul>
+
+    <h1 class="title">terraform init で lock ファイルが更新される問題の対応</h1>
+    
+    
+    <section>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/terraform/">terraform</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </header>
+
+  
+
+  <div class="article-body"><p>Terraform v0.14 で local で <code>terraform init</code> すると lock ファイルが更新されてしまう問題に対応しました。</p>
+<p>結論を最初に言うと、 <a href="https://blog.studysapuri.jp/entry/2021/03/12/080000">100 以上の Terraform 環境をいい感じに v0.14 に upgrade した方法</a>で紹介している方法で Renovate で Terraform Provider を update する際に <code>terraform init -upgrade</code> を実行して lock ファイルを更新してコミット・プッシュしているのですが、
+その際に <code>terraform providers lock -platform=darwin_amd64</code> を実行するようにしました。</p>
+<p>Terraform v0.14 で lock ファイル <code>.terraform.lock.hcl</code> が導入されました。
+Renovate で Terraform Provider を update する際にも lock ファイルを更新する必要があるので、
+<code>terraform init -upgrade</code> を実行して lock ファイルを更新してコミット・プッシュしています。
+なのですが、ローカルで <code>terraform init</code> を実行するとなんか lock ファイルが更新されることが良くありました。しばらく放置していたのですが、 developer から「なんかファイル更新されたんだけど、これコミットしていいの？」と聞かれ、このまま放っておいて困惑させたりもやっとさせたりするのは良くないなと思い、調べてみました。</p>
+<p>lock ファイルについて <a href="https://speakerdeck.com/minamijoyo/how-to-update-terraform-dot-lock-dot-hcl-efficiently">.terraform.lock.hcl 完全に理解した</a>で詳しく解説されていたので大変助かりました。</p>
+<ul>
+<li>lock ファイルには provider の hash 値が記録されている</li>
+<li>lock ファイルは <code>terraform init</code> で自動的に更新される</li>
+<li>hash 値は platform (Mac, Linux, etc) によって違う</li>
+<li><code>terraform init</code> 実行時に、その platform の hash 値が lock ファイルになければ追加される
+<ul>
+<li>デフォルトでは実行環境以外の Platform の hash 値は追加されない</li>
+</ul>
+</li>
+<li>CI は Linux 上で実行しているので、 Linux の hash 値だけが記録される</li>
+<li>ローカルで Mac 上で <code>terraform init</code> すると Mac の hash 値が追加され、 lock ファイルに差分が生じる</li>
+</ul>
+<p>なので差分が出てしまった場合はコミットするで良いとは思いますが、そもそも CI で lock ファイルを更新する際に Mac の hash 値も追加してしまえばローカルで Mac 上で <code>terraform init</code> しても差分が出なくなります。ちなみに Windows 上で <code>terraform init</code> する人は自分の周りにはいなさそうなので、 Windows は対応しないことにしました。</p>
+<p><a href="https://blog.studysapuri.jp/entry/2021/03/12/080000">100 以上の Terraform 環境をいい感じに v0.14 に upgrade した方法</a>で紹介しているようにすでに lock ファイルを更新してコミット・プッシュする仕組みはあるので、変更としては 1 (正確にはコードコメント入れて4)行追加するだけでした。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">github-comment exec -- terraform providers lock -platform<span style="color:#f92672">=</span>darwin_amd64
+</code></pre></div></div>
+
+  <footer class="article-footer">
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/terraform/">terraform</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

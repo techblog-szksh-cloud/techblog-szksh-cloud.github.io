@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+<link rel="alternate" type="application/rss+xml" title="RSS" href="https://techblog-szksh-cloud.github.io/tags/buildflow/index.xml">
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/tags/buildflow/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>buildflow - melody</title>
+    
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    
+    <header class="page-header">
+      <h1>buildflow</h1>
+    </header>
+    
+
+    <ul class="p-articles">
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2020-10-18T09:53:08JST">Oct 18, 2020</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/buildflow-goal/">なぜ buildflow を作ったのか</a></h2>
+  </header>
+
+  
+  <div class="summary">buildflow というツールを開発しているので buildflow というタグをつけて何回かに分けてブログを書きます。
+この記事では なぜ buildflow を作ったのかについて説明します。 開発者である自分の好みや置かれた環境などが所々に反映された内容になっています。
+解決したい課題 自分は CI/CD の DX の改善に業務として取り組んでいます。 リポジトリはたくさんあり、横断的にメンテナンスしています。 幾つかのリポジトリはモノレポになっており、 CI の複雑さが増していたり、 CI の実行時間が長かったりします。
+現在の CI/CD には以下のような問題があると感じています(他にもあるんですが、 buildflow と関係ないので割愛)。
+ 実行時間が長い  PR とは関係ない処理(test, build, etc) が実行されている   金銭的に高い  実行時間が長いので無駄にお金がかかっている CI サービスによっては並列度を上げることで実行時間が縮む場合があるが、それでもその分お金がかかる   PR とは直接関係ないところで失敗する  PR とは関係ない処理(test, build, etc) が実行されていて、それらが flaky で失敗する   メンテナンス性が悪い  属人化気味 何をやっているのか分かりにくい   同じような機能を複数のリポジトリで実装・メンテしたくない  これらの問題を解決するために buildflow を開発しました。
+buildflow で必要な処理だけを実行する buildflow では PR の情報を自動で取得し、それらに応じて実行する処理を変更できます。 変更されたファイルに応じてだけでなく、 label や PR の author などでも変更できます。 Tengo script を用いて柔軟なロジックを実装できます。 JSON や YAML の読み込みもサポートしているので、依存関係などの設定を別ファイルで管理することも出来ます。</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/buildflow-goal/" title="なぜ buildflow を作ったのか">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2020-10-18T08:36:09JST">Oct 18, 2020</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/buildflow-result-output/">buildflow の実行結果の出力形式</a></h2>
+  </header>
+
+  
+  <div class="summary">buildflow というツールを開発しているので buildflow というタグをつけて何回かに分けてブログを書きます。
+この記事では buildflow の実行結果の出力フォーマットなどについて説明します。
+ちょっと出力はわかりにくいかもしれません。 改善したいと思いつつ、どうあるべきなのかまだ見えてないのでこんな感じになっています。
+task の標準出力、標準エラー出力はリアルタイムで出力されます。 また、複数のタスクを並列実行できます。 複数のタスクのログをリアルタイムで出力すると当然混じるので、区別がつくように各行の prefix に timestamp | task name |  をつけて出力します。 それでも混じるとわかりにくいので、 phase が完了後に、 phase の全 task のログを混ざらないようにそれぞれ標準エラー出力します。 つまり同じログが 2 回出力されますが 2 回実行されているわけではないです。
+============== = Phase: phase 名 = ============== 10:47:54UTC | task A | + /bin/sh -c echo hello # 実行されるコマンド 10:47:54UTC | task B | + /bin/sh -c echo foo 10:47:54UTC | task A | hello # コマンドの標準(エラー)出力 10:47:54UTC | task A | .</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/buildflow-result-output/" title="buildflow の実行結果の出力形式">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2020-10-18T08:13:48JST">Oct 18, 2020</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/buildflow-pr-info/">buildflow が自動で取得する Pull Request の情報</a></h2>
+  </header>
+
+  
+  <div class="summary">buildflow というツールを開発しているので buildflow というタグをつけて何回かに分けてブログを書きます。
+この記事では buildflow が自動で Pull Request (以下 PR) の情報を取得してくる機能について説明します。
+この機能は GitHub のみサポートしています。 GitLab や BitBucket はサポートしていません。 これは単純に自分が GitHub しか使わないからです。
+PR の CI では
+ 変更されたものだけテストする 特定の PR ラベルがついていたら実行する 特定のユーザーの PR だけ処理を変える(bot とか)  のように PR の情報に基づいて挙動を変えたくなったりします。
+シェルスクリプトで GitHub API 叩いて情報とってきて jq でパースしてとか、頑張れば別にできるんですが、 毎回そういうコードを書きたくないなと感じていました。
+なお、 PR の情報をとってくる機能はデフォルトで無効化されています(GitHub Access Token 必要ですしね)。 設定で pr: true を指定してください。
+PR の情報をとってくるには、以下の情報が必要です。
+ repository owner: 設定ファイルで owner を設定するか、自動取得。 owner を設定してある場合はそちらが優先される repository name: 設定ファイルで repo を設定するか、自動取得。 repo を設定してある場合はそちらが優先される pull request number: 自動取得 GitHub Access Token: 環境変数 GITHUB_TOKEN または GITHUB_ACCESS_TOKEN を指定してください  取得される情報 以下のパラメータがテンプレートや Tengo script に渡されます。</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/buildflow-pr-info/" title="buildflow が自動で取得する Pull Request の情報">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2020-10-17T22:35:56JST">Oct 17, 2020</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/buildflow-why-tengo/">buildflow ではなぜ Tengo を採用しているのか</a></h2>
+  </header>
+
+  
+  <div class="summary">buildflow というツールを開発しているので buildflow というタグをつけて何回かに分けてブログを書きます。
+この記事では buildflow でなぜ Tengo を採用しているのかについて説明します。
+https://github.com/d5/tengo
+Tengo に関しては https://techblog.szksh.cloud/buildflow-1/ でも多少触れています。
+なぜ Tengo を採用しているのかに関しては
+ なぜスクリプト言語を採用しているのか なぜ他の言語ではなく Tengo なのか  の 2 つの観点で話します。
+なぜスクリプト言語を採用しているのか 逆にスクリプト言語を採用しない方法としては、 YAML などで独自 DSL のようなものを定義する方法があります。 DSL と言うと大げさかもしれませんが、 AND, OR, NOT といった論理を YAML のようなデータ記述言語で表現しようと思うとそんな感じになると思います。
+この方法は扱いたいロジックが単純なものに限られるのであれば問題ないですが、 より柔軟なロジックを表現したいとなった場合に、無理があります。
+ どうやって表現すればいいのか自分で考えないといけない  どう頑張っても独自ルールになるため、ユーザーにとって直感的とは言えない   正しく実装しないといけない 仕様をドキュメント化しないといけない  一方、 Go では幾つかのスクリプト言語がサードパーティのライブラリとして実装されており、 buildflow のようなツールに組み込むことが出来ます。
+https://github.com/avelino/awesome-go#embeddable-scripting-languages
+これらを活用すれば上記の問題は解決できるうえに、非常に柔軟にロジックを実装できます(勿論言語によりますが)。
+なぜ他の言語ではなく Tengo なのか 単純に https://github.com/avelino/awesome-go#embeddable-scripting-languages で紹介されているライブラリの中で一番要件にマッチしてそうだったからです。 といっても全てをちゃんとチェックしたわけではありませんが。 Lua とかもあるのでそれでも良かったかもですが、自分は Lua を全然知りません。 あとちゃんとバージョンニングされていたのも理由の一つです。 Tengo より人気のある言語もありましたが、バージョニングされてないという理由で見送ったりしました。</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/buildflow-why-tengo/" title="buildflow ではなぜ Tengo を採用しているのか">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2020-10-17T21:29:51JST">Oct 17, 2020</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/buildflow-dynamic-task/">buildflow の dynamic task</a></h2>
+  </header>
+
+  
+  <div class="summary">buildflow というツールを開発しているので buildflow というタグをつけて何回かに分けてブログを書きます。
+この記事では buildflow の dynamic task という機能について説明します。 dynamic task では task.items の値でループを回し、複数の task を動的に生成できます。 勿論 task.items はオプションなので、指定しなければ普通の task として扱われます。 task.items を指定する場合、 map か list か、それらを返す Tengo script でないといけません。
+--- phases: - name: main tasks: - name: &#34;list {{.Item.Key}} {{.Item.Value.name}}&#34; command: command: &#34;echo {{.Item.Key}} {{.Item.Value.name}} {{.Item.Value.age}}&#34; items: - name: foo age: 10 - name: bar age: 20 上記の設定は dynamic task を使わないとこうなります。
+--- phases: - name: main tasks: - name: &#34;list 0 foo&#34; command: command: &#34;echo 0 foo 10&#34; - name: &#34;list 1 bar&#34; command: command: &#34;echo 1 bar 20&#34; パラメータ Item は Key, Value を持ち、 Items が map の場合、それぞれ map の key, value が渡され、 list の場合、 index と value が渡されます。</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/buildflow-dynamic-task/" title="buildflow の dynamic task">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2020-10-17T21:05:41JST">Oct 17, 2020</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/buildflow-input-output/">buildflow の task の input, output という機能</a></h2>
+  </header>
+
+  
+  <div class="summary">buildflow というツールを開発しているので buildflow というタグをつけて何回かに分けてブログを書きます。
+この記事では buildflow の task の input, output という機能について説明します。 task の input, output は Tengo script で task のパラメータを整形する機能です。
+task の command.command や write_file.template など、幾つかの設定では Go の text/template が使えますが、 text/template は複雑なロジックを記述したりするのには向いていません。 そこで task の input で Tengo script を使って必要なデータの整形を行うことで、 template は比較的きれいな状態に保つことが出来ます。
+これは MVC モデルで View とロジックを分離するみたいな考え方と似ているかもしれません。
+output ではコマンドの実行結果を整形することが出来ます。 例えばコマンドの標準出力をユニークな文字列のリストにしたり出来ます。
+task.input は task.when が評価されたあと、 task の command などが実行される前に評価されます。 つまり、 task.when や task.dependency で同じ task の input の結果を参照は出来ません。</div>
+
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2020-10-17T20:49:28JST">Oct 17, 2020</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/buildflow-split-files/">buildflow で設定ファイルを分割する</a></h2>
+  </header>
+
+  
+  <div class="summary">buildflow というツールを開発しているので buildflow というタグをつけて何回かに分けてブログを書こうかなと思います。
+この記事では buildflow の設定ファイルを分割する方法について説明します。
+buildflow では一部の設定項目について他のファイルのパスを指定して読み込むということが出来ます。 1 つのファイルに全部の設定を書いていると、ファイルが大きくなってメンテナンス性が悪くなったり、 コードオーナーが曖昧になったりするので、そういう場合は分割すると良いでしょう。 コードオーナーが異なる複数のサービスで共通の設定ファイルを用いる場合、ファイルを分割して GitHub の CODEOWNERS を設定するのもよいでしょう。 あまりないかもしれませんが、ファイルを分割すると同じファイルを読み込んで再利用も出来ます。
+また、 Tengo script を独立したファイルに分割すると、 test が可能になります。 Tengo script をテストするためのツールとして tengo-tester というツールも開発しているので、そちらをお使いください。
+以下のようなファイル読み込みの設定があります。
+ phase.import task.import: task.input_file task.output_file task.when_file command.command_file command.env[].value_file write_file.template_file  ファイルのパスは、絶対パスか、実行中の build の設定ファイルが存在するディレクトリからの相対パスになります。</div>
+
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2020-10-17T19:44:39JST">Oct 17, 2020</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/buildflow-parameter/">buildflow の script や template に渡される parameter</a></h2>
+  </header>
+
+  
+  <div class="summary">buildflow というツールを開発しているので buildflow というタグをつけて何回かに分けてブログを書こうと思います。
+この記事では buildflow の Tengo script やテンプレートにパラメータとして渡される変数について紹介します。
+buildflow では Tengo script はテンプレートが使える設定項目が多くあります。それらの設定には共通のフォーマットのパラメータが渡されます。
+ PR: Pull Request の情報: GitHub API のレスポンス body Files: Pull Request で更新されたファイルの一覧: GitHub API のレスポンス body Phases: 対象の Phase よりも前の Phase の結果 Phase: 対象の Phase Tasks: 対象の Phase の Task の結果 Task: 対象の Task Item: dynamic task のパラメータとして渡される Meta: 設定 meta  Phase
+ Status: Phase の実行結果  succeeded failed skipped   Tasks: Phase の task の実行結果 Meta: phase の 設定 meta  Task</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/buildflow-parameter/" title="buildflow の script や template に渡される parameter">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2020-10-17T18:26:57JST">Oct 17, 2020</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/buildflow-task/">buildflow の task の設定項目</a></h2>
+  </header>
+
+  
+  <div class="summary">buildflow というツールを開発しているので buildflow というタグをつけて何回かに分けてブログを書こうと思います。
+この記事では buildflow の task の基本的な設定項目などについて説明します。 数が多いので、個々の設定の詳細はまた別の記事に書きます。
+task には幾つか type がありますが、全ての type に共通するパラメータが以下になります。
+ name: task 名。 unique である必要はない。 Go の text/template が使える when: task を実行するか否か。 真偽値か Tengo script  when_file で外部ファイルを読み込める   dependency: task の依存関係の定義。 task 名のリストか、 Tengo script items: dynamic task の設定。 loop を使って複数の task を動的に生成できる  任意の list か map か、 Tengo script   input: Tengo script で task のコマンドのパラメータを生成できる  input_file で外部ファイルを読み込める   output: Tengo script で task の実行結果を整形できる。他の task が参照して挙動を変えたりできる  output_file で外部ファイルを読み込める   meta: ユーザーが自由にパラメータを定義できる map  上記の設定は name 以外はオプションです。</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/buildflow-task/" title="buildflow の task の設定項目">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2020-10-17T18:09:19JST">Oct 17, 2020</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/buildflow-build-phase-task/">buildflow の build, phase, task について</a></h2>
+  </header>
+
+  
+  <div class="summary">buildflow というツールを開発しているので buildflow というタグをつけて何回かに分けてブログを書こうと思います。
+この記事では buildflow の概念である build, phase, task について書きたいと思います。
+buildflow には Build, Phase, Task という概念があります。 CircleCI の Pipeline, Workflow, Job みたいなものと思ってもらえるとよいと思います。
+$ buildflow run で 1 つの build が実行されます。 build は複数の phase からなり、 phase が 1 つずつ順に実行されます。 phase は複数の task からなり、 task が全て終了すると、その phase も終了となります。 task は並列に実行したり、依存関係を定義したりできます。 task では外部コマンドを実行したりできます。
+設定ファイルでは phases, tasks をそれぞれ配列で指定します。
+--- phases: - name: setup tasks: - name: hello command: command: echo hello - name: foo command: command: echo foo - name: build tasks: - name: hello command: command: echo hello - name: foo command: command: echo foo dependency: - hello - name: post build tasks: - name: hello command: command: echo hello 上の例では 3 つの phase setup, build, post build が順に実行されます。 デフォルトではどれかの phase が失敗するとそれ以降の phase は実行されません(この挙動は変えられます)。</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/buildflow-build-phase-task/" title="buildflow の build, phase, task について">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+    </ul>
+
+    
+<nav>
+  <ul class="pager">
+
+    
+    <li class="disabled"><a href="#">Previous</a></li>
+    
+
+    
+    <li><a href="/tags/buildflow/page/2/">Next</a></li>
+    
+
+  </ul>
+</nav>
+
+
+
+  </div>
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

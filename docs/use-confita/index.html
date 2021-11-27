@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/use-confita/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>Goの設定管理で viper の代わりに confita を使う - melody</title>
+    
+<meta name="description" content="Golang の設定管理のライブラリといえば viper が有名ですが、 confita も良さそうだったので紹介したいと思います。confita の機能としては以下のようなものがあります。 構造体に設定をマッピング flag や環境変数、設定ファイルに対応 複数の設定ファイルに対応  構造体に設定をマッピングすることで、https://github.com/go-playground/validator のようなライブラリを使って設定のバリデーションが出来ます。また viper は v1.3.1 の時点で複数の設定ファイルを扱いにくいです。 Viper can search multiple paths, but currently a single Viper instance only supports a single configuration file. k8s で ConfigMap と Secret を設定ファイルとして扱う場合、複数のファイルを扱えないと不便です。 その点 confita は複数の設定ファイルを問題なく扱えます。以下はフラグで指定した複数の設定ファイルから設定を読み込む簡単なサンプルです。import ( &amp;#34;context&amp;#34; &amp;#34;gopkg.in/go-playground/validator.v9&amp;#34; &amp;#34;github.com/heetch/confita&amp;#34; &amp;#34;github.com/heetch/confita/backend&amp;#34; &amp;#34;github.com/heetch/confita/backend/file&amp;#34; flag &amp;#34;github.com/spf13/pflag&amp;#34; ) func loadConfig(ctx context.Context) (Config, error) { cps := flag.StringSliceP(&amp;#34;config&amp;#34;, &amp;#34;c&amp;#34;, nil, &amp;#34;configuration file path&amp;#34;) flag.">
+
+<meta property="og:title" content="Goの設定管理で viper の代わりに confita を使う - melody">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://techblog-szksh-cloud.github.io/use-confita/">
+<meta property="og:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+<meta property="og:site_name" content="melody">
+<meta property="og:description" content="Golang の設定管理のライブラリといえば viper が有名ですが、 confita も良さそうだったので紹介したいと思います。confita の機能としては以下のようなものがあります。 構造体に設定をマッピング flag や環境変数、設定ファイルに対応 複数の設定ファイルに対応  構造体に設定をマッピングすることで、https://github.com/go-playground/validator のようなライブラリを使って設定のバリデーションが出来ます。また viper は v1.3.1 の時点で複数の設定ファイルを扱いにくいです。 Viper can search multiple paths, but currently a single Viper instance only supports a single configuration file. k8s で ConfigMap と Secret を設定ファイルとして扱う場合、複数のファイルを扱えないと不便です。 その点 confita は複数の設定ファイルを問題なく扱えます。以下はフラグで指定した複数の設定ファイルから設定を読み込む簡単なサンプルです。import ( &amp;#34;context&amp;#34; &amp;#34;gopkg.in/go-playground/validator.v9&amp;#34; &amp;#34;github.com/heetch/confita&amp;#34; &amp;#34;github.com/heetch/confita/backend&amp;#34; &amp;#34;github.com/heetch/confita/backend/file&amp;#34; flag &amp;#34;github.com/spf13/pflag&amp;#34; ) func loadConfig(ctx context.Context) (Config, error) { cps := flag.StringSliceP(&amp;#34;config&amp;#34;, &amp;#34;c&amp;#34;, nil, &amp;#34;configuration file path&amp;#34;) flag.">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="melody">
+<meta name="twitter:url" content="https://techblog-szksh-cloud.github.io/use-confita/">
+<meta name="twitter:title" content="Goの設定管理で viper の代わりに confita を使う - melody">
+<meta name="twitter:description" content="Golang の設定管理のライブラリといえば viper が有名ですが、 confita も良さそうだったので紹介したいと思います。confita の機能としては以下のようなものがあります。 構造体に設定をマッピング flag や環境変数、設定ファイルに対応 複数の設定ファイルに対応  構造体に設定をマッピングすることで、https://github.com/go-playground/validator のようなライブラリを使って設定のバリデーションが出来ます。また viper は v1.3.1 の時点で複数の設定ファイルを扱いにくいです。 Viper can search multiple paths, but currently a single Viper instance only supports a single configuration file. k8s で ConfigMap と Secret を設定ファイルとして扱う場合、複数のファイルを扱えないと不便です。 その点 confita は複数の設定ファイルを問題なく扱えます。以下はフラグで指定した複数の設定ファイルから設定を読み込む簡単なサンプルです。import ( &amp;#34;context&amp;#34; &amp;#34;gopkg.in/go-playground/validator.v9&amp;#34; &amp;#34;github.com/heetch/confita&amp;#34; &amp;#34;github.com/heetch/confita/backend&amp;#34; &amp;#34;github.com/heetch/confita/backend/file&amp;#34; flag &amp;#34;github.com/spf13/pflag&amp;#34; ) func loadConfig(ctx context.Context) (Config, error) { cps := flag.StringSliceP(&amp;#34;config&amp;#34;, &amp;#34;c&amp;#34;, nil, &amp;#34;configuration file path&amp;#34;) flag.">
+<meta name="twitter:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https:\/\/techblog-szksh-cloud.github.io\/"
+    },
+    "headline": "Goの設定管理で viper の代わりに confita を使う - melody",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https:\/\/techblog-szksh-cloud.github.io\/images\/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2019-02-16T18:38:45JST",
+    "dateModified": "2019-02-16T18:38:45JST",
+    "author": {
+      "@type": "Person",
+      "name": "melody"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "melody",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https:\/\/techblog-szksh-cloud.github.io\/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "Golang の設定管理のライブラリといえば viper が有名ですが、 confita も良さそうだったので紹介したいと思います。\nconfita の機能としては以下のようなものがあります。\n 構造体に設定をマッピング flag や環境変数、設定ファイルに対応 複数の設定ファイルに対応  構造体に設定をマッピングすることで、https:\/\/github.com\/go-playground\/validator のようなライブラリを使って設定のバリデーションが出来ます。\nまた viper は v1.3.1 の時点で複数の設定ファイルを扱いにくいです。\n Viper can search multiple paths, but currently a single Viper instance only supports a single configuration file.\n k8s で ConfigMap と Secret を設定ファイルとして扱う場合、複数のファイルを扱えないと不便です。 その点 confita は複数の設定ファイルを問題なく扱えます。\n以下はフラグで指定した複数の設定ファイルから設定を読み込む簡単なサンプルです。\nimport ( \u0026#34;context\u0026#34; \u0026#34;gopkg.in\/go-playground\/validator.v9\u0026#34; \u0026#34;github.com\/heetch\/confita\u0026#34; \u0026#34;github.com\/heetch\/confita\/backend\u0026#34; \u0026#34;github.com\/heetch\/confita\/backend\/file\u0026#34; flag \u0026#34;github.com\/spf13\/pflag\u0026#34; ) func loadConfig(ctx context.Context) (Config, error) { cps := flag.StringSliceP(\u0026#34;config\u0026#34;, \u0026#34;c\u0026#34;, nil, \u0026#34;configuration file path\u0026#34;) flag."
+  }
+</script>
+
+
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://techblog-szksh-cloud.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li class="active">Goの設定管理で viper の代わりに confita を使う</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2019-02-16T18:38:45JST">Feb 16, 2019</time></li>
+      
+      
+    </ul>
+
+    <h1 class="title">Goの設定管理で viper の代わりに confita を使う</h1>
+    
+    
+    <section>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/golang/">golang</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </header>
+
+  
+
+  <div class="article-body"><p>Golang の設定管理のライブラリといえば <a href="https://github.com/spf13/viper">viper</a> が有名ですが、
+<a href="https://github.com/heetch/confita">confita</a> も良さそうだったので紹介したいと思います。</p>
+<p>confita の機能としては以下のようなものがあります。</p>
+<ul>
+<li>構造体に設定をマッピング</li>
+<li>flag や環境変数、設定ファイルに対応</li>
+<li>複数の設定ファイルに対応</li>
+</ul>
+<p>構造体に設定をマッピングすることで、https://github.com/go-playground/validator のようなライブラリを使って設定のバリデーションが出来ます。</p>
+<p>また viper は <a href="https://github.com/spf13/viper/tree/v1.3.1#reading-config-files">v1.3.1</a> の時点で複数の設定ファイルを扱いにくいです。</p>
+<blockquote>
+<p>Viper can search multiple paths, but currently a single Viper instance only supports a single configuration file.</p>
+</blockquote>
+<p>k8s で ConfigMap と Secret を設定ファイルとして扱う場合、複数のファイルを扱えないと不便です。
+その点 confita は複数の設定ファイルを問題なく扱えます。</p>
+<p>以下はフラグで指定した複数の設定ファイルから設定を読み込む簡単なサンプルです。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">import</span> (
+	<span style="color:#e6db74">&#34;context&#34;</span>
+
+	<span style="color:#e6db74">&#34;gopkg.in/go-playground/validator.v9&#34;</span>
+
+	<span style="color:#e6db74">&#34;github.com/heetch/confita&#34;</span>
+	<span style="color:#e6db74">&#34;github.com/heetch/confita/backend&#34;</span>
+	<span style="color:#e6db74">&#34;github.com/heetch/confita/backend/file&#34;</span>
+	<span style="color:#a6e22e">flag</span> <span style="color:#e6db74">&#34;github.com/spf13/pflag&#34;</span>
+)
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">loadConfig</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>) (<span style="color:#a6e22e">Config</span>, <span style="color:#66d9ef">error</span>) {
+	<span style="color:#a6e22e">cps</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">flag</span>.<span style="color:#a6e22e">StringSliceP</span>(<span style="color:#e6db74">&#34;config&#34;</span>, <span style="color:#e6db74">&#34;c&#34;</span>, <span style="color:#66d9ef">nil</span>, <span style="color:#e6db74">&#34;configuration file path&#34;</span>)
+	<span style="color:#a6e22e">flag</span>.<span style="color:#a6e22e">Parse</span>()
+	<span style="color:#a6e22e">fileBackends</span> <span style="color:#f92672">:=</span> []<span style="color:#a6e22e">backend</span>.<span style="color:#a6e22e">Backend</span>{}
+	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">p</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">cps</span> {
+		<span style="color:#a6e22e">fileBackends</span> = append(<span style="color:#a6e22e">fileBackends</span>, <span style="color:#a6e22e">file</span>.<span style="color:#a6e22e">NewBackend</span>(<span style="color:#a6e22e">p</span>))
+	}
+
+	<span style="color:#a6e22e">loader</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">confita</span>.<span style="color:#a6e22e">NewLoader</span>(<span style="color:#a6e22e">fileBackends</span><span style="color:#f92672">...</span>)
+	<span style="color:#a6e22e">cfg</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Config</span>{<span style="color:#a6e22e">LogLevel</span>: <span style="color:#e6db74">&#34;info&#34;</span>}	<span style="color:#75715e">// default value
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">loader</span>.<span style="color:#a6e22e">Load</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">cfg</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">cfg</span>, <span style="color:#a6e22e">err</span>
+	}
+	<span style="color:#a6e22e">validate</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">validator</span>.<span style="color:#a6e22e">New</span>()
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">validate</span>.<span style="color:#a6e22e">Struct</span>(<span style="color:#a6e22e">cfg</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">cfg</span>, <span style="color:#a6e22e">err</span>
+	}
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">cfg</span>, <span style="color:#66d9ef">nil</span>
+}
+</code></pre></div><p>以上、簡単な紹介でした。
+viper 以外のライブラリを探している人は試してみてください。</p>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/golang/">golang</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

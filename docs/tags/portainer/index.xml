@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>portainer on melody</title>
+    <link>https://techblog-szksh-cloud.github.io/tags/portainer/</link>
+    <description>Recent content in portainer on melody</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>jp</language>
+    <lastBuildDate>Sun, 30 Sep 2018 21:56:42 +0900</lastBuildDate><atom:link href="https://techblog-szksh-cloud.github.io/tags/portainer/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>drone の管理のために portainer を導入した</title>
+      <link>https://techblog-szksh-cloud.github.io/use-portainer-for-drone-admin/</link>
+      <pubDate>Sun, 30 Sep 2018 21:56:42 +0900</pubDate>
+      
+      <guid>https://techblog-szksh-cloud.github.io/use-portainer-for-drone-admin/</guid>
+      <description>drone OSS 0.8.5 で検証しています。
+https://drone.io/ と https://portainer.io/ の話です。
+drone はかなり安定したシステムだと思いますが、 ユーザーが好きなイメージで好きなコマンドを実行できる以上、トラブルが起こることはあります。
+その結果、 特定の build がタイムアウトにならずに延々と実行され続けるなんてことがあります。
+その場合、
+ どのノードのどのコンテナでトラブルが起きているのか そのコンテナで何が起こっているのか  というのを知りたいのですが、 drone にはそういった管理機能はありません。
+そこで 複数のサーバで実行されている Docker コンテナを管理できるツールはないかと探したところ、 portainer が良さそうだったので導入しました。
+portainer を使うと複数のサーバのコンテナを一覧で見ることが出来、 コンテナを操作(削除、停止、再起動etc)出来ます。 コンテナのログや簡単なメトリックス(CPU, memory, network usage) が見れます。 コンテナだけでなく、network や volume, image といったリソースも管理できます。
+portainer の導入 公式ドキュメントに書いてありますが、 swarm cluster を構築してそこにデプロイすればよいです。
+ https://docs.docker.com/engine/swarm/swarm-tutorial/ https://portainer.readthedocs.io/en/stable/deployment.html#inside-a-swarm-cluster  困っていること 毎回検索で絞り込みしないといけない 検索で絞り込んだ後に特定のコンテナの詳細画面飛んだ後一覧に戻ると 検索がクリアされているのでもう一度検索しないといけないのが面倒です。
+もう少し高度な検索がしたい 自由入力の検索ボックスが1つあるだけで、特にクエリが書けるわけでもなさそうなので、 もう少し高度な検索がしたいです。 例えば Created At で 1時間以上前に特定のノードで作られたコンテナの一覧とか。
+docker API でエラーが出て、コンテナを操作できない これは多分不具合とかではなく自分の設定が良くないのだと思います。 この辺の issue が関係してそうですが、まだ解消できていません。</description>
+    </item>
+    
+  </channel>
+</rss>

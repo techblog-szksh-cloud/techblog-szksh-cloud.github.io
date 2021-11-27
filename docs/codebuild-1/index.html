@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/codebuild-1/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>AWS CodeBuild 良さそう - melody</title>
+    
+<meta name="description" content="AWS CodeBuild を検証しているんですが、結構良いですね。 現状 Jenkins や CircleCI で実行しているジョブや CI/CD を一部移行したいなと思いました。一部と言っているのは、単純に全部いきなり移行するのは難しいから共存する前提で考えるくらいの意味です。なお、これを書いている時点ではまだ軽く検証しているだけなので、CodeBuild の理解は浅いです。特徴としては Managed AWS 以外のサービスに AWS の credential を登録しなくて良い  Secret を AWS Secrets Manager で管理できる Secret を至るところに設定するのではなく、 AWS Secrets Manager か何かで一元管理するのが理想 Role 作って Build Project の Service Role として指定するだけなら credential を扱う必要がなくて楽で安心   VPC 内で実行できる GitHub 連携も簡単  Webhook の設定で PR の細かなイベント(merge とか reopen とか)に対応しているのも良い PR を merge したときも PR で変更されたファイルによって Webhook をフィルタできるのが良い   変更されたファイルによって実行するBuild Project を変更するようなロジックを実現できる(monorepo で特に有効)  といった点が挙げられます。">
+
+<meta property="og:title" content="AWS CodeBuild 良さそう - melody">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://techblog-szksh-cloud.github.io/codebuild-1/">
+<meta property="og:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+<meta property="og:site_name" content="melody">
+<meta property="og:description" content="AWS CodeBuild を検証しているんですが、結構良いですね。 現状 Jenkins や CircleCI で実行しているジョブや CI/CD を一部移行したいなと思いました。一部と言っているのは、単純に全部いきなり移行するのは難しいから共存する前提で考えるくらいの意味です。なお、これを書いている時点ではまだ軽く検証しているだけなので、CodeBuild の理解は浅いです。特徴としては Managed AWS 以外のサービスに AWS の credential を登録しなくて良い  Secret を AWS Secrets Manager で管理できる Secret を至るところに設定するのではなく、 AWS Secrets Manager か何かで一元管理するのが理想 Role 作って Build Project の Service Role として指定するだけなら credential を扱う必要がなくて楽で安心   VPC 内で実行できる GitHub 連携も簡単  Webhook の設定で PR の細かなイベント(merge とか reopen とか)に対応しているのも良い PR を merge したときも PR で変更されたファイルによって Webhook をフィルタできるのが良い   変更されたファイルによって実行するBuild Project を変更するようなロジックを実現できる(monorepo で特に有効)  といった点が挙げられます。">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="melody">
+<meta name="twitter:url" content="https://techblog-szksh-cloud.github.io/codebuild-1/">
+<meta name="twitter:title" content="AWS CodeBuild 良さそう - melody">
+<meta name="twitter:description" content="AWS CodeBuild を検証しているんですが、結構良いですね。 現状 Jenkins や CircleCI で実行しているジョブや CI/CD を一部移行したいなと思いました。一部と言っているのは、単純に全部いきなり移行するのは難しいから共存する前提で考えるくらいの意味です。なお、これを書いている時点ではまだ軽く検証しているだけなので、CodeBuild の理解は浅いです。特徴としては Managed AWS 以外のサービスに AWS の credential を登録しなくて良い  Secret を AWS Secrets Manager で管理できる Secret を至るところに設定するのではなく、 AWS Secrets Manager か何かで一元管理するのが理想 Role 作って Build Project の Service Role として指定するだけなら credential を扱う必要がなくて楽で安心   VPC 内で実行できる GitHub 連携も簡単  Webhook の設定で PR の細かなイベント(merge とか reopen とか)に対応しているのも良い PR を merge したときも PR で変更されたファイルによって Webhook をフィルタできるのが良い   変更されたファイルによって実行するBuild Project を変更するようなロジックを実現できる(monorepo で特に有効)  といった点が挙げられます。">
+<meta name="twitter:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https:\/\/techblog-szksh-cloud.github.io\/"
+    },
+    "headline": "AWS CodeBuild 良さそう - melody",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https:\/\/techblog-szksh-cloud.github.io\/images\/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2020-08-02T13:21:37JST",
+    "dateModified": "2020-08-02T13:21:37JST",
+    "author": {
+      "@type": "Person",
+      "name": "melody"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "melody",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https:\/\/techblog-szksh-cloud.github.io\/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "AWS CodeBuild を検証しているんですが、結構良いですね。 現状 Jenkins や CircleCI で実行しているジョブや CI\/CD を一部移行したいなと思いました。\n一部と言っているのは、単純に全部いきなり移行するのは難しいから共存する前提で考えるくらいの意味です。\nなお、これを書いている時点ではまだ軽く検証しているだけなので、CodeBuild の理解は浅いです。\n特徴としては\n Managed AWS 以外のサービスに AWS の credential を登録しなくて良い  Secret を AWS Secrets Manager で管理できる Secret を至るところに設定するのではなく、 AWS Secrets Manager か何かで一元管理するのが理想 Role 作って Build Project の Service Role として指定するだけなら credential を扱う必要がなくて楽で安心   VPC 内で実行できる GitHub 連携も簡単  Webhook の設定で PR の細かなイベント(merge とか reopen とか)に対応しているのも良い PR を merge したときも PR で変更されたファイルによって Webhook をフィルタできるのが良い   変更されたファイルによって実行するBuild Project を変更するようなロジックを実現できる(monorepo で特に有効)  といった点が挙げられます。"
+  }
+</script>
+
+
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://techblog-szksh-cloud.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li class="active">AWS CodeBuild 良さそう</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2020-08-02T13:21:37JST">Aug 2, 2020</time></li>
+      
+      
+    </ul>
+
+    <h1 class="title">AWS CodeBuild 良さそう</h1>
+    
+    
+    <section>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/aws/">aws</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/codebuild/">codebuild</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/ci/">ci</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </header>
+
+  
+
+  <div class="article-body"><p>AWS CodeBuild を検証しているんですが、結構良いですね。
+現状 Jenkins や CircleCI で実行しているジョブや CI/CD を一部移行したいなと思いました。</p>
+<p>一部と言っているのは、単純に全部いきなり移行するのは難しいから共存する前提で考えるくらいの意味です。</p>
+<p>なお、これを書いている時点ではまだ軽く検証しているだけなので、CodeBuild の理解は浅いです。</p>
+<p>特徴としては</p>
+<ul>
+<li>Managed</li>
+<li>AWS 以外のサービスに AWS の credential を登録しなくて良い
+<ul>
+<li>Secret を AWS Secrets Manager で管理できる</li>
+<li>Secret を至るところに設定するのではなく、 AWS Secrets Manager か何かで一元管理するのが理想</li>
+<li>Role 作って Build Project の Service Role として指定するだけなら credential を扱う必要がなくて楽で安心</li>
+</ul>
+</li>
+<li>VPC 内で実行できる</li>
+<li>GitHub 連携も簡単
+<ul>
+<li>Webhook の設定で PR の細かなイベント(merge とか reopen とか)に対応しているのも良い</li>
+<li>PR を merge したときも PR で変更されたファイルによって Webhook をフィルタできるのが良い</li>
+</ul>
+</li>
+<li>変更されたファイルによって実行するBuild Project を変更するようなロジックを実現できる(monorepo で特に有効)</li>
+</ul>
+<p>といった点が挙げられます。</p>
+<h2 id="変更検知について">変更検知について</h2>
+<p>上記の特徴についてはだいたい「まぁそうだね」というふうに思ってもらえるのではないかと思いますが、変更検知の部分について補足します。
+monorepo をやっているとサービス A 関連のジョブはサービス A 関連のコードが変更された場合のみ実行したいというのがあります。
+なのですが、 CircleCI だと自分の知る限りそれはできません。</p>
+<p><a href="https://circleci.com/docs/2.0/configuration-reference/">https://circleci.com/docs/2.0/configuration-reference/</a></p>
+<p>なので現状 Job を実行してからサービス A 関連のコードが変更されているかチェックし、変更されていなかったら skip ないし
+<code>circleci step halt</code> で Job を終了しています。
+ただ、差分検知の部分を自分で実装しないといけないし、 <code>circleci step halt</code> で終了するにしても Job の起動自体にそこそこ時間がかかったりするし(これだけでも金銭的コストがかかっているはず)、 Job の実行時間や error rate のモニタリングでもノイズとして混じってきてしまいます。</p>
+<p>CodeBuild の場合、1つのリポジトリに複数の Build Project を設定でき、 Build Project ごとに buildspec を指定できます。
+Build Project の Webhook の <code>FILE_PATH</code> の設定で特定のファイルが変更された場合のみビルドを実行することもできます。
+なのでサービス A 用の build spec 及び Build Project を作成し、サービス A のコードが変更されたときのみその Build Project が実行されるように Webhook を設定すれば良さそうです。</p>
+<h2 id="気になる点">気になる点</h2>
+<ul>
+<li><code>FILE_PATH</code> で 1 個の正規表現しか設定できないので、場合によっては複雑な正規表現を書かないといけない</li>
+<li>Terraform で管理するのが結構面倒くさい
+<ul>
+<li>いい感じにモジュール化とかテンプレート化しないとだめかも</li>
+</ul>
+</li>
+<li>Pull Request のラベルがついていたらこのジョブを実行する、みたいな複雑なことは一工夫必要かも
+<ul>
+<li>Webhook の設定だと無理なので、 build は実行しつつラベルが設定されていなかったら skip とかしないといけない</li>
+</ul>
+</li>
+</ul>
+<h2 id="おまけ-codebuild-関連のニュース">おまけ: CodeBuild 関連のニュース</h2>
+<p>以前検証したときより良くなってる気がするなと思って更新をチェックしたらやっぱ色々更新があるみたいですね。</p>
+<p><a href="https://aws.amazon.com/jp/new/?whats-new-content-all.sort-by=item.additionalFields.postDateTime&amp;whats-new-content-all.sort-order=desc&amp;awsf.whats-new-developer-tools=general-products%23aws-codebuild">https://aws.amazon.com/jp/new/?whats-new-content-all.sort-by=item.additionalFields.postDateTime&amp;whats-new-content-all.sort-order=desc&amp;awsf.whats-new-developer-tools=general-products%23aws-codebuild</a></p>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/aws/">aws</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/codebuild/">codebuild</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/ci/">ci</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

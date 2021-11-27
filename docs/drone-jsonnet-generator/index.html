@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/drone-jsonnet-generator/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>Drone v0.8 の .drone.yml を v1 の .drone.jsonnet に変換するツールを作った - melody</title>
+    
+<meta name="description" content="Drone v0.8 の .drone.yml を v1 の .drone.jsonnet に変換するツールを作ったので紹介します。https://github.com/suzuki-shunsuke/drone-jsonnet-generator背景 https://docs.drone.io/user-guide/pipeline/migrating/Drone は v0.8 から v1 で .drone.yml のフォーマットが大きく変わっています。 Drone v1 ではビルド実行時に自動で変換しているため、v0.8 の .drone.yml でもそのまま動きます(matrix builds も動きます)。そのため、Drone v0.8 から v1 に移行する際、すぐに .drone.yml を修正しなくても問題ないのですが、 v1 独自の機能が出てきた場合 v0.8 のフォーマットの場合利用できないかもしれませんし、 いつまでも古いままだと気持ち悪いので出来るならフォーマットを変換したいです。drone-cli ではフォーマットを変換する drone convert というコマンドが提供されています。ただし、 drone convert は matrix build を multiple pipeline に変換するのですが、 非常に冗長になります。 そのため、jsonnet を利用することが推奨されています。https://docs.drone.io/user-guide/pipeline/migrating/ The above syntax can be quite verbose if you are testing a large number of variations.">
+
+<meta property="og:title" content="Drone v0.8 の .drone.yml を v1 の .drone.jsonnet に変換するツールを作った - melody">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://techblog-szksh-cloud.github.io/drone-jsonnet-generator/">
+<meta property="og:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+<meta property="og:site_name" content="melody">
+<meta property="og:description" content="Drone v0.8 の .drone.yml を v1 の .drone.jsonnet に変換するツールを作ったので紹介します。https://github.com/suzuki-shunsuke/drone-jsonnet-generator背景 https://docs.drone.io/user-guide/pipeline/migrating/Drone は v0.8 から v1 で .drone.yml のフォーマットが大きく変わっています。 Drone v1 ではビルド実行時に自動で変換しているため、v0.8 の .drone.yml でもそのまま動きます(matrix builds も動きます)。そのため、Drone v0.8 から v1 に移行する際、すぐに .drone.yml を修正しなくても問題ないのですが、 v1 独自の機能が出てきた場合 v0.8 のフォーマットの場合利用できないかもしれませんし、 いつまでも古いままだと気持ち悪いので出来るならフォーマットを変換したいです。drone-cli ではフォーマットを変換する drone convert というコマンドが提供されています。ただし、 drone convert は matrix build を multiple pipeline に変換するのですが、 非常に冗長になります。 そのため、jsonnet を利用することが推奨されています。https://docs.drone.io/user-guide/pipeline/migrating/ The above syntax can be quite verbose if you are testing a large number of variations.">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="melody">
+<meta name="twitter:url" content="https://techblog-szksh-cloud.github.io/drone-jsonnet-generator/">
+<meta name="twitter:title" content="Drone v0.8 の .drone.yml を v1 の .drone.jsonnet に変換するツールを作った - melody">
+<meta name="twitter:description" content="Drone v0.8 の .drone.yml を v1 の .drone.jsonnet に変換するツールを作ったので紹介します。https://github.com/suzuki-shunsuke/drone-jsonnet-generator背景 https://docs.drone.io/user-guide/pipeline/migrating/Drone は v0.8 から v1 で .drone.yml のフォーマットが大きく変わっています。 Drone v1 ではビルド実行時に自動で変換しているため、v0.8 の .drone.yml でもそのまま動きます(matrix builds も動きます)。そのため、Drone v0.8 から v1 に移行する際、すぐに .drone.yml を修正しなくても問題ないのですが、 v1 独自の機能が出てきた場合 v0.8 のフォーマットの場合利用できないかもしれませんし、 いつまでも古いままだと気持ち悪いので出来るならフォーマットを変換したいです。drone-cli ではフォーマットを変換する drone convert というコマンドが提供されています。ただし、 drone convert は matrix build を multiple pipeline に変換するのですが、 非常に冗長になります。 そのため、jsonnet を利用することが推奨されています。https://docs.drone.io/user-guide/pipeline/migrating/ The above syntax can be quite verbose if you are testing a large number of variations.">
+<meta name="twitter:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https:\/\/techblog-szksh-cloud.github.io\/"
+    },
+    "headline": "Drone v0.8 の .drone.yml を v1 の .drone.jsonnet に変換するツールを作った - melody",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https:\/\/techblog-szksh-cloud.github.io\/images\/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2019-06-12T07:40:45JST",
+    "dateModified": "2019-06-12T07:40:45JST",
+    "author": {
+      "@type": "Person",
+      "name": "melody"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "melody",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https:\/\/techblog-szksh-cloud.github.io\/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "Drone v0.8 の .drone.yml を v1 の .drone.jsonnet に変換するツールを作ったので紹介します。\nhttps:\/\/github.com\/suzuki-shunsuke\/drone-jsonnet-generator\n背景 https:\/\/docs.drone.io\/user-guide\/pipeline\/migrating\/\nDrone は v0.8 から v1 で .drone.yml のフォーマットが大きく変わっています。 Drone v1 ではビルド実行時に自動で変換しているため、v0.8 の .drone.yml でもそのまま動きます(matrix builds も動きます)。\nそのため、Drone v0.8 から v1 に移行する際、すぐに .drone.yml を修正しなくても問題ないのですが、 v1 独自の機能が出てきた場合 v0.8 のフォーマットの場合利用できないかもしれませんし、 いつまでも古いままだと気持ち悪いので出来るならフォーマットを変換したいです。\ndrone-cli ではフォーマットを変換する drone convert というコマンドが提供されています。\nただし、 drone convert は matrix build を multiple pipeline に変換するのですが、 非常に冗長になります。 そのため、jsonnet を利用することが推奨されています。\nhttps:\/\/docs.drone.io\/user-guide\/pipeline\/migrating\/\n The above syntax can be quite verbose if you are testing a large number of variations."
+  }
+</script>
+
+
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://techblog-szksh-cloud.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li class="active">Drone v0.8 の .drone.yml を v1 の .drone.jsonnet に変換するツールを作った</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2019-06-12T07:40:45JST">Jun 12, 2019</time></li>
+      
+      
+    </ul>
+
+    <h1 class="title">Drone v0.8 の .drone.yml を v1 の .drone.jsonnet に変換するツールを作った</h1>
+    
+    
+    <section>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/oss/">oss</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/drone/">drone</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </header>
+
+  
+
+  <div class="article-body"><p>Drone v0.8 の .drone.yml を v1 の .drone.jsonnet に変換するツールを作ったので紹介します。</p>
+<p><a href="https://github.com/suzuki-shunsuke/drone-jsonnet-generator">https://github.com/suzuki-shunsuke/drone-jsonnet-generator</a></p>
+<h2 id="背景">背景</h2>
+<p><a href="https://docs.drone.io/user-guide/pipeline/migrating/">https://docs.drone.io/user-guide/pipeline/migrating/</a></p>
+<p>Drone は v0.8 から v1 で .drone.yml のフォーマットが大きく変わっています。
+Drone v1 ではビルド実行時に自動で変換しているため、v0.8 の .drone.yml でもそのまま動きます(matrix builds も動きます)。</p>
+<p>そのため、Drone v0.8 から v1 に移行する際、すぐに .drone.yml を修正しなくても問題ないのですが、
+v1 独自の機能が出てきた場合 v0.8 のフォーマットの場合利用できないかもしれませんし、
+いつまでも古いままだと気持ち悪いので出来るならフォーマットを変換したいです。</p>
+<p>drone-cli ではフォーマットを変換する <code>drone convert</code> というコマンドが提供されています。</p>
+<p>ただし、 <code>drone convert</code> は matrix build を multiple pipeline に変換するのですが、
+非常に冗長になります。
+そのため、<a href="https://jsonnet.org/">jsonnet</a> を利用することが推奨されています。</p>
+<p><a href="https://docs.drone.io/user-guide/pipeline/migrating/">https://docs.drone.io/user-guide/pipeline/migrating/</a></p>
+<blockquote>
+<p>The above syntax can be quite verbose if you are testing a large number of variations.
+To simplify your configuration we recommend using jsonnet.</p>
+</blockquote>
+<p>この .drone.jsonnet の生成は <code>drone convert</code> では出来ないですし、手作業になるのですが、結構面倒です。
+v0.8 から v1 でフォーマットが変わってますし、jsonnet に馴染みの薄い人も少なくないでしょう。
+移行対象のリポジトリが多い場合、非常に苦行になります。</p>
+<p>そこで今回この .drone.jsonnet を生成するツールを開発しました。</p>
+<h2 id="使い方">使い方</h2>
+<p>非常にシンプルです。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-console" data-lang="console">$ drone-jsonnet-generator gen <span style="color:#f92672">[</span>--source .drone.yml<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>--target .drone.jsonnet<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>--stdout<span style="color:#f92672">]</span>
+</code></pre></div><p>を実行すると .drone.yml から .drone.jsonnet を生成します。</p>
+<p>例えば</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">---
+<span style="color:#f92672">pipeline</span>:
+  <span style="color:#f92672">build</span>:
+    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">golang:${GO_VERSION}</span>
+    <span style="color:#f92672">commands</span>:
+    - <span style="color:#ae81ff">echo hello</span>
+<span style="color:#f92672">services</span>:
+  <span style="color:#f92672">database</span>:
+    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">${DATABASE}</span>
+<span style="color:#f92672">matrix</span>:
+  <span style="color:#f92672">include</span>:
+  - <span style="color:#f92672">GO_VERSION</span>: <span style="color:#ae81ff">1.4</span>
+    <span style="color:#f92672">DATABASE</span>: <span style="color:#ae81ff">mysql:5.5</span>
+  - <span style="color:#f92672">GO_VERSION</span>: <span style="color:#ae81ff">1.4</span>
+    <span style="color:#f92672">DATABASE</span>: <span style="color:#ae81ff">mysql:6.5</span>
+  - <span style="color:#f92672">GO_VERSION</span>: <span style="color:#ae81ff">1.3</span>
+    <span style="color:#f92672">DATABASE</span>: <span style="color:#ae81ff">mysql:5.5</span>
+</code></pre></div><p>から</p>
+<pre tabindex="0"><code class="language-jsonnet" data-lang="jsonnet">local pipeline(GO_VERSION, DATABASE) = {
+  &quot;kind&quot;: &quot;pipeline&quot;,
+  &quot;name&quot;: &quot;'GO_VERSION:' + GO_VERSION + ' DATABASE:' + DATABASE&quot;,
+  &quot;platform&quot;: {
+    &quot;arch&quot;: &quot;amd64&quot;,
+    &quot;os&quot;: &quot;linux&quot;
+  },
+  &quot;services&quot;: [
+    {
+      &quot;image&quot;: &quot;${DATABASE}&quot;,
+      &quot;name&quot;: &quot;database&quot;,
+      &quot;pull&quot;: &quot;default&quot;
+    }
+  ],
+  &quot;steps&quot;: [
+    {
+      &quot;commands&quot;: [
+        &quot;echo hello&quot;
+      ],
+      &quot;image&quot;: &quot;golang:${GO_VERSION}&quot;,
+      &quot;name&quot;: &quot;build&quot;,
+      &quot;pull&quot;: &quot;default&quot;
+    }
+  ]
+};
+
+local args = [
+  {
+    &quot;DATABASE&quot;: &quot;mysql:5.5&quot;,
+    &quot;GO_VERSION&quot;: &quot;1.4&quot;
+  },
+  {
+    &quot;DATABASE&quot;: &quot;mysql:6.5&quot;,
+    &quot;GO_VERSION&quot;: &quot;1.4&quot;
+  },
+  {
+    &quot;DATABASE&quot;: &quot;mysql:5.5&quot;,
+    &quot;GO_VERSION&quot;: &quot;1.3&quot;
+  }
+];
+
+[
+  pipeline(arg.GO_VERSION, arg.DATABASE) for arg in args
+]
+</code></pre><p><strong>残念ながら生成された jsonnet はそのままでは使えません。修正が必要です。</strong>
+それでも一から .drone.jsonnet を書くよりは圧倒的に効率が良いです。</p>
+<ul>
+<li>pipeline 中の変数が <code>${変数名}</code> となっているので直す (<code>&quot;golang:${GO_VERSION}&quot;</code> -&gt; <code>&quot;golang:&quot; + GO_VERSION</code>)</li>
+<li>pipeline name が <code>&quot;</code> で囲まれてるので取り除く (<code>&quot;'GO_VERSION:' + GO_VERSION + ' DATABASE:' + DATABASE&quot;</code> -&gt; <code>'GO_VERSION:' + GO_VERSION + ' DATABASE:' + DATABASE</code>)</li>
+</ul>
+<p>あと、一部のコードを JSON として生成しているので、jsonnet としては多少綺麗ではない(フィールドが<code>&quot;</code>で囲まれてたりする)ですが、実用上特に問題ないと思います。</p>
+<p>ちなみに上の例では matrix build の <code>include</code> が使われていますが、使っていない場合にも対応してますし、
+<code>include</code> が使われていない場合、若干生成されるコードのテンプレートが違います。</p>
+<p>なお、今回のツールの対象になる .drone.yml は matrix build を使っているのが前提になります。
+matrix build が使われていないとエラーを返します。
+matrix build を使っていないのであれば jsonnet を使う必要性が弱いですし、 <code>drone convert</code> で変換すれば良い気がします。</p>
+<p>以上、自作のOSSの紹介でした。
+Drone v0.8 から v1 への移行で困っている人は是非使ってみてください。
+快適な Drone ライフを。</p>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/oss/">oss</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/drone/">drone</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

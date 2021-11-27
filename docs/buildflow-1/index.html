@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/buildflow-1/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>buildflow というワークフローエンジンのようなタスクランナーのようなツールを作っている - melody</title>
+    
+<meta name="description" content="buildflow というツールを開発しているので紹介します。 buildflow というタグをつけて何回かに分けてブログを書こうかなと思います。 1本目のこの記事では どんなツールか Hello World 特徴  について簡単に説明します。どんなツールか https://github.com/suzuki-shunsuke/buildflowワークフローを実行するための CLI ツールです。 ワークフローエンジンと言うと Airflow とか Azkaban, Argo Workflows のようなツールをイメージするかと思いますが、 それらとは目的も機能も違います。 一部の CI サービスではワークフローのローカル実行をサポートしてたりしますが、そんなイメージで良いかもしれません。 buildflow では task と task の依存関係を設定ファイルに定義し、コマンドを実行するとローカルでタスクが実行されます。 そういうとタスクランナーといったほうがいいのかもしれませんが、個別のタスクを指定して実行するような機能はないので、タスクランナーとも違う気がします。CI サービス上で実行することを目的として開発しています(汎用的なツールなので他の目的でも使えるとは思います)。Hello World まだどんなツールかピンと来てない人もいるかもしれないので、簡単な Hello World をやってみましょう。GitHub Releases からバイナリをダウンロードしてください。次のような設定ファイル .buildflow.yaml を用意します。--- phases: - name: main tasks: - name: hello command: command: echo hello 次のコマンドを実行すると task が実行されます。$ buildflow run ============== = Phase: main = ============== 07:50:46UTC | hello | &#43; /bin/sh -c echo hello 07:50:46UTC | hello | 07:50:46UTC | hello | hello 07:50:46UTC | hello | ================ = Phase Result: main = ================ status: succeeded task: hello status: succeeded exit code: 0 start time: 2020-10-17T07:50:46Z end time: 2020-10-17T07:50:46Z duration: 4.">
+
+<meta property="og:title" content="buildflow というワークフローエンジンのようなタスクランナーのようなツールを作っている - melody">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://techblog-szksh-cloud.github.io/buildflow-1/">
+<meta property="og:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+<meta property="og:site_name" content="melody">
+<meta property="og:description" content="buildflow というツールを開発しているので紹介します。 buildflow というタグをつけて何回かに分けてブログを書こうかなと思います。 1本目のこの記事では どんなツールか Hello World 特徴  について簡単に説明します。どんなツールか https://github.com/suzuki-shunsuke/buildflowワークフローを実行するための CLI ツールです。 ワークフローエンジンと言うと Airflow とか Azkaban, Argo Workflows のようなツールをイメージするかと思いますが、 それらとは目的も機能も違います。 一部の CI サービスではワークフローのローカル実行をサポートしてたりしますが、そんなイメージで良いかもしれません。 buildflow では task と task の依存関係を設定ファイルに定義し、コマンドを実行するとローカルでタスクが実行されます。 そういうとタスクランナーといったほうがいいのかもしれませんが、個別のタスクを指定して実行するような機能はないので、タスクランナーとも違う気がします。CI サービス上で実行することを目的として開発しています(汎用的なツールなので他の目的でも使えるとは思います)。Hello World まだどんなツールかピンと来てない人もいるかもしれないので、簡単な Hello World をやってみましょう。GitHub Releases からバイナリをダウンロードしてください。次のような設定ファイル .buildflow.yaml を用意します。--- phases: - name: main tasks: - name: hello command: command: echo hello 次のコマンドを実行すると task が実行されます。$ buildflow run ============== = Phase: main = ============== 07:50:46UTC | hello | &#43; /bin/sh -c echo hello 07:50:46UTC | hello | 07:50:46UTC | hello | hello 07:50:46UTC | hello | ================ = Phase Result: main = ================ status: succeeded task: hello status: succeeded exit code: 0 start time: 2020-10-17T07:50:46Z end time: 2020-10-17T07:50:46Z duration: 4.">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="melody">
+<meta name="twitter:url" content="https://techblog-szksh-cloud.github.io/buildflow-1/">
+<meta name="twitter:title" content="buildflow というワークフローエンジンのようなタスクランナーのようなツールを作っている - melody">
+<meta name="twitter:description" content="buildflow というツールを開発しているので紹介します。 buildflow というタグをつけて何回かに分けてブログを書こうかなと思います。 1本目のこの記事では どんなツールか Hello World 特徴  について簡単に説明します。どんなツールか https://github.com/suzuki-shunsuke/buildflowワークフローを実行するための CLI ツールです。 ワークフローエンジンと言うと Airflow とか Azkaban, Argo Workflows のようなツールをイメージするかと思いますが、 それらとは目的も機能も違います。 一部の CI サービスではワークフローのローカル実行をサポートしてたりしますが、そんなイメージで良いかもしれません。 buildflow では task と task の依存関係を設定ファイルに定義し、コマンドを実行するとローカルでタスクが実行されます。 そういうとタスクランナーといったほうがいいのかもしれませんが、個別のタスクを指定して実行するような機能はないので、タスクランナーとも違う気がします。CI サービス上で実行することを目的として開発しています(汎用的なツールなので他の目的でも使えるとは思います)。Hello World まだどんなツールかピンと来てない人もいるかもしれないので、簡単な Hello World をやってみましょう。GitHub Releases からバイナリをダウンロードしてください。次のような設定ファイル .buildflow.yaml を用意します。--- phases: - name: main tasks: - name: hello command: command: echo hello 次のコマンドを実行すると task が実行されます。$ buildflow run ============== = Phase: main = ============== 07:50:46UTC | hello | &#43; /bin/sh -c echo hello 07:50:46UTC | hello | 07:50:46UTC | hello | hello 07:50:46UTC | hello | ================ = Phase Result: main = ================ status: succeeded task: hello status: succeeded exit code: 0 start time: 2020-10-17T07:50:46Z end time: 2020-10-17T07:50:46Z duration: 4.">
+<meta name="twitter:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https:\/\/techblog-szksh-cloud.github.io\/"
+    },
+    "headline": "buildflow というワークフローエンジンのようなタスクランナーのようなツールを作っている - melody",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https:\/\/techblog-szksh-cloud.github.io\/images\/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2020-10-17T16:06:31JST",
+    "dateModified": "2020-10-17T16:06:31JST",
+    "author": {
+      "@type": "Person",
+      "name": "melody"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "melody",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https:\/\/techblog-szksh-cloud.github.io\/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "buildflow というツールを開発しているので紹介します。 buildflow というタグをつけて何回かに分けてブログを書こうかなと思います。 1本目のこの記事では\n どんなツールか Hello World 特徴  について簡単に説明します。\nどんなツールか https:\/\/github.com\/suzuki-shunsuke\/buildflow\nワークフローを実行するための CLI ツールです。 ワークフローエンジンと言うと Airflow とか Azkaban, Argo Workflows のようなツールをイメージするかと思いますが、 それらとは目的も機能も違います。 一部の CI サービスではワークフローのローカル実行をサポートしてたりしますが、そんなイメージで良いかもしれません。 buildflow では task と task の依存関係を設定ファイルに定義し、コマンドを実行するとローカルでタスクが実行されます。 そういうとタスクランナーといったほうがいいのかもしれませんが、個別のタスクを指定して実行するような機能はないので、タスクランナーとも違う気がします。\nCI サービス上で実行することを目的として開発しています(汎用的なツールなので他の目的でも使えるとは思います)。\nHello World まだどんなツールかピンと来てない人もいるかもしれないので、簡単な Hello World をやってみましょう。\nGitHub Releases からバイナリをダウンロードしてください。\n次のような設定ファイル .buildflow.yaml を用意します。\n--- phases: - name: main tasks: - name: hello command: command: echo hello 次のコマンドを実行すると task が実行されます。\n$ buildflow run ============== = Phase: main = ============== 07:50:46UTC | hello | \u002b \/bin\/sh -c echo hello 07:50:46UTC | hello | 07:50:46UTC | hello | hello 07:50:46UTC | hello | ================ = Phase Result: main = ================ status: succeeded task: hello status: succeeded exit code: 0 start time: 2020-10-17T07:50:46Z end time: 2020-10-17T07:50:46Z duration: 4."
+  }
+</script>
+
+
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://techblog-szksh-cloud.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li class="active">buildflow というワークフローエンジンのようなタスクランナーのようなツールを作っている</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2020-10-17T16:06:31JST">Oct 17, 2020</time></li>
+      
+      
+    </ul>
+
+    <h1 class="title">buildflow というワークフローエンジンのようなタスクランナーのようなツールを作っている</h1>
+    
+    
+    <section>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/oss/">oss</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/buildflow/">buildflow</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </header>
+
+  
+
+  <div class="article-body"><p>buildflow というツールを開発しているので紹介します。
+<code>buildflow</code> というタグをつけて何回かに分けてブログを書こうかなと思います。
+1本目のこの記事では</p>
+<ul>
+<li>どんなツールか</li>
+<li>Hello World</li>
+<li>特徴</li>
+</ul>
+<p>について簡単に説明します。</p>
+<h2 id="どんなツールか">どんなツールか</h2>
+<p><a href="https://github.com/suzuki-shunsuke/buildflow">https://github.com/suzuki-shunsuke/buildflow</a></p>
+<p>ワークフローを実行するための CLI ツールです。
+ワークフローエンジンと言うと Airflow とか Azkaban, Argo Workflows のようなツールをイメージするかと思いますが、
+それらとは目的も機能も違います。
+一部の CI サービスではワークフローのローカル実行をサポートしてたりしますが、そんなイメージで良いかもしれません。
+buildflow では task と task の依存関係を設定ファイルに定義し、コマンドを実行するとローカルでタスクが実行されます。
+そういうとタスクランナーといったほうがいいのかもしれませんが、個別のタスクを指定して実行するような機能はないので、タスクランナーとも違う気がします。</p>
+<p>CI サービス上で実行することを目的として開発しています(汎用的なツールなので他の目的でも使えるとは思います)。</p>
+<h2 id="hello-world">Hello World</h2>
+<p>まだどんなツールかピンと来てない人もいるかもしれないので、簡単な Hello World をやってみましょう。</p>
+<p><a href="https://github.com/suzuki-shunsuke/buildflow/releases">GitHub Releases</a> からバイナリをダウンロードしてください。</p>
+<p>次のような設定ファイル <code>.buildflow.yaml</code> を用意します。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">---
+<span style="color:#f92672">phases</span>:
+- <span style="color:#f92672">name</span>: <span style="color:#ae81ff">main</span>
+  <span style="color:#f92672">tasks</span>:
+  - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">hello</span>
+    <span style="color:#f92672">command</span>:
+      <span style="color:#f92672">command</span>: <span style="color:#ae81ff">echo hello</span>
+</code></pre></div><p>次のコマンドを実行すると task が実行されます。</p>
+<pre tabindex="0"><code>$ buildflow run
+
+==============
+= Phase: main =
+==============
+07:50:46UTC | hello | + /bin/sh -c echo hello
+07:50:46UTC | hello |
+07:50:46UTC | hello | hello
+07:50:46UTC | hello |
+
+================
+= Phase Result: main =
+================
+status: succeeded
+task: hello
+status: succeeded
+exit code: 0
+start time: 2020-10-17T07:50:46Z
+end time: 2020-10-17T07:50:46Z
+duration: 4.317259ms
++ /bin/sh -c echo hello
+hello
+</code></pre><h2 id="特徴">特徴</h2>
+<p>task を依存関係に基づいて並列実行できます。加えて以下のような特徴があります。</p>
+<ul>
+<li>ワンバイナリで動く。他に依存するものがない
+<ul>
+<li>Go で書かれています</li>
+</ul>
+</li>
+<li>他のタスクの実行結果によってタスクの挙動を変えられる
+<ul>
+<li>標準(エラー)出力、 exit code, etc</li>
+<li>dynamic に task を生成することも可能</li>
+</ul>
+</li>
+<li>Tengo というスクリプト言語を用いて柔軟な設定を書ける
+<ul>
+<li>設定ファイルは YAML ですが、一部の設定に Tengo というスクリプト言語が使えます</li>
+<li>Tengo の処理系も buildflow に内包されているので、 Tengo の処理系をインストールする必要はありません</li>
+</ul>
+</li>
+<li>CI で実行時に Pull Request (以下 PR) の情報に基づいて処理を変えられる
+<ul>
+<li>GitHub 前提(GitLab や BitBucket はサポート外)</li>
+<li>自動で PR の情報を取得</li>
+</ul>
+</li>
+</ul>
+<p>Tengo は Go で実行されたスクリプト言語です。 <a href="https://github.com/d5/tengo">https://github.com/d5/tengo</a> を参照してください。
+なぜ Tengo を採用したかとかは別に書きたいと思います。</p>
+<p>Tengo は Python や Ruby, Go といった言語に比べれば言語仕様がコンパクトであり、
+よく知らなくてもなんとなく読めるし、簡単にかけると思っています。
+加えて、そもそも buildflow の中での Tengo の役割は限定されており、 Tengo をゴリゴリ書く必要はないと思います。</p>
+<p>PR の情報に基づき、例えば以下のようなことが出来ます。</p>
+<ul>
+<li>特定のラベルがついたら task を実行する</li>
+<li>特定のファイルが PR で更新されたら task を実行する</li>
+<li>特定のユーザー(botとか)からの PR では task を実行しない</li>
+</ul>
+<p>これらのロジックは自分がよく欲しくなるので、 buildflow を使えば簡単に実装できるようにしました。</p>
+<p>他にも様々な機能がありますので、また別の記事で紹介できたらと思います。</p>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/oss/">oss</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/buildflow/">buildflow</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

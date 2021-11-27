@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>2021-10 やったこと - melody</title>
+    
+<meta name="description" content="Job  AWS SSO の導入  Google アカウントで AWS へサインインできるように設定 AWS SSO の Terraform 管理 ssosync を Lambda で定期実行 開発者向けの移行ガイドの作成し、実際に案内 terraform, kubectl などのツールで AWS にアクセスできるかの検証   AWS WAF の COUNT, BLOCK の log を Firehose, Lambda で抽出 akoi を aqua にリプレース  Blog  2021-10-13: HashiTalks Japan 2021 で弊プロダクトの Terraform Platform について登壇しました  OSS https://github.com/pulls?q=is%3Aclosed&#43;is%3Apublic&#43;is%3Apr&#43;author%3Asuzuki-shunsuke&#43;archived%3Afalse&#43;created%3A2021-10-01..2021-10-31&#43; Profile などの更新: https://github.com/suzuki-shunsuke/suzuki-shunsuke GitHub Actions の開発 自作ツールを Homebrew でインストールできるようにした aqua: v0.7.3 =&amp;gt; v0.7.10  aqua-registry: v0.">
+
+<meta property="og:title" content="2021-10 やったこと - melody">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/">
+<meta property="og:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+<meta property="og:site_name" content="melody">
+<meta property="og:description" content="Job  AWS SSO の導入  Google アカウントで AWS へサインインできるように設定 AWS SSO の Terraform 管理 ssosync を Lambda で定期実行 開発者向けの移行ガイドの作成し、実際に案内 terraform, kubectl などのツールで AWS にアクセスできるかの検証   AWS WAF の COUNT, BLOCK の log を Firehose, Lambda で抽出 akoi を aqua にリプレース  Blog  2021-10-13: HashiTalks Japan 2021 で弊プロダクトの Terraform Platform について登壇しました  OSS https://github.com/pulls?q=is%3Aclosed&#43;is%3Apublic&#43;is%3Apr&#43;author%3Asuzuki-shunsuke&#43;archived%3Afalse&#43;created%3A2021-10-01..2021-10-31&#43; Profile などの更新: https://github.com/suzuki-shunsuke/suzuki-shunsuke GitHub Actions の開発 自作ツールを Homebrew でインストールできるようにした aqua: v0.7.3 =&amp;gt; v0.7.10  aqua-registry: v0.">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="melody">
+<meta name="twitter:url" content="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/">
+<meta name="twitter:title" content="2021-10 やったこと - melody">
+<meta name="twitter:description" content="Job  AWS SSO の導入  Google アカウントで AWS へサインインできるように設定 AWS SSO の Terraform 管理 ssosync を Lambda で定期実行 開発者向けの移行ガイドの作成し、実際に案内 terraform, kubectl などのツールで AWS にアクセスできるかの検証   AWS WAF の COUNT, BLOCK の log を Firehose, Lambda で抽出 akoi を aqua にリプレース  Blog  2021-10-13: HashiTalks Japan 2021 で弊プロダクトの Terraform Platform について登壇しました  OSS https://github.com/pulls?q=is%3Aclosed&#43;is%3Apublic&#43;is%3Apr&#43;author%3Asuzuki-shunsuke&#43;archived%3Afalse&#43;created%3A2021-10-01..2021-10-31&#43; Profile などの更新: https://github.com/suzuki-shunsuke/suzuki-shunsuke GitHub Actions の開発 自作ツールを Homebrew でインストールできるようにした aqua: v0.7.3 =&amp;gt; v0.7.10  aqua-registry: v0.">
+<meta name="twitter:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https:\/\/techblog-szksh-cloud.github.io\/"
+    },
+    "headline": "2021-10 やったこと - melody",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https:\/\/techblog-szksh-cloud.github.io\/images\/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2021-10-26T20:43:03JST",
+    "dateModified": "2021-10-26T20:43:03JST",
+    "author": {
+      "@type": "Person",
+      "name": "melody"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "melody",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https:\/\/techblog-szksh-cloud.github.io\/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "Job  AWS SSO の導入  Google アカウントで AWS へサインインできるように設定 AWS SSO の Terraform 管理 ssosync を Lambda で定期実行 開発者向けの移行ガイドの作成し、実際に案内 terraform, kubectl などのツールで AWS にアクセスできるかの検証   AWS WAF の COUNT, BLOCK の log を Firehose, Lambda で抽出 akoi を aqua にリプレース  Blog  2021-10-13: HashiTalks Japan 2021 で弊プロダクトの Terraform Platform について登壇しました  OSS https:\/\/github.com\/pulls?q=is%3Aclosed\u002bis%3Apublic\u002bis%3Apr\u002bauthor%3Asuzuki-shunsuke\u002barchived%3Afalse\u002bcreated%3A2021-10-01..2021-10-31\u002b\n Profile などの更新: https:\/\/github.com\/suzuki-shunsuke\/suzuki-shunsuke GitHub Actions の開発 自作ツールを Homebrew でインストールできるようにした aqua: v0.7.3 =\u0026gt; v0.7.10  aqua-registry: v0."
+  }
+</script>
+
+
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://techblog-szksh-cloud.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li class="active">2021-10 やったこと</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2021-10-26T20:43:03JST">Oct 26, 2021</time></li>
+      
+      
+    </ul>
+
+    <h1 class="title">2021-10 やったこと</h1>
+    
+    
+    <section>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/job/">job</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/oss/">oss</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </header>
+
+  
+
+  <div class="article-body"><h2 id="job">Job</h2>
+<ul>
+<li>AWS SSO の導入
+<ul>
+<li>Google アカウントで AWS へサインインできるように設定</li>
+<li>AWS SSO の Terraform 管理</li>
+<li>ssosync を Lambda で定期実行</li>
+<li>開発者向けの移行ガイドの作成し、実際に案内</li>
+<li>terraform, kubectl などのツールで AWS にアクセスできるかの検証</li>
+</ul>
+</li>
+<li>AWS WAF の COUNT, BLOCK の log を Firehose, Lambda で抽出</li>
+<li><a href="http://github.com/suzuki-shunsuke/akoi">akoi</a> を <a href="https://github.com/suzuki-shunsuke/aqua">aqua</a> にリプレース</li>
+</ul>
+<h2 id="blog">Blog</h2>
+<ul>
+<li><a href="https://blog.studysapuri.jp/entry/2021/10/13/080000">2021-10-13: HashiTalks Japan 2021 で弊プロダクトの Terraform Platform について登壇しました</a></li>
+</ul>
+<h2 id="oss">OSS</h2>
+<p><a href="https://github.com/pulls?q=is%3Aclosed+is%3Apublic+is%3Apr+author%3Asuzuki-shunsuke+archived%3Afalse+created%3A2021-10-01..2021-10-31+">https://github.com/pulls?q=is%3Aclosed+is%3Apublic+is%3Apr+author%3Asuzuki-shunsuke+archived%3Afalse+created%3A2021-10-01..2021-10-31+</a></p>
+<ul>
+<li>Profile などの更新: <a href="https://github.com/suzuki-shunsuke/suzuki-shunsuke">https://github.com/suzuki-shunsuke/suzuki-shunsuke</a></li>
+<li>GitHub Actions の開発</li>
+<li>自作ツールを Homebrew でインストールできるようにした</li>
+<li>aqua: v0.7.3 =&gt; v0.7.10
+<ul>
+<li>aqua-registry: v0.8.8 =&gt; v0.10.3</li>
+</ul>
+</li>
+</ul>
+<h3 id="oss-contribution">OSS Contribution</h3>
+<ul>
+<li><a href="https://github.com/hashicorp/terraform-provider-aws/pull/21385">hashicorp/terraform-provider-aws: fix make testacc</a></li>
+</ul>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/job/">job</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/oss/">oss</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/gitops-skaffold/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>skaffold を使って GitOps する - melody</title>
+    
+<meta name="description" content="skaffold を用いてマニフェストを動的に生成しつつ GitOps する方法を考えたので紹介します。 なお、現時点ではあくまで考えてみただけで実際に導入したりはしていません。GitOps はマニフェストを Git リポジトリにコミットしないといけないわけですが、 Docker image をビルド、プッシュし、マニフェストの image tag を書き換えるという一連の処理をどうやってやるのがいいのか 個人的に考えていました。自分は FluxCD には詳しくないのですが、 FluxCD では registry をポーリングして自動で最新のタグに書き換える機能があるそうですね。https://toolkit.fluxcd.io/guides/image-update/ただし、まだ alpha であることと、 semver に従っていないといけないようです。 これだと master branch が update されるたびに image をビルドして sha でタグを付与するみたいな運用は難しそうです。Skaffold だとマニフェストの image tag を自動で書き換えてくれる機能があります。 加えて skaffold render コマンドを使うと manifest の apply はせずにファイルへの出力だけやってくれます。 出力された manifest を Git リポジトリに commit, push すれば GitOps が実現できそうです。How リポジトリを 2 つ用意します。 app: アプリケーションのコードとマニフェストを管理するリポジトリ manifest: GitOps が連携するマニフェストを管理するリポジトリ  app は Monorepo になっているとします。ディレクトリ構成は次のような感じをイメージしています。">
+
+<meta property="og:title" content="skaffold を使って GitOps する - melody">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://techblog-szksh-cloud.github.io/gitops-skaffold/">
+<meta property="og:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+<meta property="og:site_name" content="melody">
+<meta property="og:description" content="skaffold を用いてマニフェストを動的に生成しつつ GitOps する方法を考えたので紹介します。 なお、現時点ではあくまで考えてみただけで実際に導入したりはしていません。GitOps はマニフェストを Git リポジトリにコミットしないといけないわけですが、 Docker image をビルド、プッシュし、マニフェストの image tag を書き換えるという一連の処理をどうやってやるのがいいのか 個人的に考えていました。自分は FluxCD には詳しくないのですが、 FluxCD では registry をポーリングして自動で最新のタグに書き換える機能があるそうですね。https://toolkit.fluxcd.io/guides/image-update/ただし、まだ alpha であることと、 semver に従っていないといけないようです。 これだと master branch が update されるたびに image をビルドして sha でタグを付与するみたいな運用は難しそうです。Skaffold だとマニフェストの image tag を自動で書き換えてくれる機能があります。 加えて skaffold render コマンドを使うと manifest の apply はせずにファイルへの出力だけやってくれます。 出力された manifest を Git リポジトリに commit, push すれば GitOps が実現できそうです。How リポジトリを 2 つ用意します。 app: アプリケーションのコードとマニフェストを管理するリポジトリ manifest: GitOps が連携するマニフェストを管理するリポジトリ  app は Monorepo になっているとします。ディレクトリ構成は次のような感じをイメージしています。">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="melody">
+<meta name="twitter:url" content="https://techblog-szksh-cloud.github.io/gitops-skaffold/">
+<meta name="twitter:title" content="skaffold を使って GitOps する - melody">
+<meta name="twitter:description" content="skaffold を用いてマニフェストを動的に生成しつつ GitOps する方法を考えたので紹介します。 なお、現時点ではあくまで考えてみただけで実際に導入したりはしていません。GitOps はマニフェストを Git リポジトリにコミットしないといけないわけですが、 Docker image をビルド、プッシュし、マニフェストの image tag を書き換えるという一連の処理をどうやってやるのがいいのか 個人的に考えていました。自分は FluxCD には詳しくないのですが、 FluxCD では registry をポーリングして自動で最新のタグに書き換える機能があるそうですね。https://toolkit.fluxcd.io/guides/image-update/ただし、まだ alpha であることと、 semver に従っていないといけないようです。 これだと master branch が update されるたびに image をビルドして sha でタグを付与するみたいな運用は難しそうです。Skaffold だとマニフェストの image tag を自動で書き換えてくれる機能があります。 加えて skaffold render コマンドを使うと manifest の apply はせずにファイルへの出力だけやってくれます。 出力された manifest を Git リポジトリに commit, push すれば GitOps が実現できそうです。How リポジトリを 2 つ用意します。 app: アプリケーションのコードとマニフェストを管理するリポジトリ manifest: GitOps が連携するマニフェストを管理するリポジトリ  app は Monorepo になっているとします。ディレクトリ構成は次のような感じをイメージしています。">
+<meta name="twitter:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https:\/\/techblog-szksh-cloud.github.io\/"
+    },
+    "headline": "skaffold を使って GitOps する - melody",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https:\/\/techblog-szksh-cloud.github.io\/images\/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2021-01-11T16:24:44JST",
+    "dateModified": "2021-01-11T16:24:44JST",
+    "author": {
+      "@type": "Person",
+      "name": "melody"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "melody",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https:\/\/techblog-szksh-cloud.github.io\/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "skaffold を用いてマニフェストを動的に生成しつつ GitOps する方法を考えたので紹介します。 なお、現時点ではあくまで考えてみただけで実際に導入したりはしていません。\nGitOps はマニフェストを Git リポジトリにコミットしないといけないわけですが、 Docker image をビルド、プッシュし、マニフェストの image tag を書き換えるという一連の処理をどうやってやるのがいいのか 個人的に考えていました。\n自分は FluxCD には詳しくないのですが、 FluxCD では registry をポーリングして自動で最新のタグに書き換える機能があるそうですね。\nhttps:\/\/toolkit.fluxcd.io\/guides\/image-update\/\nただし、まだ alpha であることと、 semver に従っていないといけないようです。 これだと master branch が update されるたびに image をビルドして sha でタグを付与するみたいな運用は難しそうです。\nSkaffold だとマニフェストの image tag を自動で書き換えてくれる機能があります。 加えて skaffold render コマンドを使うと manifest の apply はせずにファイルへの出力だけやってくれます。 出力された manifest を Git リポジトリに commit, push すれば GitOps が実現できそうです。\nHow リポジトリを 2 つ用意します。\n app: アプリケーションのコードとマニフェストを管理するリポジトリ manifest: GitOps が連携するマニフェストを管理するリポジトリ  app は Monorepo になっているとします。ディレクトリ構成は次のような感じをイメージしています。"
+  }
+</script>
+
+
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://techblog-szksh-cloud.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li class="active">skaffold を使って GitOps する</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2021-01-11T16:24:44JST">Jan 11, 2021</time></li>
+      
+      
+    </ul>
+
+    <h1 class="title">skaffold を使って GitOps する</h1>
+    
+    
+    <section>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/skaffold/">skaffold</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/gitops/">gitops</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/k8s/">k8s</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </header>
+
+  
+
+  <div class="article-body"><p>skaffold を用いてマニフェストを動的に生成しつつ GitOps する方法を考えたので紹介します。
+なお、現時点ではあくまで考えてみただけで実際に導入したりはしていません。</p>
+<p>GitOps はマニフェストを Git リポジトリにコミットしないといけないわけですが、
+Docker image をビルド、プッシュし、マニフェストの image tag を書き換えるという一連の処理をどうやってやるのがいいのか
+個人的に考えていました。</p>
+<p>自分は FluxCD には詳しくないのですが、
+FluxCD では registry をポーリングして自動で最新のタグに書き換える機能があるそうですね。</p>
+<p><a href="https://toolkit.fluxcd.io/guides/image-update/">https://toolkit.fluxcd.io/guides/image-update/</a></p>
+<p>ただし、まだ alpha であることと、 semver に従っていないといけないようです。
+これだと master branch が update されるたびに image をビルドして sha でタグを付与するみたいな運用は難しそうです。</p>
+<p>Skaffold だとマニフェストの image tag を自動で書き換えてくれる機能があります。
+加えて <a href="https://skaffold.dev/docs/references/cli/#skaffold-render">skaffold render</a> コマンドを使うと manifest の apply はせずにファイルへの出力だけやってくれます。
+出力された manifest を Git リポジトリに commit, push すれば GitOps が実現できそうです。</p>
+<h2 id="how">How</h2>
+<p>リポジトリを 2 つ用意します。</p>
+<ul>
+<li>app: アプリケーションのコードとマニフェストを管理するリポジトリ</li>
+<li>manifest: GitOps が連携するマニフェストを管理するリポジトリ</li>
+</ul>
+<p>app は Monorepo になっているとします。ディレクトリ構成は次のような感じをイメージしています。</p>
+<pre tabindex="0"><code>services/
+  foo/
+    skaffold.yaml
+    Dockerfile
+    kubernetes/
+      base/
+        kustomization.yaml
+        deployment.yaml
+      overlays/
+        develop/
+          kustomization.yaml
+        production/
+          kustomization.yaml
+</code></pre><p>skaffold.yaml</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">---
+<span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">skaffold/v2beta10</span>
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Config</span>
+<span style="color:#f92672">build</span>:
+  <span style="color:#f92672">tagPolicy</span>:
+    <span style="color:#f92672">gitCommit</span>:
+      <span style="color:#f92672">prefix</span>: <span style="color:#ae81ff">develop-</span>
+  <span style="color:#f92672">artifacts</span>:
+  - <span style="color:#f92672">image</span>: <span style="color:#ae81ff">foo</span>
+<span style="color:#f92672">deploy</span>:
+  <span style="color:#f92672">kustomize</span>:
+    <span style="color:#f92672">paths</span>:
+    - <span style="color:#ae81ff">kubernetes/overlays/develop</span>
+<span style="color:#f92672">profiles</span>:
+- <span style="color:#f92672">name</span>: <span style="color:#ae81ff">production</span>
+  <span style="color:#f92672">build</span>:
+    <span style="color:#f92672">tagPolicy</span>:
+      <span style="color:#f92672">gitCommit</span>:
+        <span style="color:#f92672">prefix</span>: <span style="color:#ae81ff">production-</span>
+  <span style="color:#f92672">deploy</span>:
+    <span style="color:#f92672">kustomize</span>:
+      <span style="color:#f92672">paths</span>:
+      - <span style="color:#ae81ff">kubernetes/overlays/production</span>
+</code></pre></div><p><a href="https://skaffold.dev/docs/environment/profiles/">profile</a> によって develop と production を区別しています。</p>
+<p>manifest では tag を指定しないようにします。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">    <span style="color:#f92672">spec</span>:
+      <span style="color:#f92672">containers</span>:
+      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">foo</span>
+        <span style="color:#f92672">image</span>: <span style="color:#ae81ff">foo</span>
+</code></pre></div><p><code>skaffold render</code> で manifest を生成します。</p>
+<pre tabindex="0"><code>$ skaffold render \
+  -p production \
+  --default-repo xxx.dkr.ecr.ap-northeast-1.amazonaws.com \
+  --offline=true \
+  --loud=true \
+  --output manifest.yaml
+</code></pre><p><code>--loud=true</code> をつけないとなにも出力しないのでなにが起こってるのかわかりません。</p>
+<p>生成されたマニフェストをみると tag が自動で付与されています。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">      - <span style="color:#f92672">image</span>: <span style="color:#ae81ff">xxx.dkr.ecr.ap-northeast-1.amazonaws.com/foo:production-e3a42e0@sha256:7032af912c511ab0c8353c28604461d8960833144953fb50853f087db55ffdd0</span>
+</code></pre></div><p>生成した manifest を <code>manifest</code> リポジトリに commit, push します。
+manifest リポジトリを checkout してきて git コマンドでやることもできますが、 <a href="https://github.com/int128/ghcp">ghcp</a> を使うとコマンド1つでできるので便利です。</p>
+<p>manifest リポジトリは対象のサービス及び環境ごとにブランチを分けることにします。
+そうしたほうが push の際に失敗しにくいと思います(多分。分からないけど)。</p>
+<pre tabindex="0"><code>$ ghcp commit -u suzuki-shunsuke -r manifest -b &quot;foo/production&quot; -m &quot;message&quot; manifest.yaml
+</code></pre><p>message は実際にはもっと詳細なメッセージにすべきでしょう。 CI で実行することになると思うので、 build URL を含めたりすると良いでしょう。</p>
+<p>こうすると <code>foo/production</code> ブランチに manifest.yaml が push されます。
+あとは ArgoCD や FluxCD のような GitOps ツール で foo/production の manifest.yaml をデプロイすればよいはずです。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">argoproj.io/v1alpha1</span>
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Application</span>
+<span style="color:#f92672">metadata</span>:
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">foo</span>
+  <span style="color:#f92672">namespace</span>: <span style="color:#ae81ff">argocd</span>
+<span style="color:#f92672">spec</span>:
+  <span style="color:#f92672">source</span>:
+    <span style="color:#f92672">repoURL</span>: <span style="color:#ae81ff">https://github.com/suzuki-shunsuke/manifest.git</span>
+    <span style="color:#f92672">targetRevision</span>: <span style="color:#ae81ff">foo/production</span>
+    <span style="color:#f92672">path</span>: <span style="color:#ae81ff">manifest.yaml</span>
+  <span style="color:#f92672">destination</span>:
+    <span style="color:#f92672">server</span>: <span style="color:#ae81ff">https://kubernetes.default.svc</span>
+    <span style="color:#f92672">namespace</span>: <span style="color:#ae81ff">production</span>
+</code></pre></div><h2 id="さいごに">さいごに</h2>
+<p>以上、 Skaffold を使っていい感じに tag を書き換えて GitOps する仕組みを考えてみました。
+Skaffold 使うと Docker image の build, push といった一連の流れも全部やってくれるので楽で良いなと感じました。</p>
+<p>GitOps じゃなくても CIOps でも Skaffold でデプロイすると便利そうだなと思いました。
+その場合は <code>skaffold render</code> ではなく、 <a href="https://skaffold.dev/docs/references/cli/#skaffold-run">skaffold run</a> になりそうですね。</p>
+<p><a href="https://skaffold.dev/docs/workflows/ci-cd/">https://skaffold.dev/docs/workflows/ci-cd/</a></p>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/skaffold/">skaffold</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/gitops/">gitops</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/k8s/">k8s</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

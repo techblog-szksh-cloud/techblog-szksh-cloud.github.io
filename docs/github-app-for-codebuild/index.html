@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>AWS CodeBuild を実行する Github App を作る - melody</title>
+    
+<meta name="description" content="GitHub Repository の CI に CodeBuild を使う場合、 CodeBuild の Webhook integration (以下 CodeBuild GitHub integration と呼ぶことにします) を使うのが一番自然でしょう。 基本的なユースケースならこれでよいのですが、 GitHub App を活用することでより高度な CI を実現することができます。解決したい課題  Batch Build の課題  起動・終了が遅い 全 build が成功した Batch Build を Retry できない Web UI がわかりにくい  余計な build が起動する build 単体を Retry できない   build ごとに条件設定とかできない buildspec を動的に生成できない   CodeBuild GitHub integration の課題  Build Project ごとに Repository Webhook が 1 つ作られる  webhook 1 repository あたり 20 個までしか作れない (これを裏付ける客観的なソースはないですが) webhook の数が増えると build の動作が不安定になるのを観測しています   Filter の条件が限られている(例えば PR label で filter とかできない) 複数の build を実行できない(Batch Build も 1 つとみなした場合の話)   CodeBuild の課題  Retry した場合 webhook で起動したときの環境変数が設定されない    GitHub App Amazon API Gateway と Lambda を使って GitHub App を構築します。 Lambda で webhook を受け取り、 AWS SDK を使って build を実行します。">
+
+<meta property="og:title" content="AWS CodeBuild を実行する Github App を作る - melody">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/">
+<meta property="og:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+<meta property="og:site_name" content="melody">
+<meta property="og:description" content="GitHub Repository の CI に CodeBuild を使う場合、 CodeBuild の Webhook integration (以下 CodeBuild GitHub integration と呼ぶことにします) を使うのが一番自然でしょう。 基本的なユースケースならこれでよいのですが、 GitHub App を活用することでより高度な CI を実現することができます。解決したい課題  Batch Build の課題  起動・終了が遅い 全 build が成功した Batch Build を Retry できない Web UI がわかりにくい  余計な build が起動する build 単体を Retry できない   build ごとに条件設定とかできない buildspec を動的に生成できない   CodeBuild GitHub integration の課題  Build Project ごとに Repository Webhook が 1 つ作られる  webhook 1 repository あたり 20 個までしか作れない (これを裏付ける客観的なソースはないですが) webhook の数が増えると build の動作が不安定になるのを観測しています   Filter の条件が限られている(例えば PR label で filter とかできない) 複数の build を実行できない(Batch Build も 1 つとみなした場合の話)   CodeBuild の課題  Retry した場合 webhook で起動したときの環境変数が設定されない    GitHub App Amazon API Gateway と Lambda を使って GitHub App を構築します。 Lambda で webhook を受け取り、 AWS SDK を使って build を実行します。">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="melody">
+<meta name="twitter:url" content="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/">
+<meta name="twitter:title" content="AWS CodeBuild を実行する Github App を作る - melody">
+<meta name="twitter:description" content="GitHub Repository の CI に CodeBuild を使う場合、 CodeBuild の Webhook integration (以下 CodeBuild GitHub integration と呼ぶことにします) を使うのが一番自然でしょう。 基本的なユースケースならこれでよいのですが、 GitHub App を活用することでより高度な CI を実現することができます。解決したい課題  Batch Build の課題  起動・終了が遅い 全 build が成功した Batch Build を Retry できない Web UI がわかりにくい  余計な build が起動する build 単体を Retry できない   build ごとに条件設定とかできない buildspec を動的に生成できない   CodeBuild GitHub integration の課題  Build Project ごとに Repository Webhook が 1 つ作られる  webhook 1 repository あたり 20 個までしか作れない (これを裏付ける客観的なソースはないですが) webhook の数が増えると build の動作が不安定になるのを観測しています   Filter の条件が限られている(例えば PR label で filter とかできない) 複数の build を実行できない(Batch Build も 1 つとみなした場合の話)   CodeBuild の課題  Retry した場合 webhook で起動したときの環境変数が設定されない    GitHub App Amazon API Gateway と Lambda を使って GitHub App を構築します。 Lambda で webhook を受け取り、 AWS SDK を使って build を実行します。">
+<meta name="twitter:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https:\/\/techblog-szksh-cloud.github.io\/"
+    },
+    "headline": "AWS CodeBuild を実行する Github App を作る - melody",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https:\/\/techblog-szksh-cloud.github.io\/images\/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2021-08-16T09:10:51JST",
+    "dateModified": "2021-08-16T09:10:51JST",
+    "author": {
+      "@type": "Person",
+      "name": "melody"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "melody",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https:\/\/techblog-szksh-cloud.github.io\/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "GitHub Repository の CI に CodeBuild を使う場合、 CodeBuild の Webhook integration (以下 CodeBuild GitHub integration と呼ぶことにします) を使うのが一番自然でしょう。 基本的なユースケースならこれでよいのですが、 GitHub App を活用することでより高度な CI を実現することができます。\n解決したい課題  Batch Build の課題  起動・終了が遅い 全 build が成功した Batch Build を Retry できない Web UI がわかりにくい  余計な build が起動する build 単体を Retry できない   build ごとに条件設定とかできない buildspec を動的に生成できない   CodeBuild GitHub integration の課題  Build Project ごとに Repository Webhook が 1 つ作られる  webhook 1 repository あたり 20 個までしか作れない (これを裏付ける客観的なソースはないですが) webhook の数が増えると build の動作が不安定になるのを観測しています   Filter の条件が限られている(例えば PR label で filter とかできない) 複数の build を実行できない(Batch Build も 1 つとみなした場合の話)   CodeBuild の課題  Retry した場合 webhook で起動したときの環境変数が設定されない    GitHub App Amazon API Gateway と Lambda を使って GitHub App を構築します。 Lambda で webhook を受け取り、 AWS SDK を使って build を実行します。"
+  }
+</script>
+
+
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://techblog-szksh-cloud.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li class="active">AWS CodeBuild を実行する Github App を作る</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2021-08-16T09:10:51JST">Aug 16, 2021</time></li>
+      
+      
+    </ul>
+
+    <h1 class="title">AWS CodeBuild を実行する Github App を作る</h1>
+    
+    
+    <section>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/aws/">aws</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/codebuild/">codebuild</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/github-app/">github-app</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </header>
+
+  
+
+  <div class="article-body"><p>GitHub Repository の CI に CodeBuild を使う場合、 <a href="https://docs.aws.amazon.com/codebuild/latest/userguide/github-webhook.html">CodeBuild の Webhook integration</a> (以下 <code>CodeBuild GitHub integration</code> と呼ぶことにします) を使うのが一番自然でしょう。
+基本的なユースケースならこれでよいのですが、 GitHub App を活用することでより高度な CI を実現することができます。</p>
+<h2 id="解決したい課題">解決したい課題</h2>
+<ul>
+<li>Batch Build の課題
+<ul>
+<li>起動・終了が遅い</li>
+<li>全 build が成功した Batch Build を Retry できない</li>
+<li>Web UI がわかりにくい
+<ul>
+<li>余計な build が起動する</li>
+<li>build 単体を Retry できない</li>
+</ul>
+</li>
+<li>build ごとに条件設定とかできない</li>
+<li>buildspec を動的に生成できない</li>
+</ul>
+</li>
+<li><code>CodeBuild GitHub integration</code> の課題
+<ul>
+<li>Build Project ごとに Repository Webhook が 1 つ作られる
+<ul>
+<li><a href="https://docs.github.com/en/developers/webhooks-and-events/webhooks/about-webhooks">webhook 1 repository あたり 20 個までしか作れない</a></li>
+<li>(これを裏付ける客観的なソースはないですが) webhook の数が増えると build の動作が不安定になるのを観測しています</li>
+</ul>
+</li>
+<li>Filter の条件が限られている(例えば PR label で filter とかできない)</li>
+<li>複数の build を実行できない(Batch Build も 1 つとみなした場合の話)</li>
+</ul>
+</li>
+<li>CodeBuild の課題
+<ul>
+<li>Retry した場合 webhook で起動したときの環境変数が設定されない</li>
+</ul>
+</li>
+</ul>
+<h2 id="github-app">GitHub App</h2>
+<p>Amazon API Gateway と Lambda を使って GitHub App を構築します。
+Lambda で webhook を受け取り、 AWS SDK を使って build を実行します。</p>
+<p><img src="https://user-images.githubusercontent.com/13323303/129534257-391da6ac-9690-46df-b6df-53605d3c0c6a.png" alt="codebuilder-architecture"></p>
+<p>GitHub App を作成し、 Webhook URL として API Gateway の endpoint を指定します。
+internet facing な API Gateway は Repository ごとに作るのではなく、共有で 1 つ作るようにしたほうが良いかと思います。
+Lambda は Repository ごとに分けたほうが権限を絞れるし、 Function がシンプルになるし、あるリポジトリのための変更が他のリポジトリに影響することがないので良いでしょう。</p>
+<p>Batch Build を使う代わりに Build を複数並列で起動することで、 Batch Build の課題を解決できます。
+実行時に<a href="https://docs.aws.amazon.com/sdk-for-go/api/service/codebuild/#CodeBuild.StartBuildWithContext">パラメータ</a>を変えることもできます。
+Webhook の Payload も参照できるので、 Payload から得たデータ(PR 番号、 label、PR Author 名、 etc)を環境変数として build にわたすこともできます。</p>
+<p>従来は build 内で GitHub API を使って取得していた PR の情報を環境変数として渡せることで
+build の処理が簡略化されますし、 GitHub API の call 数を減らすこともできます(これは API の rate limit が問題になる場合に重要です)。</p>
+<p>PR label による build のフィルタリングなど、 <code>CodeBuild GitHub integration</code> では難しいより複雑な filter も実現できます。</p>
+<p>GitHub App であれば Repository Webhook が作られることもありませんし、 Build Project ごとに webhook の設定をする必要もありません。</p>
+<p>Assume Role することで別の AWS Account の Build Project の build を実行することもできます。</p>
+<h2 id="merged-event-で-merged-commit-sha-で-build-を実行">merged event で merged commit sha で build を実行</h2>
+<p>PR がマージされたら merged commit の SHA で CI を実行したい場合、 push event を hook するのがおそらく一般的かと思います。</p>
+<p><code>CodeBuild GitHub integration</code> では <code>merged</code> event を hook することもできますが、
+この場合 PR の head branch の SHA で build が実行されてしまいますし、 base branch の commit status が更新されません。</p>
+<p>しかし <code>push</code> event では関連する PR の情報が取れない(build の環境変数として PR の情報が渡されない)という問題があります。
+<a href="https://docs.github.com/en/rest/reference/repos#list-pull-requests-associated-with-a-commit">GitHub API でコミットと関連した PR の一覧が取れます</a>が、複数の PR と関連づいている場合、どの PR なのか特定することができません(特定の条件付きであればできますが)。</p>
+<p>そこで GitHub App で <code>merged</code> event (正確には <code>closed</code> event で PR がマージ済の場合) を hook しつつ、
+build 起動時に source version として merged commit sha を指定することで
+webhook から PR の情報を取得しつつ merged commit の SHA で CI を実行できます。</p>
+<h2 id="github-の-personal-access-token-の代わりに-github-app-installation-access-token-を使う">GitHub の Personal Access Token の代わりに GitHub App installation access token を使う</h2>
+<p>CodeBuild の build 内で GitHub API を使いたい場合、 Personal Access Token を発行するのがシンプルですが、 Personal Access Token にはいくつか課題があります。</p>
+<ul>
+<li>token 流出のリスク
+<ul>
+<li>rotation が難しいので有効期限が設定されてない場合が多い</li>
+</ul>
+</li>
+<li>rate limit
+<ul>
+<li>token が organization で広く共有されたりするようになると問題になりやすい</li>
+<li>rate limit は account 単位なので、同じ account の token を別に作っても意味がない</li>
+<li>account を増やして org に追加すると、 org のメンバーが増えるのでお金がかかる(まぁ金額的に無視してもよいかもしれませんが)</li>
+</ul>
+</li>
+</ul>
+<p>GitHub App では rotation などを考えなくても一時的な token を発行できるので、セキュリティ的にリスクが低いですし、
+GitHub App を作ってもお金はかかりません。
+token を発行するには</p>
+<ul>
+<li>App ID</li>
+<li>Installation ID (webhook の payload に含まれている)</li>
+<li>Private key</li>
+</ul>
+<p>が必要で、 build 実行時に installation id を環境変数として渡すことで Lambda だけでなく Codebuild でも installation access token が使えます。</p>
+<p>もちろん GitHub App を使っても rate limit に引っかかることはありますが、 Personal Access Token に比べて回避しやすいかとは思います。</p>
+<h2 id="lambda-から-repository-のコードを参照する">Lambda から Repository のコードを参照する</h2>
+<p><a href="https://blog.studysapuri.jp/entry/2020/12/03/080000">https://blog.studysapuri.jp/entry/2020/12/03/080000</a> では CodeBuild でリポジトリのコードを checkout し、
+build の中で動的に buildspec を生成して batch build を実行しています。</p>
+<p>同じようなことを Lambda でやろうとした場合、色々制約があります。
+Lambda ではリポジトリを checkout してくる代わりに、 build を実行するのに必要な情報を静的に生成してリポジトリにコミットしておきそれを GitHub API で取得するというやり方があります。
+その場合、ファイルを生成するコマンドをリポジトリに用意しておき、 ちゃんとファイルが最新になっているか CI の中でチェックし、
+なっていなければ CI を fail させるか自動で更新してコミットするというのをやるのが良さそうです。
+Git の pre-push hook などで check するのもありかもしれません。</p>
+<h2 id="github-app-の開発をいかに楽にするか">GitHub App の開発をいかに楽にするか</h2>
+<p>ようは webhook を受け取って build を実行する Lambda Function を実装すればいいだけなのですが、
+毎回 0 からコードを書くのはちょっとした手間なので、 Go の簡単な library を作っています。</p>
+<p><a href="https://github.com/suzuki-shunsuke/go-github-app-for-aws-codebuild">https://github.com/suzuki-shunsuke/go-github-app-for-aws-codebuild</a></p>
+<p>このライブラリ自体は大したものではないので、皆さんのユースケースや言語に合わせて独自に作っても良いでしょう。</p>
+<h2 id="サンプル">サンプル</h2>
+<p>簡単なサンプルも書いています。</p>
+<p><a href="https://github.com/suzuki-shunsuke/example-github-app-for-aws-codebuild">https://github.com/suzuki-shunsuke/example-github-app-for-aws-codebuild</a></p>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/aws/">aws</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/codebuild/">codebuild</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/github-app/">github-app</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

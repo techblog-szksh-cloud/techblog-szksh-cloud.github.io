@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>2021/05 on melody</title>
+    <link>https://techblog-szksh-cloud.github.io/archives/2021/05/</link>
+    <description>Recent content in 2021/05 on melody</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>jp</language><atom:link href="https://techblog-szksh-cloud.github.io/archives/2021/05/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>仕事でやったこと 2021-05-01 ~ 2021-05-31</title>
+      <link>https://techblog-szksh-cloud.github.io/job-2021-05-01-05-31/</link>
+      <pubDate>Sun, 30 May 2021 08:19:32 +0900</pubDate>
+      
+      <guid>https://techblog-szksh-cloud.github.io/job-2021-05-01-05-31/</guid>
+      <description> SRE チームの新メンバーのオンボーディングのサポート GCP  dev からのリクエストに応じて権限付与したり対応 Terraform による GCP の管理 CI/CD の整備 Workload Identity Federation について調べた Terraform による IAM 管理の仕方を検討   Conftest  opa fmt によるフォーマット(CI も導入) Policy Testing (CI も導入)   Upgrade Terraform to v0.15.4 miam の Terraform 移行を検証  </description>
+    </item>
+    
+  </channel>
+</rss>

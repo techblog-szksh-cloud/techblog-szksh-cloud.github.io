@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>circleci on melody</title>
+    <link>https://techblog-szksh-cloud.github.io/tags/circleci/</link>
+    <description>Recent content in circleci on melody</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>jp</language>
+    <lastBuildDate>Sat, 07 Nov 2020 14:43:10 +0900</lastBuildDate><atom:link href="https://techblog-szksh-cloud.github.io/tags/circleci/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Splitting .circleci/config.yml</title>
+      <link>https://techblog-szksh-cloud.github.io/splitting-circleci-config/</link>
+      <pubDate>Sat, 07 Nov 2020 14:43:10 +0900</pubDate>
+      
+      <guid>https://techblog-szksh-cloud.github.io/splitting-circleci-config/</guid>
+      <description>In this post I introduce how to split a huge .circleci/config.yml.
+CircleCI doesn&amp;rsquo;t support to split .circleci/config.yml, so we manage all workflows and jobs configuration into one file .circleci/config.yml. If the repository is Monorepo, the more the number of services increases, the more the size of .circleci/config.yml becomes large and it&amp;rsquo;s hard to maintain .circleci/config.yml. By splitting .circleci/config.yml per service, it makes easy to maintain .circleci/config.yml and we can configure split file&amp;rsquo;s CODEOWNERS.</description>
+    </item>
+    
+    <item>
+      <title>CircleCI の run の実行時間を DataDog に送る</title>
+      <link>https://techblog-szksh-cloud.github.io/send-circleci-run-execution-time-to-datadog/</link>
+      <pubDate>Sat, 23 May 2020 14:20:53 +0900</pubDate>
+      
+      <guid>https://techblog-szksh-cloud.github.io/send-circleci-run-execution-time-to-datadog/</guid>
+      <description>小ネタです。
+dd-time を使って CircleCI の run を使ったコマンドの実行時間をどう計測したらいいのかちょっと考えました。
+以前、コマンドの実行時間を DataDog に送るツール dd-time を作りました。
+ https://techblog.szksh.cloud/dd-time/ https://github.com/suzuki-shunsuke/dd-time  これは基本的に以下のように引数として -- 以降に実行するコマンドを指定します。
+$ dd-time -m dd_time.execution_time -t command:docker-build -- docker build . 実行するスクリプトを標準入力で渡したい場合はこうします。
+$ curl https://example.com/install.sh | dd-time -m dd_time.execution_time -- sh もちろんシェルスクリプトである必要はなくて例えば Python だったらこうなります。
+$ curl https://example.com/setup.py | dd-time -m dd_time.execution_time -- python CircleCI の run では shell オプションで shell を指定できます。
+https://circleci.com/docs/2.0/configuration-reference/#run
+なので command 全体の時間を計測したい場合は、 shell を次のようにします。
+- run: name: test dd-time shell: /usr/local/bin/dd-time -m dd_time.</description>
+    </item>
+    
+    <item>
+      <title>CircleCI の checkout の注意点</title>
+      <link>https://techblog-szksh-cloud.github.io/circleci-checkout-default-branch/</link>
+      <pubDate>Fri, 24 Apr 2020 16:53:01 +0900</pubDate>
+      
+      <guid>https://techblog-szksh-cloud.github.io/circleci-checkout-default-branch/</guid>
+      <description>CircleCI の組み込みの command checkout の注意点について書きます。
+なお、ここに書かれている内容は 2020/04/24 時点のものであり、予告なしに checkout の挙動が変わる可能性があります。
+また、今回は話を簡略化するため、 checkout 実行時点で .git がない(つまりキャッシュしていない)ものとします。
+最初に結論 先に結論を書くと
+ CircleCI ではローカルのデフォルトブランチを参照しないほうが良い($CIRCLE_BRANCH がデフォルトブランチである場合は除く)  履歴が origin と異なり、 $CIRCLE_BRANCH と同様になっているため   代わりに origin のデフォルトブランチを参照したほうが良い git branch -f &amp;lt;デフォルトブランチ&amp;gt; origin/&amp;lt;デフォルトブランチ&amp;gt; を実行してデフォルトブランチの履歴を修正するのもあり  checkout がなにをやっているか checkout でなにをやっているかは実際に使ってみて CircleCI の job の詳細画面(?) から確認できます。
+サンプル: https://app.circleci.com/pipelines/github/suzuki-shunsuke/test-circleci/73/workflows/5611059c-d6b1-4a34-91b5-45d6f149d408/jobs/96
+ここでは checkout の全てについては触れません。一部抜粋します。
+elif [ -n &amp;#34;$CIRCLE_BRANCH&amp;#34; ] then git reset --hard &amp;#34;$CIRCLE_SHA1&amp;#34; git checkout -q -B &amp;#34;$CIRCLE_BRANCH&amp;#34; fi git reset --hard などをしています。</description>
+    </item>
+    
+    <item>
+      <title>travis ci から circle ci への移行のすすめ</title>
+      <link>https://techblog-szksh-cloud.github.io/migrate-from-travis-ci-to-circle-ci/</link>
+      <pubDate>Mon, 01 Oct 2018 07:23:15 +0900</pubDate>
+      
+      <guid>https://techblog-szksh-cloud.github.io/migrate-from-travis-ci-to-circle-ci/</guid>
+      <description>travis ci と circle ci の無償SaaS 版を比較しています。
+OSS の CI では travis ci がよく使われる印象がありますが、 場合によっては circle CI に移行するとCIの時間が大幅に短くなったりして良いと思います。 ただし、複数バージョンで並列にテストしたい場合、circle ci の無償planだと並列に実行できないため、 travis でやったほうが速いかもしれません。
+Circle CI の良いところ  好きな Docker Image が使える ローカルでテストが出来る Pending 時間が travis ci に比べて短い気がする(主観) private repository の CI も出来る  好きな Docker Image が使えるのが大きいですね。 予め CI に必要なツールをインストールした Image を用意しておくことで大幅に高速化出来ますし、 ツールがインストールできなかったりバージョンが変わってしまったりするトラブルも避けられます。 同じImageを使ってローカルでテストできるのでローカルでの検証もしやすいです。
+自分の場合 Golang のツールの CI用に Docker Image を用意しています。
+https://hub.docker.com/r/suzukishunsuke/go-ci/</description>
+    </item>
+    
+    <item>
+      <title>Drone と Circle CI の workspace の扱いの違いについて</title>
+      <link>https://techblog-szksh-cloud.github.io/drone-circle-volume-difference/</link>
+      <pubDate>Sun, 30 Sep 2018 19:27:59 +0900</pubDate>
+      
+      <guid>https://techblog-szksh-cloud.github.io/drone-circle-volume-difference/</guid>
+      <description>drone は同じ pipeline の step 間で同じ workspace を docker の volume としてマウントすることで workspace を共有します。
+http://docs.drone.io/workspace/
+circle ci はデフォルトで job 間で workspace を共有しません。 persist_to_workspace を指定することで共有する事ができます。
+https://circleci.com/docs/2.0/workflows/#using-workspaces-to-share-data-among-jobs
+circle ci の場合は volume を共有するのではなく、指定したディレクトリを archive し、次の job で展開することでファイルを共有するようです。
+この違いには一長一短があります。
+circle ci の場合は archive, unarchive する分、volume 共有に比べて時間がかかります。
+そのため、下手に job を分けるより一つの job で処理したほうが処理時間が短くなる場合がありますが、 build や test といった処理は出来れば別の job として実行したいでしょうし、それでは workflow が使えません。
+ただし、共有するパスは自由に選べるので必要最小限に抑えることで時間を短縮できます。
+また、circle ci の場合は archive するパス及び展開先のパスを自由に選べるので自由度が高いです。 drone の場合、 workspace 以外のファイルを共有できません。
+また、drone の場合 volume を共有するので同じ pipeline の step は同じノードで実行されるという制約がありますが、 circle ci の場合、別のノードでの実行が可能です。 drone の group を使って並列に実行する場合、複数のノードに分散できませんが、 circle ci の場合分散できるのでよりスケールしやすいと言えるでしょう。</description>
+    </item>
+    
+  </channel>
+</rss>

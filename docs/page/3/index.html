@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+<link rel="alternate" type="application/rss+xml" title="RSS" href="https://techblog-szksh-cloud.github.io/index.xml">
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>melody</title>
+    
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    
+
+    <ul class="p-articles">
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2021-02-11T08:13:10JST">Feb 11, 2021</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/job-2021-01-01-01-31/">仕事でやったこと 2021-01-01 ~ 2021-01-31</a></h2>
+  </header>
+
+  
+  <div class="summary"> CI: PR コメントの非表示  github-comment, tfcmt  非表示以外にも細かな改善入れている     Renovate  label を設定 Renovate の PR に便利なリンクを追加   Terraform  apply こけたときに plan 再実行して S3 に保存している plan file 及び PR コメントを更新 tfnotify を tfcmt にリプレース  tfnotify を fork した      </div>
+
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2021-02-11T08:02:11JST">Feb 11, 2021</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/job-2020-12-01-12-31/">仕事でやったこと 2020-12-01 ~ 2020-12-31</a></h2>
+  </header>
+
+  
+  <div class="summary">2020-12-01 から 2020-12-31 にかけて仕事でやったことを書ける範囲で書きます。
+ AWS SAM Application の開発 Renovate の PR にリンクを追加 Terraform  Terraform の CI に関して日々行っている改善点・変更点をチームにシェア Docker Compose を用いてローカルで開発しやすいように改善 ドキュメント・コードコメントの追加 リファクタリング  不要なコードの削除 不要な secret を削除 不要な変数の削除 data.terraform_remote_state を local values に置換 なぜか環境変数でパラメータを渡していた箇所を、 local value に置換   CI に tflint の導入 対象の build が 1 つの場合 batch build を実行しないようにする  Terraform の CI/CD を CodeBuild に移行した話 の改良 Batch Build の起動に時間がかかる問題の解消   master の HEAD じゃなくても apply できるようにする plan file を S3 に保存 refactor: tfsec で設定ファイルを使うようにする Renovate の PR が多すぎて鬱陶しい問題の対応  automerge されるものは reviewer を設定しないようにした prConcurrentLimit を 1 にした branch protection Require branches to be up to date before merging を無効化     kube-linter  Rule に基づいて manifest の修正   miam でリソースが削除されそうなときに警告をするようにした ブログの執筆  Renovate の Tips Terraform の CI/CD を CodeBuild に移行した話 巨大な .</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/job-2020-12-01-12-31/" title="仕事でやったこと 2020-12-01 ~ 2020-12-31">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2021-01-31T14:53:23JST">Jan 31, 2021</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/tfmigrator/">terraformer で雑に生成した tf ファイル と state を分割したくてツールを書いた</a></h2>
+  </header>
+
+  
+  <div class="summary">terraformer で雑に生成した Terraform の設定ファイル (以下 tf ファイル) と state を分割したくてツールを書きました。
+tfmigrator
+経緯 miam から Terraform へ移行したい miam というツールで管理されている大量のリソースを Terraform で管理したくなりました。 多くの AWS Resource は Terraform で管理されていますが、 IAM に関しては miam で管理されています。 なぜ Terraform ではなく miam で管理されているかというと、当時のことは自分には分かりませんが、歴史的な経緯もあると思います。 昔は今よりも Terraform の表現力が豊かではなく、 Ruby で自由にかける miam のほうが扱いやすかったとか、 miam だと miam でリソースを管理することを強制できるため、権限管理を厳格にやるという観点では都合が良いという点もあるかと思います。
+ではなぜ Terraform で管理したくなったかというと、 一番大きな理由は miam で頻繁に rate limit に引っかかるようになったからです。 Terraform にしろ miam にしろ CI/CD で test, apply が実行されるようになっています。 miam では毎回全部のリソースを対象に処理が実行されるため、リソースの数が増えるにつれて rate limit に引っかかりやすくなります。 CI を rerun すれば成功するのですが、悪いときは 3 回連続で rate limit に引っかかり、 4 回目でようやく成功するということもありました。</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/tfmigrator/" title="terraformer で雑に生成した tf ファイル と state を分割したくてツールを書いた">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2021-01-11T16:24:44JST">Jan 11, 2021</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/gitops-skaffold/">skaffold を使って GitOps する</a></h2>
+  </header>
+
+  
+  <div class="summary">skaffold を用いてマニフェストを動的に生成しつつ GitOps する方法を考えたので紹介します。 なお、現時点ではあくまで考えてみただけで実際に導入したりはしていません。
+GitOps はマニフェストを Git リポジトリにコミットしないといけないわけですが、 Docker image をビルド、プッシュし、マニフェストの image tag を書き換えるという一連の処理をどうやってやるのがいいのか 個人的に考えていました。
+自分は FluxCD には詳しくないのですが、 FluxCD では registry をポーリングして自動で最新のタグに書き換える機能があるそうですね。
+https://toolkit.fluxcd.io/guides/image-update/
+ただし、まだ alpha であることと、 semver に従っていないといけないようです。 これだと master branch が update されるたびに image をビルドして sha でタグを付与するみたいな運用は難しそうです。
+Skaffold だとマニフェストの image tag を自動で書き換えてくれる機能があります。 加えて skaffold render コマンドを使うと manifest の apply はせずにファイルへの出力だけやってくれます。 出力された manifest を Git リポジトリに commit, push すれば GitOps が実現できそうです。
+How リポジトリを 2 つ用意します。
+ app: アプリケーションのコードとマニフェストを管理するリポジトリ manifest: GitOps が連携するマニフェストを管理するリポジトリ  app は Monorepo になっているとします。ディレクトリ構成は次のような感じをイメージしています。</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/gitops-skaffold/" title="skaffold を使って GitOps する">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2021-01-02T19:42:10JST">Jan 2, 2021</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/fork-tfnotify/">tfnotify を fork した</a></h2>
+  </header>
+
+  
+  <div class="summary">mercari/tfnotify を Fork して 2 つほど OSS を作りました。
+ https://github.com/suzuki-shunsuke/tfnotify - tfnotify と互換性あり https://github.com/suzuki-shunsuke/tfcmt - tfnotify と互換性がない  開発の経緯 これまで tfnotify を便利に使わせてもらってたのですが、幾つか改善したいと思うところがあり、本家に PR を投げました。 しかし残念ながらこれまでのところ反応がなく、そこまで本家が活発ではないこと、また他にも色々改修したいところがあったことから、自分でフォークしてメンテすることにしました。 最初は互換性を維持しながら suzuki-shunsuke/tfnotify を開発していました(今もしています)。 しかし、開発を進めるに連れ、自分にとって必要のないプラットフォームなどに関するコードが邪魔であると感じ、それらを消したバージョンを別に開発することにしました。 互換性がなくなることから、名前も変えて tfcmt としました。
+https://github.com/suzuki-shunsuke/tfcmt
+こういった経緯から、 tfcmt のほうを優先的に開発していますが、 tfcmt で実装した機能を後から suzuki-shunsuke/tfnotify にも実装してたりもします。
+Fork 元のバージョン suzuki-shunsuke/tfnotify は mercari/tfnotify v0.7.0 fb178d8 をフォークしました。 一方 tfcmt は suzuki-shunsuke/tfnotify v1.3.3 をフォークしました。
+mercari/tfnotify との違い 本家との違いは Release Note とドキュメントを参照してください。
+ suzuki-shunsuke/tfnotify  https://github.com/suzuki-shunsuke/tfnotify/releases https://github.com/suzuki-shunsuke/tfnotify/blob/master/COMPARED_WITH_TFNOTIFY.md   suzuki-shunsuke/tfcmt  https://github.com/suzuki-shunsuke/tfcmt/releases https://github.</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/fork-tfnotify/" title="tfnotify を fork した">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2020-12-31T11:00:40JST">Dec 31, 2020</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/my-work-2020/">2019-10 から今(2020-12-31)に至るまで仕事でやっていること</a></h2>
+  </header>
+
+  
+  <div class="summary">2019-10-01 から今の職場で SRE として働いています。 その中で自分がどういうことをやっているかという話をします。
+2020-12-31 現在の内容です。
+要約  プロダクト横断的な SRE チームで、プロダクトのプラットフォームを運用・開発している 特に CI/CD の改善が得意 developer に CI/CD をいわばサービスとして提供しており、 DX の改善に取り組んでいる Monorepo の負の側面(CIが遅い、関係ないTestがこけるetc)の解消にも取り組んでいる 自分が直面している課題を解決する OSS を色々開発している  キーワード  SRE Monorepo CI/CD Developer Experience Terraform Go / Shell script k8s CircleCI / CodeBuild Conftest Renovate  より具体的にやっていることを書いた記事  個人ブログ  https://techblog.szksh.cloud/job-2020-10-01-10-31/ https://techblog.szksh.cloud/job-2020-07-01-09-30/ https://techblog.szksh.cloud/job-2020-04-01-06-30/ https://techblog.szksh.cloud/job-2020-01-01-03-31/ https://techblog.szksh.cloud/job-2019-10-01-12-31/   会社ブログ  Renovate の Tips Terraform の CI/CD を CodeBuild に移行した話 巨大な .circleci/config.yml を分割した話 Docker Hub の Rate Limit 問題に対応した話 CI の修正をリリース前に本番と同じ条件下で検証出来る仕組みを構築した話    何をやっているか プロダクト横断的な SRE チームで、プロダクトのプラットフォームを運用・開発しています。</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/my-work-2020/" title="2019-10 から今(2020-12-31)に至るまで仕事でやっていること">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2020-12-30T05:44:14JST">Dec 30, 2020</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/job-2020-11-01-11-30/">仕事でやったこと 2020-11-01 ~ 2020-11-30</a></h2>
+  </header>
+
+  
+  <div class="summary">2020-11-01 から 2020-11-30 にかけて仕事でやったことを書ける範囲で書きます。
+ github-ci-monitor を導入し、 CI の失敗を通知  https://github.com/suzuki-shunsuke/github-ci-monitor   Terraform  Upgrade AWS Provider: Renovate で自動更新する仕組みの改善 Upgrade Terraform from v0.12 to v0.13 tfsec の導入 PR の label によって CI(plan/apply) の実行対象を追加できるようにした CircleCI から CodeBuild への移行 tfmigrate の検証   Monorepo の CI の高速化 (CircleCI)  k8s manifest の test を、変更があったものに対してだけ実行するようにした   kube-linter の導入 Renovate  https://blog.studysapuri.jp/entry/2020/12/10/080000 additionalBranchPrefix によるブランチの分割 depName を使ったリファクタリング   .circleci/config.yml の分割 ブログの執筆  Docker Hub の Rate Limit 問題に対応した話    </div>
+
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2020-12-28T14:32:31JST">Dec 28, 2020</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/renovate-add-compare/">Renovate の PR に便利なリンクを追加</a></h2>
+  </header>
+
+  
+  <div class="summary">Renovate による PR をレビューする際、差分がなんなのか分かりづらいときがあります。 例えば data source が github-release の場合、 PR の description に Release Note が含まれており、コードの差分も link があるので便利です。 一方 helm data source の場合、 そういったものがなく差分がなんなのか分からないことがあります。 そういう場合、 prBodyNotes を利用して link を追加すると便利です。
+例えば、 datadog helm chart の場合
+{ &#34;datasources&#34;: [&#34;helm&#34;], &#34;packageNames&#34;: [&#34;datadog&#34;], &#34;prBodyNotes&#34;: [ &#34;[compare](https://github.com/DataDog/helm-charts/compare/datadog-{{currentVersion}}...datadog-{{newVersion}})&#34; ] } とすると、 PR の description にリンクが追加されます。地味ですが便利です。 Release page へのリンクを追加しても便利かもしれませんね。
+ex. https://github.com/suzuki-shunsuke/test-renovate-2/pull/28
+template で使える変数は https://docs.renovatebot.com/templates/ を参照してください。 helm chart ごとに設定を書かないといけないのが面倒ですが、仕方ないですね。</div>
+
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2020-12-05T12:37:17JST">Dec 5, 2020</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/compare-renovate-dependabot/">Renovate と Dependabot の比較</a></h2>
+  </header>
+
+  
+  <div class="summary">普段 Renovate を主に使っている自分が、 Dependabot と Renovate の違いについて調べてみました。 普段 Renovate を主に使っているので、 Renovate 寄りの内容になっています。 気分を害する人がいましたら申し訳ありません。 Dependabot の理解が浅いので間違ってたら指摘してもらえると助かります。 2020-12-01 時点の情報です。
+設定項目の数  https://docs.github.com/en/free-pro-team@latest/github/administering-a-repository/configuration-options-for-dependency-updates#directory https://docs.renovatebot.com/configuration-options/  まずは設定のドキュメントを見比べると、 Renovate のほうが設定項目が多いです。 Renovate はよく言うと設定項目が多く、柔軟な設定ができるといえる一方、すべての設定を理解し使いこなすのは難しいです。 決して日本語の情報も多くないので、色々試行錯誤したりすることもあります。 Dependabot の場合、設定がそんなに多くなく割と分かりやすい印象があります。
+scheduling  https://docs.github.com/en/free-pro-team@latest/github/administering-a-repository/configuration-options-for-dependency-updates#scheduleinterval https://docs.renovatebot.com/configuration-options/#prhourlylimit https://docs.renovatebot.com/configuration-options/#schedule  Dependabot は schedule の設定が必須です。 Renovate でも schedule の設定は出来ます。
+Dependabot は 1 個 1 個設定しないといけない？ Renovate は renovate.json さえ作れば中身がほぼ空でも勝手に update されます。 逆に対象を絞りたかったら明示的に指定する必要があります。
+一方で Dependabot は対象を 1 つ 1 つ指定しないといけないようですね。
+もちろん、これは必ずしも悪いことではないですし、良い面もあります。 設定が明示的に書かれていたほうが挙動を理解しやすいですしね。
+ただし、数が多いと大変ですし、サービスを追加するたびに設定を追加しないといけなさそうです。
+Renovate は .circleci/config.yml などの update もサポート  https://docs.</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/compare-renovate-dependabot/" title="Renovate と Dependabot の比較">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2020-12-03T09:07:32JST">Dec 3, 2020</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/collaborator-of-terraform-docker-provider/">Terraform の Docker Provider の Collaborator になりました</a></h2>
+  </header>
+
+  
+  <div class="summary">先日 kreuzwerker/terraform-provider-docker の Collaborator になりました。 kreuzwerker/terraform-provider-docker は Terraform の Docker Provider であり、 Docker コンテナや image, network などを管理できます。 元々は Hashicorp の Official Provider であった terraform-providers/terraform-provider-docker が kreuzwerker/terraform-provider-docker に移管され、 Community Provider になりました。 元のリポジトリは hashicorp org に移され archive されています。
+Collaborator になった経緯 リポジトリが移管される際に、メンテナを募集していて過去に contribution していた自分にも声をかけていただきました。
+https://github.com/hashicorp/terraform-provider-docker/issues/306
+Contributor になった経緯 自分がこの provider に contribution した経緯は、 Terraform の Hands on を書くのに丁度よい provider を探していたことでした。
+Hands on の題材として Docker コンテナを作ったりできたらいいんじゃないかなと思って Docker provider を試してみました。 しかし当時の docker_container リソースは read をちゃんとサポートしていませんでした。 なので import や update がまともに動きませんでした。 それを見かねて修正して PR を投げたのが最初です。</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/collaborator-of-terraform-docker-provider/" title="Terraform の Docker Provider の Collaborator になりました">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+    </ul>
+
+    
+<nav>
+  <ul class="pager">
+
+    
+    <li><a href="/page/2/">Previous</a></li>
+    
+
+    
+    <li><a href="/page/4/">Next</a></li>
+    
+
+  </ul>
+</nav>
+
+
+
+  </div>
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

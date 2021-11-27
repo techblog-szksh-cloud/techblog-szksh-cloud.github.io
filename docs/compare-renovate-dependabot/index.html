@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/compare-renovate-dependabot/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>Renovate と Dependabot の比較 - melody</title>
+    
+<meta name="description" content="普段 Renovate を主に使っている自分が、 Dependabot と Renovate の違いについて調べてみました。 普段 Renovate を主に使っているので、 Renovate 寄りの内容になっています。 気分を害する人がいましたら申し訳ありません。 Dependabot の理解が浅いので間違ってたら指摘してもらえると助かります。 2020-12-01 時点の情報です。設定項目の数  https://docs.github.com/en/free-pro-team@latest/github/administering-a-repository/configuration-options-for-dependency-updates#directory https://docs.renovatebot.com/configuration-options/  まずは設定のドキュメントを見比べると、 Renovate のほうが設定項目が多いです。 Renovate はよく言うと設定項目が多く、柔軟な設定ができるといえる一方、すべての設定を理解し使いこなすのは難しいです。 決して日本語の情報も多くないので、色々試行錯誤したりすることもあります。 Dependabot の場合、設定がそんなに多くなく割と分かりやすい印象があります。scheduling  https://docs.github.com/en/free-pro-team@latest/github/administering-a-repository/configuration-options-for-dependency-updates#scheduleinterval https://docs.renovatebot.com/configuration-options/#prhourlylimit https://docs.renovatebot.com/configuration-options/#schedule  Dependabot は schedule の設定が必須です。 Renovate でも schedule の設定は出来ます。Dependabot は 1 個 1 個設定しないといけない？ Renovate は renovate.json さえ作れば中身がほぼ空でも勝手に update されます。 逆に対象を絞りたかったら明示的に指定する必要があります。一方で Dependabot は対象を 1 つ 1 つ指定しないといけないようですね。もちろん、これは必ずしも悪いことではないですし、良い面もあります。 設定が明示的に書かれていたほうが挙動を理解しやすいですしね。ただし、数が多いと大変ですし、サービスを追加するたびに設定を追加しないといけなさそうです。Renovate は .circleci/config.yml などの update もサポート  https://docs.">
+
+<meta property="og:title" content="Renovate と Dependabot の比較 - melody">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://techblog-szksh-cloud.github.io/compare-renovate-dependabot/">
+<meta property="og:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+<meta property="og:site_name" content="melody">
+<meta property="og:description" content="普段 Renovate を主に使っている自分が、 Dependabot と Renovate の違いについて調べてみました。 普段 Renovate を主に使っているので、 Renovate 寄りの内容になっています。 気分を害する人がいましたら申し訳ありません。 Dependabot の理解が浅いので間違ってたら指摘してもらえると助かります。 2020-12-01 時点の情報です。設定項目の数  https://docs.github.com/en/free-pro-team@latest/github/administering-a-repository/configuration-options-for-dependency-updates#directory https://docs.renovatebot.com/configuration-options/  まずは設定のドキュメントを見比べると、 Renovate のほうが設定項目が多いです。 Renovate はよく言うと設定項目が多く、柔軟な設定ができるといえる一方、すべての設定を理解し使いこなすのは難しいです。 決して日本語の情報も多くないので、色々試行錯誤したりすることもあります。 Dependabot の場合、設定がそんなに多くなく割と分かりやすい印象があります。scheduling  https://docs.github.com/en/free-pro-team@latest/github/administering-a-repository/configuration-options-for-dependency-updates#scheduleinterval https://docs.renovatebot.com/configuration-options/#prhourlylimit https://docs.renovatebot.com/configuration-options/#schedule  Dependabot は schedule の設定が必須です。 Renovate でも schedule の設定は出来ます。Dependabot は 1 個 1 個設定しないといけない？ Renovate は renovate.json さえ作れば中身がほぼ空でも勝手に update されます。 逆に対象を絞りたかったら明示的に指定する必要があります。一方で Dependabot は対象を 1 つ 1 つ指定しないといけないようですね。もちろん、これは必ずしも悪いことではないですし、良い面もあります。 設定が明示的に書かれていたほうが挙動を理解しやすいですしね。ただし、数が多いと大変ですし、サービスを追加するたびに設定を追加しないといけなさそうです。Renovate は .circleci/config.yml などの update もサポート  https://docs.">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="melody">
+<meta name="twitter:url" content="https://techblog-szksh-cloud.github.io/compare-renovate-dependabot/">
+<meta name="twitter:title" content="Renovate と Dependabot の比較 - melody">
+<meta name="twitter:description" content="普段 Renovate を主に使っている自分が、 Dependabot と Renovate の違いについて調べてみました。 普段 Renovate を主に使っているので、 Renovate 寄りの内容になっています。 気分を害する人がいましたら申し訳ありません。 Dependabot の理解が浅いので間違ってたら指摘してもらえると助かります。 2020-12-01 時点の情報です。設定項目の数  https://docs.github.com/en/free-pro-team@latest/github/administering-a-repository/configuration-options-for-dependency-updates#directory https://docs.renovatebot.com/configuration-options/  まずは設定のドキュメントを見比べると、 Renovate のほうが設定項目が多いです。 Renovate はよく言うと設定項目が多く、柔軟な設定ができるといえる一方、すべての設定を理解し使いこなすのは難しいです。 決して日本語の情報も多くないので、色々試行錯誤したりすることもあります。 Dependabot の場合、設定がそんなに多くなく割と分かりやすい印象があります。scheduling  https://docs.github.com/en/free-pro-team@latest/github/administering-a-repository/configuration-options-for-dependency-updates#scheduleinterval https://docs.renovatebot.com/configuration-options/#prhourlylimit https://docs.renovatebot.com/configuration-options/#schedule  Dependabot は schedule の設定が必須です。 Renovate でも schedule の設定は出来ます。Dependabot は 1 個 1 個設定しないといけない？ Renovate は renovate.json さえ作れば中身がほぼ空でも勝手に update されます。 逆に対象を絞りたかったら明示的に指定する必要があります。一方で Dependabot は対象を 1 つ 1 つ指定しないといけないようですね。もちろん、これは必ずしも悪いことではないですし、良い面もあります。 設定が明示的に書かれていたほうが挙動を理解しやすいですしね。ただし、数が多いと大変ですし、サービスを追加するたびに設定を追加しないといけなさそうです。Renovate は .circleci/config.yml などの update もサポート  https://docs.">
+<meta name="twitter:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https:\/\/techblog-szksh-cloud.github.io\/"
+    },
+    "headline": "Renovate と Dependabot の比較 - melody",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https:\/\/techblog-szksh-cloud.github.io\/images\/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2020-12-05T12:37:17JST",
+    "dateModified": "2020-12-05T12:37:17JST",
+    "author": {
+      "@type": "Person",
+      "name": "melody"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "melody",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https:\/\/techblog-szksh-cloud.github.io\/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "普段 Renovate を主に使っている自分が、 Dependabot と Renovate の違いについて調べてみました。 普段 Renovate を主に使っているので、 Renovate 寄りの内容になっています。 気分を害する人がいましたら申し訳ありません。 Dependabot の理解が浅いので間違ってたら指摘してもらえると助かります。 2020-12-01 時点の情報です。\n設定項目の数  https:\/\/docs.github.com\/en\/free-pro-team@latest\/github\/administering-a-repository\/configuration-options-for-dependency-updates#directory https:\/\/docs.renovatebot.com\/configuration-options\/  まずは設定のドキュメントを見比べると、 Renovate のほうが設定項目が多いです。 Renovate はよく言うと設定項目が多く、柔軟な設定ができるといえる一方、すべての設定を理解し使いこなすのは難しいです。 決して日本語の情報も多くないので、色々試行錯誤したりすることもあります。 Dependabot の場合、設定がそんなに多くなく割と分かりやすい印象があります。\nscheduling  https:\/\/docs.github.com\/en\/free-pro-team@latest\/github\/administering-a-repository\/configuration-options-for-dependency-updates#scheduleinterval https:\/\/docs.renovatebot.com\/configuration-options\/#prhourlylimit https:\/\/docs.renovatebot.com\/configuration-options\/#schedule  Dependabot は schedule の設定が必須です。 Renovate でも schedule の設定は出来ます。\nDependabot は 1 個 1 個設定しないといけない？ Renovate は renovate.json さえ作れば中身がほぼ空でも勝手に update されます。 逆に対象を絞りたかったら明示的に指定する必要があります。\n一方で Dependabot は対象を 1 つ 1 つ指定しないといけないようですね。\nもちろん、これは必ずしも悪いことではないですし、良い面もあります。 設定が明示的に書かれていたほうが挙動を理解しやすいですしね。\nただし、数が多いと大変ですし、サービスを追加するたびに設定を追加しないといけなさそうです。\nRenovate は .circleci\/config.yml などの update もサポート  https:\/\/docs."
+  }
+</script>
+
+
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://techblog-szksh-cloud.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li class="active">Renovate と Dependabot の比較</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2020-12-05T12:37:17JST">Dec 5, 2020</time></li>
+      
+      
+    </ul>
+
+    <h1 class="title">Renovate と Dependabot の比較</h1>
+    
+    
+    <section>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/dependabot/">dependabot</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/renovate/">renovate</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </header>
+
+  
+
+  <div class="article-body"><p>普段 Renovate を主に使っている自分が、 Dependabot と Renovate の違いについて調べてみました。
+普段 Renovate を主に使っているので、 Renovate 寄りの内容になっています。
+気分を害する人がいましたら申し訳ありません。
+Dependabot の理解が浅いので間違ってたら指摘してもらえると助かります。
+2020-12-01 時点の情報です。</p>
+<h2 id="設定項目の数">設定項目の数</h2>
+<ul>
+<li><a href="https://docs.github.com/en/free-pro-team@latest/github/administering-a-repository/configuration-options-for-dependency-updates#directory">https://docs.github.com/en/free-pro-team@latest/github/administering-a-repository/configuration-options-for-dependency-updates#directory</a></li>
+<li><a href="https://docs.renovatebot.com/configuration-options/">https://docs.renovatebot.com/configuration-options/</a></li>
+</ul>
+<p>まずは設定のドキュメントを見比べると、 Renovate のほうが設定項目が多いです。
+Renovate はよく言うと設定項目が多く、柔軟な設定ができるといえる一方、すべての設定を理解し使いこなすのは難しいです。
+決して日本語の情報も多くないので、色々試行錯誤したりすることもあります。
+Dependabot の場合、設定がそんなに多くなく割と分かりやすい印象があります。</p>
+<h2 id="scheduling">scheduling</h2>
+<ul>
+<li><a href="https://docs.github.com/en/free-pro-team@latest/github/administering-a-repository/configuration-options-for-dependency-updates#scheduleinterval">https://docs.github.com/en/free-pro-team@latest/github/administering-a-repository/configuration-options-for-dependency-updates#scheduleinterval</a></li>
+<li><a href="https://docs.renovatebot.com/configuration-options/#prhourlylimit">https://docs.renovatebot.com/configuration-options/#prhourlylimit</a></li>
+<li><a href="https://docs.renovatebot.com/configuration-options/#schedule">https://docs.renovatebot.com/configuration-options/#schedule</a></li>
+</ul>
+<p>Dependabot は schedule の設定が必須です。
+Renovate でも schedule の設定は出来ます。</p>
+<h2 id="dependabot-は-1-個-1-個設定しないといけない">Dependabot は 1 個 1 個設定しないといけない？</h2>
+<p>Renovate は renovate.json さえ作れば中身がほぼ空でも勝手に update されます。
+逆に対象を絞りたかったら明示的に指定する必要があります。</p>
+<p>一方で Dependabot は対象を 1 つ 1 つ指定しないといけないようですね。</p>
+<p>もちろん、これは必ずしも悪いことではないですし、良い面もあります。
+設定が明示的に書かれていたほうが挙動を理解しやすいですしね。</p>
+<p>ただし、数が多いと大変ですし、サービスを追加するたびに設定を追加しないといけなさそうです。</p>
+<h2 id="renovate-は-circleciconfigyml-などの-update-もサポート">Renovate は .circleci/config.yml などの update もサポート</h2>
+<ul>
+<li><a href="https://docs.renovatebot.com/modules/manager/">https://docs.renovatebot.com/modules/manager/</a></li>
+<li><a href="https://docs.github.com/en/free-pro-team@latest/github/administering-a-repository/configuration-options-for-dependency-updates#package-ecosystem">https://docs.github.com/en/free-pro-team@latest/github/administering-a-repository/configuration-options-for-dependency-updates#package-ecosystem</a></li>
+</ul>
+<p>Renovate は .circleci/config.yml や .drone.yml の Docker image のバージョンの update もサポートしています。
+Dependabot はサポートしていないようですね。</p>
+<h2 id="renovate-は正規表現による-update-をサポート">Renovate は正規表現による update をサポート</h2>
+<p><a href="https://docs.renovatebot.com/modules/manager/regex/">https://docs.renovatebot.com/modules/manager/regex/</a></p>
+<p>GitHub Releases からバイナリをダウンロードしてきているような場合でも、
+Renovate では Regex Manager を使えば update 出来ます。
+CI で使っているツールを GitHub Releases からダウンロードしてきているケースが多いので重宝しています。</p>
+<h2 id="renovate-は-grouping-をサポート">Renovate は Grouping をサポート</h2>
+<p>Renovate は複数のソフトウェアのアップデートを同じ PR でまとめて update できます。</p>
+<p><a href="https://docs.renovatebot.com/configuration-options/#group">https://docs.renovatebot.com/configuration-options/#group</a></p>
+<h2 id="renovate-で-pr-をまとめられたくない場合は-additionalbranchprefix-などの設定が必要">Renovate で PR をまとめられたくない場合は additionalBranchPrefix などの設定が必要</h2>
+<p><a href="https://docs.renovatebot.com/configuration-options/#additionalbranchprefix">https://docs.renovatebot.com/configuration-options/#additionalbranchprefix</a></p>
+<p>Renovate だと同じパッケージを複数のサービスで使っている場合、何も設定しないと 1 つの PR に更新がまとめられてしまいます。
+additionalBranchPrefix を設定することで回避ができますが、この解決策を見つけるまでに少々苦労しました。
+Renovate の難しいところですね。</p>
+<h2 id="renovate-は設定をライブラリのように共有できる">Renovate は設定をライブラリのように共有できる</h2>
+<p><a href="https://docs.renovatebot.com/config-presets/">https://docs.renovatebot.com/config-presets/</a></p>
+<p>Renovate は汎用的な設定を OSS のように公開し再利用することが出来ます。
+仕事だと特に使ってないですが、
+個人の Go の Project なんかは同じものを使っていて、便利です。</p>
+<ul>
+<li><a href="https://github.com/suzuki-shunsuke/renovate-config/blob/master/golang.json">https://github.com/suzuki-shunsuke/renovate-config/blob/master/golang.json</a></li>
+<li><a href="https://github.com/suzuki-shunsuke/github-comment/blob/master/renovate.json">https://github.com/suzuki-shunsuke/github-comment/blob/master/renovate.json</a></li>
+</ul>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/dependabot/">dependabot</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/renovate/">renovate</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

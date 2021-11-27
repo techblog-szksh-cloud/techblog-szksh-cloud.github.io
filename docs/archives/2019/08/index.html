@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+<link rel="alternate" type="application/rss+xml" title="RSS" href="https://techblog-szksh-cloud.github.io/archives/2019/08/index.xml">
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/archives/2019/08/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>2019/08 - melody</title>
+    
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    
+    <header class="page-header">
+      <h1>2019/08</h1>
+    </header>
+    
+
+    <ul class="p-articles">
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2019-08-23T11:35:13JST">Aug 23, 2019</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/cmdx/">cmdx - task runner</a></h2>
+  </header>
+
+  
+  <div class="summary">最近自作した OSS, cmdx の紹介です。
+https://github.com/suzuki-shunsuke/cmdx
+cmdx は task runner です。
+task runner の定義はググってもわからなかったので、 cmdx を task runner と呼ぶのが適切かわかりませんが、 ここではプロジェクト固有のタスク
+ 依存するライブラリのインストール ビルド テスト コード整形 lint etc  などを管理するものとします。
+類似するものとしては以下のようなものがあります。
+ Make npm scripts Task tj/robo mumoshu/variant  使い方 詳細は README を読んでください。
+$ cmdx -i で設定ファイルの雛形を生成します。
+そして設定ファイルに task を定義していきます。 設定に関しては README を参照してください。
+そうすると cmdx -l でタスクの一覧とその説明が見れます。
+例えば次は cmdx のリポジトリでの実行結果です。
+$ cmdx -l init, i - setup git hooks coverage, c - test a package (fzf is required) test, t - test fmt - format the go code vet, v - go vet lint, l - lint the go code release, r - release the new version durl - check dead links (durl is required) ci-local - run the Drone pipeline at localhost (drone-cli is required) これにより新しくプロジェクトに参画した人もどのような task があるのか直ぐわかります。 例えば test を実行したければ cmdx t を実行すればいいことがわかります。 cmdx help test とすればここのタスクのより詳細なヘルプが見れます。</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/cmdx/" title="cmdx - task runner">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2019-08-15T07:54:23JST">Aug 15, 2019</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/risk-of-drone-extension/">Drone Extension のリスク</a></h2>
+  </header>
+
+  
+  <div class="summary">Drone v1 では Extension という仕組みが導入されました。
+これは文字通り Drone を拡張する仕組みで、仕様に従って作れば自由に Drone を拡張できます。
+https://docs.drone.io/extensions/overview/
+全てを本体でやるのではなく、拡張する仕組みを提供し、あとはコミュニティに委ねるというのが Drone の一つの方針とも言えると思います。
+Extension は非常に面白い仕組みだと思いますが、 Drone を運用する立場からすると中々頭が痛い仕組みな気がしてて、 自分は導入に対し慎重な立場です。 単なる杞憂で済めば良いのですが、その懸念について書きたいと思います。
+根本は Drone Extension 固有の問題と言うより、一般的な拡張機構全般に言えることだと思います。 ただし、 Drone Extension は全てのビルドに影響を及ぼす、 CI/CDシステムが動かなくなるとサービスのリリースに影響を及ぼしかねないということからよりリスクの高いものになっています。
+ 本体の drone/drone と比べ、開発は活発ではなく、サードパーティの extension はいつ開発が止まってもおかしくない 本体の drone/drone と比べ、ドキュメントやサポート体制が貧弱だと思われる(drone に関しては https://discourse.drone.io でサポートされているが、サードパーティの extension では難しい) ユーザーからの extension に関する要望を受け付けるようになると、管理者の負担になる extension のクォリティはマチマチであり、例外処理が甘かったり、ちゃんとエラーを吐かないものもあるだろう トラブルシューティングが難しいと思われる extension の仕組み上、extension を必要としないビルドにも影響を及ぼしうる 一度追加し、依存しだすと消すのが難しくなる extension が落ちると全 build に影響するので、耐障害性(冗長化)、モニタリングが必要 etc  勿論、上記の懸念点は Extension によって提供される機能とトレードオフであり、 Extension の導入方針は Drone が運用される環境によって大きく依存すると思います。
+例えば全員が顔見知りのような小さな組織で特定のサービス専用に Drone を使っていてかつ Drone の運用体制(人員)に十分余裕があるなら 積極的に Extension を導入しても問題ないかもしれません。</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/risk-of-drone-extension/" title="Drone Extension のリスク">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2019-08-15T07:39:18JST">Aug 15, 2019</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/drone-v1-deprecate-grpc/">Drone v1 で gRPC が使われなくなった</a></h2>
+  </header>
+
+  
+  <div class="summary">v0.8 では server - agent 間の通信に gPRC が使われていましたが、 v1 では使われなくなりました。
+理由  https://discourse.drone.io/t/curious-about-decision-to-drop-grpc/3987  gRPC関連のトラブルの問い合わせが多すぎてサポートしきれないので止めた    v1 での通信方法  https://discourse.drone.io/t/drone-agents-keep-closing-connections-with-499-code/5197/2  agent がロングポーリングしている 30秒後、なんのビルドもなければコネクションを切って、再接続する(張りっぱなしにしてると、LBやファイアウォールにコネクション切られるため)     自分も v0.8 から Drone を運用していて最近 v1 に upgrade しましたが、 v0.8 では gRPC 関連のトラブルが頻発していました。 server のログでは絶えず gRPC 関連のエラーを吐いていましたし、 server - agent 間の TCP connection が切れっぱなしになって戻らくなって agent 数がどんどん減っていったり ビルドが pending のままになったり、色々ありました。
+関連する issue はあり、幾つか対策を打ってみたりしましたが、結局解決しませんでした。
+ https://github.com/drone/drone/issues/2090 https://github.com/drone/drone/issues/2246 https://github.com/drone/drone/pull/2294 https://www.reddit.com/r/droneci/comments/8opifu/drone_stops_working_after_some_little_time/e06d1gn/  それが v1 にアップグレードして gRPC が使われなくなってから解消し、個人的にはとても助かりました。 管理者的にはアップグレードして一番嬉しい点ですね。</div>
+
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2019-08-14T20:28:56JST">Aug 14, 2019</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/golang-time/">Golang での時刻の扱い方を整理する</a></h2>
+  </header>
+
+  
+  <div class="summary">今更ながら Golang での時刻の扱い方について改めて整理してみました。
+まとめ  time.Local は明示的に設定する(基本UTC) DB などには 基本UTC で永続化する 出力時に必要になったらタイムゾーンを変更する  location は出力時に問題になるので出力時に location を明示的に指定する 逆に言うと出力時以外は問題にならないので無理に location を UTC にしなくても良いかもしれない サードパーティ(ex. ORM) に time.Time を渡す場合は location に注意が必要   文字列として時刻の入力を受け付ける場合は location を明示的にセットする サードパーティが time.Local に依存する場合、 time.Local を明示的に UTC にしたりする必要があるかもしれない アプリケーションで利用する location が分かっている場合、location を取得するヘルパー関数を定義する time.LoadLocation は環境依存なので予め location が分かっているなら使わないほうがよい 文字列を time.Time に変換する場合、time.ParseInLocation で Location を指定して time.Time に変換後、time.Time.UTC() で UTC に変換する time.Time を文字列に変換する場合、time.In で location を変換後、time.Time.Format で文字列に変換する  グローバルな location https://golang.org/pkg/time/#Location</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/golang-time/" title="Golang での時刻の扱い方を整理する">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2019-08-02T23:02:57JST">Aug 2, 2019</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/drone-jsonnet/">Drone v1 では Jsonnet が extension なしで使える</a></h2>
+  </header>
+
+  
+  <div class="summary">Drone では v1 から冗長な YAML を DRY にする一つの手として、 Jsonnet の利用が推奨されています。 これについては過去のブログでも触れています。
+https://techblog.szksh.cloud/drone-jsonnet-generator/
+しかし、 v1 の rc の時点では Jsonnet の活用には Jsonnet Extension が必要でした。
+https://engineering.linecorp.com/ja/blog/go-oss-ci-cd-platform-drone-1-0-0-rc-1/#title7-1
+しかし、 v1 の正式版では Jsonnet Extension がなくても Jsonnet が利用できるようになっています。
+まず Drone の管理者側で Drone server に環境変数 DRONE_JSONNET_ENABLED=true を設定する必要があります。
+そうしたら、ユーザー側は次のようにすることで jsonnet が使えます。
+ .drone.yml の代わりに .drone.jsonnet をコミットする (.drone.yml は不要) 各リポジトリの settings の Main &gt; Configuration で設定ファイルのパスを変更する  こうすることでビルド実行時に自動で Jsonnet が YAML に変換され処理されるようです。
+いつから Jsonnet Extension は不要になったのか  https://github.com/drone/drone/compare/v1.0.0-rc.6...v1.0.0 https://github.com/drone/drone/commit/5013cfa993fa455fc56f10e45b9f36cf1d6dff57  v1 の rc ではサポートされてませんでしたが、正式版をリリースするタイミングで Jsonnet Extension が不要になっていたようです。</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/drone-jsonnet/" title="Drone v1 では Jsonnet が extension なしで使える">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+    </ul>
+
+    
+
+
+  </div>
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

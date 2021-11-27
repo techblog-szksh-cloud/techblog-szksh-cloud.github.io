@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>2020/07 on melody</title>
+    <link>https://techblog-szksh-cloud.github.io/archives/2020/07/</link>
+    <description>Recent content in 2020/07 on melody</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>jp</language><atom:link href="https://techblog-szksh-cloud.github.io/archives/2020/07/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>github-comment - GitHub にコメントを投稿する CLI</title>
+      <link>https://techblog-szksh-cloud.github.io/github-comment/</link>
+      <pubDate>Fri, 31 Jul 2020 20:42:54 +0900</pubDate>
+      
+      <guid>https://techblog-szksh-cloud.github.io/github-comment/</guid>
+      <description>GitHub の issue や pull request, commit にコメントを投稿する CLI ツールを作りました(結構前の話ですが)。
+https://github.com/suzuki-shunsuke/github-comment
+このブログの執筆時点で最新は v1.5.0 です。
+Go 製なので、 GitHub Releases からダウンロードしてくれば簡単にインストールできます。
+想定している主な用途は、 CI/CD の 結果をコメントで通知することで DX を向上することです。 例えば CI がこけたらこけたコマンドとエラーメッセージを通知するなどです。
+github-comment には
+ init: 設定ファイルの雛形を生成する post: コメントを投稿する exec: 外部コマンドを実行し、その結果を元にコメントを投稿する  という 3 つのサブコマンドがあります。
+コメントの投稿には GitHub の Access Token が必要です。 コマンドライン引数 -token でも渡せますが、環境変数として設定しましょう。
+$ export GITHUB_TOKEN=xxx # GITHUB_ACCESS_TOKEN も可 post コマンド こんな感じでコメントを投稿できます。
+$ github-comment post -org suzuki-shunsuke -repo github-comment -pr 1 -template test パラメータの数が多いですが、いくつかの Platform では環境変数から自動でパラメータを補完してくれます。</description>
+    </item>
+    
+    <item>
+      <title>clap - 簡単にツールをインストールするためのツールを作った</title>
+      <link>https://techblog-szksh-cloud.github.io/clap/</link>
+      <pubDate>Mon, 06 Jul 2020 16:52:58 +0900</pubDate>
+      
+      <guid>https://techblog-szksh-cloud.github.io/clap/</guid>
+      <description>多分車輪の再生産だとは思いますが、簡単にツールをインストールするための CLI ツールを作りました。 tarball や zip をダウンロードして展開して指定したパスにインストールするツールです。
+https://github.com/suzuki-shunsuke/clap
+Go で書かれています。 ツールの名前(clap)には特別な意味や理由はなく、なんとなくです。
+CI で何かしらのツールをインストールすることがままあって、そのためのシェルスクリプトを都度書くのが割と面倒なのでツール化しました。
+このブログを書いている時点でバージョンは v0.1.0-1 で、最低限の機能しかありませんが、9割型ニーズを満たせるかなと思います。
+使い方は以下のようになっています。
+$ clap &amp;lt;URL&amp;gt; &amp;lt;インストールするファイルのアーカイブ内での相対パス&amp;gt;:&amp;lt;インストール先&amp;gt; [&amp;lt;インストールするファイルのアーカイブ内での相対パス&amp;gt;:&amp;lt;インストール先&amp;gt;...] 例えば conftest を /usr/local/bin にインストールする場合次のようになります。
+CONFTEST_VERSION=0.18.2 clap install https://github.com/instrumenta/conftest/releases/download/v${CONFTEST_VERSION}/conftest_${CONFTEST_VERSION}_Linux_x86_64.tar.gz conftest:/usr/local/bin/conftest chmod a+x /usr/local/bin/conftest パーミッションの付与はやってくれないので必要に応じてやってください。 ファイルの圧縮形式は URL から自動で判別してくれます。
+上記の conftest のインストールを今までは次のようなシェルスクリプトを書いていました。
+#!/usr/bin/env bash  set -eu CONFTEST_VERSION=0.18.2 dirpath=$(mktemp -d) pushd &amp;#34;$dirpath&amp;#34; TARFILE=conftest_${CONFTEST_VERSION}_Linux_x86_64.tar.gz curl -OL https://github.com/instrumenta/conftest/releases/download/v${CONFTEST_VERSION}/${TARFILE} tar xvzf $TARFILE mv conftest /usr/local/bin/conftest chmod a+x /usr/local/bin/conftest popd rm -R &amp;#34;$dirpath&amp;#34; 地味に面倒ですね。これをツール毎に書いて、しかも圧縮形式によって微妙に変えないといけません。</description>
+    </item>
+    
+  </channel>
+</rss>

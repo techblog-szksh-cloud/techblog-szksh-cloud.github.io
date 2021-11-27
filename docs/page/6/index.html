@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+<link rel="alternate" type="application/rss+xml" title="RSS" href="https://techblog-szksh-cloud.github.io/index.xml">
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>melody</title>
+    
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    
+
+    <ul class="p-articles">
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2020-09-12T08:05:59JST">Sep 12, 2020</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/post-tfnotify-parse-error/">tfnotify の parse error を通知する</a></h2>
+  </header>
+
+  
+  <div class="summary">tfnotify が terraform の標準出力のパースに失敗してコメントを投稿できないことがあります。
+コメントを投稿できなくてもビルドのログには残るのですが、やはりコメントを投稿できると便利なので、tfnotify がパースエラーでコメントの投稿に失敗したら、 github-comment でコメントを投稿するようにしました。
+なお、この記事を書いている時点のバージョンは tfnotify v0.7.0, github-comment v1.9.0 です。
+例えば tfnotify plan がパースエラーになった場合、 cannot parse plan result というメッセージが標準エラー出力されます。 そこで標準エラー出力に cannot parse plan result が含まれていたら github-comment でコメントするようにします。
+terraform plan | github-comment exec -k plan -- tfnotify plan .github-comment.yml
+# 細かく template を分けているが、別に分けなくてもよい templates: # header は CodeBuild の場合 header: &#39;{{Env &#34;TARGET&#34;}} [Build link]({{Env &#34;CODEBUILD_BUILD_URL&#34;}})&#39; exit_code: &#39;:{{if eq .ExitCode 0}}white_check_mark{{else}}x{{end}}: Exit Code {{.ExitCode}}&#39; join_command: |``` $ {{.JoinCommand}} ``` hidden_combined_output: |&lt;details&gt; &lt;pre&gt;&lt;code&gt;{{.</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/post-tfnotify-parse-error/" title="tfnotify の parse error を通知する">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2020-08-02T13:21:37JST">Aug 2, 2020</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/codebuild-1/">AWS CodeBuild 良さそう</a></h2>
+  </header>
+
+  
+  <div class="summary">AWS CodeBuild を検証しているんですが、結構良いですね。 現状 Jenkins や CircleCI で実行しているジョブや CI/CD を一部移行したいなと思いました。
+一部と言っているのは、単純に全部いきなり移行するのは難しいから共存する前提で考えるくらいの意味です。
+なお、これを書いている時点ではまだ軽く検証しているだけなので、CodeBuild の理解は浅いです。
+特徴としては
+ Managed AWS 以外のサービスに AWS の credential を登録しなくて良い  Secret を AWS Secrets Manager で管理できる Secret を至るところに設定するのではなく、 AWS Secrets Manager か何かで一元管理するのが理想 Role 作って Build Project の Service Role として指定するだけなら credential を扱う必要がなくて楽で安心   VPC 内で実行できる GitHub 連携も簡単  Webhook の設定で PR の細かなイベント(merge とか reopen とか)に対応しているのも良い PR を merge したときも PR で変更されたファイルによって Webhook をフィルタできるのが良い   変更されたファイルによって実行するBuild Project を変更するようなロジックを実現できる(monorepo で特に有効)  といった点が挙げられます。</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/codebuild-1/" title="AWS CodeBuild 良さそう">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2020-07-31T20:42:54JST">Jul 31, 2020</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/github-comment/">github-comment - GitHub にコメントを投稿する CLI</a></h2>
+  </header>
+
+  
+  <div class="summary">GitHub の issue や pull request, commit にコメントを投稿する CLI ツールを作りました(結構前の話ですが)。
+https://github.com/suzuki-shunsuke/github-comment
+このブログの執筆時点で最新は v1.5.0 です。
+Go 製なので、 GitHub Releases からダウンロードしてくれば簡単にインストールできます。
+想定している主な用途は、 CI/CD の 結果をコメントで通知することで DX を向上することです。 例えば CI がこけたらこけたコマンドとエラーメッセージを通知するなどです。
+github-comment には
+ init: 設定ファイルの雛形を生成する post: コメントを投稿する exec: 外部コマンドを実行し、その結果を元にコメントを投稿する  という 3 つのサブコマンドがあります。
+コメントの投稿には GitHub の Access Token が必要です。 コマンドライン引数 -token でも渡せますが、環境変数として設定しましょう。
+$ export GITHUB_TOKEN=xxx # GITHUB_ACCESS_TOKEN も可 post コマンド こんな感じでコメントを投稿できます。
+$ github-comment post -org suzuki-shunsuke -repo github-comment -pr 1 -template test パラメータの数が多いですが、いくつかの Platform では環境変数から自動でパラメータを補完してくれます。</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/github-comment/" title="github-comment - GitHub にコメントを投稿する CLI">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2020-07-06T16:52:58JST">Jul 6, 2020</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/clap/">clap - 簡単にツールをインストールするためのツールを作った</a></h2>
+  </header>
+
+  
+  <div class="summary">多分車輪の再生産だとは思いますが、簡単にツールをインストールするための CLI ツールを作りました。 tarball や zip をダウンロードして展開して指定したパスにインストールするツールです。
+https://github.com/suzuki-shunsuke/clap
+Go で書かれています。 ツールの名前(clap)には特別な意味や理由はなく、なんとなくです。
+CI で何かしらのツールをインストールすることがままあって、そのためのシェルスクリプトを都度書くのが割と面倒なのでツール化しました。
+このブログを書いている時点でバージョンは v0.1.0-1 で、最低限の機能しかありませんが、9割型ニーズを満たせるかなと思います。
+使い方は以下のようになっています。
+$ clap &lt;URL&gt; &lt;インストールするファイルのアーカイブ内での相対パス&gt;:&lt;インストール先&gt; [&lt;インストールするファイルのアーカイブ内での相対パス&gt;:&lt;インストール先&gt;...] 例えば conftest を /usr/local/bin にインストールする場合次のようになります。
+CONFTEST_VERSION=0.18.2 clap install https://github.com/instrumenta/conftest/releases/download/v${CONFTEST_VERSION}/conftest_${CONFTEST_VERSION}_Linux_x86_64.tar.gz conftest:/usr/local/bin/conftest chmod a+x /usr/local/bin/conftest パーミッションの付与はやってくれないので必要に応じてやってください。 ファイルの圧縮形式は URL から自動で判別してくれます。
+上記の conftest のインストールを今までは次のようなシェルスクリプトを書いていました。
+#!/usr/bin/env bash  set -eu CONFTEST_VERSION=0.18.2 dirpath=$(mktemp -d) pushd &#34;$dirpath&#34; TARFILE=conftest_${CONFTEST_VERSION}_Linux_x86_64.tar.gz curl -OL https://github.com/instrumenta/conftest/releases/download/v${CONFTEST_VERSION}/${TARFILE} tar xvzf $TARFILE mv conftest /usr/local/bin/conftest chmod a+x /usr/local/bin/conftest popd rm -R &#34;$dirpath&#34; 地味に面倒ですね。これをツール毎に書いて、しかも圧縮形式によって微妙に変えないといけません。</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/clap/" title="clap - 簡単にツールをインストールするためのツールを作った">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2020-05-23T14:20:53JST">May 23, 2020</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/send-circleci-run-execution-time-to-datadog/">CircleCI の run の実行時間を DataDog に送る</a></h2>
+  </header>
+
+  
+  <div class="summary">小ネタです。
+dd-time を使って CircleCI の run を使ったコマンドの実行時間をどう計測したらいいのかちょっと考えました。
+以前、コマンドの実行時間を DataDog に送るツール dd-time を作りました。
+ https://techblog.szksh.cloud/dd-time/ https://github.com/suzuki-shunsuke/dd-time  これは基本的に以下のように引数として -- 以降に実行するコマンドを指定します。
+$ dd-time -m dd_time.execution_time -t command:docker-build -- docker build . 実行するスクリプトを標準入力で渡したい場合はこうします。
+$ curl https://example.com/install.sh | dd-time -m dd_time.execution_time -- sh もちろんシェルスクリプトである必要はなくて例えば Python だったらこうなります。
+$ curl https://example.com/setup.py | dd-time -m dd_time.execution_time -- python CircleCI の run では shell オプションで shell を指定できます。
+https://circleci.com/docs/2.0/configuration-reference/#run
+なので command 全体の時間を計測したい場合は、 shell を次のようにします。
+- run: name: test dd-time shell: /usr/local/bin/dd-time -m dd_time.</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/send-circleci-run-execution-time-to-datadog/" title="CircleCI の run の実行時間を DataDog に送る">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2020-04-24T16:53:01JST">Apr 24, 2020</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/circleci-checkout-default-branch/">CircleCI の checkout の注意点</a></h2>
+  </header>
+
+  
+  <div class="summary">CircleCI の組み込みの command checkout の注意点について書きます。
+なお、ここに書かれている内容は 2020/04/24 時点のものであり、予告なしに checkout の挙動が変わる可能性があります。
+また、今回は話を簡略化するため、 checkout 実行時点で .git がない(つまりキャッシュしていない)ものとします。
+最初に結論 先に結論を書くと
+ CircleCI ではローカルのデフォルトブランチを参照しないほうが良い($CIRCLE_BRANCH がデフォルトブランチである場合は除く)  履歴が origin と異なり、 $CIRCLE_BRANCH と同様になっているため   代わりに origin のデフォルトブランチを参照したほうが良い git branch -f &lt;デフォルトブランチ&gt; origin/&lt;デフォルトブランチ&gt; を実行してデフォルトブランチの履歴を修正するのもあり  checkout がなにをやっているか checkout でなにをやっているかは実際に使ってみて CircleCI の job の詳細画面(?) から確認できます。
+サンプル: https://app.circleci.com/pipelines/github/suzuki-shunsuke/test-circleci/73/workflows/5611059c-d6b1-4a34-91b5-45d6f149d408/jobs/96
+ここでは checkout の全てについては触れません。一部抜粋します。
+elif [ -n &#34;$CIRCLE_BRANCH&#34; ] then git reset --hard &#34;$CIRCLE_SHA1&#34; git checkout -q -B &#34;$CIRCLE_BRANCH&#34; fi git reset --hard などをしています。</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/circleci-checkout-default-branch/" title="CircleCI の checkout の注意点">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2020-04-05T18:53:25JST">Apr 5, 2020</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/skaffold-generator/">Skaffold で特定のサービスだけ動かすためのツールを作った</a></h2>
+  </header>
+
+  
+  <div class="summary">自作の CLI ツール skaffold-generator の紹介です。 プロトタイピングみたいなノリで半日くらいで割と手早く作れました。 名前が長くて適当なのでもっと良い名前ないかなと思ってます。
+Skaffold に欲しい機能がないので補完する感じで作ったのですが、「それ〇〇で出来るよ」とかあったら(GitHub issue とか Twitter で)教えていただけると幸いです。
+どんなツールか 設定ファイル skaffold-generator.yaml を監視して変更があったら skaffold.yaml を生成するツールです。設定ファイルでサービスの依存関係を定義できたり、コマンドライン引数で指定したサービス及びそれが依存するサービスに関連した設定だけを使って skaffold.yaml を更新します。 このツールは skaffold.yaml を生成するだけなので実際にアプリケーションをビルド・デプロイするには skaffold と組み合わせて使います。
+なぜ作ったか 元々ローカルでアプリケーションを動かしながら開発するために Docker Compose を使ってるリポジトリがあるのですが、それを skaffold に移行出来ないか検証しています。 まだ skaffold を触り始めたばかりで理解が浅いのですが、 本番環境は k8s で動いてるからローカルも k8s で動かせるといいかなと思ったり、あとは変更を検知して自動でビルド・デプロイしてくれたりして便利そうかなと思いました。 まぁ結果的に移行しないことになったとしても、 Skaffold と現状の仕組みについて理解が深まればいいかなくらいのつもりです。
+検証の過程で、 以下のようなことが Docker Compose だと出来るけど Skaffold だと難しそうだと思いました。
+ サービスの依存関係を定義すること  Skaffold というより k8s の問題かとは思いますが Docker Compose だと依存するものを自動で起動してくれて便利   コマンドライン引数で指定したサービスだけ起動すること  Skaffold だと skafffold.yaml で定義したものすべてがビルド・デプロイされるという認識    サービスの数が少なければ全部ビルド・デプロイでもいいですが、 マイクロサービスをモノレポで管理しているような場合、 すべてのマイクロサービスをビルド・デプロイするのは無駄が大きかったりします。</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/skaffold-generator/" title="Skaffold で特定のサービスだけ動かすためのツールを作った">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2020-01-17T09:14:08JST">Jan 17, 2020</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/terraform-hands-on-with-mysql-provider/">Terraform ハンズオン with MySQL Provider</a></h2>
+  </header>
+
+  
+  <div class="summary">Terraform を勉強するには実際に使ってみるのが一番手っ取り早いですが、 では手頃な題材はあるかと言われると少し難しいです。
+公式の Getting Started では AWS が使われていますが、 AWS のアカウントやクレデンシャルが必要ですしお金もかかってしまいます(無料枠はありますが)。 もう少し手軽なものが欲しいところです。
+そこで公式の Provider で丁度いいものはないか探したところ、 MySQL Provider が良さそうでした。 MySQL のユーザーや Database を Terraform で管理したいとは自分は思いませんが、 Terraform の入門で遊ぶにはちょうどよいでしょう。
+ちなみに公式の Provider のリストはこちらです。
+ https://github.com/terraform-providers https://www.terraform.io/docs/providers/index.html  また、 Terraform に関しては Terraform 入門 も参照してください。
+今回の作業用に適当にディレクトリを作成し、そこで作業しましょう。
+以降、コマンドの実行結果は一部省略することがあります。
+$ mkdir workspace $ cd workspace Terraform のバージョンと tfenv Terraform を複数人で使う場合、 Terraform のバージョンを揃えるのが重要です。 理由の一つとして、 Terraform の State は State を作成した Terraform のバージョンを記録しており、それより古いバージョンの Terraform で terraform plan などを実行すると失敗するようになっていることが挙げられます(この点については後でも触れます)。 そういう意味では、 tfenv によってバージョン管理するのが良いです。</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/terraform-hands-on-with-mysql-provider/" title="Terraform ハンズオン with MySQL Provider">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2020-01-16T09:25:05JST">Jan 16, 2020</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/terraform-getting-started/">Terraform 入門</a></h2>
+  </header>
+
+  
+  <div class="summary">参考  10分で理解するTerraform | Qiita Terraform入門資料(v0.12.0対応) ~基本知識から設計や運用、知っておくべきtipsまで~ | Qiita AWSでTerraformに入門 | Developers.io Terraform職人入門: 日々の運用で学んだ知見を淡々とまとめる | Qiita  手を動かしたい方は Terraform ハンズオン with MySQL Provider も参考にしてください。
+前提  執筆時点 (2020/01/05) で Terraform の最新バージョンは v0.12.18 です  Terraform とは Terraform は Infrastructure as Code を実現する汎用的なCLIツールです。 インフラの状態を設定ファイルに定義し、コマンドを実行することで、 実際のインフラの状態と設定ファイルの差分を検知し、設定ファイルに記述されたとおりになるようにインフラを変更(CRUD)します。
+Hashicorp という企業がホストしている OSS になります。 Go で書かれています。 https://github.com/hashicorp/terraform
+Terraform のインストール Terraform は Go 製なので 1 バイナリをダウンロードしてインストールするだけです。
+https://www.terraform.io/downloads.html
+tfenv を使うと管理が楽です。
+https://github.com/tfutils/tfenv
+tfenv は Terraform のバージョン管理ツールです。 pyenv や rbenv の Terraform 版みたいなものです。</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/terraform-getting-started/" title="Terraform 入門">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2020-01-10T16:18:05JST">Jan 10, 2020</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/terraform-state-locking/">Terraform の State Locking の概要</a></h2>
+  </header>
+
+  
+  <div class="summary">Terraform の State Locking という機能の概要について説明します。 ただし、自分もちゃんと理解しているわけではないので、推測も混じります。 基本的には公式ドキュメントに書いてある内容なのでそちらをご参照ください。
+State Locking とは terraform plan などのコマンドは State を変更する場合があります。 その処理は atomic ではないため、同時に複数のコマンドが State を書き換えようとすると不整合が生じる可能性があります。
+ 例えば S3 backend の state を state rm で更新する場合を考えます。 これはコマンド内部で
+ 現在の State を取得する (READ) 修正した State を S3 に push する (WRITE)  という処理を行っているはずであり、複数のコマンドを実行した場合、READ と WRITE の間に他のコマンドによって WRITE されると、その WRITE による変更が消えてしまいます。
+ そこで State Locking を使うと各コマンドで State を変更する前に lock を取り、WRITE 後に lock を解除します。
+コマンドラインオプション plan, apply, refresh, state rm, state mv, state push には次のようなオプションがあります。</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/terraform-state-locking/" title="Terraform の State Locking の概要">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+    </ul>
+
+    
+<nav>
+  <ul class="pager">
+
+    
+    <li><a href="/page/5/">Previous</a></li>
+    
+
+    
+    <li><a href="/page/7/">Next</a></li>
+    
+
+  </ul>
+</nav>
+
+
+
+  </div>
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

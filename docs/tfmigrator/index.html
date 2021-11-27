@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/tfmigrator/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>terraformer で雑に生成した tf ファイル と state を分割したくてツールを書いた - melody</title>
+    
+<meta name="description" content="terraformer で雑に生成した Terraform の設定ファイル (以下 tf ファイル) と state を分割したくてツールを書きました。tfmigrator経緯 miam から Terraform へ移行したい miam というツールで管理されている大量のリソースを Terraform で管理したくなりました。 多くの AWS Resource は Terraform で管理されていますが、 IAM に関しては miam で管理されています。 なぜ Terraform ではなく miam で管理されているかというと、当時のことは自分には分かりませんが、歴史的な経緯もあると思います。 昔は今よりも Terraform の表現力が豊かではなく、 Ruby で自由にかける miam のほうが扱いやすかったとか、 miam だと miam でリソースを管理することを強制できるため、権限管理を厳格にやるという観点では都合が良いという点もあるかと思います。ではなぜ Terraform で管理したくなったかというと、 一番大きな理由は miam で頻繁に rate limit に引っかかるようになったからです。 Terraform にしろ miam にしろ CI/CD で test, apply が実行されるようになっています。 miam では毎回全部のリソースを対象に処理が実行されるため、リソースの数が増えるにつれて rate limit に引っかかりやすくなります。 CI を rerun すれば成功するのですが、悪いときは 3 回連続で rate limit に引っかかり、 4 回目でようやく成功するということもありました。">
+
+<meta property="og:title" content="terraformer で雑に生成した tf ファイル と state を分割したくてツールを書いた - melody">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://techblog-szksh-cloud.github.io/tfmigrator/">
+<meta property="og:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+<meta property="og:site_name" content="melody">
+<meta property="og:description" content="terraformer で雑に生成した Terraform の設定ファイル (以下 tf ファイル) と state を分割したくてツールを書きました。tfmigrator経緯 miam から Terraform へ移行したい miam というツールで管理されている大量のリソースを Terraform で管理したくなりました。 多くの AWS Resource は Terraform で管理されていますが、 IAM に関しては miam で管理されています。 なぜ Terraform ではなく miam で管理されているかというと、当時のことは自分には分かりませんが、歴史的な経緯もあると思います。 昔は今よりも Terraform の表現力が豊かではなく、 Ruby で自由にかける miam のほうが扱いやすかったとか、 miam だと miam でリソースを管理することを強制できるため、権限管理を厳格にやるという観点では都合が良いという点もあるかと思います。ではなぜ Terraform で管理したくなったかというと、 一番大きな理由は miam で頻繁に rate limit に引っかかるようになったからです。 Terraform にしろ miam にしろ CI/CD で test, apply が実行されるようになっています。 miam では毎回全部のリソースを対象に処理が実行されるため、リソースの数が増えるにつれて rate limit に引っかかりやすくなります。 CI を rerun すれば成功するのですが、悪いときは 3 回連続で rate limit に引っかかり、 4 回目でようやく成功するということもありました。">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="melody">
+<meta name="twitter:url" content="https://techblog-szksh-cloud.github.io/tfmigrator/">
+<meta name="twitter:title" content="terraformer で雑に生成した tf ファイル と state を分割したくてツールを書いた - melody">
+<meta name="twitter:description" content="terraformer で雑に生成した Terraform の設定ファイル (以下 tf ファイル) と state を分割したくてツールを書きました。tfmigrator経緯 miam から Terraform へ移行したい miam というツールで管理されている大量のリソースを Terraform で管理したくなりました。 多くの AWS Resource は Terraform で管理されていますが、 IAM に関しては miam で管理されています。 なぜ Terraform ではなく miam で管理されているかというと、当時のことは自分には分かりませんが、歴史的な経緯もあると思います。 昔は今よりも Terraform の表現力が豊かではなく、 Ruby で自由にかける miam のほうが扱いやすかったとか、 miam だと miam でリソースを管理することを強制できるため、権限管理を厳格にやるという観点では都合が良いという点もあるかと思います。ではなぜ Terraform で管理したくなったかというと、 一番大きな理由は miam で頻繁に rate limit に引っかかるようになったからです。 Terraform にしろ miam にしろ CI/CD で test, apply が実行されるようになっています。 miam では毎回全部のリソースを対象に処理が実行されるため、リソースの数が増えるにつれて rate limit に引っかかりやすくなります。 CI を rerun すれば成功するのですが、悪いときは 3 回連続で rate limit に引っかかり、 4 回目でようやく成功するということもありました。">
+<meta name="twitter:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https:\/\/techblog-szksh-cloud.github.io\/"
+    },
+    "headline": "terraformer で雑に生成した tf ファイル と state を分割したくてツールを書いた - melody",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https:\/\/techblog-szksh-cloud.github.io\/images\/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2021-01-31T14:53:23JST",
+    "dateModified": "2021-01-31T14:53:23JST",
+    "author": {
+      "@type": "Person",
+      "name": "melody"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "melody",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https:\/\/techblog-szksh-cloud.github.io\/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "terraformer で雑に生成した Terraform の設定ファイル (以下 tf ファイル) と state を分割したくてツールを書きました。\ntfmigrator\n経緯 miam から Terraform へ移行したい miam というツールで管理されている大量のリソースを Terraform で管理したくなりました。 多くの AWS Resource は Terraform で管理されていますが、 IAM に関しては miam で管理されています。 なぜ Terraform ではなく miam で管理されているかというと、当時のことは自分には分かりませんが、歴史的な経緯もあると思います。 昔は今よりも Terraform の表現力が豊かではなく、 Ruby で自由にかける miam のほうが扱いやすかったとか、 miam だと miam でリソースを管理することを強制できるため、権限管理を厳格にやるという観点では都合が良いという点もあるかと思います。\nではなぜ Terraform で管理したくなったかというと、 一番大きな理由は miam で頻繁に rate limit に引っかかるようになったからです。 Terraform にしろ miam にしろ CI\/CD で test, apply が実行されるようになっています。 miam では毎回全部のリソースを対象に処理が実行されるため、リソースの数が増えるにつれて rate limit に引っかかりやすくなります。 CI を rerun すれば成功するのですが、悪いときは 3 回連続で rate limit に引っかかり、 4 回目でようやく成功するということもありました。"
+  }
+</script>
+
+
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://techblog-szksh-cloud.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li class="active">terraformer で雑に生成した tf ファイル と state を分割したくてツールを書いた</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2021-01-31T14:53:23JST">Jan 31, 2021</time></li>
+      
+      
+    </ul>
+
+    <h1 class="title">terraformer で雑に生成した tf ファイル と state を分割したくてツールを書いた</h1>
+    
+    
+    <section>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/oss/">oss</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/terraform/">terraform</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </header>
+
+  
+
+  <div class="article-body"><p><a href="https://github.com/GoogleCloudPlatform/terraformer">terraformer</a> で雑に生成した Terraform の設定ファイル (以下 tf ファイル) と state を分割したくてツールを書きました。</p>
+<p><a href="https://github.com/suzuki-shunsuke/tfmigrator">tfmigrator</a></p>
+<h2 id="経緯">経緯</h2>
+<h3 id="miam-から-terraform-へ移行したい">miam から Terraform へ移行したい</h3>
+<p><a href="https://github.com/codenize-tools/miam">miam</a> というツールで管理されている大量のリソースを Terraform で管理したくなりました。
+多くの AWS Resource は Terraform で管理されていますが、 IAM に関しては miam で管理されています。
+なぜ Terraform ではなく miam で管理されているかというと、当時のことは自分には分かりませんが、歴史的な経緯もあると思います。
+昔は今よりも Terraform の表現力が豊かではなく、 Ruby で自由にかける miam のほうが扱いやすかったとか、
+miam だと miam でリソースを管理することを強制できるため、権限管理を厳格にやるという観点では都合が良いという点もあるかと思います。</p>
+<p>ではなぜ Terraform で管理したくなったかというと、
+一番大きな理由は miam で頻繁に rate limit に引っかかるようになったからです。
+Terraform にしろ miam にしろ CI/CD で test, apply が実行されるようになっています。
+miam では毎回全部のリソースを対象に処理が実行されるため、リソースの数が増えるにつれて rate limit に引っかかりやすくなります。
+CI を rerun すれば成功するのですが、悪いときは 3 回連続で rate limit に引っかかり、 4 回目でようやく成功するということもありました。</p>
+<p>Terraform ではサービスや環境単位で State が分割されており、 CI も PR でファイルが変更された state に対してのみ実行されるため、
+rate limit に引っかかることは基本ないようになっています。</p>
+<p>他にも色々理由はあるのですが、本題からそれるのでやめておきます。
+rate limit だけなら miam でも exclude する機能があるので頑張ればなんとかなる気はします。</p>
+<h3 id="やりたかったこと">やりたかったこと</h3>
+<ul>
+<li>Terraform で既存のリソースを管理したい
+<ul>
+<li>tf ファイル と state を生成したい</li>
+</ul>
+</li>
+<li>Terraform の設定ファイル と state はサービス・環境ごとに分割したい</li>
+<li>Terraform のリソースパスはヒューマンリーダブルにしたい
+<ul>
+<li>これは難しければ諦めるのもありだが、できればやりたい</li>
+</ul>
+</li>
+</ul>
+<h3 id="terraformer-で自動生成するも色々問題があった">terraformer で自動生成するも色々問題があった</h3>
+<p>まずは terraformer で雑に tf ファイル と state を生成しました。
+今回 terraformer を使うのは初めてで、 terraformer で万事解決なら話は簡単だったのですが、話はそんな簡単ではありませんでした。
+これに関しては、自分の問題(使い方を間違っている、ドキュメントをちゃんと読んでいない)なのか、 あるいは terraformer 側の問題なのかよく分かってない部分もあります。</p>
+<p>まずドキュメントを読んでもいまいちリソースのフィルタリングの仕方が分かりませんでした。
+試しに IAM role の名前を指定してそれだけ import しようとしましたが、なぜか全 IAM リソースが import されてしまいました。</p>
+<p>良くわからないので、これは全 IAM リソースを雑に import してからサービス・環境ごとに分割するしか無いかなぁと思いました。</p>
+<p>加えて、リソースパスが全然ヒューマンリーダブルではありませんでした。 terraformer としてはこれは仕方ないと思いますが、なんとかリネームしたいと思いました。</p>
+<h3 id="最初手作業で始めるも自動化が必要と悟る">最初手作業で始めるも、自動化が必要と悟る</h3>
+<p>最初特定のサービスに関して手作業で tf ファイル, state を移行する作業を行ってみました。
+簡単なシェルスクリプトを書いて半自動化してみました。
+tf ファイルの操作には <a href="https://github.com/minamijoyo/hcledit">hcledit</a> が便利です。</p>
+<p>以下のようなコマンドを使いました。</p>
+<ul>
+<li>terraform state mv</li>
+<li>hcledit block get</li>
+<li>hcledit block mv</li>
+<li>hcledit block list</li>
+</ul>
+<p>で、やってみたものの、なにせ対象が多いので、これを一つ一つ手作業でやるのは大変だし、ヒューマンエラーは避けられないと感じました。
+そこでちょっとしたツールを作ることにしました。
+手作業で一回やった分手順はイメージできているので、割と簡単にできるだろうと思いました。</p>
+<h2 id="tfmigrator">tfmigrator</h2>
+<p>そこで作ったのが <a href="https://github.com/suzuki-shunsuke/tfmigrator">tfmigrator</a> です。
+今回は AWS の IAM リソースを扱いますが、 tfmigrator は特定の provider などには依存しないツールです。
+Terraform CLI と hcledit が必要です。</p>
+<p>まず terraformer で IAM リソースを全部 import してきます。</p>
+<pre tabindex="0"><code>$ terraformer import aws -r iam --compact --path-pattern .
+</code></pre><p>こうすると resources.tf と terraform.tfstate が作られます。</p>
+<p>tfmigrator の設定ファイル tfmigrator.yaml を書きます。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">---
+<span style="color:#f92672">items</span>:
+<span style="color:#75715e"># 既に Terraform で管理されているものは無視</span>
+- <span style="color:#f92672">rule</span>: <span style="color:#e6db74">&#39;&#34;tags&#34; in Values &amp;&amp; Values.tags.ManagedBy == &#34;Terraform&#34;&#39;</span>
+  <span style="color:#f92672">exclude</span>: <span style="color:#66d9ef">true</span>
+- <span style="color:#f92672">rule</span>: <span style="color:#e6db74">&#39;&#34;name&#34; not in Values&#39;</span>
+  <span style="color:#f92672">exclude</span>: <span style="color:#66d9ef">true</span>
+<span style="color:#75715e"># `name` に &#34;foo&#34; が含まれているものはサービス foo のリソースとみなして分割</span>
+- <span style="color:#f92672">rule</span>: <span style="color:#e6db74">&#39;Values.name contains &#34;foo&#34;&#39;</span>
+  <span style="color:#f92672">state_out</span>: <span style="color:#ae81ff">foo/terraform.tfstate</span>
+  <span style="color:#f92672">resource_name</span>: <span style="color:#e6db74">&#34;{{.Values.name}}&#34;</span>
+  <span style="color:#f92672">tf_path</span>: <span style="color:#ae81ff">foo/resource.tf</span>
+<span style="color:#75715e"># 以下略</span>
+</code></pre></div><p>tfmigrator の処理の流れをなんとなくそれっぽい擬似言語で表現します。
+実際の処理の流れとは若干異なりますが、雰囲気が伝わればと思います。</p>
+<pre tabindex="0"><code>for resource in state
+  for item config.items
+    if item.rule.match(resource)
+      if item.exclude
+        # このリソースは処理せず次のリソースの処理に移る
+        break
+      # tf の migration (note: 元の tf はそのまま)
+      hcledit block get resource.path &lt; tf | hcledit block mv resource.path &quot;${resource.type}.${item.resource_name(resource)}&quot; &gt;&gt; item.tf_path
+      terraform state mv
+      # 次のリソースの処理に移る
+      break
+</code></pre><p>各 item の設定の意味はこんな感じです。</p>
+<ul>
+<li>rule: <a href="https://github.com/antonmedv/expr/blob/master/docs/Language-Definition.md">expr</a> の expression 。この条件にマッチしたリソースをこの item で処理する</li>
+<li>exclude: true の場合、この item にマッチしたリソースは無視する</li>
+<li>state_out: <code>terraform state mv</code> の <code>-state-out</code></li>
+<li>resource_name: 新しいリソース名。デフォルトでは名前はそのまま。 Go の <a href="https://golang.org/pkg/text/template/">text/template</a> で処理されます</li>
+<li>tf_path: Terraform の設定ファイルの出力先</li>
+</ul>
+<p>設定ファイルを書いたら tfmigrator を実行します。
+いきなりマイグレーションをするというよりは、まずは dry run てきなことをして動作を確認したいですね。
+<code>-skip-state</code> をつけると <code>terraform state mv</code> を skip し、分割される tf ファイル を新しいファイルに出力だけします。</p>
+<pre tabindex="0"><code>$ cat *.tf | tfmigrator run -skip-state
+</code></pre><p>生成された tf ファイル を眺めて、良さそうなら <code>-skip-state</code> をとって実行します。</p>
+<h2 id="tf-ファイル生成時の注意点">tf ファイル生成時の注意点</h2>
+<p>tf ファイルの生成は現状追記モードで実行されます。なので <code>-skip-state</code> をつけて複数回実行すると同じ設定が重複して書き込まれることになります。
+それが困る場合は実行前に対象ファイルを消してから実行してください。</p>
+<p>また、tf ファイルの移行は既存の tf ファイルに対して <code>hcledit block get</code>, <code>hcledit block mv</code> を実行して行われるため、
+元の tf ファイルはそのまま残ること、また expression は評価されないことに注意が必要です。
+例えば <code>name = var.name</code> のように変数を参照している場合、それもそのまま評価されずに残ります。
+とりあえず自分がやりたかったのは terraformer で生成した tf ファイルの移行だったので、そんなに問題にはならないだろうと思っています。</p>
+<h2 id="エラーハンドリング">エラーハンドリング</h2>
+<p>あるリソースの処理でエラーが起こったら即座に異常終了するようにしています。
+(当然ですが)ロールバックとかはしません(し、できません)。
+エラー出力しつつ次のリソースの処理に移る、というのも考えられますが、間違って <code>terraform state mv</code> されると面倒なので、現状即座に終了するようにしています。
+問題のあるリソースを無視したい場合は、 tfmigrator の設定でそのリソースにマッチする item を追加し <code>exclude: true</code> とすればよいでしょう。</p>
+<h2 id="このツールの便利なところ">このツールの便利なところ</h2>
+<ul>
+<li>expr を用いてリソースを分類できる</li>
+<li>設定ファイルに記述し、ワン・コマンドで実行できる
+<ul>
+<li>レビューできる</li>
+<li>後で見返せる</li>
+</ul>
+</li>
+</ul>
+<p>ローカルで試行錯誤しながら複数のコマンドを実行していると、後でなにやったかわからなくなりがちですし、途中で作業を中断したりすると、あとで今どういう状態なのか分からなくなったりします。
+ワン・コマンドで実行できるとそういう問題がなくて便利ですね。</p>
+<h2 id="肝心の移行はできたのか">肝心の移行はできたのか</h2>
+<p>まだできていません。移行するために tfmigrator を作ったので、これから移行していこうという段階です。
+なので tfmigrator はまだ全然使い込んでないですし、使ってく中で機能修正したりすることもあると思います。</p>
+<h2 id="最後に">最後に</h2>
+<p>terraformer で雑に import してきた tf ファイルと state をいい感じに分割するために tfmigrator というツールを作りました。
+tfmigrator が役に立つケースは割と限られているというか、日常的に使うようなツールでもないですが、
+terraformer で雑に import してきたのは良いが、扱いに困っているなんて人には役に立つかもしれません。</p>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/oss/">oss</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/terraform/">terraform</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

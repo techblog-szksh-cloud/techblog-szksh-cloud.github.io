@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>2019/11 on melody</title>
+    <link>https://techblog-szksh-cloud.github.io/archives/2019/11/</link>
+    <description>Recent content in 2019/11 on melody</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>jp</language><atom:link href="https://techblog-szksh-cloud.github.io/archives/2019/11/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>dd-time - コマンドの実行時間を Datadog に送るツール</title>
+      <link>https://techblog-szksh-cloud.github.io/dd-time/</link>
+      <pubDate>Sat, 30 Nov 2019 13:54:47 +0900</pubDate>
+      
+      <guid>https://techblog-szksh-cloud.github.io/dd-time/</guid>
+      <description>コマンドの実行時間を Datadog に送る dd-time というツールを作りました。
+このツールは circle-dd-bench にインスパイアされていますが、 CircleCI 以外でも需要あると思ったり、他にも幾つか改善したい部分があったので自作することにしました。
+circle-dd-bench については circle-dd-bench の作者が書いたブログ https://blog.yuyat.jp/post/circle-dd-bench/ も参考にしてください。
+dd-time は Go 製なので GitHub Releases からバイナリをダウンロードしてインストールすれば使えます。
+使い方はシンプルで実行時間を計測したいコマンドの前に dd-time -- をつけるだけです。 例えば Docker image のビルドの時間を計測したい場合次のような感じになります。
+$ dd-time -t command:docker-build -- docker build . Datadog の API key を環境変数 DATADOG_API_KEY として設定する必要があります。 こうすると Datadog の Post timeseries points API を使い、command_execution_time というメトリックス名(変更可能)でコマンドの実行時間が送られます。
+メトリックスの名前や host, tags はそれぞれ --metric-name (-m), --host, --tag (-t) で指定できます。 --tag は複数回指定可能で、 key:value というフォーマットで指定します。
+CircleCI で実行した場合、 CircleCI のビルドイン環境変数が tag として勝手に設定されますが、 CircleCI 以外でも使えます。</description>
+    </item>
+    
+    <item>
+      <title>モブレビューやっていきたい</title>
+      <link>https://techblog-szksh-cloud.github.io/mobreview/</link>
+      <pubDate>Sun, 10 Nov 2019 18:31:05 +0900</pubDate>
+      
+      <guid>https://techblog-szksh-cloud.github.io/mobreview/</guid>
+      <description>最近モブレビュー取り入れたいと感じていて、なんで取り入れたいかなどについて書いてみました。 モブレビュー自体まだ 2, 3 回しかやってないので説得力にかけますが、ご容赦ください。
+想定  チームは 6 人以下 Pull Request (以下 PR) をマージするには必ず他の誰かが approve しないといけない  目的  チーム内の情報共有  属人化の解消 退職や異動などによる情報の喪失(誰も分からない状態)を防ぐ チーム外の人とのコミュニケーションにも活用できる   レビュー待ちの短縮 レビューの品質の改善 仕事を評価してもらうことで承認欲求を満たす オンボーディングの改善  レビューを通じて必要な知識を吸収してもらう オンボーディングに限ったことではないが、オンボーディングにも有効ではないか   最後までやりきる  箇条書した内容を補足します。
+情報共有 属人化の解消は結構重要だと自分は思っていて、特定の人じゃないと出来ないこと、わからないことというのは ボトルネックや技術的負債だったり、障害対応時に致命的になりかねません(深夜に障害が起こってAさんに聞かないとわからないのに、Aさんと連絡が取れないとか最悪)。 チーム全員とはいかなくても 3 人ぐらいは出来る・分かってる必要があるかなと思います。
+まぁ、当初は 3 人ぐらい分かってても、時間が経って異動やら退職やらで気づいたら分かっている人いなくなってたというのは ありえなくないので、そういったリスクをどうやって防ぐかというのは考える必要がありますが、今回の話とは外れるので割愛します。
+また、チーム外の人とのコミュニケーションにも活用できると思っていて、 例えばランチや飲み会でチーム外の人とのコミュニケーションを取る際に自分のチームの他の人が対応した件とかが話題に上がったときに ちゃんと情報共有できてないと、自分は担当外なので分かりませんとなってしまうでしょう。 知っていればむしろ自分から話題にできるかもしれません。 そこから発展して更に新しいタスクの話もできるかもしれません。
+レビューの改善 せっかくいい仕事をしても中々レビューしてもらえないとなると不満がたまります。 モブレビューを実施することでレビューを促進し、レビュー待ちの時間を短くできることを期待します。 レビューしたくても良くわからなくてレビューできないというパターンもあると思うので、 わからない部分をモブレビューで解消されてレビューが進むと良いですね。
+また、ちゃんと複数人でレビューすることで目先の問題を解決するだけの本質的でない問題解決を防ぐことが出来ることもあると思います。 「いや、それそもそもPRの前提がおかしくない？前提となっている仕様を見直すべきなのでは」 みたいなこともあるかもしれません。
+仕事を評価してもらうことで承認欲求を満たす いい仕事したら他の人にも知ってもらいたいというのは自然なことでしょう。 いい仕事を褒めるのは良いチーム・環境であり働きやすさというところにつながるのではないでしょうか。
+ちなみに現職だと Slack で他のチームにも共有して emoji で褒め称えるというのが結構やられていて 気持ちのいい環境だなと思っています。</description>
+    </item>
+    
+    <item>
+      <title>go-timeout - command の timeout</title>
+      <link>https://techblog-szksh-cloud.github.io/go-timeout/</link>
+      <pubDate>Mon, 04 Nov 2019 10:00:21 +0900</pubDate>
+      
+      <guid>https://techblog-szksh-cloud.github.io/go-timeout/</guid>
+      <description>作ったのは 2ヶ月くらい前の話ですが、 Go の command の timeout を実装するためのライブラリを作ったので紹介します。
+https://github.com/suzuki-shunsuke/go-timeout
+基本的には https://github.com/Songmu/timeout をオススメしますが、これだと上手くいかないパターンがあったので自作しました。
+Go の command の timeout に関しては https://junkyard.song.mu/slides/gocon2019-spring/#24 がとても参考になります。
+上記のスライドでは
+ 標準ライブラリの exec.CommandContext でも停止できるが、 SIGKILL で強制的に停止することになる  子プロセスが停止しない   公式見解 では、SIGKILL 以外は標準ライブラリではサポートしない。サードパーティでやればよい Songmu/timeout 使えば SIGKILL 以外でより安全に停止できる  ということが丁寧に説明されています。
+自分は cmdx という task runner を開発していてその中で task の実行時に timeout を設定出来るようにしました。 当初 Songmu/timeout を使って実装したのですが、問題があることに気づきました。 それは、 command の中で fzf を使うと、上手く動かないというものでした。
+ https://github.com/suzuki-shunsuke/cmdx/issues/52 https://twitter.com/szkdash/status/1165529415238815745  正直この辺の挙動はちゃんと理解できていないのですが、 調べてみると Songmu/timeout だと syscall.SysProcAttr の Setpgid を true に設定していて、そうすると fzf が上手く動かないようでした。</description>
+    </item>
+    
+  </channel>
+</rss>

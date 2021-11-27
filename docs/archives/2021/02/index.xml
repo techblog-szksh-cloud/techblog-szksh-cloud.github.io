@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>2021/02 on melody</title>
+    <link>https://techblog-szksh-cloud.github.io/archives/2021/02/</link>
+    <description>Recent content in 2021/02 on melody</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>jp</language><atom:link href="https://techblog-szksh-cloud.github.io/archives/2021/02/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>仕事でやったこと 2021-02-01 ~ 2021-02-28</title>
+      <link>https://techblog-szksh-cloud.github.io/job-2021-02-01-02-28/</link>
+      <pubDate>Sat, 27 Feb 2021 20:51:56 +0900</pubDate>
+      
+      <guid>https://techblog-szksh-cloud.github.io/job-2021-02-01-02-28/</guid>
+      <description> Terraform リポジトリの統合 Terraform を v0.14 へ upgrade デプロイをサービスごとに分割 CircleCI の設定ファイルの分割  https://blog.studysapuri.jp/entry/2020/12/01/080000 と同様のことを別のリポジトリでもやった   Renovate の設定を改善し、安全性と運用の負担軽減、オープンなままの PR の削減 miam の Rate Limit 問題の解消  </description>
+    </item>
+    
+    <item>
+      <title>仕事でやったこと 2021-01-01 ~ 2021-01-31</title>
+      <link>https://techblog-szksh-cloud.github.io/job-2021-01-01-01-31/</link>
+      <pubDate>Thu, 11 Feb 2021 08:13:10 +0900</pubDate>
+      
+      <guid>https://techblog-szksh-cloud.github.io/job-2021-01-01-01-31/</guid>
+      <description> CI: PR コメントの非表示  github-comment, tfcmt  非表示以外にも細かな改善入れている     Renovate  label を設定 Renovate の PR に便利なリンクを追加   Terraform  apply こけたときに plan 再実行して S3 に保存している plan file 及び PR コメントを更新 tfnotify を tfcmt にリプレース  tfnotify を fork した      </description>
+    </item>
+    
+    <item>
+      <title>仕事でやったこと 2020-12-01 ~ 2020-12-31</title>
+      <link>https://techblog-szksh-cloud.github.io/job-2020-12-01-12-31/</link>
+      <pubDate>Thu, 11 Feb 2021 08:02:11 +0900</pubDate>
+      
+      <guid>https://techblog-szksh-cloud.github.io/job-2020-12-01-12-31/</guid>
+      <description>2020-12-01 から 2020-12-31 にかけて仕事でやったことを書ける範囲で書きます。
+ AWS SAM Application の開発 Renovate の PR にリンクを追加 Terraform  Terraform の CI に関して日々行っている改善点・変更点をチームにシェア Docker Compose を用いてローカルで開発しやすいように改善 ドキュメント・コードコメントの追加 リファクタリング  不要なコードの削除 不要な secret を削除 不要な変数の削除 data.terraform_remote_state を local values に置換 なぜか環境変数でパラメータを渡していた箇所を、 local value に置換   CI に tflint の導入 対象の build が 1 つの場合 batch build を実行しないようにする  Terraform の CI/CD を CodeBuild に移行した話 の改良 Batch Build の起動に時間がかかる問題の解消   master の HEAD じゃなくても apply できるようにする plan file を S3 に保存 refactor: tfsec で設定ファイルを使うようにする Renovate の PR が多すぎて鬱陶しい問題の対応  automerge されるものは reviewer を設定しないようにした prConcurrentLimit を 1 にした branch protection Require branches to be up to date before merging を無効化     kube-linter  Rule に基づいて manifest の修正   miam でリソースが削除されそうなときに警告をするようにした ブログの執筆  Renovate の Tips Terraform の CI/CD を CodeBuild に移行した話 巨大な .</description>
+    </item>
+    
+  </channel>
+</rss>

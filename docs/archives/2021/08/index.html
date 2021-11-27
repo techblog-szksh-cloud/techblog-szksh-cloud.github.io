@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+<link rel="alternate" type="application/rss+xml" title="RSS" href="https://techblog-szksh-cloud.github.io/archives/2021/08/index.xml">
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/archives/2021/08/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>2021/08 - melody</title>
+    
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    
+    <header class="page-header">
+      <h1>2021/08</h1>
+    </header>
+    
+
+    <ul class="p-articles">
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2021-09-02T14:33:16JST">Sep 2, 2021</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/">2021-08 やったこと</a></h2>
+  </header>
+
+  
+  <div class="summary">仕事  AWS IAM User を削除する際に force_destroy が true になっているか Conftest でテスト Terraform の State 分割 Terraform Modules を別リポジトリで管理して versioning git-secrets を secretlint に移行  git-secrets がメンテされてなくて、既知バグが放置されているから   CI で terraform fmt によるフォーマットの自動化 WIP: AWS WAF の COUNT, BLOCK ログを Firehose で抽出 WIP: AWS CodeBuild で Provisioning Error が発生したら自動で Retry WIP: AWS CodeBuild のための GitHub App の開発 WIP: AWS SSO について調査  OSS Contribution Renovate の GitHub Actions のドキュメントの修正をしました。 ドキュメント中に書かれたバージョンを Renovate で自動 update するようにしました。</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" title="2021-08 やったこと">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2021-08-28T09:07:38JST">Aug 28, 2021</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/aqua/">aqua - CLI ツールのバージョン管理</a></h2>
+  </header>
+
+  
+  <div class="summary">2021-09-04 追記: aqua v0.1.0 から v0.5.0 での変更点
+aqua という OSS を開発しているので紹介します。
+記事の内容は aqua v0.1.0 に基づきます。将来的に仕様が変わる可能性があります。
+aqua とは aqua は CLI ツールのバージョン管理のための CLI です。 aqua で管理する主な対象は GitHub Release で公開されているツールです。 YAML の設定ファイルを書いてコマンドを実行すると指定したツールをインストールすることができます。
+例えば以下のような設定ファイルを書き、 aqua install というコマンドを実行すると jq, conftest などが GitHub Release からダウンロードされ、インストールされます。
+packages: - name: jq registry: inline version: jq-1.6 - name: conftest registry: inline version: v0.27.0 inline_registry: - name: jq type: github_release repo_owner: stedolan repo_name: jq asset: &#39;jq-{{if eq .OS &#34;darwin&#34;}}osx-amd64{{else}}{{if eq .</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/aqua/" title="aqua - CLI ツールのバージョン管理">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2021-08-16T09:10:51JST">Aug 16, 2021</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/">AWS CodeBuild を実行する Github App を作る</a></h2>
+  </header>
+
+  
+  <div class="summary">GitHub Repository の CI に CodeBuild を使う場合、 CodeBuild の Webhook integration (以下 CodeBuild GitHub integration と呼ぶことにします) を使うのが一番自然でしょう。 基本的なユースケースならこれでよいのですが、 GitHub App を活用することでより高度な CI を実現することができます。
+解決したい課題  Batch Build の課題  起動・終了が遅い 全 build が成功した Batch Build を Retry できない Web UI がわかりにくい  余計な build が起動する build 単体を Retry できない   build ごとに条件設定とかできない buildspec を動的に生成できない   CodeBuild GitHub integration の課題  Build Project ごとに Repository Webhook が 1 つ作られる  webhook 1 repository あたり 20 個までしか作れない (これを裏付ける客観的なソースはないですが) webhook の数が増えると build の動作が不安定になるのを観測しています   Filter の条件が限られている(例えば PR label で filter とかできない) 複数の build を実行できない(Batch Build も 1 つとみなした場合の話)   CodeBuild の課題  Retry した場合 webhook で起動したときの環境変数が設定されない    GitHub App Amazon API Gateway と Lambda を使って GitHub App を構築します。 Lambda で webhook を受け取り、 AWS SDK を使って build を実行します。</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" title="AWS CodeBuild を実行する Github App を作る">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+    </ul>
+
+    
+
+
+  </div>
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

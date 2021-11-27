@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/2019-knowledge-share-meeting/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>毎週30分の技術共有会 - melody</title>
+    
+<meta name="description" content="自分が最近職場で行っている技術共有の取り組みについて紹介したいと思います。背景 これまで自分は積極的に自分にとって新しい技術を取り入れてサービスの品質の向上に繋げてきました。 ただし、それらの技術に関して周りに十分に共有できていなかった側面がありました。やっていること 毎週30分決まった時間にスライドを使って発表しています。 対象は同じ部署の希望者です。 枠は30分ですが、実質話しているのは20分くらいな気がします。 k8sのハンズオン的なこともやりました(そのときは30分で終わらないので2回に分けてやりました)。話したいことはたくさんあるのですが、とりあえず大きなトピックとして以下の3つに絞っています。 k8s(Rancher): オーケストレーション (いまここ) Drone: CI/CD Graylog: ログ収集  これまで話したこと・話す予定のこと k8s の初心者が k8s を本番運用を視野に入れつつ検証環境で使ってみるところまでを目指して話しています。 なぜ k8s を使うのか(部署のコンテキストに合わせて導入意義を説明) k8s のリソース(Pod, Service, Deployment, etc) について k8s, Rancher ハンズオン(2回) 簡単なアプリケーションをデプロイしてみたり Logging (いまここ) モニタリング IP制限のかかった外部サービスへアクセスする方法  毎週30分というペース感について 以下のようなことを配慮しました。 集中力が続くこと  60分は長すぎる   持続可能であること  1, 2 回やっただけでは意味がない 30分だけなら参加しやすい 準備のコストも現実的な範囲 30分と短めなので毎週やる。隔週とかだと頻度が少なすぎるし、1回飛ぶと1ヶ月空いてしまう    これまでの結果 特に大きな成果があるわけではないですが、 k8sに興味を持ちk8sを検証環境で使ってくれる人が出てきました。 共有会がk8s を触るきっかけになったのだとしたらそれだけでもやってよかったと思います。また、自分自身学ぶこともありました。 Logging に関して自分は今まで Sidecar pattern を使っていたのですが、Cluster Level Logging への移行を検討するきっかけになりました。">
+
+<meta property="og:title" content="毎週30分の技術共有会 - melody">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://techblog-szksh-cloud.github.io/2019-knowledge-share-meeting/">
+<meta property="og:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+<meta property="og:site_name" content="melody">
+<meta property="og:description" content="自分が最近職場で行っている技術共有の取り組みについて紹介したいと思います。背景 これまで自分は積極的に自分にとって新しい技術を取り入れてサービスの品質の向上に繋げてきました。 ただし、それらの技術に関して周りに十分に共有できていなかった側面がありました。やっていること 毎週30分決まった時間にスライドを使って発表しています。 対象は同じ部署の希望者です。 枠は30分ですが、実質話しているのは20分くらいな気がします。 k8sのハンズオン的なこともやりました(そのときは30分で終わらないので2回に分けてやりました)。話したいことはたくさんあるのですが、とりあえず大きなトピックとして以下の3つに絞っています。 k8s(Rancher): オーケストレーション (いまここ) Drone: CI/CD Graylog: ログ収集  これまで話したこと・話す予定のこと k8s の初心者が k8s を本番運用を視野に入れつつ検証環境で使ってみるところまでを目指して話しています。 なぜ k8s を使うのか(部署のコンテキストに合わせて導入意義を説明) k8s のリソース(Pod, Service, Deployment, etc) について k8s, Rancher ハンズオン(2回) 簡単なアプリケーションをデプロイしてみたり Logging (いまここ) モニタリング IP制限のかかった外部サービスへアクセスする方法  毎週30分というペース感について 以下のようなことを配慮しました。 集中力が続くこと  60分は長すぎる   持続可能であること  1, 2 回やっただけでは意味がない 30分だけなら参加しやすい 準備のコストも現実的な範囲 30分と短めなので毎週やる。隔週とかだと頻度が少なすぎるし、1回飛ぶと1ヶ月空いてしまう    これまでの結果 特に大きな成果があるわけではないですが、 k8sに興味を持ちk8sを検証環境で使ってくれる人が出てきました。 共有会がk8s を触るきっかけになったのだとしたらそれだけでもやってよかったと思います。また、自分自身学ぶこともありました。 Logging に関して自分は今まで Sidecar pattern を使っていたのですが、Cluster Level Logging への移行を検討するきっかけになりました。">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="melody">
+<meta name="twitter:url" content="https://techblog-szksh-cloud.github.io/2019-knowledge-share-meeting/">
+<meta name="twitter:title" content="毎週30分の技術共有会 - melody">
+<meta name="twitter:description" content="自分が最近職場で行っている技術共有の取り組みについて紹介したいと思います。背景 これまで自分は積極的に自分にとって新しい技術を取り入れてサービスの品質の向上に繋げてきました。 ただし、それらの技術に関して周りに十分に共有できていなかった側面がありました。やっていること 毎週30分決まった時間にスライドを使って発表しています。 対象は同じ部署の希望者です。 枠は30分ですが、実質話しているのは20分くらいな気がします。 k8sのハンズオン的なこともやりました(そのときは30分で終わらないので2回に分けてやりました)。話したいことはたくさんあるのですが、とりあえず大きなトピックとして以下の3つに絞っています。 k8s(Rancher): オーケストレーション (いまここ) Drone: CI/CD Graylog: ログ収集  これまで話したこと・話す予定のこと k8s の初心者が k8s を本番運用を視野に入れつつ検証環境で使ってみるところまでを目指して話しています。 なぜ k8s を使うのか(部署のコンテキストに合わせて導入意義を説明) k8s のリソース(Pod, Service, Deployment, etc) について k8s, Rancher ハンズオン(2回) 簡単なアプリケーションをデプロイしてみたり Logging (いまここ) モニタリング IP制限のかかった外部サービスへアクセスする方法  毎週30分というペース感について 以下のようなことを配慮しました。 集中力が続くこと  60分は長すぎる   持続可能であること  1, 2 回やっただけでは意味がない 30分だけなら参加しやすい 準備のコストも現実的な範囲 30分と短めなので毎週やる。隔週とかだと頻度が少なすぎるし、1回飛ぶと1ヶ月空いてしまう    これまでの結果 特に大きな成果があるわけではないですが、 k8sに興味を持ちk8sを検証環境で使ってくれる人が出てきました。 共有会がk8s を触るきっかけになったのだとしたらそれだけでもやってよかったと思います。また、自分自身学ぶこともありました。 Logging に関して自分は今まで Sidecar pattern を使っていたのですが、Cluster Level Logging への移行を検討するきっかけになりました。">
+<meta name="twitter:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https:\/\/techblog-szksh-cloud.github.io\/"
+    },
+    "headline": "毎週30分の技術共有会 - melody",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https:\/\/techblog-szksh-cloud.github.io\/images\/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2019-03-17T13:47:40JST",
+    "dateModified": "2019-03-17T13:47:40JST",
+    "author": {
+      "@type": "Person",
+      "name": "melody"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "melody",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https:\/\/techblog-szksh-cloud.github.io\/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "自分が最近職場で行っている技術共有の取り組みについて紹介したいと思います。\n背景 これまで自分は積極的に自分にとって新しい技術を取り入れてサービスの品質の向上に繋げてきました。 ただし、それらの技術に関して周りに十分に共有できていなかった側面がありました。\nやっていること 毎週30分決まった時間にスライドを使って発表しています。 対象は同じ部署の希望者です。 枠は30分ですが、実質話しているのは20分くらいな気がします。 k8sのハンズオン的なこともやりました(そのときは30分で終わらないので2回に分けてやりました)。\n話したいことはたくさんあるのですが、とりあえず大きなトピックとして以下の3つに絞っています。\n k8s(Rancher): オーケストレーション (いまここ) Drone: CI\/CD Graylog: ログ収集  これまで話したこと・話す予定のこと k8s の初心者が k8s を本番運用を視野に入れつつ検証環境で使ってみるところまでを目指して話しています。\n なぜ k8s を使うのか(部署のコンテキストに合わせて導入意義を説明) k8s のリソース(Pod, Service, Deployment, etc) について k8s, Rancher ハンズオン(2回) 簡単なアプリケーションをデプロイしてみたり Logging (いまここ) モニタリング IP制限のかかった外部サービスへアクセスする方法  毎週30分というペース感について 以下のようなことを配慮しました。\n 集中力が続くこと  60分は長すぎる   持続可能であること  1, 2 回やっただけでは意味がない 30分だけなら参加しやすい 準備のコストも現実的な範囲 30分と短めなので毎週やる。隔週とかだと頻度が少なすぎるし、1回飛ぶと1ヶ月空いてしまう    これまでの結果 特に大きな成果があるわけではないですが、 k8sに興味を持ちk8sを検証環境で使ってくれる人が出てきました。 共有会がk8s を触るきっかけになったのだとしたらそれだけでもやってよかったと思います。\nまた、自分自身学ぶこともありました。 Logging に関して自分は今まで Sidecar pattern を使っていたのですが、Cluster Level Logging への移行を検討するきっかけになりました。"
+  }
+</script>
+
+
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://techblog-szksh-cloud.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li class="active">毎週30分の技術共有会</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2019-03-17T13:47:40JST">Mar 17, 2019</time></li>
+      
+      
+    </ul>
+
+    <h1 class="title">毎週30分の技術共有会</h1>
+    
+    
+  </header>
+
+  
+
+  <div class="article-body"><p>自分が最近職場で行っている技術共有の取り組みについて紹介したいと思います。</p>
+<h2 id="背景">背景</h2>
+<p>これまで自分は積極的に自分にとって新しい技術を取り入れてサービスの品質の向上に繋げてきました。
+ただし、それらの技術に関して周りに十分に共有できていなかった側面がありました。</p>
+<h2 id="やっていること">やっていること</h2>
+<p>毎週30分決まった時間にスライドを使って発表しています。
+対象は同じ部署の希望者です。
+枠は30分ですが、実質話しているのは20分くらいな気がします。
+k8sのハンズオン的なこともやりました(そのときは30分で終わらないので2回に分けてやりました)。</p>
+<p>話したいことはたくさんあるのですが、とりあえず大きなトピックとして以下の3つに絞っています。</p>
+<ol>
+<li>k8s(Rancher): オーケストレーション (いまここ)</li>
+<li>Drone: CI/CD</li>
+<li>Graylog: ログ収集</li>
+</ol>
+<h2 id="これまで話したこと話す予定のこと">これまで話したこと・話す予定のこと</h2>
+<p>k8s の初心者が k8s を本番運用を視野に入れつつ検証環境で使ってみるところまでを目指して話しています。</p>
+<ol>
+<li>なぜ k8s を使うのか(部署のコンテキストに合わせて導入意義を説明)</li>
+<li>k8s のリソース(Pod, Service, Deployment, etc) について</li>
+<li>k8s, Rancher ハンズオン(2回) 簡単なアプリケーションをデプロイしてみたり</li>
+<li>Logging (いまここ)</li>
+<li>モニタリング</li>
+<li>IP制限のかかった外部サービスへアクセスする方法</li>
+</ol>
+<h2 id="毎週30分というペース感について">毎週30分というペース感について</h2>
+<p>以下のようなことを配慮しました。</p>
+<ul>
+<li>集中力が続くこと
+<ul>
+<li>60分は長すぎる</li>
+</ul>
+</li>
+<li>持続可能であること
+<ul>
+<li>1, 2 回やっただけでは意味がない</li>
+<li>30分だけなら参加しやすい</li>
+<li>準備のコストも現実的な範囲</li>
+<li>30分と短めなので毎週やる。隔週とかだと頻度が少なすぎるし、1回飛ぶと1ヶ月空いてしまう</li>
+</ul>
+</li>
+</ul>
+<h2 id="これまでの結果">これまでの結果</h2>
+<p>特に大きな成果があるわけではないですが、
+k8sに興味を持ちk8sを検証環境で使ってくれる人が出てきました。
+共有会がk8s を触るきっかけになったのだとしたらそれだけでもやってよかったと思います。</p>
+<p>また、自分自身学ぶこともありました。
+Logging に関して自分は今まで Sidecar pattern を使っていたのですが、Cluster Level Logging への移行を検討するきっかけになりました。</p>
+<p>今後もこの取組を(無理のない範囲で)続けていきたいと思います。</p>
+</div>
+
+  <footer class="article-footer">
+    
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

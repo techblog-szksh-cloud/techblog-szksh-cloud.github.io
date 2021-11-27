@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/use-npm/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>JS以外でのnpmの活用 - melody</title>
+    
+<meta name="description" content="npm は Node.js のパッケージマネージャーですが、自分はJS以外のプロジェクトでも使えると思っています。 実際、Goのアプリケーション、OSS、ansible role, playbook など種類を問わず、自分が管理している多くのリポジトリで使っています。 ただ、GoのOSSで npm 使っているのは自分以外で見たことはないですし、 正直あまり賛同はされないかなと思いますが、こういう考え方もあると思っていただけたらと思います。npm を使う理由は Node製のツールを使うため npm scripts を使うため (今回書きたいのはこっち)  の2つあります。Node製のツール  husky: Git Hookを設定 commitlint: commit メッセージのlint standard-version: コミットログによって Change Log を生成  などを使っています。 Nodeはバージョンの変化が速く、互換性が壊れたりとかも多い印象ですが、 グローバルにインストールしなくてもリポジトリごとに install 出来る(package.jsonで管理できる)のでその点は(特にチーム開発では)良いと思います。npm scripts npm scripts によってそのリポジトリの開発に使うコマンド群を管理するということを自分はしています。https://github.com/suzuki-shunsuke/gomic/blob/v0.5.7/package.jsonなにもツールを使わない場合に比べ、こうすることでチーム全体でコマンドを統一できますし、一連のコマンドをスクリプト化して npm scripts で実行できるようにするなど、自動化も促進されます。ごく簡単な自動化の例ですが、tag を打つと同時にソースコード中のバージョン番号を更新するのを npm run tag v1.1.0 といったコマンドで出来るようにしています。 こうすることで tag とversionコマンドで出力されるバージョンが違うなんてことを防ぐことが出来ます。https://github.com/suzuki-shunsuke/gomic/blob/v0.5.7/scripts/tag.shまた、オプションによって動作が変わるようなコマンドは npm scripts によって実行することでオプションを統一できます。 例えば gofmt は -s オプションの有無で結果が変わります。">
+
+<meta property="og:title" content="JS以外でのnpmの活用 - melody">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://techblog-szksh-cloud.github.io/use-npm/">
+<meta property="og:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+<meta property="og:site_name" content="melody">
+<meta property="og:description" content="npm は Node.js のパッケージマネージャーですが、自分はJS以外のプロジェクトでも使えると思っています。 実際、Goのアプリケーション、OSS、ansible role, playbook など種類を問わず、自分が管理している多くのリポジトリで使っています。 ただ、GoのOSSで npm 使っているのは自分以外で見たことはないですし、 正直あまり賛同はされないかなと思いますが、こういう考え方もあると思っていただけたらと思います。npm を使う理由は Node製のツールを使うため npm scripts を使うため (今回書きたいのはこっち)  の2つあります。Node製のツール  husky: Git Hookを設定 commitlint: commit メッセージのlint standard-version: コミットログによって Change Log を生成  などを使っています。 Nodeはバージョンの変化が速く、互換性が壊れたりとかも多い印象ですが、 グローバルにインストールしなくてもリポジトリごとに install 出来る(package.jsonで管理できる)のでその点は(特にチーム開発では)良いと思います。npm scripts npm scripts によってそのリポジトリの開発に使うコマンド群を管理するということを自分はしています。https://github.com/suzuki-shunsuke/gomic/blob/v0.5.7/package.jsonなにもツールを使わない場合に比べ、こうすることでチーム全体でコマンドを統一できますし、一連のコマンドをスクリプト化して npm scripts で実行できるようにするなど、自動化も促進されます。ごく簡単な自動化の例ですが、tag を打つと同時にソースコード中のバージョン番号を更新するのを npm run tag v1.1.0 といったコマンドで出来るようにしています。 こうすることで tag とversionコマンドで出力されるバージョンが違うなんてことを防ぐことが出来ます。https://github.com/suzuki-shunsuke/gomic/blob/v0.5.7/scripts/tag.shまた、オプションによって動作が変わるようなコマンドは npm scripts によって実行することでオプションを統一できます。 例えば gofmt は -s オプションの有無で結果が変わります。">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="melody">
+<meta name="twitter:url" content="https://techblog-szksh-cloud.github.io/use-npm/">
+<meta name="twitter:title" content="JS以外でのnpmの活用 - melody">
+<meta name="twitter:description" content="npm は Node.js のパッケージマネージャーですが、自分はJS以外のプロジェクトでも使えると思っています。 実際、Goのアプリケーション、OSS、ansible role, playbook など種類を問わず、自分が管理している多くのリポジトリで使っています。 ただ、GoのOSSで npm 使っているのは自分以外で見たことはないですし、 正直あまり賛同はされないかなと思いますが、こういう考え方もあると思っていただけたらと思います。npm を使う理由は Node製のツールを使うため npm scripts を使うため (今回書きたいのはこっち)  の2つあります。Node製のツール  husky: Git Hookを設定 commitlint: commit メッセージのlint standard-version: コミットログによって Change Log を生成  などを使っています。 Nodeはバージョンの変化が速く、互換性が壊れたりとかも多い印象ですが、 グローバルにインストールしなくてもリポジトリごとに install 出来る(package.jsonで管理できる)のでその点は(特にチーム開発では)良いと思います。npm scripts npm scripts によってそのリポジトリの開発に使うコマンド群を管理するということを自分はしています。https://github.com/suzuki-shunsuke/gomic/blob/v0.5.7/package.jsonなにもツールを使わない場合に比べ、こうすることでチーム全体でコマンドを統一できますし、一連のコマンドをスクリプト化して npm scripts で実行できるようにするなど、自動化も促進されます。ごく簡単な自動化の例ですが、tag を打つと同時にソースコード中のバージョン番号を更新するのを npm run tag v1.1.0 といったコマンドで出来るようにしています。 こうすることで tag とversionコマンドで出力されるバージョンが違うなんてことを防ぐことが出来ます。https://github.com/suzuki-shunsuke/gomic/blob/v0.5.7/scripts/tag.shまた、オプションによって動作が変わるようなコマンドは npm scripts によって実行することでオプションを統一できます。 例えば gofmt は -s オプションの有無で結果が変わります。">
+<meta name="twitter:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https:\/\/techblog-szksh-cloud.github.io\/"
+    },
+    "headline": "JS以外でのnpmの活用 - melody",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https:\/\/techblog-szksh-cloud.github.io\/images\/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2019-02-14T21:34:22JST",
+    "dateModified": "2019-02-14T21:34:22JST",
+    "author": {
+      "@type": "Person",
+      "name": "melody"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "melody",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https:\/\/techblog-szksh-cloud.github.io\/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "npm は Node.js のパッケージマネージャーですが、自分はJS以外のプロジェクトでも使えると思っています。 実際、Goのアプリケーション、OSS、ansible role, playbook など種類を問わず、自分が管理している多くのリポジトリで使っています。 ただ、GoのOSSで npm 使っているのは自分以外で見たことはないですし、 正直あまり賛同はされないかなと思いますが、こういう考え方もあると思っていただけたらと思います。\nnpm を使う理由は\n Node製のツールを使うため npm scripts を使うため (今回書きたいのはこっち)  の2つあります。\nNode製のツール  husky: Git Hookを設定 commitlint: commit メッセージのlint standard-version: コミットログによって Change Log を生成  などを使っています。 Nodeはバージョンの変化が速く、互換性が壊れたりとかも多い印象ですが、 グローバルにインストールしなくてもリポジトリごとに install 出来る(package.jsonで管理できる)のでその点は(特にチーム開発では)良いと思います。\nnpm scripts npm scripts によってそのリポジトリの開発に使うコマンド群を管理するということを自分はしています。\nhttps:\/\/github.com\/suzuki-shunsuke\/gomic\/blob\/v0.5.7\/package.json\nなにもツールを使わない場合に比べ、こうすることでチーム全体でコマンドを統一できますし、一連のコマンドをスクリプト化して npm scripts で実行できるようにするなど、自動化も促進されます。\nごく簡単な自動化の例ですが、tag を打つと同時にソースコード中のバージョン番号を更新するのを npm run tag v1.1.0 といったコマンドで出来るようにしています。 こうすることで tag とversionコマンドで出力されるバージョンが違うなんてことを防ぐことが出来ます。\nhttps:\/\/github.com\/suzuki-shunsuke\/gomic\/blob\/v0.5.7\/scripts\/tag.sh\nまた、オプションによって動作が変わるようなコマンドは npm scripts によって実行することでオプションを統一できます。 例えば gofmt は -s オプションの有無で結果が変わります。"
+  }
+</script>
+
+
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://techblog-szksh-cloud.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li class="active">JS以外でのnpmの活用</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2019-02-14T21:34:22JST">Feb 14, 2019</time></li>
+      
+      
+    </ul>
+
+    <h1 class="title">JS以外でのnpmの活用</h1>
+    
+    
+    <section>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/npm/">npm</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </header>
+
+  
+
+  <div class="article-body"><p>npm は Node.js のパッケージマネージャーですが、自分はJS以外のプロジェクトでも使えると思っています。
+実際、Goのアプリケーション、OSS、ansible role, playbook など種類を問わず、自分が管理している多くのリポジトリで使っています。
+ただ、GoのOSSで npm 使っているのは自分以外で見たことはないですし、
+正直あまり賛同はされないかなと思いますが、こういう考え方もあると思っていただけたらと思います。</p>
+<p>npm を使う理由は</p>
+<ul>
+<li>Node製のツールを使うため</li>
+<li>npm scripts を使うため (今回書きたいのはこっち)</li>
+</ul>
+<p>の2つあります。</p>
+<h2 id="node製のツール">Node製のツール</h2>
+<ul>
+<li><a href="https://github.com/typicode/husky">husky</a>: Git Hookを設定</li>
+<li><a href="https://conventional-changelog.github.io/commitlint/#/">commitlint</a>: commit メッセージのlint</li>
+<li><a href="https://github.com/conventional-changelog/standard-version">standard-version</a>: コミットログによって Change Log を生成</li>
+</ul>
+<p>などを使っています。
+Nodeはバージョンの変化が速く、互換性が壊れたりとかも多い印象ですが、
+グローバルにインストールしなくてもリポジトリごとに install 出来る(package.jsonで管理できる)のでその点は(特にチーム開発では)良いと思います。</p>
+<h2 id="npm-scripts">npm scripts</h2>
+<p>npm scripts によってそのリポジトリの開発に使うコマンド群を管理するということを自分はしています。</p>
+<p><a href="https://github.com/suzuki-shunsuke/gomic/blob/v0.5.7/package.json">https://github.com/suzuki-shunsuke/gomic/blob/v0.5.7/package.json</a></p>
+<p>なにもツールを使わない場合に比べ、こうすることでチーム全体でコマンドを統一できますし、一連のコマンドをスクリプト化して npm scripts で実行できるようにするなど、自動化も促進されます。</p>
+<p>ごく簡単な自動化の例ですが、tag を打つと同時にソースコード中のバージョン番号を更新するのを <code>npm run tag v1.1.0</code> といったコマンドで出来るようにしています。
+こうすることで tag とversionコマンドで出力されるバージョンが違うなんてことを防ぐことが出来ます。</p>
+<p><a href="https://github.com/suzuki-shunsuke/gomic/blob/v0.5.7/scripts/tag.sh">https://github.com/suzuki-shunsuke/gomic/blob/v0.5.7/scripts/tag.sh</a></p>
+<p>また、オプションによって動作が変わるようなコマンドは npm scripts によって実行することでオプションを統一できます。
+例えば <code>gofmt</code> は <code>-s</code> オプションの有無で結果が変わります。</p>
+<h2 id="make-でいいのでは">Make でいいのでは</h2>
+<p>npm scripts ではなくて Make のほうがいいんじゃないのという意見もあるかと思います。</p>
+<ul>
+<li>npm が特定の言語のパッケージマネージャーなのに対し、Makeはより汎用的なツールなので、Node以外ではMakeのほうが適切では</li>
+<li>Makeのほうがnpm scriptsより多機能
+<ul>
+<li>依存関係のあるタスクを管理する場合はMakeのほうが良い</li>
+</ul>
+</li>
+<li>package.jsonはjsonなのでコメントを書けないのが不便</li>
+</ul>
+<p>ただ、Makeよりnpm scriptsのほうが良いと感じている部分が少なからずあります。</p>
+<ul>
+<li>Makeには派生がある(BSD, GNU, etc)</li>
+<li>Makeは複雑すぎる(1冊の本になるくらい)
+<ul>
+<li>npm scripts は機能が少ない分、とてもシンプル</li>
+</ul>
+</li>
+<li>npm scripts はカレントディレクトリに依存しない(package.jsonがあるディレクトリから実行される)
+<ul>
+<li>MakeではカレントディレクトリにMakefile がない場合、Makefileのパスを指定する必要がある</li>
+</ul>
+</li>
+<li>Makeは引数が渡しづらい(make FOO=foo みたいに引数名を指定する必要がある)</li>
+</ul>
+<p>そのため、自分は npm scripts を使っています(huskyとかを使うからというのもありますが)。</p>
+<p>それ以外のツールとの比較はしていません。
+npm はかなり一般的なツールであり、そのへんのツールよりは導入障壁が低いと思います。</p>
+<h2 id="npm-scripts-の関数エイリアス">npm scripts の関数・エイリアス</h2>
+<p>npm scripts をよく使う場合、関数やエイリアスを設定すると便利です。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">nx<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+  npm --silent run $1 -- <span style="color:#e6db74">${</span>@:2<span style="color:#e6db74">}</span>
+<span style="color:#f92672">}</span>
+alias npm<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;npm --silent&#34;</span>
+</code></pre></div><p><code>--silent</code> オプションは、ログレベルの設定です。 <a href="https://docs.npmjs.com/misc/config#loglevel">https://docs.npmjs.com/misc/config#loglevel</a>
+ログレベルを特に指定しないと、Nodeに関するログも出力されてしまい、見通しが悪くなります。</p>
+<pre tabindex="0"><code>$ /usr/local/bin/npm run vet
+
+&gt; @ vet /Users/suzuki-shunsuke/repos/src/github.com/suzuki-shunsuke/gomic
+&gt; go vet ./...
+
+# github.com/suzuki-shunsuke/gomic/internal/usecase/gencmd/output
+internal/usecase/gencmd/output/output.go:9:14: undefined: imports
+npm ERR! code ELIFECYCLE
+npm ERR! errno 2
+npm ERR! @ vet: `go vet ./...`
+npm ERR! Exit status 2
+npm ERR!
+npm ERR! Failed at the @ vet script.
+npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /Users/suzuki-shunsuke/.npm/_logs/2019-02-14T22_44_50_065Z-debug.log
+</code></pre><p><code>--silent</code> をつけるとすっきりします。</p>
+<pre tabindex="0"><code>$ /usr/local/bin/npm --silent run vet
+# github.com/suzuki-shunsuke/gomic/internal/usecase/gencmd/output
+internal/usecase/gencmd/output/output.go:9:14: undefined: imports
+</code></pre><p>ただこのオプションつけると、npm scripts で間違ったコマンドを指定してもなんのエラーも出力してくれなくなるので注意してください。</p>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/npm/">npm</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

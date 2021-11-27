@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>2021/04 on melody</title>
+    <link>https://techblog-szksh-cloud.github.io/archives/2021/04/</link>
+    <description>Recent content in 2021/04 on melody</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>jp</language><atom:link href="https://techblog-szksh-cloud.github.io/archives/2021/04/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>仕事でやったこと 2021-04-01 ~ 2021-04-30</title>
+      <link>https://techblog-szksh-cloud.github.io/job-2021-04-01-04-30/</link>
+      <pubDate>Wed, 28 Apr 2021 09:28:01 +0900</pubDate>
+      
+      <guid>https://techblog-szksh-cloud.github.io/job-2021-04-01-04-30/</guid>
+      <description> SRE チームの新メンバーのオンボーディングのサポート Lambda の Monorepo  幾つか実際に Function 作った(developer support) 幾つかの Release Strategy の実装・検証  シンプルな GitHub Flow Git Flow をアレンジしたリリースフロー Canary Release WIP: AWS AppConfig を用いた Dark Launch     IAM User の初期パスワード送信の自動化 Terraform  Renovate による Terraform の patch update の自動化 Docker を使ったローカル開発環境の改善 ローカルで terraform init したら .terraform.lock.hcl が更新される問題の対応 https://techblog.szksh.cloud/terraform-providers-lock/   GCP の Terraform 管理  調査 WIP   Conftest  社内の Rego の活用事例をまとめた opa fmt によるフォーマット(CI も導入) Policy Testing (CI も導入)    </description>
+    </item>
+    
+    <item>
+      <title>PR で変更されたファイルや PR Label に応じて matrix build を実行する Github Actions の Workflow のサンプルを書いてみた</title>
+      <link>https://techblog-szksh-cloud.github.io/example-github-actions-dynamic-matrix/</link>
+      <pubDate>Sun, 25 Apr 2021 16:09:47 +0900</pubDate>
+      
+      <guid>https://techblog-szksh-cloud.github.io/example-github-actions-dynamic-matrix/</guid>
+      <description>GitHub Actions の勉強がてら Pull Request (以下 PR) で変更されたファイルや PR Label に応じて Matrix build を実行する Github Actions の Workflow のサンプルを書いてみました。
+https://github.com/suzuki-shunsuke/example-github-actions-dynamic-matrix
+Monorepo で同じ Job を PR で変更されたものに対してだけ実行したい、 けど workflow をサービスごとに定義するのはめんどいみたいな場合に使えるかもしれません。
+勉強がてらちょっと書いてみて軽く動作確認しただけなので、バグってる、あるいは実用的ではないかもしれません。
+ここでは Monorepo の CI を GitHub Actions で実行する場合を考えます。
+GitHub Actions では path filter を用いて workflow の実行有無を制御することができます。 そこでサービスごとに workflow を作成し、 path filter を設定することでそのサービスが更新されたときのみそのサービスの CI を実行するということが簡単にできます。
+しかし多くのサービスが含まれる Monorepo で各サービスに同じ Job を実行したい場合を考えてみましょう。 その場合サービスを追加するたびに workflow を追加していく必要があります。 まぁ .github/workflows 配下に 1 つ YAML をコピペで作成するだけといえばそれまでなのですが、それすらも省略したいとしましょう。
+Terraform の CI/CD を CodeBuild に移行した話では CodeBuild の Batch Build の buildspec を PR で変更されたファイルおよび PR Label に応じて動的に生成しています。 これの良いところは、サービスを追加したり、リネームしたり、削除したりしても CI をイジる必要がまったくないところです。</description>
+    </item>
+    
+    <item>
+      <title>terraform init で lock ファイルが更新される問題の対応</title>
+      <link>https://techblog-szksh-cloud.github.io/terraform-providers-lock/</link>
+      <pubDate>Sat, 24 Apr 2021 21:57:27 +0900</pubDate>
+      
+      <guid>https://techblog-szksh-cloud.github.io/terraform-providers-lock/</guid>
+      <description>Terraform v0.14 で local で terraform init すると lock ファイルが更新されてしまう問題に対応しました。
+結論を最初に言うと、 100 以上の Terraform 環境をいい感じに v0.14 に upgrade した方法で紹介している方法で Renovate で Terraform Provider を update する際に terraform init -upgrade を実行して lock ファイルを更新してコミット・プッシュしているのですが、 その際に terraform providers lock -platform=darwin_amd64 を実行するようにしました。
+Terraform v0.14 で lock ファイル .terraform.lock.hcl が導入されました。 Renovate で Terraform Provider を update する際にも lock ファイルを更新する必要があるので、 terraform init -upgrade を実行して lock ファイルを更新してコミット・プッシュしています。 なのですが、ローカルで terraform init を実行するとなんか lock ファイルが更新されることが良くありました。しばらく放置していたのですが、 developer から「なんかファイル更新されたんだけど、これコミットしていいの？」と聞かれ、このまま放っておいて困惑させたりもやっとさせたりするのは良くないなと思い、調べてみました。
+lock ファイルについて .</description>
+    </item>
+    
+    <item>
+      <title>Terraform Module の Template という使い方</title>
+      <link>https://techblog-szksh-cloud.github.io/terraform-module-template/</link>
+      <pubDate>Sat, 03 Apr 2021 11:04:25 +0900</pubDate>
+      
+      <guid>https://techblog-szksh-cloud.github.io/terraform-module-template/</guid>
+      <description>Terraform Module の使い方として Terraform Module のテンプレートをコピペして使うというアプローチを紹介します。
+Terraform の設定ファイル(以下 tfファイル) を書く際、毎回一から書くのは大変です。 多くの場合、既存のコードを再利用したほうが楽でしょう。
+Terraform のコードの再利用の仕組みとして、 Module があります。 Module は勿論便利なのですが、使い方には注意が必要で、「安易に Module 化するな。使うな」というふうな考え方もあるでしょう。 自分も基本的に同意見で、 Module を共用するようになると Module への変更がしづらくなったり、パラメータがどんどん増えて複雑になったりします。
+例えば次のように共用の local Module を作成するアプローチがあります。
+modules/ lambda-base/ README.md main.tf variables.tf outputs.tf services/ foo/ staging/ main.tf # リポジトリ直下の modules/lambda-base を参照 production/ main.tf # リポジトリ直下の modules/lambda-base を参照 こうすると modules 配下の Module を変更した際にその Module を使っているすべてのサービスに影響が出てしまい、 サービスのオーナーが様々だったり、曖昧だったり不在だったりすると変更が難しいですし、どんどん Module が複雑になったりします。
+Module を別のリポジトリでバージョニングして管理し、バージョンを指定するようにするというやり方もありますが、 結構複雑というか考えることが多いアプローチだとは思います。
+Terraform にそこまで詳しくない developer にも書いてもらうとなると、シンプルなアプローチにするのが望ましいでしょう(当然これは組織によりますが)。
+そこで Module のテンプレートを用意し、 Module を使いたくなったらそれをコピペして使うというアプローチがあります。 例えば lambda-base という Module の Template を foo というサービスの staging 環境と production 環境で使う場合、次のような感じになります。</description>
+    </item>
+    
+  </channel>
+</rss>

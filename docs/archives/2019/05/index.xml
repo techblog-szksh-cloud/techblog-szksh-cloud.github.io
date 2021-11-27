@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>2019/05 on melody</title>
+    <link>https://techblog-szksh-cloud.github.io/archives/2019/05/</link>
+    <description>Recent content in 2019/05 on melody</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>jp</language><atom:link href="https://techblog-szksh-cloud.github.io/archives/2019/05/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>go-jsoneq - 2つの値がJSONとして等しいか比較するGoライブラリ</title>
+      <link>https://techblog-szksh-cloud.github.io/go-jsoneq/</link>
+      <pubDate>Thu, 23 May 2019 11:43:18 +0900</pubDate>
+      
+      <guid>https://techblog-szksh-cloud.github.io/go-jsoneq/</guid>
+      <description>https://github.com/suzuki-shunsuke/go-jsoneq
+2つの値がJSONとして等しいか比較するGoライブラリを開発したので紹介します。
+「2つの値がJSONとして等しい」とは、2つの値をそれぞれJSON文字列に変換したら、2つが表現するデータがおなじになるという意味です。
+struct { Foo string `json:&amp;#34;foo&amp;#34;` }{ Foo: &amp;#34;bar&amp;#34;, } と
+map[string]interface{}{&amp;#34;foo&amp;#34;: &amp;#34;bar&amp;#34;} を JSON に変換したらともに
+{&amp;#34;foo&amp;#34;: &amp;#34;bar&amp;#34;} になりますね。
+json.Marshaler のテストや、 実際の JSON 文字列から構造体を定義したときにちゃんと定義できているかチェックするのに使えると思います。
+jsoneq.Equal でやっていることは単純です。
+ json.Marshal で []byte に変換 json.Unmarshal で []byte を map, array と primitive な型からなるオブジェクト(?)に変換 reflect.DeepEqual で比較  引数が []byte の場合は 1 は飛ばします。
+GoDoc やサンプルを見れば使い方は簡単にわかると思います。
+以上、簡単ですが、自作ライブラリの紹介でした。</description>
+    </item>
+    
+  </channel>
+</rss>

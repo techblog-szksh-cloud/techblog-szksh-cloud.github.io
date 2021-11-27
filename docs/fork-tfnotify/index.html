@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/fork-tfnotify/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>tfnotify を fork した - melody</title>
+    
+<meta name="description" content="mercari/tfnotify を Fork して 2 つほど OSS を作りました。 https://github.com/suzuki-shunsuke/tfnotify - tfnotify と互換性あり https://github.com/suzuki-shunsuke/tfcmt - tfnotify と互換性がない  開発の経緯 これまで tfnotify を便利に使わせてもらってたのですが、幾つか改善したいと思うところがあり、本家に PR を投げました。 しかし残念ながらこれまでのところ反応がなく、そこまで本家が活発ではないこと、また他にも色々改修したいところがあったことから、自分でフォークしてメンテすることにしました。 最初は互換性を維持しながら suzuki-shunsuke/tfnotify を開発していました(今もしています)。 しかし、開発を進めるに連れ、自分にとって必要のないプラットフォームなどに関するコードが邪魔であると感じ、それらを消したバージョンを別に開発することにしました。 互換性がなくなることから、名前も変えて tfcmt としました。https://github.com/suzuki-shunsuke/tfcmtこういった経緯から、 tfcmt のほうを優先的に開発していますが、 tfcmt で実装した機能を後から suzuki-shunsuke/tfnotify にも実装してたりもします。Fork 元のバージョン suzuki-shunsuke/tfnotify は mercari/tfnotify v0.7.0 fb178d8 をフォークしました。 一方 tfcmt は suzuki-shunsuke/tfnotify v1.3.3 をフォークしました。mercari/tfnotify との違い 本家との違いは Release Note とドキュメントを参照してください。 suzuki-shunsuke/tfnotify  https://github.com/suzuki-shunsuke/tfnotify/releases https://github.com/suzuki-shunsuke/tfnotify/blob/master/COMPARED_WITH_TFNOTIFY.md   suzuki-shunsuke/tfcmt  https://github.com/suzuki-shunsuke/tfcmt/releases https://github.">
+
+<meta property="og:title" content="tfnotify を fork した - melody">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://techblog-szksh-cloud.github.io/fork-tfnotify/">
+<meta property="og:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+<meta property="og:site_name" content="melody">
+<meta property="og:description" content="mercari/tfnotify を Fork して 2 つほど OSS を作りました。 https://github.com/suzuki-shunsuke/tfnotify - tfnotify と互換性あり https://github.com/suzuki-shunsuke/tfcmt - tfnotify と互換性がない  開発の経緯 これまで tfnotify を便利に使わせてもらってたのですが、幾つか改善したいと思うところがあり、本家に PR を投げました。 しかし残念ながらこれまでのところ反応がなく、そこまで本家が活発ではないこと、また他にも色々改修したいところがあったことから、自分でフォークしてメンテすることにしました。 最初は互換性を維持しながら suzuki-shunsuke/tfnotify を開発していました(今もしています)。 しかし、開発を進めるに連れ、自分にとって必要のないプラットフォームなどに関するコードが邪魔であると感じ、それらを消したバージョンを別に開発することにしました。 互換性がなくなることから、名前も変えて tfcmt としました。https://github.com/suzuki-shunsuke/tfcmtこういった経緯から、 tfcmt のほうを優先的に開発していますが、 tfcmt で実装した機能を後から suzuki-shunsuke/tfnotify にも実装してたりもします。Fork 元のバージョン suzuki-shunsuke/tfnotify は mercari/tfnotify v0.7.0 fb178d8 をフォークしました。 一方 tfcmt は suzuki-shunsuke/tfnotify v1.3.3 をフォークしました。mercari/tfnotify との違い 本家との違いは Release Note とドキュメントを参照してください。 suzuki-shunsuke/tfnotify  https://github.com/suzuki-shunsuke/tfnotify/releases https://github.com/suzuki-shunsuke/tfnotify/blob/master/COMPARED_WITH_TFNOTIFY.md   suzuki-shunsuke/tfcmt  https://github.com/suzuki-shunsuke/tfcmt/releases https://github.">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="melody">
+<meta name="twitter:url" content="https://techblog-szksh-cloud.github.io/fork-tfnotify/">
+<meta name="twitter:title" content="tfnotify を fork した - melody">
+<meta name="twitter:description" content="mercari/tfnotify を Fork して 2 つほど OSS を作りました。 https://github.com/suzuki-shunsuke/tfnotify - tfnotify と互換性あり https://github.com/suzuki-shunsuke/tfcmt - tfnotify と互換性がない  開発の経緯 これまで tfnotify を便利に使わせてもらってたのですが、幾つか改善したいと思うところがあり、本家に PR を投げました。 しかし残念ながらこれまでのところ反応がなく、そこまで本家が活発ではないこと、また他にも色々改修したいところがあったことから、自分でフォークしてメンテすることにしました。 最初は互換性を維持しながら suzuki-shunsuke/tfnotify を開発していました(今もしています)。 しかし、開発を進めるに連れ、自分にとって必要のないプラットフォームなどに関するコードが邪魔であると感じ、それらを消したバージョンを別に開発することにしました。 互換性がなくなることから、名前も変えて tfcmt としました。https://github.com/suzuki-shunsuke/tfcmtこういった経緯から、 tfcmt のほうを優先的に開発していますが、 tfcmt で実装した機能を後から suzuki-shunsuke/tfnotify にも実装してたりもします。Fork 元のバージョン suzuki-shunsuke/tfnotify は mercari/tfnotify v0.7.0 fb178d8 をフォークしました。 一方 tfcmt は suzuki-shunsuke/tfnotify v1.3.3 をフォークしました。mercari/tfnotify との違い 本家との違いは Release Note とドキュメントを参照してください。 suzuki-shunsuke/tfnotify  https://github.com/suzuki-shunsuke/tfnotify/releases https://github.com/suzuki-shunsuke/tfnotify/blob/master/COMPARED_WITH_TFNOTIFY.md   suzuki-shunsuke/tfcmt  https://github.com/suzuki-shunsuke/tfcmt/releases https://github.">
+<meta name="twitter:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https:\/\/techblog-szksh-cloud.github.io\/"
+    },
+    "headline": "tfnotify を fork した - melody",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https:\/\/techblog-szksh-cloud.github.io\/images\/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2021-01-02T19:42:10JST",
+    "dateModified": "2021-01-02T19:42:10JST",
+    "author": {
+      "@type": "Person",
+      "name": "melody"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "melody",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https:\/\/techblog-szksh-cloud.github.io\/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "mercari\/tfnotify を Fork して 2 つほど OSS を作りました。\n https:\/\/github.com\/suzuki-shunsuke\/tfnotify - tfnotify と互換性あり https:\/\/github.com\/suzuki-shunsuke\/tfcmt - tfnotify と互換性がない  開発の経緯 これまで tfnotify を便利に使わせてもらってたのですが、幾つか改善したいと思うところがあり、本家に PR を投げました。 しかし残念ながらこれまでのところ反応がなく、そこまで本家が活発ではないこと、また他にも色々改修したいところがあったことから、自分でフォークしてメンテすることにしました。 最初は互換性を維持しながら suzuki-shunsuke\/tfnotify を開発していました(今もしています)。 しかし、開発を進めるに連れ、自分にとって必要のないプラットフォームなどに関するコードが邪魔であると感じ、それらを消したバージョンを別に開発することにしました。 互換性がなくなることから、名前も変えて tfcmt としました。\nhttps:\/\/github.com\/suzuki-shunsuke\/tfcmt\nこういった経緯から、 tfcmt のほうを優先的に開発していますが、 tfcmt で実装した機能を後から suzuki-shunsuke\/tfnotify にも実装してたりもします。\nFork 元のバージョン suzuki-shunsuke\/tfnotify は mercari\/tfnotify v0.7.0 fb178d8 をフォークしました。 一方 tfcmt は suzuki-shunsuke\/tfnotify v1.3.3 をフォークしました。\nmercari\/tfnotify との違い 本家との違いは Release Note とドキュメントを参照してください。\n suzuki-shunsuke\/tfnotify  https:\/\/github.com\/suzuki-shunsuke\/tfnotify\/releases https:\/\/github.com\/suzuki-shunsuke\/tfnotify\/blob\/master\/COMPARED_WITH_TFNOTIFY.md   suzuki-shunsuke\/tfcmt  https:\/\/github.com\/suzuki-shunsuke\/tfcmt\/releases https:\/\/github."
+  }
+</script>
+
+
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://techblog-szksh-cloud.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li class="active">tfnotify を fork した</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2021-01-02T19:42:10JST">Jan 2, 2021</time></li>
+      
+      
+    </ul>
+
+    <h1 class="title">tfnotify を fork した</h1>
+    
+    
+    <section>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/oss/">oss</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/terraform/">terraform</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </header>
+
+  
+
+  <div class="article-body"><p><a href="https://github.com/mercari/tfnotify">mercari/tfnotify</a> を Fork して 2 つほど OSS を作りました。</p>
+<ul>
+<li><a href="https://github.com/suzuki-shunsuke/tfnotify">https://github.com/suzuki-shunsuke/tfnotify</a> - tfnotify と互換性あり</li>
+<li><a href="https://github.com/suzuki-shunsuke/tfcmt">https://github.com/suzuki-shunsuke/tfcmt</a> - tfnotify と互換性がない</li>
+</ul>
+<h2 id="開発の経緯">開発の経緯</h2>
+<p>これまで tfnotify を便利に使わせてもらってたのですが、幾つか改善したいと思うところがあり、本家に PR を投げました。
+しかし残念ながらこれまでのところ反応がなく、そこまで本家が活発ではないこと、また他にも色々改修したいところがあったことから、自分でフォークしてメンテすることにしました。
+最初は互換性を維持しながら <a href="https://github.com/suzuki-shunsuke/tfnotify">suzuki-shunsuke/tfnotify</a> を開発していました(今もしています)。
+しかし、開発を進めるに連れ、自分にとって必要のないプラットフォームなどに関するコードが邪魔であると感じ、それらを消したバージョンを別に開発することにしました。
+互換性がなくなることから、名前も変えて tfcmt としました。</p>
+<p><a href="https://github.com/suzuki-shunsuke/tfcmt">https://github.com/suzuki-shunsuke/tfcmt</a></p>
+<p>こういった経緯から、 tfcmt のほうを優先的に開発していますが、 tfcmt で実装した機能を後から suzuki-shunsuke/tfnotify にも実装してたりもします。</p>
+<h2 id="fork-元のバージョン">Fork 元のバージョン</h2>
+<p><a href="https://github.com/suzuki-shunsuke/tfnotify">suzuki-shunsuke/tfnotify</a> は <a href="https://github.com/mercari/tfnotify/releases/tag/v0.7.0">mercari/tfnotify v0.7.0</a> <a href="https://github.com/mercari/tfnotify/commit/fb178d8a5a51f88a51b7fda93ed5443ff56dfc8f">fb178d8</a> をフォークしました。
+一方 tfcmt は <a href="https://github.com/suzuki-shunsuke/tfnotify/releases/tag/v1.3.3">suzuki-shunsuke/tfnotify v1.3.3</a> をフォークしました。</p>
+<h2 id="mercaritfnotify-との違い">mercari/tfnotify との違い</h2>
+<p>本家との違いは Release Note とドキュメントを参照してください。</p>
+<ul>
+<li>suzuki-shunsuke/tfnotify
+<ul>
+<li><a href="https://github.com/suzuki-shunsuke/tfnotify/releases">https://github.com/suzuki-shunsuke/tfnotify/releases</a></li>
+<li><a href="https://github.com/suzuki-shunsuke/tfnotify/blob/master/COMPARED_WITH_TFNOTIFY.md">https://github.com/suzuki-shunsuke/tfnotify/blob/master/COMPARED_WITH_TFNOTIFY.md</a></li>
+</ul>
+</li>
+<li>suzuki-shunsuke/tfcmt
+<ul>
+<li><a href="https://github.com/suzuki-shunsuke/tfcmt/releases">https://github.com/suzuki-shunsuke/tfcmt/releases</a></li>
+<li><a href="https://github.com/suzuki-shunsuke/tfcmt/blob/master/COMPARED_WITH_TFNOTIFY.md">https://github.com/suzuki-shunsuke/tfcmt/blob/master/COMPARED_WITH_TFNOTIFY.md</a></li>
+</ul>
+</li>
+</ul>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/oss/">oss</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/terraform/">terraform</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/buildflow-why-tengo/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>buildflow ではなぜ Tengo を採用しているのか - melody</title>
+    
+<meta name="description" content="buildflow というツールを開発しているので buildflow というタグをつけて何回かに分けてブログを書きます。この記事では buildflow でなぜ Tengo を採用しているのかについて説明します。https://github.com/d5/tengoTengo に関しては https://techblog.szksh.cloud/buildflow-1/ でも多少触れています。なぜ Tengo を採用しているのかに関しては なぜスクリプト言語を採用しているのか なぜ他の言語ではなく Tengo なのか  の 2 つの観点で話します。なぜスクリプト言語を採用しているのか 逆にスクリプト言語を採用しない方法としては、 YAML などで独自 DSL のようなものを定義する方法があります。 DSL と言うと大げさかもしれませんが、 AND, OR, NOT といった論理を YAML のようなデータ記述言語で表現しようと思うとそんな感じになると思います。この方法は扱いたいロジックが単純なものに限られるのであれば問題ないですが、 より柔軟なロジックを表現したいとなった場合に、無理があります。 どうやって表現すればいいのか自分で考えないといけない  どう頑張っても独自ルールになるため、ユーザーにとって直感的とは言えない   正しく実装しないといけない 仕様をドキュメント化しないといけない  一方、 Go では幾つかのスクリプト言語がサードパーティのライブラリとして実装されており、 buildflow のようなツールに組み込むことが出来ます。https://github.com/avelino/awesome-go#embeddable-scripting-languagesこれらを活用すれば上記の問題は解決できるうえに、非常に柔軟にロジックを実装できます(勿論言語によりますが)。なぜ他の言語ではなく Tengo なのか 単純に https://github.com/avelino/awesome-go#embeddable-scripting-languages で紹介されているライブラリの中で一番要件にマッチしてそうだったからです。 といっても全てをちゃんとチェックしたわけではありませんが。 Lua とかもあるのでそれでも良かったかもですが、自分は Lua を全然知りません。 あとちゃんとバージョンニングされていたのも理由の一つです。 Tengo より人気のある言語もありましたが、バージョニングされてないという理由で見送ったりしました。">
+
+<meta property="og:title" content="buildflow ではなぜ Tengo を採用しているのか - melody">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://techblog-szksh-cloud.github.io/buildflow-why-tengo/">
+<meta property="og:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+<meta property="og:site_name" content="melody">
+<meta property="og:description" content="buildflow というツールを開発しているので buildflow というタグをつけて何回かに分けてブログを書きます。この記事では buildflow でなぜ Tengo を採用しているのかについて説明します。https://github.com/d5/tengoTengo に関しては https://techblog.szksh.cloud/buildflow-1/ でも多少触れています。なぜ Tengo を採用しているのかに関しては なぜスクリプト言語を採用しているのか なぜ他の言語ではなく Tengo なのか  の 2 つの観点で話します。なぜスクリプト言語を採用しているのか 逆にスクリプト言語を採用しない方法としては、 YAML などで独自 DSL のようなものを定義する方法があります。 DSL と言うと大げさかもしれませんが、 AND, OR, NOT といった論理を YAML のようなデータ記述言語で表現しようと思うとそんな感じになると思います。この方法は扱いたいロジックが単純なものに限られるのであれば問題ないですが、 より柔軟なロジックを表現したいとなった場合に、無理があります。 どうやって表現すればいいのか自分で考えないといけない  どう頑張っても独自ルールになるため、ユーザーにとって直感的とは言えない   正しく実装しないといけない 仕様をドキュメント化しないといけない  一方、 Go では幾つかのスクリプト言語がサードパーティのライブラリとして実装されており、 buildflow のようなツールに組み込むことが出来ます。https://github.com/avelino/awesome-go#embeddable-scripting-languagesこれらを活用すれば上記の問題は解決できるうえに、非常に柔軟にロジックを実装できます(勿論言語によりますが)。なぜ他の言語ではなく Tengo なのか 単純に https://github.com/avelino/awesome-go#embeddable-scripting-languages で紹介されているライブラリの中で一番要件にマッチしてそうだったからです。 といっても全てをちゃんとチェックしたわけではありませんが。 Lua とかもあるのでそれでも良かったかもですが、自分は Lua を全然知りません。 あとちゃんとバージョンニングされていたのも理由の一つです。 Tengo より人気のある言語もありましたが、バージョニングされてないという理由で見送ったりしました。">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="melody">
+<meta name="twitter:url" content="https://techblog-szksh-cloud.github.io/buildflow-why-tengo/">
+<meta name="twitter:title" content="buildflow ではなぜ Tengo を採用しているのか - melody">
+<meta name="twitter:description" content="buildflow というツールを開発しているので buildflow というタグをつけて何回かに分けてブログを書きます。この記事では buildflow でなぜ Tengo を採用しているのかについて説明します。https://github.com/d5/tengoTengo に関しては https://techblog.szksh.cloud/buildflow-1/ でも多少触れています。なぜ Tengo を採用しているのかに関しては なぜスクリプト言語を採用しているのか なぜ他の言語ではなく Tengo なのか  の 2 つの観点で話します。なぜスクリプト言語を採用しているのか 逆にスクリプト言語を採用しない方法としては、 YAML などで独自 DSL のようなものを定義する方法があります。 DSL と言うと大げさかもしれませんが、 AND, OR, NOT といった論理を YAML のようなデータ記述言語で表現しようと思うとそんな感じになると思います。この方法は扱いたいロジックが単純なものに限られるのであれば問題ないですが、 より柔軟なロジックを表現したいとなった場合に、無理があります。 どうやって表現すればいいのか自分で考えないといけない  どう頑張っても独自ルールになるため、ユーザーにとって直感的とは言えない   正しく実装しないといけない 仕様をドキュメント化しないといけない  一方、 Go では幾つかのスクリプト言語がサードパーティのライブラリとして実装されており、 buildflow のようなツールに組み込むことが出来ます。https://github.com/avelino/awesome-go#embeddable-scripting-languagesこれらを活用すれば上記の問題は解決できるうえに、非常に柔軟にロジックを実装できます(勿論言語によりますが)。なぜ他の言語ではなく Tengo なのか 単純に https://github.com/avelino/awesome-go#embeddable-scripting-languages で紹介されているライブラリの中で一番要件にマッチしてそうだったからです。 といっても全てをちゃんとチェックしたわけではありませんが。 Lua とかもあるのでそれでも良かったかもですが、自分は Lua を全然知りません。 あとちゃんとバージョンニングされていたのも理由の一つです。 Tengo より人気のある言語もありましたが、バージョニングされてないという理由で見送ったりしました。">
+<meta name="twitter:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https:\/\/techblog-szksh-cloud.github.io\/"
+    },
+    "headline": "buildflow ではなぜ Tengo を採用しているのか - melody",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https:\/\/techblog-szksh-cloud.github.io\/images\/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2020-10-17T22:35:56JST",
+    "dateModified": "2020-10-17T22:35:56JST",
+    "author": {
+      "@type": "Person",
+      "name": "melody"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "melody",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https:\/\/techblog-szksh-cloud.github.io\/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "buildflow というツールを開発しているので buildflow というタグをつけて何回かに分けてブログを書きます。\nこの記事では buildflow でなぜ Tengo を採用しているのかについて説明します。\nhttps:\/\/github.com\/d5\/tengo\nTengo に関しては https:\/\/techblog.szksh.cloud\/buildflow-1\/ でも多少触れています。\nなぜ Tengo を採用しているのかに関しては\n なぜスクリプト言語を採用しているのか なぜ他の言語ではなく Tengo なのか  の 2 つの観点で話します。\nなぜスクリプト言語を採用しているのか 逆にスクリプト言語を採用しない方法としては、 YAML などで独自 DSL のようなものを定義する方法があります。 DSL と言うと大げさかもしれませんが、 AND, OR, NOT といった論理を YAML のようなデータ記述言語で表現しようと思うとそんな感じになると思います。\nこの方法は扱いたいロジックが単純なものに限られるのであれば問題ないですが、 より柔軟なロジックを表現したいとなった場合に、無理があります。\n どうやって表現すればいいのか自分で考えないといけない  どう頑張っても独自ルールになるため、ユーザーにとって直感的とは言えない   正しく実装しないといけない 仕様をドキュメント化しないといけない  一方、 Go では幾つかのスクリプト言語がサードパーティのライブラリとして実装されており、 buildflow のようなツールに組み込むことが出来ます。\nhttps:\/\/github.com\/avelino\/awesome-go#embeddable-scripting-languages\nこれらを活用すれば上記の問題は解決できるうえに、非常に柔軟にロジックを実装できます(勿論言語によりますが)。\nなぜ他の言語ではなく Tengo なのか 単純に https:\/\/github.com\/avelino\/awesome-go#embeddable-scripting-languages で紹介されているライブラリの中で一番要件にマッチしてそうだったからです。 といっても全てをちゃんとチェックしたわけではありませんが。 Lua とかもあるのでそれでも良かったかもですが、自分は Lua を全然知りません。 あとちゃんとバージョンニングされていたのも理由の一つです。 Tengo より人気のある言語もありましたが、バージョニングされてないという理由で見送ったりしました。"
+  }
+</script>
+
+
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://techblog-szksh-cloud.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li class="active">buildflow ではなぜ Tengo を採用しているのか</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2020-10-17T22:35:56JST">Oct 17, 2020</time></li>
+      
+      
+    </ul>
+
+    <h1 class="title">buildflow ではなぜ Tengo を採用しているのか</h1>
+    
+    
+    <section>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/oss/">oss</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/buildflow/">buildflow</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </header>
+
+  
+
+  <div class="article-body"><p>buildflow というツールを開発しているので <code>buildflow</code> というタグをつけて何回かに分けてブログを書きます。</p>
+<p>この記事では buildflow でなぜ Tengo を採用しているのかについて説明します。</p>
+<p><a href="https://github.com/d5/tengo">https://github.com/d5/tengo</a></p>
+<p>Tengo に関しては <a href="https://techblog.szksh.cloud/buildflow-1/">https://techblog.szksh.cloud/buildflow-1/</a> でも多少触れています。</p>
+<p>なぜ Tengo を採用しているのかに関しては</p>
+<ul>
+<li>なぜスクリプト言語を採用しているのか</li>
+<li>なぜ他の言語ではなく Tengo なのか</li>
+</ul>
+<p>の 2 つの観点で話します。</p>
+<h2 id="なぜスクリプト言語を採用しているのか">なぜスクリプト言語を採用しているのか</h2>
+<p>逆にスクリプト言語を採用しない方法としては、 YAML などで独自 DSL のようなものを定義する方法があります。
+DSL と言うと大げさかもしれませんが、 AND, OR, NOT といった論理を YAML のようなデータ記述言語で表現しようと思うとそんな感じになると思います。</p>
+<p>この方法は扱いたいロジックが単純なものに限られるのであれば問題ないですが、
+より柔軟なロジックを表現したいとなった場合に、無理があります。</p>
+<ul>
+<li>どうやって表現すればいいのか自分で考えないといけない
+<ul>
+<li>どう頑張っても独自ルールになるため、ユーザーにとって直感的とは言えない</li>
+</ul>
+</li>
+<li>正しく実装しないといけない</li>
+<li>仕様をドキュメント化しないといけない</li>
+</ul>
+<p>一方、 Go では幾つかのスクリプト言語がサードパーティのライブラリとして実装されており、 buildflow のようなツールに組み込むことが出来ます。</p>
+<p><a href="https://github.com/avelino/awesome-go#embeddable-scripting-languages">https://github.com/avelino/awesome-go#embeddable-scripting-languages</a></p>
+<p>これらを活用すれば上記の問題は解決できるうえに、非常に柔軟にロジックを実装できます(勿論言語によりますが)。</p>
+<h2 id="なぜ他の言語ではなく-tengo-なのか">なぜ他の言語ではなく Tengo なのか</h2>
+<p>単純に <a href="https://github.com/avelino/awesome-go#embeddable-scripting-languages">https://github.com/avelino/awesome-go#embeddable-scripting-languages</a> で紹介されているライブラリの中で一番要件にマッチしてそうだったからです。
+といっても全てをちゃんとチェックしたわけではありませんが。
+Lua とかもあるのでそれでも良かったかもですが、自分は Lua を全然知りません。
+あとちゃんとバージョンニングされていたのも理由の一つです。
+Tengo より人気のある言語もありましたが、バージョニングされてないという理由で見送ったりしました。</p>
+<p>実は Tengo の前に他の言語 <a href="https://github.com/antonmedv/expr">antonmedv/expr</a> を採用していたのですが、途中で表現力が足りてないので移行しました。
+github-comment でも antonmedv/expr は使ってますし、便利ではあるのですが、
+変数が宣言できず、基本ワンライナーで書くしかないので無理だなと判断しました。</p>
+<p><a href="https://github.com/suzuki-shunsuke/buildflow/issues/20">https://github.com/suzuki-shunsuke/buildflow/issues/20</a></p>
+<h2 id="buildflow-でスクリプト言語に求めているもの">buildflow でスクリプト言語に求めているもの</h2>
+<p>buildflow における Tengo の用途はあくまでロジックの記述、シェルスクリプトでは扱いにくい map 等の操作です。
+Tengo で外部コマンドを呼び出したりとかファイルを読み書きしたりとかそういうことは考えていません
+(てっきりそういうことが出来ない言語なのかと当初思っていましたが、できるようですね)。</p>
+<p>Tengo は Python や Ruby, Go といった言語に比べれば言語仕様がコンパクトであり、
+よく知らなくてもなんとなく読めるし、簡単にかけると思っています。</p>
+<p>また、 Tengo ではテキスト処理などに使える標準ライブラリが提供されています(これがないと辛かったけど、あるので十分)。</p>
+<p>なので今の所 Tengo で十分だと考えています。 Tengo よりリッチな言語があったとしても、今の所あまり移行するモチベーションはありません。</p>
+<h2 id="tengo-に関する不満">Tengo に関する不満</h2>
+<p>Tengo に関する不満を挙げると以下のようなものがあります。</p>
+<ul>
+<li>やはり認知度が低い</li>
+<li>linter などがない</li>
+<li>各種 editor で syntax highlight がない(issue はある) <a href="https://github.com/d5/tengo/issues/146">https://github.com/d5/tengo/issues/146</a></li>
+</ul>
+<p>情報が少ないのに関しては、言語仕様がシンプルなので個人的には今の所困ってません(公式ドキュメント読めば分かる</p>
+<h2 id="tengo-script-の実行-test">Tengo script の実行、 Test</h2>
+<p>よく知らない言語であれば、試しに実行してみたり、ちゃんとテストを書いたりしたいですよね。</p>
+<p>実行に関しては公式の方でツールがあったりします。</p>
+<ul>
+<li><a href="https://tengolang.com/">https://tengolang.com/</a></li>
+<li><a href="https://github.com/d5/tengo/blob/master/docs/tengo-cli.md">https://github.com/d5/tengo/blob/master/docs/tengo-cli.md</a></li>
+</ul>
+<p>テストに関しては簡単なツールを別に作りました <a href="https://github.com/suzuki-shunsuke/tengo-tester">https://github.com/suzuki-shunsuke/tengo-tester</a>
+従来シェルスクリプトでこういうロジックを実装しても「動けばいい」程度に考えていてテストは書かないことが多かったですが、
+ロジックだけを Tengo のスクリプトとして切り出し、テストツールも用意することでちゃんとテストを書くようになることを期待しています。</p>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/oss/">oss</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/buildflow/">buildflow</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

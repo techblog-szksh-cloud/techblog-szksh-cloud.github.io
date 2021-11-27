@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+<link rel="alternate" type="application/rss+xml" title="RSS" href="https://techblog-szksh-cloud.github.io/index.xml">
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>melody</title>
+    
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    
+
+    <ul class="p-articles">
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2019-02-01T22:26:13JST">Feb 1, 2019</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/golang-logging-error-handling-practice-0.2.0/">go-error-handling-logging-practice v0.2</a></h2>
+  </header>
+
+  
+  <div class="summary">以前 Golang のロギング・エラーハンドリングについて書きました。
+ https://suzuki-shunsuke.github.io/golang-logging-error-handling-practice/ https://github.com/suzuki-shunsuke/go-error-handling-logging-practice  それを少し v0.1 から v0.2 に互換性を壊す形でアップデートしようかと思います。 本記事ではその変更点について書きます。
+変更点 関数のエラーに情報を付与する責務を関数に割り当てていたものを、呼び出し元に割り当てるようにします。
+具体的には元々
+func createUser(name string, age int) error { return errlog.Wrap(checkName(name), logrus.Fields{&#34;age&#34;: age}, &#34;failed to create a user&#34;) } だったものが
+func createUser(name string, age int) error { return errlog.Wrap(checkName(name), nil, &#34;user name is invalid&#34;) } になります。
+変更理由 メタ情報のフィールド名はコンテキストに依存します。 上記の例だとユーザー名というメタ情報のフィールド名は name より user_name や admin_name, owner_name としたほうが適切かもしれません。それは関数内部では分からず、呼び出し元でないと分かりません。呼び出し元でないとフィールド名の衝突が避けられないこともあるでしょう。
+メッセージに関しても同様のことが言えます。 また、元々 v0.1 ではユーザーが定義した関数と
+ 標準関数やサードパーティのライブラリなど、プロジェクト外部で定義された関数 interface の関数やメソッド  を区別し、前者では関数側でエラーに情報を付与させる一方、後者では呼び出し元で情報を付与させるというふうにしていました。</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/golang-logging-error-handling-practice-0.2.0/" title="go-error-handling-logging-practice v0.2">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2019-01-25T22:38:28JST">Jan 25, 2019</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/terraform-provider-graylog-import/">Terraform Providerで import を実装する方法</a></h2>
+  </header>
+
+  
+  <div class="summary">terraform provider graylog で alert condition と stream rule の import を実装しました。
+ https://github.com/suzuki-shunsuke/go-graylog/pull/59 https://github.com/suzuki-shunsuke/go-graylog/pull/60  そこで import を実装する方法を紹介したいと思います。
+terraform でリソースをimportするにはリソースがimportをサポートしている必要があります。 schema.Resource の Importer フィールドですね。リソースがIDだけでGet出来る場合、schema.ImportStatePassthroughを使えば終わりです。 一方、Graylogのalert condition や stream rule はIDだけでなく、stream id も必要になります。 terraform import コマンドは1つの引数しか取らないため、サポートできないのでは？と以前まで思っていました。 そういった場合、次のようにStateFuncを実装すればサポートできます。
+https://github.com/suzuki-shunsuke/go-graylog/pull/59/commits/baee1165f49d2bc21b6ea7551ceff6b7daf01543#diff-f41be2a3640efd12ad4e808d77c5c8d5
+# &quot;/&quot; で区切って stream id と ID を渡す $ terraform import graylog_alarm_callback.test 5bb1b4b5c9e77bbbbbbbbbbb/5c4acaefc9e77bbbbbbbbbbb 区切り文字は何でも良いのでしょうが、公式のprovider が &ldquo;/&rdquo; で区切っていたのでそれに従うことにしました。
+https://www.terraform.io/docs/providers/google/r/spanner_database.html#import
+https://godoc.org/github.com/hashicorp/terraform/helper/schema#ImportStatePassthrough の実装を見てみれば分かりますが、 StateFunc の中では GET API を叩いてリソースを取得したりはしません。 terraform import コマンドの標準出力を見ると分かりますが refresh を実行しているのでそこでGETしているようです。 StateFunc は *schema.</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/terraform-provider-graylog-import/" title="Terraform Providerで import を実装する方法">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2019-01-20T12:27:26JST">Jan 20, 2019</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/downgrade-github-plan/">GithubをFree Planにダウングレードした</a></h2>
+  </header>
+
+  
+  <div class="summary">GitHub のプラン体系が変わり、無料プランでも無制限でprivate repositoryが作れるようになりました。
+https://github.blog/2019-01-07-new-year-new-github/
+そこで無料プランにダウングレードすることにしました。
+ https://help.github.com/articles/downgrading-your-github-billing-plan/ https://blog.jnito.com/entry/2019/01/09/081913  無料プランではwikiはpublic repositoryでしか使えないので、 private repository の wiki を 移行することにしました。
+private なソースコード(サービス)のためのwikiではなく、 個人的なメモが書いてあるだけだったので移行することに特に問題はありませんでした。
+全 private repository の wiki を clone そこでまずはそういった wiki を clone して一つのリポジトリにまとめることにしました。
+https://github.com/suzuki-shunsuke/foo の wiki は https://github.com/suzuki-shunsuke/foo.wiki で clone できます。
+次のようなコマンドを実行し、private repositoryのwikiを全部cloneしました。
+https://developer.github.com/v3/repos/#list-your-repositories
+curl &#34;https://api.github.com/user/repos?access_token=$GITHUB_TOKEN&amp;visibility=private&#34; | jq -r &#39;.[].html_url&#39; | xargs -I{} -n 1 git clone {}.wiki wikiが存在しないものに関しては clone に失敗します。 API で wiki のリストが取得できると良かったんですが、 wikiに関するAPIはなさそうです。
+また /user/repos API のレスポンスの has_wiki はwikiが存在しなくても、wikiが無効化されてなければ true なようです。</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/downgrade-github-plan/" title="GithubをFree Planにダウングレードした">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-12-25T21:51:41JST">Dec 25, 2018</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/golang-logging-error-handling-practice/">Golangにおけるエラーハンドリングとロギングのプラクティス</a></h2>
+  </header>
+
+  
+  <div class="summary">2018-12-30 追記 この記事を元にドキュメントを書いてみました。
+https://github.com/suzuki-shunsuke/go-error-handling-logging-practice
+追記ここまで
+ Golang でエラーハンドリングとロギングをしてきて自分の中で固まりつつあるプラクティスを明文化します。 明文化することで以下のことを目指します。
+ 迷いをなくす コードの一貫性を保つ コーディング規約とすることでレビューの品質を上げる(自動化は出来ないけど) コードの品質を上げる(コードがゴチャつかなくなる) 適切にエラーをロギングする(必要十分な情報をログとして残す)  またエラーハンドリングとロギングのためのライブラリを自作しているのでそれも紹介します。
+https://github.com/suzuki-shunsuke/go-errlog
+ロギングに関する関連記事 この記事を書く前に軽くググってみただけでちゃんと読んでないのですが、 興味のある人は読んでみてください。
+ https://www.loggly.com/blog/think-differently-about-what-to-log-in-go-best-practices-examined/ https://dave.cheney.net/2015/11/05/lets-talk-about-logging https://postd.cc/go-best-practices-2016/#logging-and-instrumentation  ログレベルは分ける ログレベルでwarningとかいらないという意見もありますが、自分は必要だと思っています。 自分は以下のログレベルを使い分けます。
+ debug: あまり使わない。調査目的で一時的に埋め込むログ。調査が終わったら出力しないようにする。一時的でないものはinfoにする info: エラーでないログ。イベント、処理の開始時や終了を記録するのに使うことが多い warn: 4xx系のエラー。それが起こっただけではアラートを飛ばさないが、数が通常時より多い場合はバグかUIに問題があってユーザーが間違えやすくなっている可能性があるのでアラートを飛ばす error: 5xx系のエラー。アラートを飛ばす(閾値は調整) fatal: 処理継続が不可能な致命的なエラー。システムを止める  書いてから思いましたが、これに関しては標準的な使い分けのルールがありそうですね(要調査)。。
+logrus を使ってログを構造化する 前提としてwebシステムやバッチシステムなどを想定しています。CLIツールならば話は変わるでしょう。 JSONフォーマットで出力してfluentdでElasticsearchにフォワードするのが個人的によくあるパターンです。
+go-errlogもlogrusの使用を前提としています。
+ロギングのライブラリは他にも色々あるので、logrusで満足できない人は以下から探してみるとよいでしょう。
+https://github.com/avelino/awesome-go#logging
+エラーログは中央集権的に main に近い所で出力する エラーログをどこで出力するかですが、原則中央集権的に main に近い所で出力します。 因みに中央集権的という表現は echo の centralized error handling からもじっています。
+https://echo.labstack.com/guide/error-handling
+error が発生してもすぐログを吐くのではなく、error を関数の戻り値として返し、ロギングする責務を親に委譲します。 Goでは以下のようなイディオムがよく見られますね。
+if err != nil { return err } ロギングに必要な情報を戻り値のerrorに含める 上記のコードで問題なのは、エラーに関する情報が欠損することがあることです。</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/golang-logging-error-handling-practice/" title="Golangにおけるエラーハンドリングとロギングのプラクティス">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-12-19T21:02:11JST">Dec 19, 2018</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/graylog-alert-issue/">GraylogのAlertの課題</a></h2>
+  </header>
+
+  
+  <div class="summary">Graylogを運用してきて感じているAlert機能周りの課題をリストアップします。 自分のGraylogの理解が不十分で勘違いしている部分もあるかもしれませんが、ご了承ください。 Graylogのバージョンは 2.5.0 です。 ここでいう「メンション」とは、Slackのようなチャットツールのメンションを指します。 リストの詳細を書きだしてみたものの、リストだけでだいたい言いたいことが言えてしまっていたのと、単なる愚痴っぽくなってしまったので、 リストだけに留めます。
+2018-12-31 追記 元々 Alert Condition, Notification の APIがないと勘違いしていたのですが、 実はちゃんとあったので terraform で管理できるように go-graylog を更新しました。
+ https://github.com/suzuki-shunsuke/go-graylog/pull/50 https://github.com/suzuki-shunsuke/go-graylog/pull/52 https://github.com/suzuki-shunsuke/go-graylog/blob/v11.0.0/docs/resources/alarm_callback.md https://github.com/suzuki-shunsuke/go-graylog/blob/v11.0.0/docs/resources/alert_condition.md  課題リスト  APIでAlert Condition, Notificationを管理できない  APIがないので terraform でサポートも出来ない 数が増えるとWeb UIでは管理が辛い・修正漏れや設定ミスが出やすい   Condition, NotificationがStreamに紐づく  ConditionによってNotificationを変えられない  条件に応じてアラートの文面・通知先・メンション先・メンションの有無を変えられない (正確にはテンプレートエンジンで頑張ればある程度対応できるかもしれないが、個人的にはテンプレートそのものを切り替えたい)   ConditionやNotificationを複数のStreamで使い回せない   (少なくとも標準機能では)時間帯によってアラートの挙動を変更できない  夜中にはアラートを飛ばさない・メンションをつけないといったことが出来ない 一時的にアラートを止められない   Pluginを使うにしてもどれを使ったら良いか分からない  もっとGraylogがメジャーになれば状況も変わるかもしれない    </div>
+
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-12-07T08:22:49JST">Dec 7, 2018</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/graylog-terraform-ci/">Graylog の Terraform を CI/CDで実行する</a></h2>
+  </header>
+
+  
+  <div class="summary">以前 Graylog を Terraform で管理する記事を書きました。
+https://suzuki-shunsuke.github.io/graylog-terraform/
+今回はそれを CI/CD で実行できるようにした話です。
+ただし、今回の内容は Graylog に限らず Terraform を CI/CD で実行する方法として使えると思います。
+今回実現したのは以下のことです。
+ PR時にテストをする plan/* tag を push すると terraform plan が実行される apply/* tag を push すると terraform apply が実行され、tfstate がコミット、プッシュされる  ソースコード https://github.com/suzuki-shunsuke/example/tree/master/graylog-terraform に置いておきました。
+ https://github.com/suzuki-shunsuke/example/blob/master/graylog-terraform/role.tf#L13-L25 https://github.com/suzuki-shunsuke/example/blob/master/graylog-terraform/user.tf#L12-L21 https://github.com/suzuki-shunsuke/example/blob/master/graylog-terraform/.drone.yml https://github.com/suzuki-shunsuke/example/blob/master/graylog-terraform/terraform.tfvars.tpl https://github.com/suzuki-shunsuke/example/blob/master/graylog-terraform/drone_pipeline_commands/git.sh  CI/CD用の user, role を作成する まずは role を作成します。
+resource &quot;graylog_role&quot; &quot;terraform&quot; { name = &quot;terraform&quot; description = &quot;terraform&quot; permissions = [ &quot;dashboards:*&quot;, &quot;indexsets:*&quot;, &quot;inputs:*&quot;, &quot;roles:*&quot;, &quot;streams:*&quot;, &quot;users:*&quot;, ] } permission は terraform で管理するリソースのみ付与しますが、 それでも結構強い権限を付与するので取扱に注意してください。</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/graylog-terraform-ci/" title="Graylog の Terraform を CI/CDで実行する">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-12-06T23:08:04JST">Dec 6, 2018</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/ansible-molecule/">molecule でansible の role と playbook をテストする</a></h2>
+  </header>
+
+  
+  <div class="summary">ansible 専用の testing ツール molecule を紹介します。 molecule の公式ドキュメント以外の情報は少ないので、参考になれば幸いです。
+以前 Docker を使って ansible のテストをする方法を紹介しました。
+https://suzuki-shunsuke.github.io/test-ansible-on-docker/
+この際は Docker Compose と簡単なシェルスクリプトを使って実現しました。 これはこれでブラックボックスな部分がなく、学習コストも低くて悪くないので興味のある方はそちらもご参照ください。
+molecule は ansible 専用の testing ツールです。 基本的に playbook というより role 用のツールですが、playbookのテストも工夫すれば出来ます。
+ 情報が少ない 公式ドキュメントも分かりづらい部分がある コマンドがエラー吐いて失敗した際に、ググっても情報が出てこないので辛い  という風に辛い部分もありますが、
+ star数はそれなりにある ansible の公式のプロジェクトである https://github.com/ansible/molecule/ geerlingguy さんも使ってる  という風に良い面もあります。
+それでは使っていきましょう。
+インストール https://molecule.readthedocs.io/en/latest/installation.html
+$ pip install molecule Docker を使う場合 docker-py も必要です。
+$ pip install docker-py role のテスト playbookに比べて role のテストは簡単です。
+role のディレクトリ(tasksやfilesなどがあるディレクトリ)に移動してコマンドを実行します。
+$ molecule init scenario -r &lt;role name&gt; こうすると molecule ディレクトリが生成されます。</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/ansible-molecule/" title="molecule でansible の role と playbook をテストする">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-12-01T14:56:00JST">Dec 1, 2018</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/graylog-terraform/">GraylogをTerraformで管理する</a></h2>
+  </header>
+
+  
+  <div class="summary">Graylogのリソースを terraform で管理するために作った terraform provider を紹介します。 Graylogとは何かはこちらを読んでください。
+Graylogには様々なリソースがあります。
+ User Role Input Index Set Stream Stream Rule Dashboard Alert etc  これらのリソースはWeb UIから作成したり出来るわけですが、 Web UIでポチポチするのは疲れますし、ソースコードで管理したいものです(Infrastructure as Code)。 また、Web UIからでは細かな権限管理は出来ず(限られた権限管理しか出来ない)、APIを使ってする必要があります。
+APIを使って管理できるツールを探したものの見つからなかったので、 APIを使ってGraylog用のterraform providerを自作しています。
+https://github.com/suzuki-shunsuke/go-graylog
+GraylogのAPIの種類は非常に多く、残念ながらカバーできているのは一部だけですが、以下のようなものをサポートしています。
+ Alert Condition Alert Notification (Alarm Callback) Input User Role Index Set Stream Stream Rule Dashboard Ldap Setting  Role はサポートしているので権限管理は問題なく出来ます。 Dashboard Widget もサポートしたいです。
+出来れば Alert の設定も出来ると良いのですが、Alertに関するCRUD APIが提供されていない(GETのみ)ので、サポートできません。
+terraform を使った管理方法 以下では自分の管理方法を紹介します。
+https://github.com/suzuki-shunsuke/example/tree/master/graylog-terraform
+にサンプルが置いてあります。
+基本はプロジェクトごとに
+ Index Set, Stream, Role といったリソースを作成 User に Role を付与  という流れになります。</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/graylog-terraform/" title="GraylogをTerraformで管理する">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-11-27T16:40:33JST">Nov 27, 2018</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/graylog/">Graylog で log を管理する</a></h2>
+  </header>
+
+  
+  <div class="summary">Java 製の OSS ログ管理システム Graylog の紹介です。 Graylog については幾つかに分けて記事を書きたいと思います。 今回はGraylogの入門的な内容になります。
+なお、本記事中で「現在」「現時点」といった場合、特に断りがなければ記事執筆時点 2018-11-27 を指します。
+Graylog のバージョン 検証に用いるGraylogのバージョンは 2.4.6 になります。
+OSSバージョンとEnterpriseバージョンがありますが、本記事ではOSSバージョンを使用します。
+Graylog とは  https://www.graylog.org/ https://github.com/Graylog2/graylog2-server  Kibana と Elasticsearch(以下ES) を使ったことがある人は、Kibanaに代わるものだと思っていただくとイメージしやすいかと思います。 ログはGraylogそのものが保持するのではなく、ESにインデキシングされます。 Kibana同様、ESに収集されたログを検索したり、ダッシュボードを作ったり出来ます。 ダッシュボードに関してはKibanaのほうが優れているようにも思えますが、 Graylogは認証・認可によりダッシュボードやログを操作できる人を制限・管理することが出来ます。
+Graylogでログを管理する場合、ユーザーは直接ESにはログを送らず、Graylogを経由して送ります。 ESに対するGraylog以外のアクセスを制限し直接ESにアクセスされるのを防ぐことが出来ます。
+Graylog は多機能なシステムであり、ログを整形したり、アラートを飛ばしたり、他のシステムにログをフォワードしたりすることも出来ます。 marketplace でサードパーティの plugin が公開されており、機能を拡張することが出来ます。 APIも提供されており、ある程度自動化が可能です。
+認証・認可 オンプレミスでログを管理する場合、社外からは勿論社内からのアクセスも制限したいです。 Graylog では LDAP や Active Directory によってアクセスを制限できます。 リソース毎に誰が何を出来るか設定できます。
+http://docs.graylog.org/en/2.5/pages/users_and_roles/external_auth.html
+ログの収集 ログの収集をするには Graylog で幾つかのリソースを作成する必要があります。
+ Input Index Set Stream Stream Rule  Input はログの入力のフォーマットの設定であり、 どのポートでどういったフォーマットのログを受け付けるかという設定になります。 フォーマットは様々なものがサポートされています。
+ AWS Flow Logs AWS Cloud Watch Logs AWS Cloud Trail Beats CEF AMQP CEF Kafka CEF TCP CEF UDP Fake HTTP Message GELF AMQP GELF HTTP GELF Kafka GELF TCP GELF UDP JSON Path NetFlow UDP Raw AMQP Syslog AMQP Syslog Kafka Syslog TCP Syslog UDP  この設定はログを収集するアプリケーションごとに設定するというより、グローバルな設定なので、他のアプリケーションで既に同じ形式でログを収集していたら新たに設定する必要はありません。</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/graylog/" title="Graylog で log を管理する">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-10-31T08:56:04JST">Oct 31, 2018</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/akoi/">akoi - binary installer</a></h2>
+  </header>
+
+  
+  <div class="summary">自作のOSS akoi の紹介をします。
+ なぜこんなものを作ったのか akoi と ansible を使ってサーバにバイナリをインストールする方法  について主に説明します。
+まとめ  akoi はバイナリファイルのインストーラ 設定ファイルで管理できる 冪等であり、効率よくインストールできる  並列インストール Accept-Ranges による分散ダウンロード   ansibleでサーバにバイナリをインストールするのを補助してくれる  ansible で真面目にバージョンコントロールして効率よくインストールするのは難しい(ほとんどの ansible role は出来ていない)    akoi とは akoi はバイナリファイルのインストーラです。 設定ファイルにインストールするファイルのダウンロードURLとインストール先を記述して管理します。 インストールするバイナリのバージョン管理が可能であり、既にインストールしてあるバージョンへの切り替えはシンボリックを作り直すだけなので一瞬で終わります。無駄にダウンロードをしたりはしません。 複数のバイナリを並列でインストールしたり、Accept-Ranges ヘッダによる分散ダウンロードをサポートしています。
+分散ダウンロードについては
+https://qiita.com/codehex/items/d0a500ac387d39a34401
+が参考になります。
+Goで書かれています。
+https://github.com/suzuki-shunsuke/akoi/releases からバイナリをダウンロードしてインストールできます。
+詳細はREADMEを読んでください。
+なぜ作ったのか サーバにバイナリをインストールする ansible role を書くのが辛かったからです。 最近は色々なソフトウェアがGoで書かれ、バイナリで配布されています。 そういったバイナリをサーバへインストールするのは ansible で行っているという方も少なくないのではないでしょうか？ 有名なソフトウェアをインストールする ansible role は大抵Ansible Galaxy で公開されています。
+しかし、ほとんどの role は「真面目に」バージョン管理していません。 ここでいう「真面目に」とは
+ バージョンを指定できる バージョンを変更できる 指定したバージョンが既にインストールされている場合は無駄にダウンロードしたりしない  といったことです。</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/akoi/" title="akoi - binary installer">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+    </ul>
+
+    
+<nav>
+  <ul class="pager">
+
+    
+    <li><a href="/page/8/">Previous</a></li>
+    
+
+    
+    <li><a href="/page/10/">Next</a></li>
+    
+
+  </ul>
+</nav>
+
+
+
+  </div>
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/aqua-v0.5/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>aqua v0.1.0 から v0.5.0 での変更点 - melody</title>
+    
+<meta name="description" content="先日 aqua v0.1.0 をリリースした記事を書いたばかりですが、 そこから更に開発を続けて v0.5.0 をリリースしたので、変更点を紹介します。基本的に Release Note に書いてあるとおりです。 PATH を project (aqua.yaml) 毎に設定する必要がなくなりました  ~/.aqua/bin を PATH に追加すればよくなりました direnv などを使って環境変数を追加する必要がなくなりました   install コマンドに --test option を追加し、 file.src の設定が正しいかテストできるようになりました  CI で aqua の設定をテストするのに便利   GitHub Release だけでなく、任意の URL から tool のダウンロード・インストールができるようになりました  Go や helm, Hashicorp の product のような公式サイトからダウンロードするタイプのツールも install できるようになりました   Breaking Change: inline_registry の設定の形式を変更しました aqua の設定の再利用性を高める Registry という仕組みを導入しました  standard Registry を公開しました https://github.">
+
+<meta property="og:title" content="aqua v0.1.0 から v0.5.0 での変更点 - melody">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://techblog-szksh-cloud.github.io/aqua-v0.5/">
+<meta property="og:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+<meta property="og:site_name" content="melody">
+<meta property="og:description" content="先日 aqua v0.1.0 をリリースした記事を書いたばかりですが、 そこから更に開発を続けて v0.5.0 をリリースしたので、変更点を紹介します。基本的に Release Note に書いてあるとおりです。 PATH を project (aqua.yaml) 毎に設定する必要がなくなりました  ~/.aqua/bin を PATH に追加すればよくなりました direnv などを使って環境変数を追加する必要がなくなりました   install コマンドに --test option を追加し、 file.src の設定が正しいかテストできるようになりました  CI で aqua の設定をテストするのに便利   GitHub Release だけでなく、任意の URL から tool のダウンロード・インストールができるようになりました  Go や helm, Hashicorp の product のような公式サイトからダウンロードするタイプのツールも install できるようになりました   Breaking Change: inline_registry の設定の形式を変更しました aqua の設定の再利用性を高める Registry という仕組みを導入しました  standard Registry を公開しました https://github.">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="melody">
+<meta name="twitter:url" content="https://techblog-szksh-cloud.github.io/aqua-v0.5/">
+<meta name="twitter:title" content="aqua v0.1.0 から v0.5.0 での変更点 - melody">
+<meta name="twitter:description" content="先日 aqua v0.1.0 をリリースした記事を書いたばかりですが、 そこから更に開発を続けて v0.5.0 をリリースしたので、変更点を紹介します。基本的に Release Note に書いてあるとおりです。 PATH を project (aqua.yaml) 毎に設定する必要がなくなりました  ~/.aqua/bin を PATH に追加すればよくなりました direnv などを使って環境変数を追加する必要がなくなりました   install コマンドに --test option を追加し、 file.src の設定が正しいかテストできるようになりました  CI で aqua の設定をテストするのに便利   GitHub Release だけでなく、任意の URL から tool のダウンロード・インストールができるようになりました  Go や helm, Hashicorp の product のような公式サイトからダウンロードするタイプのツールも install できるようになりました   Breaking Change: inline_registry の設定の形式を変更しました aqua の設定の再利用性を高める Registry という仕組みを導入しました  standard Registry を公開しました https://github.">
+<meta name="twitter:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https:\/\/techblog-szksh-cloud.github.io\/"
+    },
+    "headline": "aqua v0.1.0 から v0.5.0 での変更点 - melody",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https:\/\/techblog-szksh-cloud.github.io\/images\/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2021-09-04T11:58:42JST",
+    "dateModified": "2021-09-04T11:58:42JST",
+    "author": {
+      "@type": "Person",
+      "name": "melody"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "melody",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https:\/\/techblog-szksh-cloud.github.io\/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "先日 aqua v0.1.0 をリリースした記事を書いたばかりですが、 そこから更に開発を続けて v0.5.0 をリリースしたので、変更点を紹介します。\n基本的に Release Note に書いてあるとおりです。\n PATH を project (aqua.yaml) 毎に設定する必要がなくなりました  ~\/.aqua\/bin を PATH に追加すればよくなりました direnv などを使って環境変数を追加する必要がなくなりました   install コマンドに --test option を追加し、 file.src の設定が正しいかテストできるようになりました  CI で aqua の設定をテストするのに便利   GitHub Release だけでなく、任意の URL から tool のダウンロード・インストールができるようになりました  Go や helm, Hashicorp の product のような公式サイトからダウンロードするタイプのツールも install できるようになりました   Breaking Change: inline_registry の設定の形式を変更しました aqua の設定の再利用性を高める Registry という仕組みを導入しました  standard Registry を公開しました https:\/\/github."
+  }
+</script>
+
+
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://techblog-szksh-cloud.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li class="active">aqua v0.1.0 から v0.5.0 での変更点</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2021-09-04T11:58:42JST">Sep 4, 2021</time></li>
+      
+      
+    </ul>
+
+    <h1 class="title">aqua v0.1.0 から v0.5.0 での変更点</h1>
+    
+    
+    <section>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/oss/">oss</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/aqua/">aqua</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </header>
+
+  
+
+  <div class="article-body"><p><a href="/aqua/">先日 aqua v0.1.0 をリリースした記事を書いた</a>ばかりですが、
+そこから更に開発を続けて v0.5.0 をリリースしたので、変更点を紹介します。</p>
+<p>基本的に <a href="https://github.com/suzuki-shunsuke/aqua/releases">Release Note</a> に書いてあるとおりです。</p>
+<ul>
+<li>PATH を project (aqua.yaml) 毎に設定する必要がなくなりました
+<ul>
+<li><code>~/.aqua/bin</code> を PATH に追加すればよくなりました</li>
+<li>direnv などを使って環境変数を追加する必要がなくなりました</li>
+</ul>
+</li>
+<li><code>install</code> コマンドに <code>--test</code> option を追加し、 <code>file.src</code> の設定が正しいかテストできるようになりました
+<ul>
+<li>CI で aqua の設定をテストするのに便利</li>
+</ul>
+</li>
+<li>GitHub Release だけでなく、任意の URL から tool のダウンロード・インストールができるようになりました
+<ul>
+<li>Go や helm, Hashicorp の product のような公式サイトからダウンロードするタイプのツールも install できるようになりました</li>
+</ul>
+</li>
+<li>Breaking Change: <code>inline_registry</code> の設定の形式を変更しました</li>
+<li>aqua の設定の再利用性を高める <code>Registry</code> という仕組みを導入しました
+<ul>
+<li>standard <code>Registry</code> を公開しました <a href="https://github.com/suzuki-shunsuke/aqua-registry">https://github.com/suzuki-shunsuke/aqua-registry</a></li>
+</ul>
+</li>
+<li>簡単な slide を公開しました: <a href="https://speakerdeck.com/szksh/introduction-of-aqua">https://speakerdeck.com/szksh/introduction-of-aqua</a></li>
+</ul>
+<h2 id="path-を-project-aquayaml-毎に設定する必要がなくなりました">PATH を project (aqua.yaml) 毎に設定する必要がなくなりました</h2>
+<p>aqua v0.1.0 では symbolic link を aqua.yaml のあるディレクトリの <code>.aqua/bin</code> 配下に作成しており、ここを PATH に追加する必要がありました。
+direnv とかを使うと便利ですが、間接的に(?) aqua が direnv のようなツールに依存している形になり、微妙でした。</p>
+<p>aqua v0.5.0 では symbolic link を <code>~/.aqua/bin</code> 配下に作成するため、 .bashrc などで <code>~/.aqua/bin</code> を PATH に追加しておけば project ごとに環境変数を追加する必要はなくなりました。
+ちなみに作成される symbolic link は aqua-proxy へのリンクであり、ツールのバージョンには依存しないので <code>~/.aqua/bin</code> を共有しても干渉することはありません。</p>
+<h3 id="応用-aquabin-配下に-symbolic-link-を作る上での課題とそれの解決法">[応用] <code>~/.aqua/bin</code> 配下に symbolic link を作る上での課題とそれの解決法</h3>
+<p><code>~/.aqua/bin</code> 配下に symbolic link を作って PATH に追加する場合、一つ大きな課題があります
+(だからこそ v0.1.0 ではプロジェクトごとに symbolic link を作っていました)。
+<code>~/.aqua/bin</code> 配下に symbolic link を作って PATH に追加すると、基本的にそのファイルが呼ばれることになります。
+そのツールを aqua で管理しているプロジェクト配下ならそれで良いですが、そうでない場合、本来 aqua 以外でインストールしたものを実行したくても実行できません。
+例えば homebrew で jq を install していて、あるプロジェクトでは aqua を使ってバージョンを固定したものを使いたいが、それ以外では homebrew で install したものを使いたいといった場合に問題になります。</p>
+<p>この問題を解決するため、 aqua ではツールを呼び出す際に <code>PATH</code> をチェックして aqua-proxy へのリンクとなっているものは除外するというハック(?)のようなことをしています。</p>
+<h2 id="install-コマンドに---test-option-を追加し-filesrc-の設定が正しいかテストできるようになりました"><code>install</code> コマンドに <code>--test</code> option を追加し、 <code>file.src</code> の設定が正しいかテストできるようになりました</h2>
+<p>地味な更新ですが、 aqua の設定を更新した際に CI でテストするのに便利です。
+<code>--test</code> option なしだと、 warning は出力しますが、 exit code は 0 になります。</p>
+<h2 id="github-release-だけでなく任意の-url-から-tool-のダウンロードインストールができるようになりました">GitHub Release だけでなく、任意の URL から tool のダウンロード・インストールができるようになりました</h2>
+<p>ちなみに、 GitHub Release で公開されてないようなツールでも、
+GitHub リポジトリで versioning されていて Renovate の <code>github_release</code> data source で自動更新できるケースは少なくないと思います。</p>
+<h2 id="breaking-change-inline_registry-の設定の形式を変更しました">Breaking Change: <code>inline_registry</code> の設定の形式を変更しました</h2>
+<p>小さな breaking change ですが、<code>inline_registry</code> の形式が変わりました。</p>
+<p>AS IS</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">inline_registry</span>:
+- <span style="color:#f92672">name</span>: <span style="color:#ae81ff">jq</span>
+  <span style="color:#f92672">type</span>: <span style="color:#ae81ff">github_release</span>
+  <span style="color:#f92672">repo_owner</span>: <span style="color:#ae81ff">stedolan</span>
+  <span style="color:#f92672">repo_name</span>: <span style="color:#ae81ff">jq</span>
+  <span style="color:#f92672">asset</span>: <span style="color:#e6db74">&#39;jq-{{if eq .OS &#34;darwin&#34;}}osx{{else}}{{.OS}}{{end}}-{{.Arch}}&#39;</span>
+  <span style="color:#f92672">files</span>:
+  - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">jq</span>
+</code></pre></div><p>TO BE</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">inline_registry</span>:
+  <span style="color:#f92672">packages</span>:
+  - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">jq</span>
+    <span style="color:#f92672">type</span>: <span style="color:#ae81ff">github_release</span>
+    <span style="color:#f92672">repo_owner</span>: <span style="color:#ae81ff">stedolan</span>
+    <span style="color:#f92672">repo_name</span>: <span style="color:#ae81ff">jq</span>
+    <span style="color:#f92672">asset</span>: <span style="color:#e6db74">&#39;jq-{{if eq .OS &#34;darwin&#34;}}osx{{else}}{{.OS}}{{end}}-{{.Arch}}&#39;</span>
+    <span style="color:#f92672">files</span>:
+    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">jq</span>
+</code></pre></div><h2 id="aqua-の設定の再利用性を高める-registry-という仕組みを導入しました">aqua の設定の再利用性を高める <code>Registry</code> という仕組みを導入しました</h2>
+<p>これが一番大きな更新です。
+aqua を使うにはツールのインストール方法を YAML で記述しないといけませんが、
+これはちょっとした手間ですし、新規ユーザーにとって障壁となるでしょう。</p>
+<p>ツールとそのバージョンを定義したらインストールできてほしいものです。
+ツールとそのバージョンの定義は <code>aqua.yaml</code> の <code>packages</code> の部分なので、それ以外の設定を如何に簡略化するかという話になります。</p>
+<p>Registry はツールのインストール方法の設定を、プロジェクト固有のバージョン設定とは独立させ、再利用可能な形で共有する仕組みです。</p>
+<p>Registry には現状 4 種類あります。</p>
+<ul>
+<li>inline regisry: aqua.yaml の中に直接 install 方法を定義する。 v0.1.0 からサポートされている方法</li>
+<li>github_content registry: GitHub Repository にあるファイルを Registry として参照する方法</li>
+<li>local registry: GitHub Repository にあるファイルを Regisry として参照する方法</li>
+<li>standard registry: 自分がメンテしている github_content registry のエイリアス</li>
+</ul>
+<h3 id="inline-registry">inline registry</h3>
+<p>inline registry は従来からあるやつで、 aqua.yaml 内に定義する方法です。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">inline_registry</span>:
+  <span style="color:#f92672">packages</span>:
+  - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">jq</span>
+    <span style="color:#f92672">type</span>: <span style="color:#ae81ff">github_release</span>
+    <span style="color:#f92672">repo_owner</span>: <span style="color:#ae81ff">stedolan</span>
+    <span style="color:#f92672">repo_name</span>: <span style="color:#ae81ff">jq</span>
+    <span style="color:#f92672">asset</span>: <span style="color:#e6db74">&#39;jq-{{if eq .OS &#34;darwin&#34;}}osx{{else}}{{.OS}}{{end}}-{{.Arch}}&#39;</span>
+    <span style="color:#f92672">files</span>:
+    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">jq</span>
+</code></pre></div><p>シンプルではありますが、コピペする以外に再利用性がありません。</p>
+<h2 id="local-registry">local registry</h2>
+<p>local registry はローカルにあるファイルを参照する registry です。
+絶対パスか、 aqua.yaml からの相対パスを指定します。</p>
+<h2 id="github_content-registry">github_content registry</h2>
+<p>ユーザーとしては次のように Registry を定義すればあとは <code>packages</code> で Registry を参照できます。
+GitHub Access Token を環境変数 <code>GITHUB_TOKEN</code> として設定する必要があります。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">registries</span>:
+- <span style="color:#f92672">name</span>: <span style="color:#ae81ff">suzuki-shunsuke/aqua-registry</span>
+  <span style="color:#f92672">type</span>: <span style="color:#ae81ff">github_content</span>
+  <span style="color:#f92672">repo_owner</span>: <span style="color:#ae81ff">suzuki-shunsuke</span>
+  <span style="color:#f92672">repo_name</span>: <span style="color:#ae81ff">aqua-registry</span>
+  <span style="color:#f92672">ref: v0.2.0 # renovate</span>: <span style="color:#ae81ff">depName=suzuki-shunsuke/aqua-registry</span>
+  <span style="color:#f92672">path</span>: <span style="color:#ae81ff">registry.yaml</span>
+
+<span style="color:#f92672">packages</span>:
+- <span style="color:#f92672">name</span>: <span style="color:#ae81ff">conftest</span>
+  <span style="color:#f92672">registry</span>: <span style="color:#ae81ff">standard</span>
+  <span style="color:#f92672">version: v0.27.0 # renovate</span>: <span style="color:#ae81ff">depName=open-policy-agent/conftest</span>
+</code></pre></div><h3 id="registry-を公開する">Registry を公開する</h3>
+<p>自分で Registry を公開したい場合は GitHub Repository に設定ファイルを置くだけで OK です。
+e.g. <a href="https://github.com/suzuki-shunsuke/aqua-registry/blob/main/registry.yaml">https://github.com/suzuki-shunsuke/aqua-registry/blob/main/registry.yaml</a></p>
+<h2 id="standard-registry">Standard Registry</h2>
+<p>Standard Registry も作りました。</p>
+<p><a href="https://github.com/suzuki-shunsuke/aqua-registry">https://github.com/suzuki-shunsuke/aqua-registry</a></p>
+<p>jq や gh, kubectl, Terraform など有名なツールはこの Registry を使えばインストールできますが、
+当然 PR も受け付けているので、追加してほしいツールがあれば PR を投げてください。</p>
+<p>Official Registry を github_content Registry として利用することも当然できますが、
+より簡潔に書けるように <code>type: standard</code> という Registry がサポートされています。</p>
+<p>AS IS</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">registries</span>:
+- <span style="color:#f92672">name</span>: <span style="color:#ae81ff">standard</span>
+  <span style="color:#f92672">type</span>: <span style="color:#ae81ff">github_content</span>
+  <span style="color:#f92672">repo_owner</span>: <span style="color:#ae81ff">suzuki-shunsuke</span>
+  <span style="color:#f92672">repo_name</span>: <span style="color:#ae81ff">aqua-registry</span>
+  <span style="color:#f92672">ref: v0.2.0 # renovate</span>: <span style="color:#ae81ff">depName=suzuki-shunsuke/aqua-registry</span>
+  <span style="color:#f92672">path</span>: <span style="color:#ae81ff">registry.yaml</span>
+</code></pre></div><p>TO BE</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">registries</span>:
+- <span style="color:#f92672">type</span>: <span style="color:#ae81ff">standard</span>
+  <span style="color:#f92672">ref: v0.2.0 # renovate</span>: <span style="color:#ae81ff">depName=suzuki-shunsuke/aqua-registry</span>
+</code></pre></div><p>上 2 つは等価ではありますが、後者のほうが簡潔です。</p>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/oss/">oss</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/aqua/">aqua</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+<link rel="alternate" type="application/rss+xml" title="RSS" href="https://techblog-szksh-cloud.github.io/tags/skaffold/index.xml">
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/tags/skaffold/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>skaffold - melody</title>
+    
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    
+    <header class="page-header">
+      <h1>skaffold</h1>
+    </header>
+    
+
+    <ul class="p-articles">
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2021-01-11T16:24:44JST">Jan 11, 2021</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/gitops-skaffold/">skaffold を使って GitOps する</a></h2>
+  </header>
+
+  
+  <div class="summary">skaffold を用いてマニフェストを動的に生成しつつ GitOps する方法を考えたので紹介します。 なお、現時点ではあくまで考えてみただけで実際に導入したりはしていません。
+GitOps はマニフェストを Git リポジトリにコミットしないといけないわけですが、 Docker image をビルド、プッシュし、マニフェストの image tag を書き換えるという一連の処理をどうやってやるのがいいのか 個人的に考えていました。
+自分は FluxCD には詳しくないのですが、 FluxCD では registry をポーリングして自動で最新のタグに書き換える機能があるそうですね。
+https://toolkit.fluxcd.io/guides/image-update/
+ただし、まだ alpha であることと、 semver に従っていないといけないようです。 これだと master branch が update されるたびに image をビルドして sha でタグを付与するみたいな運用は難しそうです。
+Skaffold だとマニフェストの image tag を自動で書き換えてくれる機能があります。 加えて skaffold render コマンドを使うと manifest の apply はせずにファイルへの出力だけやってくれます。 出力された manifest を Git リポジトリに commit, push すれば GitOps が実現できそうです。
+How リポジトリを 2 つ用意します。
+ app: アプリケーションのコードとマニフェストを管理するリポジトリ manifest: GitOps が連携するマニフェストを管理するリポジトリ  app は Monorepo になっているとします。ディレクトリ構成は次のような感じをイメージしています。</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/gitops-skaffold/" title="skaffold を使って GitOps する">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2020-04-05T18:53:25JST">Apr 5, 2020</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/skaffold-generator/">Skaffold で特定のサービスだけ動かすためのツールを作った</a></h2>
+  </header>
+
+  
+  <div class="summary">自作の CLI ツール skaffold-generator の紹介です。 プロトタイピングみたいなノリで半日くらいで割と手早く作れました。 名前が長くて適当なのでもっと良い名前ないかなと思ってます。
+Skaffold に欲しい機能がないので補完する感じで作ったのですが、「それ〇〇で出来るよ」とかあったら(GitHub issue とか Twitter で)教えていただけると幸いです。
+どんなツールか 設定ファイル skaffold-generator.yaml を監視して変更があったら skaffold.yaml を生成するツールです。設定ファイルでサービスの依存関係を定義できたり、コマンドライン引数で指定したサービス及びそれが依存するサービスに関連した設定だけを使って skaffold.yaml を更新します。 このツールは skaffold.yaml を生成するだけなので実際にアプリケーションをビルド・デプロイするには skaffold と組み合わせて使います。
+なぜ作ったか 元々ローカルでアプリケーションを動かしながら開発するために Docker Compose を使ってるリポジトリがあるのですが、それを skaffold に移行出来ないか検証しています。 まだ skaffold を触り始めたばかりで理解が浅いのですが、 本番環境は k8s で動いてるからローカルも k8s で動かせるといいかなと思ったり、あとは変更を検知して自動でビルド・デプロイしてくれたりして便利そうかなと思いました。 まぁ結果的に移行しないことになったとしても、 Skaffold と現状の仕組みについて理解が深まればいいかなくらいのつもりです。
+検証の過程で、 以下のようなことが Docker Compose だと出来るけど Skaffold だと難しそうだと思いました。
+ サービスの依存関係を定義すること  Skaffold というより k8s の問題かとは思いますが Docker Compose だと依存するものを自動で起動してくれて便利   コマンドライン引数で指定したサービスだけ起動すること  Skaffold だと skafffold.yaml で定義したものすべてがビルド・デプロイされるという認識    サービスの数が少なければ全部ビルド・デプロイでもいいですが、 マイクロサービスをモノレポで管理しているような場合、 すべてのマイクロサービスをビルド・デプロイするのは無駄が大きかったりします。</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/skaffold-generator/" title="Skaffold で特定のサービスだけ動かすためのツールを作った">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+    </ul>
+
+    
+
+
+  </div>
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

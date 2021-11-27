@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+<link rel="alternate" type="application/rss+xml" title="RSS" href="https://techblog-szksh-cloud.github.io/archives/2018/10/index.xml">
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/archives/2018/10/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>2018/10 - melody</title>
+    
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    
+    <header class="page-header">
+      <h1>2018/10</h1>
+    </header>
+    
+
+    <ul class="p-articles">
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-10-31T08:56:04JST">Oct 31, 2018</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/akoi/">akoi - binary installer</a></h2>
+  </header>
+
+  
+  <div class="summary">自作のOSS akoi の紹介をします。
+ なぜこんなものを作ったのか akoi と ansible を使ってサーバにバイナリをインストールする方法  について主に説明します。
+まとめ  akoi はバイナリファイルのインストーラ 設定ファイルで管理できる 冪等であり、効率よくインストールできる  並列インストール Accept-Ranges による分散ダウンロード   ansibleでサーバにバイナリをインストールするのを補助してくれる  ansible で真面目にバージョンコントロールして効率よくインストールするのは難しい(ほとんどの ansible role は出来ていない)    akoi とは akoi はバイナリファイルのインストーラです。 設定ファイルにインストールするファイルのダウンロードURLとインストール先を記述して管理します。 インストールするバイナリのバージョン管理が可能であり、既にインストールしてあるバージョンへの切り替えはシンボリックを作り直すだけなので一瞬で終わります。無駄にダウンロードをしたりはしません。 複数のバイナリを並列でインストールしたり、Accept-Ranges ヘッダによる分散ダウンロードをサポートしています。
+分散ダウンロードについては
+https://qiita.com/codehex/items/d0a500ac387d39a34401
+が参考になります。
+Goで書かれています。
+https://github.com/suzuki-shunsuke/akoi/releases からバイナリをダウンロードしてインストールできます。
+詳細はREADMEを読んでください。
+なぜ作ったのか サーバにバイナリをインストールする ansible role を書くのが辛かったからです。 最近は色々なソフトウェアがGoで書かれ、バイナリで配布されています。 そういったバイナリをサーバへインストールするのは ansible で行っているという方も少なくないのではないでしょうか？ 有名なソフトウェアをインストールする ansible role は大抵Ansible Galaxy で公開されています。
+しかし、ほとんどの role は「真面目に」バージョン管理していません。 ここでいう「真面目に」とは
+ バージョンを指定できる バージョンを変更できる 指定したバージョンが既にインストールされている場合は無駄にダウンロードしたりしない  といったことです。</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/akoi/" title="akoi - binary installer">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-10-30T08:35:16JST">Oct 30, 2018</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/gomic/">gomic - Goのモックジェネレータ</a></h2>
+  </header>
+
+  
+  <div class="summary">自作のOSS gomic の紹介をします。
+ なぜわざわざこんなものを作ったのか 生成されたモックの簡単な使い方  を主に説明したいと思います。
+まとめ  gomic は Goのinterfaceを実装したモックを生成するCLIツール モックを手で書くのが辛すぎた &amp; 既存ツールで満足できなかったため作った  自動生成できるコードは自動生成すべき   設定ファイルで管理するため、interfaceの更新に合わせてmockの更新が容易 生成されるモックはシンプルなAPIのみ提供するので学習コストが低い  gomic とは gomic は Goのinterfaceを実装したモックを生成するCLIツールです。 これによってモックを使ったテストの作成を効率化します。 単調な作業を自動化し、本来注力すべきことに注力できるようにするためのツールです。
+Goで書かれています。
+https://github.com/suzuki-shunsuke/gomic/releases からバイナリをダウンロードしてインストールできます。
+同様のツールは幾つかあります。
+ https://github.com/avelino/awesome-go#testing https://github.com/golang/mock (以下 gomock) https://github.com/gojuno/minimock (以下 minimock)  特に gomock は有名ですね。
+なぜ作ったのか 上述のように既に同様のツールはありますし、 gomock と minimock は試しました。 しかしあまり満足のいくものではなかったため、自分で作ることにしました。
+自分が欲しかったのは学習コストの低いシンプルなAPIです。 interfaceのメソッドを実装した関数をモックに渡すことで 簡単にメソッドの実装を切り替えたいのです。
+// Getwd メソッドのモック mock.SetFuncGetwd(func() (string, error) { return &#34;/tmp&#34;, nil }) mock.Getwd() // &#34;/tmp&#34;, nil これは非常にシンプルで分かりやすく、柔軟性のあるパターンです(minimockはこのパターンもサポートしています)。</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/gomic/" title="gomic - Goのモックジェネレータ">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-10-12T21:02:51JST">Oct 12, 2018</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/test-ansible-on-docker/">Dockerを使ってansible playbookをテストする</a></h2>
+  </header>
+
+  
+  <div class="summary">ansible playbookを(VMの代わりに)Dockerコンテナに対して実行すると、効率よく動作確認できるというお話です。 ansible playbookの動作確認のためにvagrantでVMを起動したりしていると動作確認に時間がかかるし、容量も喰います。 Dockerコンテナを使って動作確認できればこれらの問題を解決できます。
+ただし、Dockerコンテナの場合、一部のansible のtaskが失敗することがあるので ansible playbookによってはDockerコンテナではテストにならない場合もあるかと思います。
+サンプル https://github.com/suzuki-shunsuke/example/tree/master/ansible/test-on-docker
+簡単なサンプルを用意しました。
+ansible playbookに加え、
+ docker-compose.yml test_docker.sh: 簡単なシェルスクリプト  を作成してあります。
+$ bash test_docker.sh とすることで動作確認できます。
+説明 スクリプトでやっていることは
+ Docker Compose でコンテナを起動 コンテナのIDを取得し、inventory ファイルを作成 Docker Connection Pluginを使ってコンテナにplaybookを実行  です。
+Docker Connection Plugin を使うとDockerコンテナに対してansible playbookを実行できます。
+ https://docs.ansible.com/ansible/2.6/plugins/connection.html https://docs.ansible.com/ansible/2.6/plugins/connection/docker.html  また、Docker Hubで公開されている多くのDockerイメージのUSERは root ですが、 ansible playbookの動作確認としては都合が悪かったりします。
+そこで自分は非rootユーザーを作成したDocker Imageを使っています。
+https://hub.docker.com/r/suzukishunsuke/ansible-test-centos/
+関係ありそうなツール 今回は簡単なスクリプトとdocker-compose.ymlを用意しましたが、 もっとイケてるやり方がありそうなものです。
+Vagrant Docker Provider https://www.vagrantup.com/docs/docker/
+なんかあまり使えなさそうです。 Linux以外だと結局VMが必要で、既に非推奨な boot2docker をデフォルトでは使うらしくだめそうだなって思いました。 あまり調べてません。
+https://www.vagrantup.com/docs/docker/basics.html#host-vm
+ By default, the host VM Vagrant spins up is backed by boot2docker, because it launches quickly and uses little resources.</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/test-ansible-on-docker/" title="Dockerを使ってansible playbookをテストする">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-10-10T21:14:03JST">Oct 10, 2018</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/migrate-to-user-gh-pages/">Project site を User site に移行しました (GitHub Pages)</a></h2>
+  </header>
+
+  
+  <div class="summary">なんとなく試験的に Project site でホスティングしていた GitHub Pages を User site に移行しました。
+source code は source branch にあります。
+CIに関しては Hugo製ブログをGitHub PagesへCIでデプロイ にも書きましたが参考になる部分もあるかもしれません。</div>
+
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-10-01T08:04:16JST">Oct 1, 2018</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/how-to-host-hugo-at-github-pages/">Hugo製ブログをGitHub PagesへCIでデプロイ</a></h2>
+  </header>
+
+  
+  <div class="summary">https://gohugo.io/ と https://pages.github.com/ の話です。 master に push したら GitHub Pages に circle ciでデプロイするようにする方法の紹介です。
+前提  テーマは master branch に含めない(CIでcloneする) buildしたものは gh-pages ブランチにデプロイ  コード .circleci/config.yml
+--- version: 2 jobs: build: docker: - image: suzukishunsuke/hugo-ci:0.1.2 steps: - checkout - run: git config user.name &#34;***&#34; - run: git config user.email &#34;***@example.com&#34; # --depth 1 で高速化 - run: git clone --depth 1 https://github.com/suzuki-shunsuke/tale-hugo themes/tale - run: hugo - run: sh release.sh workflows: version: 2 build: jobs: - build: filters: branches: only: master release.</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/how-to-host-hugo-at-github-pages/" title="Hugo製ブログをGitHub PagesへCIでデプロイ">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-10-01T07:23:15JST">Oct 1, 2018</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/migrate-from-travis-ci-to-circle-ci/">travis ci から circle ci への移行のすすめ</a></h2>
+  </header>
+
+  
+  <div class="summary">travis ci と circle ci の無償SaaS 版を比較しています。
+OSS の CI では travis ci がよく使われる印象がありますが、 場合によっては circle CI に移行するとCIの時間が大幅に短くなったりして良いと思います。 ただし、複数バージョンで並列にテストしたい場合、circle ci の無償planだと並列に実行できないため、 travis でやったほうが速いかもしれません。
+Circle CI の良いところ  好きな Docker Image が使える ローカルでテストが出来る Pending 時間が travis ci に比べて短い気がする(主観) private repository の CI も出来る  好きな Docker Image が使えるのが大きいですね。 予め CI に必要なツールをインストールした Image を用意しておくことで大幅に高速化出来ますし、 ツールがインストールできなかったりバージョンが変わってしまったりするトラブルも避けられます。 同じImageを使ってローカルでテストできるのでローカルでの検証もしやすいです。
+自分の場合 Golang のツールの CI用に Docker Image を用意しています。
+https://hub.docker.com/r/suzukishunsuke/go-ci/</div>
+
+  
+</article>
+</li>
+      
+    </ul>
+
+    
+
+
+  </div>
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

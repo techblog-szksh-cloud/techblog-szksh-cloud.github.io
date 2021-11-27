@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/gomic/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>gomic - Goのモックジェネレータ - melody</title>
+    
+<meta name="description" content="自作のOSS gomic の紹介をします。 なぜわざわざこんなものを作ったのか 生成されたモックの簡単な使い方  を主に説明したいと思います。まとめ  gomic は Goのinterfaceを実装したモックを生成するCLIツール モックを手で書くのが辛すぎた &amp;amp; 既存ツールで満足できなかったため作った  自動生成できるコードは自動生成すべき   設定ファイルで管理するため、interfaceの更新に合わせてmockの更新が容易 生成されるモックはシンプルなAPIのみ提供するので学習コストが低い  gomic とは gomic は Goのinterfaceを実装したモックを生成するCLIツールです。 これによってモックを使ったテストの作成を効率化します。 単調な作業を自動化し、本来注力すべきことに注力できるようにするためのツールです。Goで書かれています。https://github.com/suzuki-shunsuke/gomic/releases からバイナリをダウンロードしてインストールできます。同様のツールは幾つかあります。 https://github.com/avelino/awesome-go#testing https://github.com/golang/mock (以下 gomock) https://github.com/gojuno/minimock (以下 minimock)  特に gomock は有名ですね。なぜ作ったのか 上述のように既に同様のツールはありますし、 gomock と minimock は試しました。 しかしあまり満足のいくものではなかったため、自分で作ることにしました。自分が欲しかったのは学習コストの低いシンプルなAPIです。 interfaceのメソッドを実装した関数をモックに渡すことで 簡単にメソッドの実装を切り替えたいのです。// Getwd メソッドのモック mock.SetFuncGetwd(func() (string, error) { return &amp;#34;/tmp&amp;#34;, nil }) mock.Getwd() // &amp;#34;/tmp&amp;#34;, nil これは非常にシンプルで分かりやすく、柔軟性のあるパターンです(minimockはこのパターンもサポートしています)。">
+
+<meta property="og:title" content="gomic - Goのモックジェネレータ - melody">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://techblog-szksh-cloud.github.io/gomic/">
+<meta property="og:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+<meta property="og:site_name" content="melody">
+<meta property="og:description" content="自作のOSS gomic の紹介をします。 なぜわざわざこんなものを作ったのか 生成されたモックの簡単な使い方  を主に説明したいと思います。まとめ  gomic は Goのinterfaceを実装したモックを生成するCLIツール モックを手で書くのが辛すぎた &amp;amp; 既存ツールで満足できなかったため作った  自動生成できるコードは自動生成すべき   設定ファイルで管理するため、interfaceの更新に合わせてmockの更新が容易 生成されるモックはシンプルなAPIのみ提供するので学習コストが低い  gomic とは gomic は Goのinterfaceを実装したモックを生成するCLIツールです。 これによってモックを使ったテストの作成を効率化します。 単調な作業を自動化し、本来注力すべきことに注力できるようにするためのツールです。Goで書かれています。https://github.com/suzuki-shunsuke/gomic/releases からバイナリをダウンロードしてインストールできます。同様のツールは幾つかあります。 https://github.com/avelino/awesome-go#testing https://github.com/golang/mock (以下 gomock) https://github.com/gojuno/minimock (以下 minimock)  特に gomock は有名ですね。なぜ作ったのか 上述のように既に同様のツールはありますし、 gomock と minimock は試しました。 しかしあまり満足のいくものではなかったため、自分で作ることにしました。自分が欲しかったのは学習コストの低いシンプルなAPIです。 interfaceのメソッドを実装した関数をモックに渡すことで 簡単にメソッドの実装を切り替えたいのです。// Getwd メソッドのモック mock.SetFuncGetwd(func() (string, error) { return &amp;#34;/tmp&amp;#34;, nil }) mock.Getwd() // &amp;#34;/tmp&amp;#34;, nil これは非常にシンプルで分かりやすく、柔軟性のあるパターンです(minimockはこのパターンもサポートしています)。">
+<meta property="og:locale" content="ja_JP">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="melody">
+<meta name="twitter:url" content="https://techblog-szksh-cloud.github.io/gomic/">
+<meta name="twitter:title" content="gomic - Goのモックジェネレータ - melody">
+<meta name="twitter:description" content="自作のOSS gomic の紹介をします。 なぜわざわざこんなものを作ったのか 生成されたモックの簡単な使い方  を主に説明したいと思います。まとめ  gomic は Goのinterfaceを実装したモックを生成するCLIツール モックを手で書くのが辛すぎた &amp;amp; 既存ツールで満足できなかったため作った  自動生成できるコードは自動生成すべき   設定ファイルで管理するため、interfaceの更新に合わせてmockの更新が容易 生成されるモックはシンプルなAPIのみ提供するので学習コストが低い  gomic とは gomic は Goのinterfaceを実装したモックを生成するCLIツールです。 これによってモックを使ったテストの作成を効率化します。 単調な作業を自動化し、本来注力すべきことに注力できるようにするためのツールです。Goで書かれています。https://github.com/suzuki-shunsuke/gomic/releases からバイナリをダウンロードしてインストールできます。同様のツールは幾つかあります。 https://github.com/avelino/awesome-go#testing https://github.com/golang/mock (以下 gomock) https://github.com/gojuno/minimock (以下 minimock)  特に gomock は有名ですね。なぜ作ったのか 上述のように既に同様のツールはありますし、 gomock と minimock は試しました。 しかしあまり満足のいくものではなかったため、自分で作ることにしました。自分が欲しかったのは学習コストの低いシンプルなAPIです。 interfaceのメソッドを実装した関数をモックに渡すことで 簡単にメソッドの実装を切り替えたいのです。// Getwd メソッドのモック mock.SetFuncGetwd(func() (string, error) { return &amp;#34;/tmp&amp;#34;, nil }) mock.Getwd() // &amp;#34;/tmp&amp;#34;, nil これは非常にシンプルで分かりやすく、柔軟性のあるパターンです(minimockはこのパターンもサポートしています)。">
+<meta name="twitter:image" content="https://techblog-szksh-cloud.github.io/images/default.png">
+
+
+<script type="application/ld+json">
+  {
+    "@context": "http://schema.org",
+    "@type": "NewsArticle",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id":"https:\/\/techblog-szksh-cloud.github.io\/"
+    },
+    "headline": "gomic - Goのモックジェネレータ - melody",
+    "image": {
+      "@type": "ImageObject",
+      "url": "https:\/\/techblog-szksh-cloud.github.io\/images\/default.png",
+      "height": 800,
+      "width": 800
+    },
+    "datePublished": "2018-10-30T08:35:16JST",
+    "dateModified": "2018-10-30T08:35:16JST",
+    "author": {
+      "@type": "Person",
+      "name": "melody"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "melody",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https:\/\/techblog-szksh-cloud.github.io\/images/logo.png",
+        "width": 600,
+        "height": 60
+      }
+    },
+    "description": "自作のOSS gomic の紹介をします。\n なぜわざわざこんなものを作ったのか 生成されたモックの簡単な使い方  を主に説明したいと思います。\nまとめ  gomic は Goのinterfaceを実装したモックを生成するCLIツール モックを手で書くのが辛すぎた \u0026amp; 既存ツールで満足できなかったため作った  自動生成できるコードは自動生成すべき   設定ファイルで管理するため、interfaceの更新に合わせてmockの更新が容易 生成されるモックはシンプルなAPIのみ提供するので学習コストが低い  gomic とは gomic は Goのinterfaceを実装したモックを生成するCLIツールです。 これによってモックを使ったテストの作成を効率化します。 単調な作業を自動化し、本来注力すべきことに注力できるようにするためのツールです。\nGoで書かれています。\nhttps:\/\/github.com\/suzuki-shunsuke\/gomic\/releases からバイナリをダウンロードしてインストールできます。\n同様のツールは幾つかあります。\n https:\/\/github.com\/avelino\/awesome-go#testing https:\/\/github.com\/golang\/mock (以下 gomock) https:\/\/github.com\/gojuno\/minimock (以下 minimock)  特に gomock は有名ですね。\nなぜ作ったのか 上述のように既に同様のツールはありますし、 gomock と minimock は試しました。 しかしあまり満足のいくものではなかったため、自分で作ることにしました。\n自分が欲しかったのは学習コストの低いシンプルなAPIです。 interfaceのメソッドを実装した関数をモックに渡すことで 簡単にメソッドの実装を切り替えたいのです。\n\/\/ Getwd メソッドのモック mock.SetFuncGetwd(func() (string, error) { return \u0026#34;\/tmp\u0026#34;, nil }) mock.Getwd() \/\/ \u0026#34;\/tmp\u0026#34;, nil これは非常にシンプルで分かりやすく、柔軟性のあるパターンです(minimockはこのパターンもサポートしています)。"
+  }
+</script>
+
+
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    <nav class="p-crumb">
+      <ol class="breadcrumb">
+        <li><a href="https://techblog-szksh-cloud.github.io/"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+        
+        <li class="active">gomic - Goのモックジェネレータ</li>
+      </ol>
+    </nav>
+
+    <article class="single">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2018-10-30T08:35:16JST">Oct 30, 2018</time></li>
+      
+      
+    </ul>
+
+    <h1 class="title">gomic - Goのモックジェネレータ</h1>
+    
+    
+    <section>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/oss/">oss</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/golang/">golang</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/gomic/">gomic</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </header>
+
+  
+
+  <div class="article-body"><p>自作のOSS <a href="https://github.com/suzuki-shunsuke/gomic">gomic</a> の紹介をします。</p>
+<ul>
+<li>なぜわざわざこんなものを作ったのか</li>
+<li>生成されたモックの簡単な使い方</li>
+</ul>
+<p>を主に説明したいと思います。</p>
+<h2 id="まとめ">まとめ</h2>
+<ul>
+<li>gomic は Goのinterfaceを実装したモックを生成するCLIツール</li>
+<li>モックを手で書くのが辛すぎた &amp; 既存ツールで満足できなかったため作った
+<ul>
+<li>自動生成できるコードは自動生成すべき</li>
+</ul>
+</li>
+<li>設定ファイルで管理するため、interfaceの更新に合わせてmockの更新が容易</li>
+<li>生成されるモックはシンプルなAPIのみ提供するので学習コストが低い</li>
+</ul>
+<h2 id="gomic-とは">gomic とは</h2>
+<p>gomic は Goのinterfaceを実装したモックを生成するCLIツールです。
+これによってモックを使ったテストの作成を効率化します。
+単調な作業を自動化し、本来注力すべきことに注力できるようにするためのツールです。</p>
+<p>Goで書かれています。</p>
+<p><a href="https://github.com/suzuki-shunsuke/gomic/releases">https://github.com/suzuki-shunsuke/gomic/releases</a> からバイナリをダウンロードしてインストールできます。</p>
+<p>同様のツールは幾つかあります。</p>
+<ul>
+<li><a href="https://github.com/avelino/awesome-go#testing">https://github.com/avelino/awesome-go#testing</a></li>
+<li><a href="https://github.com/golang/mock">https://github.com/golang/mock</a> (以下 gomock)</li>
+<li><a href="https://github.com/gojuno/minimock">https://github.com/gojuno/minimock</a> (以下 minimock)</li>
+</ul>
+<p>特に gomock は有名ですね。</p>
+<h2 id="なぜ作ったのか">なぜ作ったのか</h2>
+<p>上述のように既に同様のツールはありますし、 gomock と minimock は試しました。
+しかしあまり満足のいくものではなかったため、自分で作ることにしました。</p>
+<p>自分が欲しかったのは学習コストの低いシンプルなAPIです。
+interfaceのメソッドを実装した関数をモックに渡すことで
+簡単にメソッドの実装を切り替えたいのです。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">// Getwd メソッドのモック
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">mock</span>.<span style="color:#a6e22e">SetFuncGetwd</span>(<span style="color:#66d9ef">func</span>() (<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">error</span>) {
+	<span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;/tmp&#34;</span>, <span style="color:#66d9ef">nil</span>
+})
+
+<span style="color:#a6e22e">mock</span>.<span style="color:#a6e22e">Getwd</span>() <span style="color:#75715e">// &#34;/tmp&#34;, nil
+</span></code></pre></div><p>これは非常にシンプルで分かりやすく、柔軟性のあるパターンです(minimockはこのパターンもサポートしています)。</p>
+<p>gomock や minimock では</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">mockSample</span>.<span style="color:#a6e22e">EXPECT</span>().<span style="color:#a6e22e">Method</span>(<span style="color:#e6db74">&#34;hoge&#34;</span>).<span style="color:#a6e22e">Return</span>(<span style="color:#ae81ff">1</span>)
+</code></pre></div><p>のように 関数のパラメータと戻り値のペアを渡してモックを実装するパターン(何か名前があるのでしょうか？)をサポートしています。
+このパターンを gomic はサポートしていません。
+このパターンはごく簡単なサンプルでは有効かもしれませんが、実際には使えないことが多いかなと感じています。</p>
+<p>また、gomock はそれ以外にも <a href="https://godoc.org/github.com/golang/mock/gomock#InOrder">gomock.InOrder</a> や <a href="https://godoc.org/github.com/golang/mock/gomock#Call.After">gomock#Call.After</a> など、色々便利なAPIを提供していますが、
+それらは学習コストを上げてしまう要因になると思います。
+gomicはそういったAPIは提供していません。</p>
+<h3 id="素のgoで良いのではgomicいらなくない">素のGoで良いのでは(gomicいらなくない)?</h3>
+<p>上述のように関数を渡すだけの実装なら gomic なんて使わなくても素のGoで良いのではないかという意見もありそうですね。</p>
+<p><a href="http://haya14busa.com/golang-how-to-write-mock-of-interface-for-testing/">http://haya14busa.com/golang-how-to-write-mock-of-interface-for-testing/</a></p>
+<p>でも似たようなモッキングの方法がライブラリに依存しないでmockを書くパターンとして紹介されています
+(似たようなというか、<a href="https://github.com/suzuki-shunsuke/gomic/blob/v0.4.0/examples/os_mock_test.go#L20-L22">gomicも v0.4.0 までは構造体のフィールドに代入していました</a>)。</p>
+<p>Goではライブラリに依存しないで標準ライブラリだけで書くのが良いという思想・意見がよく見られます。
+そのため、gomicのようなツールを好まない方がいるのは承知しています。</p>
+<p>ただ、自分はこのパターンの実装を手で愚直に書くのは辛いし、生産的ではないのでツールによって自動生成すべきだと思っています。</p>
+<p>以下は2つのメソッドのみ持つシンプルなインタフェースとそのモックです。</p>
+<ul>
+<li><a href="https://github.com/suzuki-shunsuke/gomic/blob/master/examples/os.go">https://github.com/suzuki-shunsuke/gomic/blob/master/examples/os.go</a></li>
+<li><a href="https://github.com/suzuki-shunsuke/gomic/blob/master/examples/os_mock.go">https://github.com/suzuki-shunsuke/gomic/blob/master/examples/os_mock.go</a></li>
+</ul>
+<p>とてもシンプルな interface とそのモックですが、それでもモックを実装するのはそこそこ面倒です。
+メソッド、interfaceの数に比例してどんどん面倒になります。
+golintのようなlinterでエラーにならないようにコードコメントを書くのも地味に大変です。</p>
+<p>interfaceを更新すればmockも更新しないといけません。</p>
+<p>ツールによって自動化すべきです。</p>
+<h2 id="モックの使い方">モックの使い方</h2>
+<p>生成されたモックの使い方について軽く説明します。
+<a href="https://github.com/suzuki-shunsuke/gomic/releases/tag/v0.5.0">v0.5.0</a> 時点のものなので古くなっているかもしれません。
+最新の使い方は</p>
+<ul>
+<li><a href="https://github.com/suzuki-shunsuke/gomic">https://github.com/suzuki-shunsuke/gomic</a></li>
+<li><a href="https://github.com/suzuki-shunsuke/gomic/tree/master/examples">https://github.com/suzuki-shunsuke/gomic/tree/master/examples</a></li>
+</ul>
+<p>をご確認ください。</p>
+<p>以下のサンプルは <a href="https://github.com/suzuki-shunsuke/gomic/tree/v0.5.0/examples">v0.5.0のサンプル</a> を元にしています。</p>
+<p>まず mock を生成します(以下このモックを生成する関数を&quot;コンストラクタ&quot;と呼びます)。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">mock</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">examples</span>.<span style="color:#a6e22e">NewOSMock</span>(<span style="color:#66d9ef">nil</span>, <span style="color:#66d9ef">nil</span>)
+</code></pre></div><p>第一引数は *testing.T で、通常のテストならテスト関数の引数をそのまま渡せば良いし、そうでなければ nil を渡せば良いと思います。
+第二引数は <code>func(t *testing.T, intfName, methodName string)</code> 型の関数で、interfaceのメソッドの実装がセットされていない場合に呼び出されます。nil を渡すと代わりに<a href="https://godoc.org/github.com/suzuki-shunsuke/gomic/gomic#DefaultCallbackNotImplemented">gomic.DefaultCallbackNotImplemented</a> が呼び出されます。</p>
+<p>mockは interface を実装しています。</p>
+<p>次にinterfaceのメソッドを実装した関数をmockにセットします。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">mock</span>.<span style="color:#a6e22e">SetFuncGetwd</span>(<span style="color:#66d9ef">func</span>() (<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">error</span>) {
+	<span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;/tmp&#34;</span>, <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;&#34;</span>)
+})
+</code></pre></div><p><code>mock.Getwd</code> を呼び出すと <code>SetFuncGetwd</code> に渡した関数が呼び出されます。</p>
+<p>上記のサンプルのように決まった値を返すだけの fake はよくあるので、以下のように簡単に書けるようにしています。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">mock</span>.<span style="color:#a6e22e">SetReturnGetwd</span>(<span style="color:#e6db74">&#34;/tmp&#34;</span>, <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;&#34;</span>))
+</code></pre></div><p>モックの <code>SetFuncXXX</code> 及び <code>SetReturnXXX</code> はモック自身を返すのでメソッドチェーンが出来るようになっています。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">mock</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">examples</span>.<span style="color:#a6e22e">NewOSMock</span>(<span style="color:#66d9ef">nil</span>, <span style="color:#66d9ef">nil</span>).
+  <span style="color:#a6e22e">SetReturnMkdir</span>(<span style="color:#66d9ef">nil</span>).
+	<span style="color:#a6e22e">SetFuncGetwd</span>(<span style="color:#66d9ef">func</span>() (<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">error</span>) {
+		<span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;/tmp&#34;</span>, <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;&#34;</span>)
+	})
+</code></pre></div><p>実装がセットされていない状態でモックのメソッドを呼び出すと
+コンストラクタの第二引数で渡した関数が呼び出されます。</p>
+<p>コンストラクタの第二引数がnilだと <a href="https://godoc.org/github.com/suzuki-shunsuke/gomic/gomic#DefaultCallbackNotImplemented">gomic.DefaultCallbackNotImplemented</a> が呼びだされます。
+gomic.DefaultCallbackNotImplemented は コンストラクタの第一引数が nil だと <a href="https://golang.org/pkg/log/#Fatal">log.Fatal</a> を、そうでなければ <a href="https://golang.org/pkg/testing/#T.Fatal">testing.T#Fatal</a> を呼び出し、そこで処理を停止します。</p>
+<p>コンストラクタの第二引数で渡した関数で log.Fatal や testing.Fatal によって処理を止めなければ、interfaceのメソッドを実装していない場合、<a href="https://golang.org/ref/spec#The_zero_value">zero value</a> を返す fake になります。</p>
+<p>一番簡単なのは <a href="https://godoc.org/github.com/suzuki-shunsuke/gomic/gomic#DoNothing">gomic.DoNothing</a> を渡すことです。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">s</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">mock</span>.<span style="color:#a6e22e">Getwd</span>(<span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">gomic</span>.<span style="color:#a6e22e">DoNothing</span>)
+</code></pre></div><p>上で説明したことは</p>
+<p><a href="https://github.com/suzuki-shunsuke/gomic/blob/v0.5.0/examples/os_mock.go#L27-L67">https://github.com/suzuki-shunsuke/gomic/blob/v0.5.0/examples/os_mock.go#L27-L67</a></p>
+<p>を見てもらえばわかると思います。</p>
+</div>
+
+  <footer class="article-footer">
+    
+    
+    <section class="bordered">
+      <header>
+        <div class="panel-title">TAGS</div>
+      </header>
+      <div>
+        <ul class="p-terms">
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/oss/">oss</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/golang/">golang</a></li>
+          
+          <li><a href="https://techblog-szksh-cloud.github.io/tags/gomic/">gomic</a></li>
+          
+        </ul>
+      </div>
+    </section>
+    
+  </footer>
+
+</article>
+
+
+    
+  </div>
+
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>2021/11 on melody</title>
+    <link>https://techblog-szksh-cloud.github.io/archives/2021/11/</link>
+    <description>Recent content in 2021/11 on melody</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>jp</language><atom:link href="https://techblog-szksh-cloud.github.io/archives/2021/11/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>aqua の最近の update (v0.7.4 ~ v0.7.16)</title>
+      <link>https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/</link>
+      <pubDate>Thu, 18 Nov 2021 20:21:57 +0900</pubDate>
+      
+      <guid>https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/</guid>
+      <description>以前 aqua v0.7.3 がリリースされた際に aqua で組織・チームのツール群を管理 という記事を書きました。 あれからもうすぐ 2 ヶ月になり、最新バージョンは v0.7.16 になりました。 そこで v0.7.4 ~ v0.7.16 の間の更新と、関連 repository の更新を幾つか(全部ではない)紹介します。
+基本的に Release Note に書いてある内容です。
+ GitHub の Access Token が基本的に不要になりました Homebrew で install できるようになりました aqua.yaml がより簡潔に書けるようになりました aqua.yaml の packages を他のローカルのファイルから import できるようになりました aqua.yaml をディレクトリの階層的にネストできるようになりました aqua which コマンドをサポートしました github_archive, github_content type をサポートしました (advanced) バージョンによってパッケージの type が変更された場合にも対応できるようになりました Standard Registry の package の数が 139 =&amp;gt; 220 になりました。 aqua のための CircleCI Orb をリリースしました  GitHub の Access Token が基本的に不要になりました private repository から package をインストール場合は当然必要ですが、そうでなければ不要になりました。 これにより、 aqua を導入するハードルが下がりましたし、 GitHub API の Rate Limit に引っかかることが基本的になくなりました。</description>
+    </item>
+    
+  </channel>
+</rss>

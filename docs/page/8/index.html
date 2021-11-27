@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="pinterest" content="nopin">
+<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+<meta name="generator" content="Hugo 0.89.4" />
+
+<link rel="alternate" type="application/rss+xml" title="RSS" href="https://techblog-szksh-cloud.github.io/index.xml">
+
+<link rel="canonical" href="https://techblog-szksh-cloud.github.io/">
+
+
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <title>melody</title>
+    
+    <link href="https://techblog-szksh-cloud.github.io/css/styles.css" rel="stylesheet">
+    
+
+  </head>
+
+  <body>
+    
+    
+    
+
+    <header class="l-header">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="https://techblog-szksh-cloud.github.io/">melody</a>
+          </div>
+
+          
+
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        
+<div class="row">
+  <div class="col-md-8">
+
+    
+
+    <ul class="p-articles">
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2019-06-20T17:50:11JST">Jun 20, 2019</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/how-to-imitate-jenkins-parameterized-build-at-drone/">Drone で「ビルド実行時にパラメータを渡す」っぽいことをする</a></h2>
+  </header>
+
+  
+  <div class="summary">Jenkins では parameterized build という機能で、ビルド実行時に Web UI からパラメータを指定することができます。
+Drone では基本的に Git のイベントをフックして動くので「ビルドを実行時に手動でパラメータを設定する」ということは出来ません。
+自分は基本的にできなくても構わないと思っていますが、 こういった機能がないから Drone を使わないという人も中にはいるので、 Drone でもちょっとした工夫でそれっぽいことは出来るんじゃないかと思い、簡単なサンプルを書いてみました。
+一応言っておくと、 Jenkins の parameterized build を完全に代替するようなものではありません。
+https://github.com/suzuki-shunsuke/example-drone-build-parameter
+以下のファイルが必要です。
+ build_params/params.sh.tpl: ビルドパラメータを記述するファイルのテンプレート scripts/deploy.sh: デプロイ時に実行するスクリプト .drone.yml: Drone の設定ファイル  スクリプトを実行してデプロイします。
+$ bash scripts/deploy.sh するとパラメータを記述するファイルがテンプレートから作成され、エディタで開きます。
+https://github.com/suzuki-shunsuke/example-drone-build-parameter/blob/master/scripts/deploy.sh#L12-L17
+パラメータを記述し、エディタを閉じます。
+するとそのファイルがコミットされ、新しいタグが作成され、コミットとタグがリモートにプッシュされます。
+https://github.com/suzuki-shunsuke/example-drone-build-parameter/blob/master/scripts/deploy.sh#L27-L35
+Drone でタグをプッシュするイベントをフックしてビルドが実行されます。
+https://github.com/suzuki-shunsuke/example-drone-build-parameter/blob/master/.drone.yml#L13-L17
+ビルドではコミットされたパラメータの設定ファイルを読み込むことでビルドにパラメータを渡せます。
+https://github.com/suzuki-shunsuke/example-drone-build-parameter/blob/master/.drone.yml#L10
+こうすることでビルドにパラメータを渡すことができます。 パラメータの設定ファイルはコミットされるので Git で管理できるというのも特徴です。
+https://github.com/suzuki-shunsuke/example-drone-build-parameter/blob/master/build_params/2019-07-07T10-04-02JST/params.sh
+上記のスクリプトではパラメータの設定ファイルとしてシェルスクリプトで環境変数を定義していますが、 シェルスクリプトである必要性はなく、例えば JSON ファイルを記述してビルドで JSON ファイルを読み込んでもよいし、 パラメータを選択させるようなことがしたければ fzf のようなものを使ってもよいし、 いくらでも改善できます。
+以上、簡単な tips でした。</div>
+
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2019-06-12T07:40:45JST">Jun 12, 2019</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/drone-jsonnet-generator/">Drone v0.8 の .drone.yml を v1 の .drone.jsonnet に変換するツールを作った</a></h2>
+  </header>
+
+  
+  <div class="summary">Drone v0.8 の .drone.yml を v1 の .drone.jsonnet に変換するツールを作ったので紹介します。
+https://github.com/suzuki-shunsuke/drone-jsonnet-generator
+背景 https://docs.drone.io/user-guide/pipeline/migrating/
+Drone は v0.8 から v1 で .drone.yml のフォーマットが大きく変わっています。 Drone v1 ではビルド実行時に自動で変換しているため、v0.8 の .drone.yml でもそのまま動きます(matrix builds も動きます)。
+そのため、Drone v0.8 から v1 に移行する際、すぐに .drone.yml を修正しなくても問題ないのですが、 v1 独自の機能が出てきた場合 v0.8 のフォーマットの場合利用できないかもしれませんし、 いつまでも古いままだと気持ち悪いので出来るならフォーマットを変換したいです。
+drone-cli ではフォーマットを変換する drone convert というコマンドが提供されています。
+ただし、 drone convert は matrix build を multiple pipeline に変換するのですが、 非常に冗長になります。 そのため、jsonnet を利用することが推奨されています。
+https://docs.drone.io/user-guide/pipeline/migrating/
+ The above syntax can be quite verbose if you are testing a large number of variations.</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/drone-jsonnet-generator/" title="Drone v0.8 の .drone.yml を v1 の .drone.jsonnet に変換するツールを作った">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2019-06-01T08:34:10JST">Jun 1, 2019</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/drone-plugin-jsonnet-check/">.drone.jsonnet と .drone.yml を比較する Drone plugin を作った</a></h2>
+  </header>
+
+  
+  <div class="summary">久しぶりに Drone plugin を作ったので紹介します。
+https://www.github.com/suzuki-shunsuke/drone-plugin-jsonnet-check
+.drone.jsonnet から .drone.yml を生成していて、両方を Git で管理している場合に、 .drone.jsonnet と .drone.yml の状態が一致しているかテストするための plugin です。
+Drone v1 では matrix builds が廃止され、multiple pipeline が導入されました。 matrix builds を drone convert コマンドで multiple pipeline に変換すると、pipeline の数が多いほど冗長でメンテナンス性が悪くなります。 そこで公式では jsonnet で記述して .drone.yml に変換する方法が推奨されています。
+https://docs.drone.io/user-guide/pipeline/migrating/
+ To simplify your configuration we recommend using jsonnet.
+ $ drone jsonnet --format --stream jsonnet から yaml への変換は Jsonnet extension を使うと Drone がビルド実行時に自動で変換してくれるので .drone.yml を管理する必要はなくなりますが、 使っていない場合、 .drone.jsonnet と .</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/drone-plugin-jsonnet-check/" title=".drone.jsonnet と .drone.yml を比較する Drone plugin を作った">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2019-05-23T11:43:18JST">May 23, 2019</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/go-jsoneq/">go-jsoneq - 2つの値がJSONとして等しいか比較するGoライブラリ</a></h2>
+  </header>
+
+  
+  <div class="summary">https://github.com/suzuki-shunsuke/go-jsoneq
+2つの値がJSONとして等しいか比較するGoライブラリを開発したので紹介します。
+「2つの値がJSONとして等しい」とは、2つの値をそれぞれJSON文字列に変換したら、2つが表現するデータがおなじになるという意味です。
+struct { Foo string `json:&#34;foo&#34;` }{ Foo: &#34;bar&#34;, } と
+map[string]interface{}{&#34;foo&#34;: &#34;bar&#34;} を JSON に変換したらともに
+{&#34;foo&#34;: &#34;bar&#34;} になりますね。
+json.Marshaler のテストや、 実際の JSON 文字列から構造体を定義したときにちゃんと定義できているかチェックするのに使えると思います。
+jsoneq.Equal でやっていることは単純です。
+ json.Marshal で []byte に変換 json.Unmarshal で []byte を map, array と primitive な型からなるオブジェクト(?)に変換 reflect.DeepEqual で比較  引数が []byte の場合は 1 は飛ばします。
+GoDoc やサンプルを見れば使い方は簡単にわかると思います。
+以上、簡単ですが、自作ライブラリの紹介でした。</div>
+
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2019-04-28T21:25:00JST">Apr 28, 2019</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/durl/">durl - 壊れたURLを検知するCLIツール</a></h2>
+  </header>
+
+  
+  <div class="summary">結構前に開発したツールですが、まだ記事にしてなかったので紹介します。
+https://github.com/suzuki-shunsuke/durl
+ファイル中の URL が壊れていないかチェックするツールです。 ファイル中の URL を抽出し、HTTPリクエストを投げてステータスコードが 2xx でないものがあった場合、異常終了します。
+なお、ページ内リンク(アンカー)が壊れているものについては検知できません。
+インストール Go製で、バイナリを GitHub Releases で公開しています。
+https://github.com/suzuki-shunsuke/durl/releases
+Docker イメージ https://quay.io/repository/suzuki_shunsuke/durl
+busybox ベースの Docker イメージも提供しています。 CI で使うのに便利です。
+使い方 durl init で設定ファイル .durl.yml を生成します。
+$ durl init durl check に対象ファイルパスのリストを標準入力として渡してください。 find コマンドなどと組み合わせると良いです。
+https://github.com/suzuki-shunsuke/go-errlog/blob/v0.9.0/scripts/durl.sh#L9
+find . \ -type d -name node_modules -prune -o \ -type d -name .git -prune -o \ -type d -name vendor -prune -o \ -type f -print | \ grep -v package-lock.</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/durl/" title="durl - 壊れたURLを検知するCLIツール">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2019-03-17T13:47:40JST">Mar 17, 2019</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/2019-knowledge-share-meeting/">毎週30分の技術共有会</a></h2>
+  </header>
+
+  
+  <div class="summary">自分が最近職場で行っている技術共有の取り組みについて紹介したいと思います。
+背景 これまで自分は積極的に自分にとって新しい技術を取り入れてサービスの品質の向上に繋げてきました。 ただし、それらの技術に関して周りに十分に共有できていなかった側面がありました。
+やっていること 毎週30分決まった時間にスライドを使って発表しています。 対象は同じ部署の希望者です。 枠は30分ですが、実質話しているのは20分くらいな気がします。 k8sのハンズオン的なこともやりました(そのときは30分で終わらないので2回に分けてやりました)。
+話したいことはたくさんあるのですが、とりあえず大きなトピックとして以下の3つに絞っています。
+ k8s(Rancher): オーケストレーション (いまここ) Drone: CI/CD Graylog: ログ収集  これまで話したこと・話す予定のこと k8s の初心者が k8s を本番運用を視野に入れつつ検証環境で使ってみるところまでを目指して話しています。
+ なぜ k8s を使うのか(部署のコンテキストに合わせて導入意義を説明) k8s のリソース(Pod, Service, Deployment, etc) について k8s, Rancher ハンズオン(2回) 簡単なアプリケーションをデプロイしてみたり Logging (いまここ) モニタリング IP制限のかかった外部サービスへアクセスする方法  毎週30分というペース感について 以下のようなことを配慮しました。
+ 集中力が続くこと  60分は長すぎる   持続可能であること  1, 2 回やっただけでは意味がない 30分だけなら参加しやすい 準備のコストも現実的な範囲 30分と短めなので毎週やる。隔週とかだと頻度が少なすぎるし、1回飛ぶと1ヶ月空いてしまう    これまでの結果 特に大きな成果があるわけではないですが、 k8sに興味を持ちk8sを検証環境で使ってくれる人が出てきました。 共有会がk8s を触るきっかけになったのだとしたらそれだけでもやってよかったと思います。
+また、自分自身学ぶこともありました。 Logging に関して自分は今まで Sidecar pattern を使っていたのですが、Cluster Level Logging への移行を検討するきっかけになりました。</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/2019-knowledge-share-meeting/" title="毎週30分の技術共有会">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2019-03-16T21:17:05JST">Mar 16, 2019</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/rancher-duplicated-user-name/">Rancherでusername が重複してログインできなくなった場合の解消方法</a></h2>
+  </header>
+
+  
+  <div class="summary">先日起こった Rancher のトラブルの解消方法について紹介したいと思います。 Rancher のバージョンは v2.1.6 です。 admin ユーザーでログインしようとしたところ、エラーが起こりました。 最初パスワードが間違っているのかと思い、パスワードリセットしたものの、解消しませんでした。
+https://rancher.com/docs/rancher/v2.x/en/faq/technical/#how-can-i-reset-the-admin-password
+エラーメッセージをよく見ると 500 エラーでした。そこで rancher のコンテナのログを見ました。
+[ERROR] API error response 500 for POST /v3-public/localProviders/local?action=login. Cause: found more than one users with username admin username が admin のユーザーが複数人いるからログインに失敗しているようです。 であれば、ユーザーを rename ないし delete すれば解消しそうです。 しかし Admin 権限を持っているのが admin しかいないため、ユーザーを rename したり delete するのが難しいです。
+どうすればよいかと思って調べてたところ rancher のコンテナ内で kubectl コマンドを使うことで Rancher の Custom Resource を操作できそうなことを知りました。
+https://qiita.com/yamamoto-febc/items/498b911611dd25351ad7
+そこで 2 人いる admin の片方を rename することで解消しました。
+# rancher のコンテナに入る $ docker exec -ti rancher bash # CRDの一覧 $ kubectl get crd # ユーザー一覧 $ kubectl get users.</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/rancher-duplicated-user-name/" title="Rancherでusername が重複してログインできなくなった場合の解消方法">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2019-02-16T18:38:45JST">Feb 16, 2019</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/use-confita/">Goの設定管理で viper の代わりに confita を使う</a></h2>
+  </header>
+
+  
+  <div class="summary">Golang の設定管理のライブラリといえば viper が有名ですが、 confita も良さそうだったので紹介したいと思います。
+confita の機能としては以下のようなものがあります。
+ 構造体に設定をマッピング flag や環境変数、設定ファイルに対応 複数の設定ファイルに対応  構造体に設定をマッピングすることで、https://github.com/go-playground/validator のようなライブラリを使って設定のバリデーションが出来ます。
+また viper は v1.3.1 の時点で複数の設定ファイルを扱いにくいです。
+ Viper can search multiple paths, but currently a single Viper instance only supports a single configuration file.
+ k8s で ConfigMap と Secret を設定ファイルとして扱う場合、複数のファイルを扱えないと不便です。 その点 confita は複数の設定ファイルを問題なく扱えます。
+以下はフラグで指定した複数の設定ファイルから設定を読み込む簡単なサンプルです。
+import ( &#34;context&#34; &#34;gopkg.in/go-playground/validator.v9&#34; &#34;github.com/heetch/confita&#34; &#34;github.com/heetch/confita/backend&#34; &#34;github.com/heetch/confita/backend/file&#34; flag &#34;github.com/spf13/pflag&#34; ) func loadConfig(ctx context.Context) (Config, error) { cps := flag.StringSliceP(&#34;config&#34;, &#34;c&#34;, nil, &#34;configuration file path&#34;) flag.</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/use-confita/" title="Goの設定管理で viper の代わりに confita を使う">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2019-02-14T21:34:22JST">Feb 14, 2019</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/use-npm/">JS以外でのnpmの活用</a></h2>
+  </header>
+
+  
+  <div class="summary">npm は Node.js のパッケージマネージャーですが、自分はJS以外のプロジェクトでも使えると思っています。 実際、Goのアプリケーション、OSS、ansible role, playbook など種類を問わず、自分が管理している多くのリポジトリで使っています。 ただ、GoのOSSで npm 使っているのは自分以外で見たことはないですし、 正直あまり賛同はされないかなと思いますが、こういう考え方もあると思っていただけたらと思います。
+npm を使う理由は
+ Node製のツールを使うため npm scripts を使うため (今回書きたいのはこっち)  の2つあります。
+Node製のツール  husky: Git Hookを設定 commitlint: commit メッセージのlint standard-version: コミットログによって Change Log を生成  などを使っています。 Nodeはバージョンの変化が速く、互換性が壊れたりとかも多い印象ですが、 グローバルにインストールしなくてもリポジトリごとに install 出来る(package.jsonで管理できる)のでその点は(特にチーム開発では)良いと思います。
+npm scripts npm scripts によってそのリポジトリの開発に使うコマンド群を管理するということを自分はしています。
+https://github.com/suzuki-shunsuke/gomic/blob/v0.5.7/package.json
+なにもツールを使わない場合に比べ、こうすることでチーム全体でコマンドを統一できますし、一連のコマンドをスクリプト化して npm scripts で実行できるようにするなど、自動化も促進されます。
+ごく簡単な自動化の例ですが、tag を打つと同時にソースコード中のバージョン番号を更新するのを npm run tag v1.1.0 といったコマンドで出来るようにしています。 こうすることで tag とversionコマンドで出力されるバージョンが違うなんてことを防ぐことが出来ます。
+https://github.com/suzuki-shunsuke/gomic/blob/v0.5.7/scripts/tag.sh
+また、オプションによって動作が変わるようなコマンドは npm scripts によって実行することでオプションを統一できます。 例えば gofmt は -s オプションの有無で結果が変わります。</div>
+
+  
+  <footer>
+    <a href="https://techblog-szksh-cloud.github.io/use-npm/" title="JS以外でのnpmの活用">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2019-02-10T17:49:58JST">Feb 10, 2019</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog-szksh-cloud.github.io/golang-good-point/">Golang の好きなところ</a></h2>
+  </header>
+
+  
+  <div class="summary">自分は 2017/8頃(曖昧)からメインで書く言語をPythonからGolangに変更しました。 Goを書き始めて割と早い段階でGoが一番好きになりました。 そこでなんで Go が好きなのかということを頑張って言語化しようと思います。
+若干他の言語と比較する部分もありますが、決して他の言語をディスったり、 他の言語より優れているということが言いたいわけではないのでご了承ください。
+ 依存するものが小さく、バイナリ1つインストールするだけで良い  Prometheus の exporter とかインストールするの簡単 Docker Imageも最小限になる   静的型付け  ビルド出来ている時点で一定の信頼性が担保されている よく知らないコードを読んだり修正するときとかだいぶ有り難い   GoDocが素晴らしい  何もしなくてもライブラリのドキュメントが出来上がっている   ライブラリの公開が容易  GitHubに公開するだけ npm や pypi のようなレジストリがないので楽   go test とか go vet, gofmt みたいに標準ツールが揃っている コーディング規約で悩む必要がない lintツールが充実している  gometalinter とか使っておけば OK lintできる環境を構築するのにそこまで頑張らなくて良い   エラーハンドリングが暗黙的に省略できないので信頼性が高い  Goのエラーハンドリング嫌いって人もいるし、v2で改善されるって話も聞くけど、自分はむしろ好き(面倒なのは理解できるけど)   言語仕様がシンプル(客観的な根拠はないし、難しい部分もあるけど、そんな気がする)  メタプログラミング使った、魔術的なコードになりにくい   interface 使ってコードを疎結合にするのが書いてて気持ちいい 並列処理が書きやすい  </div>
+
+  
+</article>
+</li>
+      
+    </ul>
+
+    
+<nav>
+  <ul class="pager">
+
+    
+    <li><a href="/page/7/">Previous</a></li>
+    
+
+    
+    <li><a href="/page/9/">Next</a></li>
+    
+
+  </ul>
+</nav>
+
+
+
+  </div>
+  <div class="col-md-4">
+    
+<aside class="l-sidebar">
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">LATESTS</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-09/" class="list-group-item">2021-09 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-global-configs/" class="list-group-item">aqua で組織・チームのツール群を管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-generate/" class="list-group-item">aqua の設定ファイルをインタラクティブに生成する generate コマンド</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua-v0.5/" class="list-group-item">aqua v0.1.0 から v0.5.0 での変更点</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-08/" class="list-group-item">2021-08 やったこと</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/aqua/" class="list-group-item">aqua - CLI ツールのバージョン管理</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">TAG</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/oss" class="list-group-item">oss (42)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/job" class="list-group-item">job (18)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/drone" class="list-group-item">drone (14)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/terraform" class="list-group-item">terraform (13)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/buildflow" class="list-group-item">buildflow (12)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/golang" class="list-group-item">golang (6)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/aqua" class="list-group-item">aqua (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/circleci" class="list-group-item">circleci (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/graylog" class="list-group-item">graylog (5)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/tags/ansible" class="list-group-item">ansible (3)</a>
+      
+    </div>
+  </section>
+
+  <section class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">ARCHIVE</div>
+    </div>
+    <div class="list-group">
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/11" class="list-group-item">2021/11 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/09" class="list-group-item">2021/09 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/08" class="list-group-item">2021/08 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/07" class="list-group-item">2021/07 (3)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/06" class="list-group-item">2021/06 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/05" class="list-group-item">2021/05 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/04" class="list-group-item">2021/04 (4)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/03" class="list-group-item">2021/03 (1)</a>
+      
+      <a href="https://techblog-szksh-cloud.github.io/archives/2021/02" class="list-group-item">2021/02 (3)</a>
+      
+    </div>
+  </section>
+
+</aside>
+
+
+  </div>
+</div>
+
+      </div>
+    </main>
+
+    <footer class="l-footer">
+      <div class="container">
+        <p><span class="h-logo">&copy; melody</span></p>
+        <aside>
+          <p>Powered by <a href="https://gohugo.io/">Hugo</a>.</p>
+          <p><a href="https://github.com/dim0627/hugo_theme_beg">Beg</a> designed by <a href="http://yet.unresolved.xyz/">Daisuke Tsuji</a>.</p>
+        </aside>
+      </div>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+  </body>
+</html>
+
