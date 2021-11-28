@@ -10,7 +10,7 @@ jobs:
     - uses: actions/checkout@v2
     - uses: int128/aqua-action@v1
       with:
-        version: v0.7.16 # renovate: depName=suzuki-shunsuke/aqua
+        version: v0.8.0 # renovate: depName=aquaproj/aqua
     - run: git clone --depth 1 https://github.com/suzuki-shunsuke/hugo_theme_beg themes/beg
     - run: hugo
     - run: echo "techblog.szksh.cloud" > public/CNAME
