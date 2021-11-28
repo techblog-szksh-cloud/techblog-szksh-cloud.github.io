@@ -2,7 +2,6 @@
 title: "2021-11 やったこと"
 date: 2021-11-28T15:45:55+09:00
 archives: ["2021/10"]
-draft: true
 tags:
 - job
 - oss
