@@ -22,7 +22,8 @@ tags:
   * SSO 出来ない人を SSO できるように対応した (同期対象の Group や、 Permission Set を追加したり)
   * SSO に関する User 向け、 SRE 向けドキュメントを英語で書いた
 * aqua を更新し、 Access Token なしでも動くようにした(API call を減らし、 rate limit の問題を解決した
-* Self Hosted in GitHub Actions
+* Self Hosted Renovate in GitHub Actions
+  * https://github.com/renovatebot/github-action
   * 無事 Self Hosted で動かせるようになった
   * 結果的に Self Hosted じゃなくても良かったのではという気はしている
 * AWS WAF
