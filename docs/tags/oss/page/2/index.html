@@ -62,6 +62,30 @@
       <li><article class="li">
   <header>
     <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2021-01-31T14:53:23JST">Jan 31, 2021</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog.szksh.cloud/tfmigrator/">terraformer で雑に生成した tf ファイル と state を分割したくてツールを書いた</a></h2>
+  </header>
+
+  
+  <div class="summary">terraformer で雑に生成した Terraform の設定ファイル (以下 tf ファイル) と state を分割したくてツールを書きました。
+tfmigrator
+経緯 miam から Terraform へ移行したい miam というツールで管理されている大量のリソースを Terraform で管理したくなりました。 多くの AWS Resource は Terraform で管理されていますが、 IAM に関しては miam で管理されています。 なぜ Terraform ではなく miam で管理されているかというと、当時のことは自分には分かりませんが、歴史的な経緯もあると思います。 昔は今よりも Terraform の表現力が豊かではなく、 Ruby で自由にかける miam のほうが扱いやすかったとか、 miam だと miam でリソースを管理することを強制できるため、権限管理を厳格にやるという観点では都合が良いという点もあるかと思います。
+ではなぜ Terraform で管理したくなったかというと、 一番大きな理由は miam で頻繁に rate limit に引っかかるようになったからです。 Terraform にしろ miam にしろ CI/CD で test, apply が実行されるようになっています。 miam では毎回全部のリソースを対象に処理が実行されるため、リソースの数が増えるにつれて rate limit に引っかかりやすくなります。 CI を rerun すれば成功するのですが、悪いときは 3 回連続で rate limit に引っかかり、 4 回目でようやく成功するということもありました。</div>
+
+  
+  <footer>
+    <a href="https://techblog.szksh.cloud/tfmigrator/" title="terraformer で雑に生成した tf ファイル と state を分割したくてツールを書いた">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
       <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2021-01-02T19:42:10JST">Jan 2, 2021</time></li>
       
       
@@ -305,30 +329,6 @@ https://github.com/avelino/awesome-go#embeddable-scripting-languages
 </article>
 </li>
       
-      <li><article class="li">
-  <header>
-    <ul class="p-facts">
-      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2020-10-17T21:29:51JST">Oct 17, 2020</time></li>
-      
-      
-    </ul>
-    <h2 class="title"><a href="https://techblog.szksh.cloud/buildflow-dynamic-task/">buildflow の dynamic task</a></h2>
-  </header>
-
-  
-  <div class="summary">buildflow というツールを開発しているので buildflow というタグをつけて何回かに分けてブログを書きます。
-この記事では buildflow の dynamic task という機能について説明します。 dynamic task では task.items の値でループを回し、複数の task を動的に生成できます。 勿論 task.items はオプションなので、指定しなければ普通の task として扱われます。 task.items を指定する場合、 map か list か、それらを返す Tengo script でないといけません。
---- phases: - name: main tasks: - name: &#34;list {{.Item.Key}} {{.Item.Value.name}}&#34; command: command: &#34;echo {{.Item.Key}} {{.Item.Value.name}} {{.Item.Value.age}}&#34; items: - name: foo age: 10 - name: bar age: 20 上記の設定は dynamic task を使わないとこうなります。
---- phases: - name: main tasks: - name: &#34;list 0 foo&#34; command: command: &#34;echo 0 foo 10&#34; - name: &#34;list 1 bar&#34; command: command: &#34;echo 1 bar 20&#34; パラメータ Item は Key, Value を持ち、 Items が map の場合、それぞれ map の key, value が渡され、 list の場合、 index と value が渡されます。</div>
-
-  
-  <footer>
-    <a href="https://techblog.szksh.cloud/buildflow-dynamic-task/" title="buildflow の dynamic task">Read More…</a>
-  </footer>
-  
-</article>
-</li>
-      
     </ul>
 
     
@@ -359,6 +359,8 @@ https://github.com/avelino/awesome-go#embeddable-scripting-languages
     </div>
     <div class="list-group">
       
+      <a href="https://techblog.szksh.cloud/what-i-did-2021-11/" class="list-group-item">2021-11 やったこと</a>
+      
       <a href="https://techblog.szksh.cloud/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
       
       <a href="https://techblog.szksh.cloud/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
@@ -377,8 +379,6 @@ https://github.com/avelino/awesome-go#embeddable-scripting-languages
       
       <a href="https://techblog.szksh.cloud/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
       
-      <a href="https://techblog.szksh.cloud/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
-      
     </div>
   </section>
 
@@ -388,9 +388,9 @@ https://github.com/avelino/awesome-go#embeddable-scripting-languages
     </div>
     <div class="list-group">
       
-      <a href="https://techblog.szksh.cloud/tags/oss" class="list-group-item">oss (42)</a>
+      <a href="https://techblog.szksh.cloud/tags/oss" class="list-group-item">oss (43)</a>
       
-      <a href="https://techblog.szksh.cloud/tags/job" class="list-group-item">job (18)</a>
+      <a href="https://techblog.szksh.cloud/tags/job" class="list-group-item">job (19)</a>
       
       <a href="https://techblog.szksh.cloud/tags/drone" class="list-group-item">drone (14)</a>
       
@@ -419,7 +419,7 @@ https://github.com/avelino/awesome-go#embeddable-scripting-languages
       
       <a href="https://techblog.szksh.cloud/archives/2021/11" class="list-group-item">2021/11 (1)</a>
       
-      <a href="https://techblog.szksh.cloud/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/10" class="list-group-item">2021/10 (3)</a>
       
       <a href="https://techblog.szksh.cloud/archives/2021/09" class="list-group-item">2021/09 (3)</a>
       

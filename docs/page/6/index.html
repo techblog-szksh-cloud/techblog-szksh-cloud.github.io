@@ -58,6 +58,36 @@
       <li><article class="li">
   <header>
     <ul class="p-facts">
+      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2020-10-17T16:06:31JST">Oct 17, 2020</time></li>
+      
+      
+    </ul>
+    <h2 class="title"><a href="https://techblog.szksh.cloud/buildflow-1/">buildflow というワークフローエンジンのようなタスクランナーのようなツールを作っている</a></h2>
+  </header>
+
+  
+  <div class="summary">buildflow というツールを開発しているので紹介します。 buildflow というタグをつけて何回かに分けてブログを書こうかなと思います。 1本目のこの記事では
+ どんなツールか Hello World 特徴  について簡単に説明します。
+どんなツールか https://github.com/suzuki-shunsuke/buildflow
+ワークフローを実行するための CLI ツールです。 ワークフローエンジンと言うと Airflow とか Azkaban, Argo Workflows のようなツールをイメージするかと思いますが、 それらとは目的も機能も違います。 一部の CI サービスではワークフローのローカル実行をサポートしてたりしますが、そんなイメージで良いかもしれません。 buildflow では task と task の依存関係を設定ファイルに定義し、コマンドを実行するとローカルでタスクが実行されます。 そういうとタスクランナーといったほうがいいのかもしれませんが、個別のタスクを指定して実行するような機能はないので、タスクランナーとも違う気がします。
+CI サービス上で実行することを目的として開発しています(汎用的なツールなので他の目的でも使えるとは思います)。
+Hello World まだどんなツールかピンと来てない人もいるかもしれないので、簡単な Hello World をやってみましょう。
+GitHub Releases からバイナリをダウンロードしてください。
+次のような設定ファイル .buildflow.yaml を用意します。
+--- phases: - name: main tasks: - name: hello command: command: echo hello 次のコマンドを実行すると task が実行されます。
+$ buildflow run ============== = Phase: main = ============== 07:50:46UTC | hello | + /bin/sh -c echo hello 07:50:46UTC | hello | 07:50:46UTC | hello | hello 07:50:46UTC | hello | ================ = Phase Result: main = ================ status: succeeded task: hello status: succeeded exit code: 0 start time: 2020-10-17T07:50:46Z end time: 2020-10-17T07:50:46Z duration: 4.</div>
+
+  
+  <footer>
+    <a href="https://techblog.szksh.cloud/buildflow-1/" title="buildflow というワークフローエンジンのようなタスクランナーのようなツールを作っている">Read More…</a>
+  </footer>
+  
+</article>
+</li>
+      
+      <li><article class="li">
+  <header>
+    <ul class="p-facts">
       <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2020-09-12T08:05:59JST">Sep 12, 2020</time></li>
       
       
@@ -306,32 +336,6 @@ tfenv は Terraform のバージョン管理ツールです。 pyenv や rbenv �
 </article>
 </li>
       
-      <li><article class="li">
-  <header>
-    <ul class="p-facts">
-      <li><i class="fa fa-calendar" aria-hidden="true"></i><time datetime="2020-01-10T16:18:05JST">Jan 10, 2020</time></li>
-      
-      
-    </ul>
-    <h2 class="title"><a href="https://techblog.szksh.cloud/terraform-state-locking/">Terraform の State Locking の概要</a></h2>
-  </header>
-
-  
-  <div class="summary">Terraform の State Locking という機能の概要について説明します。 ただし、自分もちゃんと理解しているわけではないので、推測も混じります。 基本的には公式ドキュメントに書いてある内容なのでそちらをご参照ください。
-State Locking とは terraform plan などのコマンドは State を変更する場合があります。 その処理は atomic ではないため、同時に複数のコマンドが State を書き換えようとすると不整合が生じる可能性があります。
- 例えば S3 backend の state を state rm で更新する場合を考えます。 これはコマンド内部で
- 現在の State を取得する (READ) 修正した State を S3 に push する (WRITE)  という処理を行っているはずであり、複数のコマンドを実行した場合、READ と WRITE の間に他のコマンドによって WRITE されると、その WRITE による変更が消えてしまいます。
- そこで State Locking を使うと各コマンドで State を変更する前に lock を取り、WRITE 後に lock を解除します。
-コマンドラインオプション plan, apply, refresh, state rm, state mv, state push には次のようなオプションがあります。</div>
-
-  
-  <footer>
-    <a href="https://techblog.szksh.cloud/terraform-state-locking/" title="Terraform の State Locking の概要">Read More…</a>
-  </footer>
-  
-</article>
-</li>
-      
     </ul>
 
     
@@ -362,6 +366,8 @@ State Locking とは terraform plan などのコマンドは State を変更す�
     </div>
     <div class="list-group">
       
+      <a href="https://techblog.szksh.cloud/what-i-did-2021-11/" class="list-group-item">2021-11 やったこと</a>
+      
       <a href="https://techblog.szksh.cloud/update-aqua-v0.7.16/" class="list-group-item">aqua の最近の update (v0.7.4 ~ v0.7.16)</a>
       
       <a href="https://techblog.szksh.cloud/what-i-did-2021-10/" class="list-group-item">2021-10 やったこと</a>
@@ -380,8 +386,6 @@ State Locking とは terraform plan などのコマンドは State を変更す�
       
       <a href="https://techblog.szksh.cloud/github-app-for-codebuild/" class="list-group-item">AWS CodeBuild を実行する Github App を作る</a>
       
-      <a href="https://techblog.szksh.cloud/what-i-did-2021-07/" class="list-group-item">2021-07 やったこと</a>
-      
     </div>
   </section>
 
@@ -391,9 +395,9 @@ State Locking とは terraform plan などのコマンドは State を変更す�
     </div>
     <div class="list-group">
       
-      <a href="https://techblog.szksh.cloud/tags/oss" class="list-group-item">oss (42)</a>
+      <a href="https://techblog.szksh.cloud/tags/oss" class="list-group-item">oss (43)</a>
       
-      <a href="https://techblog.szksh.cloud/tags/job" class="list-group-item">job (18)</a>
+      <a href="https://techblog.szksh.cloud/tags/job" class="list-group-item">job (19)</a>
       
       <a href="https://techblog.szksh.cloud/tags/drone" class="list-group-item">drone (14)</a>
       
@@ -422,7 +426,7 @@ State Locking とは terraform plan などのコマンドは State を変更す�
       
       <a href="https://techblog.szksh.cloud/archives/2021/11" class="list-group-item">2021/11 (1)</a>
       
-      <a href="https://techblog.szksh.cloud/archives/2021/10" class="list-group-item">2021/10 (2)</a>
+      <a href="https://techblog.szksh.cloud/archives/2021/10" class="list-group-item">2021/10 (3)</a>
       
       <a href="https://techblog.szksh.cloud/archives/2021/09" class="list-group-item">2021/09 (3)</a>
       
