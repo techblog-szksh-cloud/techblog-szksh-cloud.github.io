@@ -16,21 +16,21 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
     <title>2021-11 やったこと - melody</title>
     
-<meta name="description" content="Job  AWS Control Tower  登録できてなかった Account を登録できた   AWS SSO  ユーザーへの案内・催促を行い、 IAM User から SSO に移行してもらった ローカルの開発で Access Key に依存していた部分に関して修正し、 Access Key なしでローカルで開発できるようにした(人によってはまだ Access Key に依存したツールを使っている  S3 Browser が SSO でなぜか動かないらしい(自分が Windows 持ってないので確認できてないけど Cyberduck が SSO サポートしていない   一部のユーザーの Access Key の deactivate 不要な IAM User のクリーニング 来月中には一部の例外を除き、移行を完了させたい SSO 出来ない人を SSO できるように対応した (同期対象の Group や、 Permission Set を追加したり) SSO に関する User 向け、 SRE 向けドキュメントを英語で書いた   aqua を更新し、 Access Token なしでも動くようにした(API call を減らし、 rate limit の問題を解決した Self Hosted in GitHub Actions  無事 Self Hosted で動かせるようになった 結果的に Self Hosted じゃなくても良かったのではという気はしている   AWS WAF  COUNT, BLOCK log を Lambda で抽出しようとしているが、なぜか COUNT log が抽出できていない あまり時間取れてない   Route53 のドメインのアカウントの移管 Lambda の CI/CD  実現したいことを言語化: https://github.">
+<meta name="description" content="Job  AWS Control Tower  登録できてなかった Account を登録できた   AWS SSO  ユーザーへの案内・催促を行い、 IAM User から SSO に移行してもらった ローカルの開発で Access Key に依存していた部分に関して修正し、 Access Key なしでローカルで開発できるようにした(人によってはまだ Access Key に依存したツールを使っている  S3 Browser が SSO でなぜか動かないらしい(自分が Windows 持ってないので確認できてないけど Cyberduck が SSO サポートしていない   一部のユーザーの Access Key の deactivate 不要な IAM User のクリーニング 来月中には一部の例外を除き、移行を完了させたい SSO 出来ない人を SSO できるように対応した (同期対象の Group や、 Permission Set を追加したり) SSO に関する User 向け、 SRE 向けドキュメントを英語で書いた   aqua を更新し、 Access Token なしでも動くようにした(API call を減らし、 rate limit の問題を解決した Self Hosted Renovate in GitHub Actions  https://github.">
 
 <meta property="og:title" content="2021-11 やったこと - melody">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://techblog.szksh.cloud/what-i-did-2021-11/">
 <meta property="og:image" content="https://techblog.szksh.cloud/images/default.png">
 <meta property="og:site_name" content="melody">
-<meta property="og:description" content="Job  AWS Control Tower  登録できてなかった Account を登録できた   AWS SSO  ユーザーへの案内・催促を行い、 IAM User から SSO に移行してもらった ローカルの開発で Access Key に依存していた部分に関して修正し、 Access Key なしでローカルで開発できるようにした(人によってはまだ Access Key に依存したツールを使っている  S3 Browser が SSO でなぜか動かないらしい(自分が Windows 持ってないので確認できてないけど Cyberduck が SSO サポートしていない   一部のユーザーの Access Key の deactivate 不要な IAM User のクリーニング 来月中には一部の例外を除き、移行を完了させたい SSO 出来ない人を SSO できるように対応した (同期対象の Group や、 Permission Set を追加したり) SSO に関する User 向け、 SRE 向けドキュメントを英語で書いた   aqua を更新し、 Access Token なしでも動くようにした(API call を減らし、 rate limit の問題を解決した Self Hosted in GitHub Actions  無事 Self Hosted で動かせるようになった 結果的に Self Hosted じゃなくても良かったのではという気はしている   AWS WAF  COUNT, BLOCK log を Lambda で抽出しようとしているが、なぜか COUNT log が抽出できていない あまり時間取れてない   Route53 のドメインのアカウントの移管 Lambda の CI/CD  実現したいことを言語化: https://github.">
+<meta property="og:description" content="Job  AWS Control Tower  登録できてなかった Account を登録できた   AWS SSO  ユーザーへの案内・催促を行い、 IAM User から SSO に移行してもらった ローカルの開発で Access Key に依存していた部分に関して修正し、 Access Key なしでローカルで開発できるようにした(人によってはまだ Access Key に依存したツールを使っている  S3 Browser が SSO でなぜか動かないらしい(自分が Windows 持ってないので確認できてないけど Cyberduck が SSO サポートしていない   一部のユーザーの Access Key の deactivate 不要な IAM User のクリーニング 来月中には一部の例外を除き、移行を完了させたい SSO 出来ない人を SSO できるように対応した (同期対象の Group や、 Permission Set を追加したり) SSO に関する User 向け、 SRE 向けドキュメントを英語で書いた   aqua を更新し、 Access Token なしでも動くようにした(API call を減らし、 rate limit の問題を解決した Self Hosted Renovate in GitHub Actions  https://github.">
 <meta property="og:locale" content="ja_JP">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="melody">
 <meta name="twitter:url" content="https://techblog.szksh.cloud/what-i-did-2021-11/">
 <meta name="twitter:title" content="2021-11 やったこと - melody">
-<meta name="twitter:description" content="Job  AWS Control Tower  登録できてなかった Account を登録できた   AWS SSO  ユーザーへの案内・催促を行い、 IAM User から SSO に移行してもらった ローカルの開発で Access Key に依存していた部分に関して修正し、 Access Key なしでローカルで開発できるようにした(人によってはまだ Access Key に依存したツールを使っている  S3 Browser が SSO でなぜか動かないらしい(自分が Windows 持ってないので確認できてないけど Cyberduck が SSO サポートしていない   一部のユーザーの Access Key の deactivate 不要な IAM User のクリーニング 来月中には一部の例外を除き、移行を完了させたい SSO 出来ない人を SSO できるように対応した (同期対象の Group や、 Permission Set を追加したり) SSO に関する User 向け、 SRE 向けドキュメントを英語で書いた   aqua を更新し、 Access Token なしでも動くようにした(API call を減らし、 rate limit の問題を解決した Self Hosted in GitHub Actions  無事 Self Hosted で動かせるようになった 結果的に Self Hosted じゃなくても良かったのではという気はしている   AWS WAF  COUNT, BLOCK log を Lambda で抽出しようとしているが、なぜか COUNT log が抽出できていない あまり時間取れてない   Route53 のドメインのアカウントの移管 Lambda の CI/CD  実現したいことを言語化: https://github.">
+<meta name="twitter:description" content="Job  AWS Control Tower  登録できてなかった Account を登録できた   AWS SSO  ユーザーへの案内・催促を行い、 IAM User から SSO に移行してもらった ローカルの開発で Access Key に依存していた部分に関して修正し、 Access Key なしでローカルで開発できるようにした(人によってはまだ Access Key に依存したツールを使っている  S3 Browser が SSO でなぜか動かないらしい(自分が Windows 持ってないので確認できてないけど Cyberduck が SSO サポートしていない   一部のユーザーの Access Key の deactivate 不要な IAM User のクリーニング 来月中には一部の例外を除き、移行を完了させたい SSO 出来ない人を SSO できるように対応した (同期対象の Group や、 Permission Set を追加したり) SSO に関する User 向け、 SRE 向けドキュメントを英語で書いた   aqua を更新し、 Access Token なしでも動くようにした(API call を減らし、 rate limit の問題を解決した Self Hosted Renovate in GitHub Actions  https://github.">
 <meta name="twitter:image" content="https://techblog.szksh.cloud/images/default.png">
 
 
@@ -65,7 +65,7 @@
         "height": 60
       }
     },
-    "description": "Job  AWS Control Tower  登録できてなかった Account を登録できた   AWS SSO  ユーザーへの案内・催促を行い、 IAM User から SSO に移行してもらった ローカルの開発で Access Key に依存していた部分に関して修正し、 Access Key なしでローカルで開発できるようにした(人によってはまだ Access Key に依存したツールを使っている  S3 Browser が SSO でなぜか動かないらしい(自分が Windows 持ってないので確認できてないけど Cyberduck が SSO サポートしていない   一部のユーザーの Access Key の deactivate 不要な IAM User のクリーニング 来月中には一部の例外を除き、移行を完了させたい SSO 出来ない人を SSO できるように対応した (同期対象の Group や、 Permission Set を追加したり) SSO に関する User 向け、 SRE 向けドキュメントを英語で書いた   aqua を更新し、 Access Token なしでも動くようにした(API call を減らし、 rate limit の問題を解決した Self Hosted in GitHub Actions  無事 Self Hosted で動かせるようになった 結果的に Self Hosted じゃなくても良かったのではという気はしている   AWS WAF  COUNT, BLOCK log を Lambda で抽出しようとしているが、なぜか COUNT log が抽出できていない あまり時間取れてない   Route53 のドメインのアカウントの移管 Lambda の CI\/CD  実現したいことを言語化: https:\/\/github."
+    "description": "Job  AWS Control Tower  登録できてなかった Account を登録できた   AWS SSO  ユーザーへの案内・催促を行い、 IAM User から SSO に移行してもらった ローカルの開発で Access Key に依存していた部分に関して修正し、 Access Key なしでローカルで開発できるようにした(人によってはまだ Access Key に依存したツールを使っている  S3 Browser が SSO でなぜか動かないらしい(自分が Windows 持ってないので確認できてないけど Cyberduck が SSO サポートしていない   一部のユーザーの Access Key の deactivate 不要な IAM User のクリーニング 来月中には一部の例外を除き、移行を完了させたい SSO 出来ない人を SSO できるように対応した (同期対象の Group や、 Permission Set を追加したり) SSO に関する User 向け、 SRE 向けドキュメントを英語で書いた   aqua を更新し、 Access Token なしでも動くようにした(API call を減らし、 rate limit の問題を解決した Self Hosted Renovate in GitHub Actions  https:\/\/github."
   }
 </script>
 
@@ -164,8 +164,9 @@
 </ul>
 </li>
 <li>aqua を更新し、 Access Token なしでも動くようにした(API call を減らし、 rate limit の問題を解決した</li>
-<li>Self Hosted in GitHub Actions
+<li>Self Hosted Renovate in GitHub Actions
 <ul>
+<li><a href="https://github.com/renovatebot/github-action">https://github.com/renovatebot/github-action</a></li>
 <li>無事 Self Hosted で動かせるようになった</li>
 <li>結果的に Self Hosted じゃなくても良かったのではという気はしている</li>
 </ul>
