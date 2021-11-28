@@ -81,7 +81,10 @@ OSS のドキュメントなどを GitHub Pages で公開したいときに都�
 ### suzuki-shunsuke/issue の活用
 
 https://github.com/suzuki-shunsuke/issue/issues に記録を残すようにしました。
-前から使ってましたが、あまり活用できてなかったので、意識的に活用していきたいと思っています。
+
+https://github.com/suzuki-shunsuke/issue/issues?q=is%3Aissue+created%3A2021-11-01..2021-11-30+
+
+前から使ってましたが、あまり活用できてなかったので、意識的に活用していこうと思っています。
 せっかくツールとかを検証しても、ちゃんと記録が残ってないと忘れてしまいもったいないというのと、
 issue に残すと自然と検証とかが進むような気がしています。
 
