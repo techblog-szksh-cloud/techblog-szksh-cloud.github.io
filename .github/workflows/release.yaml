@@ -3,19 +3,24 @@ on:
   push:
     branches:
     - main
+  pull_request:
+    branches:
+    - main
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: int128/aqua-action@v1
+    - uses: actions/setup-node@v3
       with:
-        version: v0.8.0 # renovate: depName=aquaproj/aqua
-    - run: git clone --depth 1 https://github.com/suzuki-shunsuke/hugo_theme_beg themes/beg
-    - run: hugo
-    - run: echo "techblog.szksh.cloud" > public/CNAME
+        node-version: '17'
+        cache: 'yarn'
+    - run: yarn install
+    - run: yarn build
+    - run: echo "techblog.szksh.cloud" > build/CNAME
     - uses: peaceiris/actions-gh-pages@v3
+      if: github.event_name != 'pull_request'
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./public
+        publish_dir: ./build
         destination_dir: ./docs

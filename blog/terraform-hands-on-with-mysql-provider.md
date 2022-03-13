@@ -1,7 +1,6 @@
 ---
 title: "Terraform ハンズオン with MySQL Provider"
 date: 2020-01-17T09:14:08+09:00
-archives: ["2020/01"]
 tags:
 - terraform
 ---
@@ -855,7 +854,7 @@ The resources that were imported are shown above. These resources are now in
 your Terraform state and will henceforth be managed by Terraform.
 ```
 
-import 出来ました。 `terraform plan` を実行して差分がなくなっていることを確認します。
+Import 出来ました。 `terraform plan` を実行して差分がなくなっていることを確認します。
 
 ```
 $ terraform plan
@@ -901,7 +900,7 @@ The resources that were imported are shown above. These resources are now in
 your Terraform state and will henceforth be managed by Terraform.
 ```
 
-import 出来たので zoo を Terraform で管理できるようになりました。
+Import 出来たので zoo を Terraform で管理できるようになりました。
 `terraform plan` を実行してみます。
 
 ```
@@ -941,7 +940,7 @@ Plan: 0 to add, 1 to change, 0 to destroy.
 
 まだ差分が出てしまいました。
 
-import は State にはリソースのデータを反映してくれますが、設定ファイルには反映してくれないので自分で反映させる必要があります。
+Import は State にはリソースのデータを反映してくれますが、設定ファイルには反映してくれないので自分で反映させる必要があります。
 一部の Provider では、設定ファイルに自動で反映させるためのサードパーティのツールもあります。
 
 修正します。
