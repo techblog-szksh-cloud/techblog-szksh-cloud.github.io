@@ -1,8 +1,0 @@
-baseURL = "https://techblog.szksh.cloud/"
-languageCode = "jp"
-title = "melody"
-theme = "beg"
-
-[taxonomies]
-  tag = "tags"
-  archive = "archives"
