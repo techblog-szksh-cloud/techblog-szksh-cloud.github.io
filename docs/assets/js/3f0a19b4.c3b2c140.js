@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunktechblog_szksh_cloud_github_io=self.webpackChunktechblog_szksh_cloud_github_io||[]).push([[2757],{3946:function(e){e.exports=JSON.parse('{"allTagsPath":"/tags","slug":"/tags/molecule","name":"molecule","count":1,"permalink":"/tags/molecule"}')}}]);
