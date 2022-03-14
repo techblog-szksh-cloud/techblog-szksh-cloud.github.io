@@ -1,9 +1,10 @@
 ---
 title: "Renovate の PR に便利なリンクを追加"
 date: 2020-12-28T14:32:31+09:00
-archives: ["2020/12"]
 tags:
 - renovate
+authors:
+- suzuki-shunsuke
 ---
 
 Renovate による PR をレビューする際、差分がなんなのか分かりづらいときがあります。

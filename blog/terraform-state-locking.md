@@ -4,6 +4,8 @@ date: 2020-01-10T16:18:05+09:00
 archives: ["2020/01"]
 tags:
 - terraform
+authors:
+- suzuki-shunsuke
 ---
 
 Terraform の [State Locking](https://www.terraform.io/docs/state/locking.html) という機能の概要について説明します。

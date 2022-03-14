@@ -5,6 +5,8 @@ draft: false
 tags:
 - golang
 archives: ["2019/02"]
+authors:
+- suzuki-shunsuke
 ---
 
 Golang の設定管理のライブラリといえば [viper](https://github.com/spf13/viper) が有名ですが、

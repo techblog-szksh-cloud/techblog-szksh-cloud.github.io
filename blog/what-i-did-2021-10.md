@@ -5,6 +5,8 @@ archives: ["2021/10"]
 tags:
 - job
 - oss
+authors:
+- suzuki-shunsuke
 ---
 
 ## Job

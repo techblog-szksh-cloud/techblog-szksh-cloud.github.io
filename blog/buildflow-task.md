@@ -1,10 +1,11 @@
 ---
 title: "buildflow の task の設定項目"
 date: 2020-10-17T18:26:57+09:00
-archives: ["2020/10"]
 tags:
 - oss
 - buildflow
+authors:
+- suzuki-shunsuke
 ---
 
 buildflow というツールを開発しているので `buildflow` というタグをつけて何回かに分けてブログを書こうと思います。

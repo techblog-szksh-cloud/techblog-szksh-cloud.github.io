@@ -1,9 +1,10 @@
 ---
 title: "PR で変更されたファイルや PR Label に応じて matrix build を実行する Github Actions の Workflow のサンプルを書いてみた"
 date: 2021-04-25T16:09:47+09:00
-archives: ["2021/04"]
 tags:
 - github-actions
+authors:
+- suzuki-shunsuke
 ---
 
 GitHub Actions の勉強がてら Pull Request (以下 PR) で変更されたファイルや PR Label に応じて

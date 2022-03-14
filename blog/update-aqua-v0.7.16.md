@@ -5,6 +5,8 @@ archives: ["2021/11"]
 tags:
 - oss
 - aqua
+authors:
+- suzuki-shunsuke
 ---
 
 以前 aqua [v0.7.3](https://github.com/suzuki-shunsuke/aqua/releases/tag/v0.7.3) がリリースされた際に [aqua で組織・チームのツール群を管理](/aqua-global-configs/) という記事を書きました。

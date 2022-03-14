@@ -1,10 +1,11 @@
 ---
 title: "aqua で組織・チームのツール群を管理"
 date: 2021-09-25T12:01:56+09:00
-archives: ["2021/09"]
 tags:
 - oss
 - aqua
+authors:
+- suzuki-shunsuke
 ---
 
 [aqua](https://github.com/suzuki-shunsuke/aqua) [v0.7.3](https://github.com/suzuki-shunsuke/aqua/releases/tag/v0.7.3) をリリースし、

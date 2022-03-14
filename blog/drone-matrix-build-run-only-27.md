@@ -1,8 +1,8 @@
 ---
 title: "drone の matrix build が27個しか実行されない"
 date: 2018-09-30T20:26:11+09:00
-draft: false
-archives: ["2018/09"]
+authors:
+- suzuki-shunsuke
 ---
 
 drone 0.8.5 で検証しています。

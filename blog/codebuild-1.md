@@ -1,11 +1,12 @@
 ---
 title: "AWS CodeBuild 良さそう"
 date: 2020-08-02T13:21:37+09:00
-archives: ["2020/08"]
 tags:
 - aws
 - codebuild
 - ci
+authors:
+- suzuki-shunsuke
 ---
 
 AWS CodeBuild を検証しているんですが、結構良いですね。

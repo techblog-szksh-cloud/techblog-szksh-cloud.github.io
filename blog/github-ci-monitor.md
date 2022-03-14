@@ -1,9 +1,10 @@
 ---
 title: "github-ci-monitor: CI のステータスを DataDog で監視"
 date: 2020-11-01T17:51:44+09:00
-archives: ["2020/11"]
 tags:
 - oss
+authors:
+- suzuki-shunsuke
 ---
 
 自作の OSS [github-ci-monitor](https://github.com/suzuki-shunsuke/github-ci-monitor) の紹介です。

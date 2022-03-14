@@ -3,6 +3,8 @@ title: "Drone で「ビルド実行時にパラメータを渡す」っぽいこ
 date: 2019-06-20T17:50:11+09:00
 tags:
 - drone
+authors:
+- suzuki-shunsuke
 ---
 
 Jenkins では parameterized build という機能で、ビルド実行時に Web UI からパラメータを指定することができます。

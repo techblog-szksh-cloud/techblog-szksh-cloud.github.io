@@ -1,10 +1,11 @@
 ---
 title: "buildflow というワークフローエンジンのようなタスクランナーのようなツールを作っている"
 date: 2020-10-17T16:06:31+09:00
-archives: ["2020/10"]
 tags:
 - oss
 - buildflow
+authors:
+- suzuki-shunsuke
 ---
 
 buildflow というツールを開発しているので紹介します。

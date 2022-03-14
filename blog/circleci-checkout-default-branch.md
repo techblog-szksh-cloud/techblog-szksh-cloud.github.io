@@ -1,9 +1,10 @@
 ---
 title: "CircleCI の checkout の注意点"
 date: 2020-04-24T16:53:01+09:00
-archives: ["2020/04"]
 tags:
 - circleci
+authors:
+- suzuki-shunsuke
 ---
 
 CircleCI の組み込みの command `checkout` の注意点について書きます。

@@ -1,10 +1,11 @@
 ---
 title: "Renovate と Dependabot の比較"
 date: 2020-12-05T12:37:17+09:00
-archives: ["2020/12"]
 tags:
 - dependabot
 - renovate
+authors:
+- suzuki-shunsuke
 ---
 
 普段 Renovate を主に使っている自分が、 Dependabot と Renovate の違いについて調べてみました。

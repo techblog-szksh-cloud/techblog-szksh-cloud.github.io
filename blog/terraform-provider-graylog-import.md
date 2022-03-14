@@ -6,6 +6,8 @@ tags:
 - terraform
 - graylog
 archives: ["2019/01"]
+authors:
+- suzuki-shunsuke
 ---
 
 terraform provider graylog で alert condition と stream rule の import を実装しました。

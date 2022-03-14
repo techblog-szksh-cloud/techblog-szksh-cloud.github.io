@@ -1,11 +1,11 @@
 ---
 title: "travis ci から circle ci への移行のすすめ"
 date: 2018-10-01T07:23:15+09:00
-draft: false
 tags:
 - circleci
 - travisci
-archives: ["2018/10"]
+authors:
+- suzuki-shunsuke
 ---
 
 travis ci と circle ci の無償SaaS 版を比較しています。

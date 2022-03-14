@@ -4,6 +4,8 @@ date: 2019-07-21T18:13:53+09:00
 tags:
 - go
 archives: ["2019/07"]
+authors:
+- suzuki-shunsuke
 ---
 
 [The Top 10 Most Common Mistakes I’ve Seen in Go Projects](https://itnext.io/the-top-10-most-common-mistakes-ive-seen-in-go-projects-4b79d4f6cd65) という記事を読んで面白かったのでメモります。

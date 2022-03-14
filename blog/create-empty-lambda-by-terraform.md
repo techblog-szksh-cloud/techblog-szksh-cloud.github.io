@@ -1,10 +1,11 @@
 ---
 title: "Terraform で空の AWS Lambda Function を作る方法"
 date: 2021-06-24T21:25:24+09:00
-archives: ["2021/06"]
 tags:
 - terraform
 - lambda
+authors:
+- suzuki-shunsuke
 ---
 
 Terraform で空の AWS Lambda Function を作ろうとした際にちょっとハマったのでやり方を書いておきます。

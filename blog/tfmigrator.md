@@ -5,6 +5,8 @@ archives: ["2021/01"]
 tags:
 - oss
 - terraform
+authors:
+- suzuki-shunsuke
 ---
 
 [terraformer](https://github.com/GoogleCloudPlatform/terraformer) で雑に生成した Terraform の設定ファイル (以下 tf ファイル) と state を分割したくてツールを書きました。

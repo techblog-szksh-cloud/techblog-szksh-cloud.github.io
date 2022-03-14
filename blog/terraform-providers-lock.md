@@ -4,6 +4,8 @@ date: 2021-04-24T21:57:27+09:00
 archives: ["2021/04"]
 tags:
 - terraform
+authors:
+- suzuki-shunsuke
 ---
 
 Terraform v0.14 で local で `terraform init` すると lock ファイルが更新されてしまう問題に対応しました。

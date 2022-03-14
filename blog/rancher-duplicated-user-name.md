@@ -1,10 +1,10 @@
 ---
 title: "Rancherでusername が重複してログインできなくなった場合の解消方法"
 date: 2019-03-16T21:17:05+09:00
-draft: false
 tags:
 - rancher
-archives: ["2019/03"]
+authors:
+- suzuki-shunsuke
 ---
 
 先日起こった Rancher のトラブルの解消方法について紹介したいと思います。

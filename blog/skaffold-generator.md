@@ -1,12 +1,13 @@
 ---
 title: "Skaffold で特定のサービスだけ動かすためのツールを作った"
 date: 2020-04-05T18:53:25+09:00
-archives: ["2020/04"]
 tags:
 - k8s
 - skaffold
 - skaffold-generator
 - oss
+authors:
+- suzuki-shunsuke
 ---
 
 自作の CLI ツール [skaffold-generator](https://github.com/suzuki-shunsuke/skaffold-generator) の紹介です。

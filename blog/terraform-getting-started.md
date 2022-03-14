@@ -1,9 +1,10 @@
 ---
 title: "Terraform 入門"
 date: 2020-01-16T09:25:05+09:00
-archives: ["2020/01"]
 tags:
 - terraform
+authors:
+- suzuki-shunsuke
 ---
 
 ## 参考

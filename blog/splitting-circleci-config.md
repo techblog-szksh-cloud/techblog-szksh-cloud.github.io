@@ -1,10 +1,11 @@
 ---
 title: "Splitting .circleci/config.yml"
 date: 2020-11-07T14:43:10+09:00
-archives: ["2020/11"]
 tags:
 - circleci
 - oss
+authors:
+- suzuki-shunsuke
 ---
 
 In this post I introduce how to split a huge `.circleci/config.yml`.

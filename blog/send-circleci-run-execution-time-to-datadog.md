@@ -1,11 +1,12 @@
 ---
 title: "CircleCI の run の実行時間を DataDog に送る"
 date: 2020-05-23T14:20:53+09:00
-archives: ["2020/05"]
 tags:
 - circleci
 - dd-time
 - datadog
+authors:
+- suzuki-shunsuke
 ---
 
 小ネタです。

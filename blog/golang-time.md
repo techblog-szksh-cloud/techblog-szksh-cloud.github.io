@@ -3,7 +3,8 @@ title: "Golang での時刻の扱い方を整理する"
 date: 2019-08-14T20:28:56+09:00
 tags:
 - golang
-archives: ["2019/08"]
+authors:
+- suzuki-shunsuke
 ---
 
 今更ながら Golang での時刻の扱い方について改めて整理してみました。

@@ -1,10 +1,11 @@
 ---
 title: "Drone v1 で gRPC が使われなくなった"
 date: 2019-08-15T07:39:18+09:00
-archives: ["2019/08"]
 tags:
 - drone
 - grpc
+authors:
+- suzuki-shunsuke
 ---
 
 v0.8 では server - agent 間の通信に gPRC が使われていましたが、 v1 では使われなくなりました。

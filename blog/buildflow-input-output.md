@@ -1,10 +1,11 @@
 ---
 title: "buildflow の task の input, output という機能"
 date: 2020-10-17T21:05:41+09:00
-archives: ["2020/10"]
 tags:
 - oss
 - buildflow
+authors:
+- suzuki-shunsuke
 ---
 
 buildflow というツールを開発しているので `buildflow` というタグをつけて何回かに分けてブログを書きます。

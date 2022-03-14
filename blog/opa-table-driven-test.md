@@ -1,11 +1,12 @@
 ---
 title: "OPA で Table Driven Tests っぽいことをしてみる"
 date: 2021-07-09T19:38:55+09:00
-archives: ["2021/07"]
 tags:
 - opa
 - conftest
 - rego
+authors:
+- suzuki-shunsuke
 ---
 
 OPA で Table Driven Tests っぽく Policy を Test する方法について考えたので紹介します。

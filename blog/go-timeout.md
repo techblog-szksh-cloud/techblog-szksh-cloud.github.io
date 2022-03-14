@@ -1,10 +1,11 @@
 ---
 title: "go-timeout - command の timeout"
 date: 2019-11-04T10:00:21+09:00
-archives: ["2019/11"]
-draft: false
 tags:
 - oss
+- golang
+authors:
+- suzuki-shunsuke
 ---
 
 作ったのは 2ヶ月くらい前の話ですが、

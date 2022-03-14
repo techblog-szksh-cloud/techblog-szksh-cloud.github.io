@@ -3,6 +3,8 @@ title: "Terraform ハンズオン with MySQL Provider"
 date: 2020-01-17T09:14:08+09:00
 tags:
 - terraform
+authors:
+- suzuki-shunsuke
 ---
 
 Terraform を勉強するには実際に使ってみるのが一番手っ取り早いですが、

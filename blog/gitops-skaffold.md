@@ -1,11 +1,12 @@
 ---
 title: "skaffold を使って GitOps する"
 date: 2021-01-11T16:24:44+09:00
-archives: ["2021/01"]
 tags:
 - skaffold
 - gitops
 - k8s
+authors:
+- suzuki-shunsuke
 ---
 
 skaffold を用いてマニフェストを動的に生成しつつ GitOps する方法を考えたので紹介します。

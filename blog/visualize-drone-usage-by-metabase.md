@@ -6,6 +6,8 @@ tags:
 - drone
 - metabase
 archives: ["2018/09"]
+authors:
+- suzuki-shunsuke
 ---
 
 drone OSS 0.8.5 で検証しています。

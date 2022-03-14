@@ -1,10 +1,11 @@
 ---
 title: "Terraform の Docker Provider の Collaborator になりました"
 date: 2020-12-03T09:07:32+09:00
-archives: ["2020/12"]
 tags:
 - oss
 - terraform
+authors:
+- suzuki-shunsuke
 ---
 
 先日 [kreuzwerker/terraform-provider-docker](https://github.com/kreuzwerker/terraform-provider-docker) の Collaborator になりました。
