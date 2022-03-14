@@ -5,6 +5,22 @@
     "description": "Melody Blog",
     "items": [
         {
+            "id": "/what-i-did-2022-02",
+            "content_html": "<h2 class=\"anchor anchorWithStickyNavbar_mojV\" id=\"まとめ\">まとめ<a class=\"hash-link\" href=\"#まとめ\" title=\"Direct link to heading\">​</a></h2><p>aqua, aqua-registry, aqua-installer の v1 をリリースしました。\nv1 に伴う変更は特にありません。\naqua v1.1.0 では <code>aqua g -i</code> によって aqua.yaml に package を追加できるようにし、使い勝手を良くしました。\ntfaction は結構色々機能追加やバグ修正が入ってます。\n仕事ではブログにも書いたように Renovate の大量 PR を自動で処理できるように改善を行いました。</p><h2 class=\"anchor anchorWithStickyNavbar_mojV\" id=\"仕事\">仕事<a class=\"hash-link\" href=\"#仕事\" title=\"Direct link to heading\">​</a></h2><ul><li>Terraform<ul><li>tfaction バグ修正</li><li>GITHUB_TOKEN rate limit 引っかかったので GitHub App の token に置き換え</li><li>CI こけた renovate PR の自動 close 検討</li><li>tfsec や AWS Provider v4 の update 対応をどうするか検討したり、対応したりしてた</li></ul></li><li>AWS Account 分割</li></ul><h2 class=\"anchor anchorWithStickyNavbar_mojV\" id=\"blog\">Blog<a class=\"hash-link\" href=\"#blog\" title=\"Direct link to heading\">​</a></h2><ul><li><a href=\"https://devs.quipper.com/2022/02/25/terraform-github-actions.html\" target=\"_blank\" rel=\"noopener noreferrer\">Migrate Terraform CI from AWS CodeBuild to GitHub Actions</a></li><li><a href=\"https://blog.studysapuri.jp/entry/2022/02/18/080000\" target=\"_blank\" rel=\"noopener noreferrer\">Renovate の大量の Pull Request を処理する技術</a></li><li><a href=\"https://blog.studysapuri.jp/entry/2022/02/04/080000\" target=\"_blank\" rel=\"noopener noreferrer\">Terraform の CI を AWS CodeBuild から GitHub Actions + tfaction に移行しました</a></li></ul><h2 class=\"anchor anchorWithStickyNavbar_mojV\" id=\"oss-開発\">OSS 開発<a class=\"hash-link\" href=\"#oss-開発\" title=\"Direct link to heading\">​</a></h2><ul><li>aqua v1.0.0 ~ v1.1.0</li><li>aqua-registry v1.0.0 ~ v1.5.0</li><li>aqua-installer v1.0.0</li><li>tfaction v0.4.0 ~ v0.4.12</li><li>New<ul><li><a href=\"https://github.com/suzuki-shunsuke/reenable-automerge-action\" target=\"_blank\" rel=\"noopener noreferrer\">https://github.com/suzuki-shunsuke/reenable-automerge-action</a></li><li><a href=\"https://github.com/suzuki-shunsuke/renovate-autoclose-action\" target=\"_blank\" rel=\"noopener noreferrer\">https://github.com/suzuki-shunsuke/renovate-autoclose-action</a></li></ul></li></ul>",
+            "url": "https://techblog.szksh.cloud/what-i-did-2022-02",
+            "title": "2022-02 振り返り",
+            "summary": "まとめ",
+            "date_modified": "2022-03-14T05:16:55.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
+            "tags": [
+                "job",
+                "oss"
+            ]
+        },
+        {
             "id": "/what-i-did-2021-11",
             "content_html": "<h2 class=\"anchor anchorWithStickyNavbar_mojV\" id=\"job\">Job<a class=\"hash-link\" href=\"#job\" title=\"Direct link to heading\">​</a></h2><ul><li>AWS Control Tower<ul><li>登録できてなかった Account を登録できた</li></ul></li><li>AWS SSO<ul><li>ユーザーへの案内・催促を行い、 IAM User から SSO に移行してもらった</li><li>ローカルの開発で Access Key に依存していた部分に関して修正し、 Access Key なしでローカルで開発できるようにした(人によってはまだ Access Key に依存したツールを使っている<ul><li>S3 Browser が SSO でなぜか動かないらしい(自分が Windows 持ってないので確認できてないけど</li><li>Cyberduck が SSO サポートしていない</li></ul></li><li>一部のユーザーの Access Key の deactivate</li><li>不要な IAM User のクリーニング</li><li>来月中には一部の例外を除き、移行を完了させたい</li><li>SSO 出来ない人を SSO できるように対応した (同期対象の Group や、 Permission Set を追加したり)</li><li>SSO に関する User 向け、 SRE 向けドキュメントを英語で書いた</li></ul></li><li>aqua を更新し、 Access Token なしでも動くようにした(API call を減らし、 rate limit の問題を解決した</li><li>Self Hosted Renovate in GitHub Actions<ul><li><a href=\"https://github.com/renovatebot/github-action\" target=\"_blank\" rel=\"noopener noreferrer\">https://github.com/renovatebot/github-action</a></li><li>無事 Self Hosted で動かせるようになった</li><li>結果的に Self Hosted じゃなくても良かったのではという気はしている</li></ul></li><li>AWS WAF<ul><li>COUNT, BLOCK log を Lambda で抽出しようとしているが、なぜか COUNT log が抽出できていない</li><li>あまり時間取れてない</li></ul></li><li>Route53 のドメインのアカウントの移管</li><li>Lambda の CI/CD<ul><li>実現したいことを言語化: <a href=\"https://github.com/suzuki-shunsuke/issue/issues/70\" target=\"_blank\" rel=\"noopener noreferrer\">https://github.com/suzuki-shunsuke/issue/issues/70</a></li><li>検討(あまり進んでない</li></ul></li><li>git-secrets から secretlint への移行</li><li>circleci-config-merge を CI で実行して自動修正するようにした</li></ul><h3 class=\"anchor anchorWithStickyNavbar_mojV\" id=\"課題\">課題<a class=\"hash-link\" href=\"#課題\" title=\"Direct link to heading\">​</a></h3><ul><li>Renovate の Automerge が base branch が更新されたことで disable になり、結局手でマージしないといけなくなっている<ul><li>自動化の検討</li></ul></li></ul><h2 class=\"anchor anchorWithStickyNavbar_mojV\" id=\"blog-slide\">Blog, Slide<a class=\"hash-link\" href=\"#blog-slide\" title=\"Direct link to heading\">​</a></h2><ul><li><a href=\"https://techblog.szksh.cloud/archives/2021/11/\" target=\"_blank\" rel=\"noopener noreferrer\">https://techblog.szksh.cloud/archives/2021/11/</a><ul><li><a href=\"https://techblog.szksh.cloud/update-aqua-v0.7.16/\" target=\"_blank\" rel=\"noopener noreferrer\">aqua の最近の update (v0.7.4 ~ v0.7.16)</a></li></ul></li><li><a href=\"https://dev.to/suzukishunsuke/opa-policy-testing-by-table-driven-test-289e\" target=\"_blank\" rel=\"noopener noreferrer\">OPA Policy Testing by Table Driven Test</a></li><li><a href=\"https://suzuki-shunsuke.github.io/slides/aqua/introduction-5min/\" target=\"_blank\" rel=\"noopener noreferrer\">https://suzuki-shunsuke.github.io/slides/aqua/introduction-5min/</a></li></ul><h2 class=\"anchor anchorWithStickyNavbar_mojV\" id=\"oss\">OSS<a class=\"hash-link\" href=\"#oss\" title=\"Direct link to heading\">​</a></h2><p>aqua の公式サイトを立ち上げました。</p><p><a href=\"https://aquaproj.github.io/\" target=\"_blank\" rel=\"noopener noreferrer\">https://aquaproj.github.io/</a></p><p><a href=\"https://docusaurus.io/\" target=\"_blank\" rel=\"noopener noreferrer\">Docusaurus v2</a> で生成して、 GitHub Pages でホスティングしています。</p><p>aqua 用の GitHub Organization を作り、関連リポジトリを transfer しました。</p><p><a href=\"https://github.com/aquaproj\" target=\"_blank\" rel=\"noopener noreferrer\">https://github.com/aquaproj</a></p><h3 class=\"anchor anchorWithStickyNavbar_mojV\" id=\"oss-contribution\">OSS Contribution<a class=\"hash-link\" href=\"#oss-contribution\" title=\"Direct link to heading\">​</a></h3><p><a href=\"https://github.com/tfmigrator/cli\" target=\"_blank\" rel=\"noopener noreferrer\">tfmigrator</a> と <a href=\"https://github.com/suzuki-shunsuke/tfcmt\" target=\"_blank\" rel=\"noopener noreferrer\">tfcmt</a> を <a href=\"https://github.com/shuaibiyy/awesome-terraform\" target=\"_blank\" rel=\"noopener noreferrer\">awesome-terraform</a> に追加してもらいました。</p><ul><li><a href=\"https://github.com/shuaibiyy/awesome-terraform/pull/139\" target=\"_blank\" rel=\"noopener noreferrer\">https://github.com/shuaibiyy/awesome-terraform/pull/139</a></li><li><a href=\"https://github.com/shuaibiyy/awesome-terraform/pull/138\" target=\"_blank\" rel=\"noopener noreferrer\">https://github.com/shuaibiyy/awesome-terraform/pull/138</a></li></ul><h2 class=\"anchor anchorWithStickyNavbar_mojV\" id=\"その他\">その他<a class=\"hash-link\" href=\"#その他\" title=\"Direct link to heading\">​</a></h2><h3 class=\"anchor anchorWithStickyNavbar_mojV\" id=\"このブログのリポジトリを別の-github-organization-に-transfer-しました\">このブログのリポジトリを別の GitHub Organization に transfer しました<a class=\"hash-link\" href=\"#このブログのリポジトリを別の-github-organization-に-transfer-しました\" title=\"Direct link to heading\">​</a></h3><p><a href=\"https://github.com/techblog-szksh-cloud/techblog-szksh-cloud.github.io\" target=\"_blank\" rel=\"noopener noreferrer\">https://github.com/techblog-szksh-cloud/techblog-szksh-cloud.github.io</a></p><p>理由は techblog.szksh.cloud が suzuki-shunsuke.github.io の CNAME になっていて、\nOSS のドキュメントなどを GitHub Pages で公開したいときに都合が悪かったからです。</p><p>ついでに CI を Drone から GitHub Actions に移行しました。</p><h3 class=\"anchor anchorWithStickyNavbar_mojV\" id=\"suzuki-shunsukeissue-の活用\">suzuki-shunsuke/issue の活用<a class=\"hash-link\" href=\"#suzuki-shunsukeissue-の活用\" title=\"Direct link to heading\">​</a></h3><p><a href=\"https://github.com/suzuki-shunsuke/issue/issues\" target=\"_blank\" rel=\"noopener noreferrer\">https://github.com/suzuki-shunsuke/issue/issues</a> に記録を残すようにしました。</p><p><a href=\"https://github.com/suzuki-shunsuke/issue/issues?q=is%3Aissue+updated%3A2021-11-01..2021-11-30\" target=\"_blank\" rel=\"noopener noreferrer\">https://github.com/suzuki-shunsuke/issue/issues?q=is%3Aissue+updated%3A2021-11-01..2021-11-30</a></p><p>前から使ってましたが、あまり活用できてなかったので、意識的に活用していこうと思っています。\nせっかくツールとかを検証しても、ちゃんと記録が残ってないと忘れてしまいもったいないというのと、\nissue に残すと自然と検証とかが進むような気がしています。</p><h3 class=\"anchor anchorWithStickyNavbar_mojV\" id=\"docusaurus\">Docusaurus<a class=\"hash-link\" href=\"#docusaurus\" title=\"Direct link to heading\">​</a></h3><p>Docusaurus はいい感じなので <a href=\"https://github.com/suzuki-shunsuke/profile\" target=\"_blank\" rel=\"noopener noreferrer\">suzuki-shunsuke/profile</a> やこのブログを Docusaurus に移行するのもありかもしれないなと思いました\n(思っただけでまだ何もしてません</p><p>ただ、 OSS のドキュメントに Docusaurus を使う場合、個人的には package.json を同じリポジトリに置きたくないので、\n同じリポジトリでプロダクトとドキュメントを管理しにくいかなという気はしています。</p>",
             "url": "https://techblog.szksh.cloud/what-i-did-2021-11",
@@ -27,6 +43,10 @@
             "title": "aqua の最近の update (v0.7.4 ~ v0.7.16)",
             "summary": "以前 aqua v0.7.3 がリリースされた際に aqua で組織・チームのツール群を管理 という記事を書きました。",
             "date_modified": "2021-11-18T11:21:57.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "oss",
                 "aqua"
@@ -39,6 +59,10 @@
             "title": "2021-10 やったこと",
             "summary": "Job",
             "date_modified": "2021-10-26T11:43:03.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "job",
                 "oss"
@@ -51,6 +75,10 @@
             "title": "2021-09 やったこと",
             "summary": "仕事",
             "date_modified": "2021-10-02T12:46:15.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "job",
                 "oss"
@@ -63,6 +91,10 @@
             "title": "aqua で組織・チームのツール群を管理",
             "summary": "aqua v0.7.3 をリリースし、",
             "date_modified": "2021-09-25T03:01:56.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "oss",
                 "aqua"
@@ -75,6 +107,10 @@
             "title": "aqua の設定ファイルをインタラクティブに生成する generate コマンド",
             "summary": "* aqua - CLI ツールのバージョン管理",
             "date_modified": "2021-09-05T01:17:39.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "oss",
                 "aqua"
@@ -87,6 +123,10 @@
             "title": "aqua v0.1.0 から v0.5.0 での変更点",
             "summary": "先日 aqua v0.1.0 をリリースした記事を書いたばかりですが、",
             "date_modified": "2021-09-04T02:58:42.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "oss",
                 "aqua"
@@ -99,6 +139,10 @@
             "title": "2021-08 やったこと",
             "summary": "仕事",
             "date_modified": "2021-09-02T05:33:16.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "job",
                 "oss"
@@ -123,6 +167,10 @@
             "title": "AWS CodeBuild を実行する Github App を作る",
             "summary": "GitHub Repository の CI に CodeBuild を使う場合、 CodeBuild の Webhook integration (以下 CodeBuild GitHub integration と呼ぶことにします) を使うのが一番自然でしょう。",
             "date_modified": "2021-08-16T00:10:51.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "aws",
                 "codebuild",
@@ -136,6 +184,10 @@
             "title": "2021-07 やったこと",
             "summary": "今まで仕事に限定して書いてきましたが、 OSS 活動なんかにも触れてもいいんじゃないかと思ったので分かる範囲で書きます。",
             "date_modified": "2021-07-27T21:58:45.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "job",
                 "oss"
@@ -148,6 +200,10 @@
             "title": "仕事でやったこと 2021-06-01 ~ 2021-06-30",
             "summary": "* GCP を Terraform で管理するための developer support",
             "date_modified": "2021-07-12T20:47:11.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "job"
             ]
@@ -159,6 +215,10 @@
             "title": "OPA で Table Driven Tests っぽいことをしてみる",
             "summary": "OPA で Table Driven Tests っぽく Policy を Test する方法について考えたので紹介します。",
             "date_modified": "2021-07-09T10:38:55.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "opa",
                 "conftest",
@@ -172,6 +232,10 @@
             "title": "Terraform で空の AWS Lambda Function を作る方法",
             "summary": "Terraform で空の AWS Lambda Function を作ろうとした際にちょっとハマったのでやり方を書いておきます。",
             "date_modified": "2021-06-24T12:25:24.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "terraform",
                 "lambda"
@@ -184,6 +248,10 @@
             "title": "仕事でやったこと 2021-05-01 ~ 2021-05-31",
             "summary": "* SRE チームの新メンバーのオンボーディングのサポート",
             "date_modified": "2021-05-29T23:19:32.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "job"
             ]
@@ -195,6 +263,10 @@
             "title": "仕事でやったこと 2021-04-01 ~ 2021-04-30",
             "summary": "* SRE チームの新メンバーのオンボーディングのサポート",
             "date_modified": "2021-04-28T00:28:01.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "job"
             ]
@@ -206,6 +278,10 @@
             "title": "PR で変更されたファイルや PR Label に応じて matrix build を実行する Github Actions の Workflow のサンプルを書いてみた",
             "summary": "GitHub Actions の勉強がてら Pull Request (以下 PR) で変更されたファイルや PR Label に応じて",
             "date_modified": "2021-04-25T07:09:47.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "github-actions"
             ]
@@ -217,6 +293,10 @@
             "title": "terraform init で lock ファイルが更新される問題の対応",
             "summary": "Terraform v0.14 で local で terraform init すると lock ファイルが更新されてしまう問題に対応しました。",
             "date_modified": "2021-04-24T12:57:27.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "terraform"
             ]
@@ -228,6 +308,10 @@
             "title": "Terraform Module の Template という使い方",
             "summary": "Terraform Module の使い方として Terraform Module のテンプレートをコピペして使うというアプローチを紹介します。",
             "date_modified": "2021-04-03T02:04:25.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "terraform"
             ]
@@ -239,6 +323,10 @@
             "title": "仕事でやったこと 2021-03-01 ~ 2021-03-31",
             "summary": "* ブログの執筆",
             "date_modified": "2021-03-28T14:36:55.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "job"
             ]
@@ -250,6 +338,10 @@
             "title": "仕事でやったこと 2021-02-01 ~ 2021-02-28",
             "summary": "* Terraform リポジトリの統合",
             "date_modified": "2021-02-27T11:51:56.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "job"
             ]
@@ -261,6 +353,10 @@
             "title": "仕事でやったこと 2021-01-01 ~ 2021-01-31",
             "summary": "* CI: PR コメントの非表示",
             "date_modified": "2021-02-10T23:13:10.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "job"
             ]
@@ -272,6 +368,10 @@
             "title": "仕事でやったこと 2020-12-01 ~ 2020-12-31",
             "summary": "2020-12-01 から 2020-12-31 にかけて仕事でやったことを書ける範囲で書きます。",
             "date_modified": "2021-02-10T23:02:11.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "job"
             ]
@@ -283,6 +383,10 @@
             "title": "terraformer で雑に生成した tf ファイル と state を分割したくてツールを書いた",
             "summary": "terraformer で雑に生成した Terraform の設定ファイル (以下 tf ファイル) と state を分割したくてツールを書きました。",
             "date_modified": "2021-01-31T05:53:23.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "oss",
                 "terraform"
@@ -295,6 +399,10 @@
             "title": "skaffold を使って GitOps する",
             "summary": "skaffold を用いてマニフェストを動的に生成しつつ GitOps する方法を考えたので紹介します。",
             "date_modified": "2021-01-11T07:24:44.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "skaffold",
                 "gitops",
@@ -308,6 +416,10 @@
             "title": "tfnotify を fork した",
             "summary": "mercari/tfnotify を Fork して 2 つほど OSS を作りました。",
             "date_modified": "2021-01-02T10:42:10.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "oss",
                 "terraform"
@@ -320,6 +432,10 @@
             "title": "2019-10 から今(2020-12-31)に至るまで仕事でやっていること",
             "summary": "2019-10-01 から今の職場で SRE として働いています。",
             "date_modified": "2020-12-31T02:00:40.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "job"
             ]
@@ -331,6 +447,10 @@
             "title": "仕事でやったこと 2020-11-01 ~ 2020-11-30",
             "summary": "2020-11-01 から 2020-11-30 にかけて仕事でやったことを書ける範囲で書きます。",
             "date_modified": "2020-12-29T20:44:14.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "job"
             ]
@@ -342,6 +462,10 @@
             "title": "Renovate の PR に便利なリンクを追加",
             "summary": "Renovate による PR をレビューする際、差分がなんなのか分かりづらいときがあります。",
             "date_modified": "2020-12-28T05:32:31.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "renovate"
             ]
@@ -353,6 +477,10 @@
             "title": "Renovate と Dependabot の比較",
             "summary": "普段 Renovate を主に使っている自分が、 Dependabot と Renovate の違いについて調べてみました。",
             "date_modified": "2020-12-05T03:37:17.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "dependabot",
                 "renovate"
@@ -365,6 +493,10 @@
             "title": "Terraform の Docker Provider の Collaborator になりました",
             "summary": "先日 kreuzwerker/terraform-provider-docker の Collaborator になりました。",
             "date_modified": "2020-12-03T00:07:32.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "oss",
                 "terraform"
@@ -388,6 +520,10 @@
             "title": "仕事でやったこと 2020-07-01 ~ 2020-09-30",
             "summary": "2020-07-01 から 2020-09-30 にかけて仕事でやったことを書きます。",
             "date_modified": "2020-11-29T02:36:44.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "job"
             ]
@@ -399,6 +535,10 @@
             "title": "仕事でやったこと 2020-04-01 ~ 2020-06-30",
             "summary": "2020-04-01 から 2020-06-30 にかけて仕事でやったことを書きます。",
             "date_modified": "2020-11-29T02:20:07.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "job"
             ]
@@ -410,6 +550,10 @@
             "title": "仕事でやったこと 2020-01-01 ~ 2020-03-31",
             "summary": "2020-01-01 から 2020-03-31 にかけて仕事でやったことを書きます。",
             "date_modified": "2020-11-29T01:50:11.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "job"
             ]
@@ -421,6 +565,10 @@
             "title": "仕事でやったこと 2019-10-01 ~ 2019-12-31",
             "summary": "2019-10-01 から 2019-12-31 にかけて仕事でやったことを書きます。",
             "date_modified": "2020-11-29T01:38:57.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "job"
             ]
@@ -432,6 +580,10 @@
             "title": "Splitting .circleci/config.yml",
             "summary": "In this post I introduce how to split a huge .circleci/config.yml.",
             "date_modified": "2020-11-07T05:43:10.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "circleci",
                 "oss"
@@ -444,6 +596,10 @@
             "title": "github-ci-monitor: CI のステータスを DataDog で監視",
             "summary": "自作の OSS github-ci-monitor の紹介です。",
             "date_modified": "2020-11-01T08:51:44.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "oss"
             ]
@@ -455,6 +611,10 @@
             "title": "matchfile - 変更されたファイルの一覧から必要なタスクを導出するための CLI ツール",
             "summary": "自作の CLI ツール matchfile について紹介します。",
             "date_modified": "2020-10-27T10:39:44.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "oss"
             ]
@@ -466,6 +626,10 @@
             "title": "なぜ buildflow を作ったのか",
             "summary": "buildflow というツールを開発しているので buildflow というタグをつけて何回かに分けてブログを書きます。",
             "date_modified": "2020-10-18T00:53:08.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "oss",
                 "buildflow"
@@ -478,6 +642,10 @@
             "title": "buildflow の実行結果の出力形式",
             "summary": "buildflow というツールを開発しているので buildflow というタグをつけて何回かに分けてブログを書きます。",
             "date_modified": "2020-10-17T23:36:09.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "oss",
                 "buildflow"
@@ -490,6 +658,10 @@
             "title": "buildflow が自動で取得する Pull Request の情報",
             "summary": "buildflow というツールを開発しているので buildflow というタグをつけて何回かに分けてブログを書きます。",
             "date_modified": "2020-10-17T23:13:48.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "oss",
                 "buildflow"
@@ -502,6 +674,10 @@
             "title": "buildflow ではなぜ Tengo を採用しているのか",
             "summary": "buildflow というツールを開発しているので buildflow というタグをつけて何回かに分けてブログを書きます。",
             "date_modified": "2020-10-17T13:35:56.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "oss",
                 "buildflow"
@@ -514,6 +690,10 @@
             "title": "buildflow の dynamic task",
             "summary": "buildflow というツールを開発しているので buildflow というタグをつけて何回かに分けてブログを書きます。",
             "date_modified": "2020-10-17T12:29:51.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "oss",
                 "buildflow"
@@ -526,6 +706,10 @@
             "title": "buildflow の task の input, output という機能",
             "summary": "buildflow というツールを開発しているので buildflow というタグをつけて何回かに分けてブログを書きます。",
             "date_modified": "2020-10-17T12:05:41.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "oss",
                 "buildflow"
@@ -538,6 +722,10 @@
             "title": "buildflow で設定ファイルを分割する",
             "summary": "buildflow というツールを開発しているので buildflow というタグをつけて何回かに分けてブログを書こうかなと思います。",
             "date_modified": "2020-10-17T11:49:28.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "oss",
                 "buildflow"
@@ -550,6 +738,10 @@
             "title": "buildflow の script や template に渡される parameter",
             "summary": "buildflow というツールを開発しているので buildflow というタグをつけて何回かに分けてブログを書こうと思います。",
             "date_modified": "2020-10-17T10:44:39.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "oss",
                 "buildflow"
@@ -562,6 +754,10 @@
             "title": "buildflow の task の設定項目",
             "summary": "buildflow というツールを開発しているので buildflow というタグをつけて何回かに分けてブログを書こうと思います。",
             "date_modified": "2020-10-17T09:26:57.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "oss",
                 "buildflow"
@@ -574,6 +770,10 @@
             "title": "buildflow の build, phase, task について",
             "summary": "buildflow というツールを開発しているので buildflow というタグをつけて何回かに分けてブログを書こうと思います。",
             "date_modified": "2020-10-17T09:09:19.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "oss",
                 "buildflow"
@@ -586,6 +786,10 @@
             "title": "buildflow での Tengo の使い方",
             "summary": "buildflow というツールを開発しているので buildflow というタグをつけて何回かに分けてブログを書こうかなと思います。",
             "date_modified": "2020-10-17T08:18:34.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "oss",
                 "buildflow"
@@ -598,6 +802,10 @@
             "title": "buildflow というワークフローエンジンのようなタスクランナーのようなツールを作っている",
             "summary": "buildflow というツールを開発しているので紹介します。",
             "date_modified": "2020-10-17T07:06:31.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "oss",
                 "buildflow"
@@ -610,6 +818,10 @@
             "title": "tfnotify の parse error を通知する",
             "summary": "tfnotify が terraform の標準出力のパースに失敗してコメントを投稿できないことがあります。",
             "date_modified": "2020-09-11T23:05:59.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "terraform",
                 "tfnotify",
@@ -623,6 +835,10 @@
             "title": "AWS CodeBuild 良さそう",
             "summary": "AWS CodeBuild を検証しているんですが、結構良いですね。",
             "date_modified": "2020-08-02T04:21:37.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "aws",
                 "codebuild",
@@ -636,17 +852,25 @@
             "title": "github-comment - GitHub にコメントを投稿する CLI",
             "summary": "GitHub の issue や pull request, commit にコメントを投稿する CLI ツールを作りました(結構前の話ですが)。",
             "date_modified": "2020-07-31T11:42:54.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "oss"
             ]
         },
         {
             "id": "/clap",
-            "content_html": "<p>多分車輪の再生産だとは思いますが、簡単にツールをインストールするための CLI ツールを作りました。\ntarball や zip をダウンロードして展開して指定したパスにインストールするツールです。</p><p><a href=\"https://github.com/suzuki-shunsuke/clap\" target=\"_blank\" rel=\"noopener noreferrer\">https://github.com/suzuki-shunsuke/clap</a></p><p>Go で書かれています。\nツールの名前(clap)には特別な意味や理由はなく、なんとなくです。</p><p>CI で何かしらのツールをインストールすることがままあって、そのためのシェルスクリプトを都度書くのが割と面倒なのでツール化しました。</p><p>このブログを書いている時点でバージョンは v0.1.0-1 で、最低限の機能しかありませんが、9割型ニーズを満たせるかなと思います。</p><p>使い方は以下のようになっています。</p><div class=\"codeBlockContainer_I0IT theme-code-block\"><div class=\"codeBlockContent_wNvx\"><pre tabindex=\"0\" class=\"prism-code language-text codeBlock_jd64 thin-scrollbar\" style=\"color:#393A34;background-color:#f6f8fa\"><code class=\"codeBlockLines_mRuA\"><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">$ clap &lt;URL&gt; &lt;インストールするファイルのアーカイブ内での相対パス&gt;:&lt;インストール先&gt; [&lt;インストールするファイルのアーカイブ内での相対パス&gt;:&lt;インストール先&gt;...]</span><br></span></code></pre><button type=\"button\" aria-label=\"Copy code to clipboard\" class=\"copyButton_wuS7 clean-btn\">Copy</button></div></div><p>例えば <a href=\"https://github.com/open-policy-agent/conftest\" target=\"_blank\" rel=\"noopener noreferrer\">conftest</a> を /usr/local/bin にインストールする場合次のようになります。</p><div class=\"codeBlockContainer_I0IT language-sh theme-code-block\"><div class=\"codeBlockContent_wNvx sh\"><pre tabindex=\"0\" class=\"prism-code language-sh codeBlock_jd64 thin-scrollbar\" style=\"color:#393A34;background-color:#f6f8fa\"><code class=\"codeBlockLines_mRuA\"><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">CONFTEST_VERSION=0.18.2</span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">clap install https://github.com/instrumenta/conftest/releases/download/v${CONFTEST_VERSION}/conftest_${CONFTEST_VERSION}_Linux_x86_64.tar.gz conftest:/usr/local/bin/conftest</span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">chmod a+x /usr/local/bin/conftest</span><br></span></code></pre><button type=\"button\" aria-label=\"Copy code to clipboard\" class=\"copyButton_wuS7 clean-btn\">Copy</button></div></div><p>パーミッションの付与はやってくれないので必要に応じてやってください。\nファイルの圧縮形式は URL から自動で判別してくれます。</p><p>上記の conftest のインストールを今までは次のようなシェルスクリプトを書いていました。</p><div class=\"codeBlockContainer_I0IT language-sh theme-code-block\"><div class=\"codeBlockContent_wNvx sh\"><pre tabindex=\"0\" class=\"prism-code language-sh codeBlock_jd64 thin-scrollbar\" style=\"color:#393A34;background-color:#f6f8fa\"><code class=\"codeBlockLines_mRuA\"><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">#!/usr/bin/env bash</span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\" style=\"display:inline-block\"></span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">set -eu</span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\" style=\"display:inline-block\"></span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">CONFTEST_VERSION=0.18.2</span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\" style=\"display:inline-block\"></span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">dirpath=$(mktemp -d)</span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">pushd \"$dirpath\"</span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">TARFILE=conftest_${CONFTEST_VERSION}_Linux_x86_64.tar.gz</span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">curl -OL https://github.com/instrumenta/conftest/releases/download/v${CONFTEST_VERSION}/${TARFILE}</span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">tar xvzf $TARFILE</span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">mv conftest /usr/local/bin/conftest</span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">chmod a+x /usr/local/bin/conftest</span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">popd</span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">rm -R \"$dirpath\"</span><br></span></code></pre><button type=\"button\" aria-label=\"Copy code to clipboard\" class=\"copyButton_wuS7 clean-btn\">Copy</button></div></div><p>地味に面倒ですね。これをツール毎に書いて、しかも圧縮形式によって微妙に変えないといけません。</p><p>clap 自体のインストールはどうするかというと、 <a href=\"https://github.com/suzuki-shunsuke/clap/releases\" target=\"_blank\" rel=\"noopener noreferrer\">GitHub Releases で tarball の他にバイナリ単体でも配布</a>しているので簡単にインストールできます。</p><div class=\"codeBlockContainer_I0IT theme-code-block\"><div class=\"codeBlockContent_wNvx\"><pre tabindex=\"0\" class=\"prism-code language-text codeBlock_jd64 thin-scrollbar\" style=\"color:#393A34;background-color:#f6f8fa\"><code class=\"codeBlockLines_mRuA\"><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">CLAP_VERSION=0.1.0-1</span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">curl -L -o /usr/local/bin/clap https://github.com/suzuki-shunsuke/clap/releases/download/v${CLAP_VERSION}/clap_${CLAP_VERSION}_linux_amd64</span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">chmod a+x /usr/local/bin/clap</span><br></span></code></pre><button type=\"button\" aria-label=\"Copy code to clipboard\" class=\"copyButton_wuS7 clean-btn\">Copy</button></div></div><p>以上、簡単な紹介でした。</p>",
+            "content_html": "<p>多分車輪の再発明だとは思いますが、簡単にツールをインストールするための CLI ツールを作りました。\ntarball や zip をダウンロードして展開して指定したパスにインストールするツールです。</p><p><a href=\"https://github.com/suzuki-shunsuke/clap\" target=\"_blank\" rel=\"noopener noreferrer\">https://github.com/suzuki-shunsuke/clap</a></p><p>Go で書かれています。\nツールの名前(clap)には特別な意味や理由はなく、なんとなくです。</p><p>CI で何かしらのツールをインストールすることがままあって、そのためのシェルスクリプトを都度書くのが割と面倒なのでツール化しました。</p><p>このブログを書いている時点でバージョンは v0.1.0-1 で、最低限の機能しかありませんが、9割型ニーズを満たせるかなと思います。</p><p>使い方は以下のようになっています。</p><div class=\"codeBlockContainer_I0IT theme-code-block\"><div class=\"codeBlockContent_wNvx\"><pre tabindex=\"0\" class=\"prism-code language-text codeBlock_jd64 thin-scrollbar\" style=\"color:#393A34;background-color:#f6f8fa\"><code class=\"codeBlockLines_mRuA\"><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">$ clap &lt;URL&gt; &lt;インストールするファイルのアーカイブ内での相対パス&gt;:&lt;インストール先&gt; [&lt;インストールするファイルのアーカイブ内での相対パス&gt;:&lt;インストール先&gt;...]</span><br></span></code></pre><button type=\"button\" aria-label=\"Copy code to clipboard\" class=\"copyButton_wuS7 clean-btn\">Copy</button></div></div><p>例えば <a href=\"https://github.com/open-policy-agent/conftest\" target=\"_blank\" rel=\"noopener noreferrer\">conftest</a> を /usr/local/bin にインストールする場合次のようになります。</p><div class=\"codeBlockContainer_I0IT language-sh theme-code-block\"><div class=\"codeBlockContent_wNvx sh\"><pre tabindex=\"0\" class=\"prism-code language-sh codeBlock_jd64 thin-scrollbar\" style=\"color:#393A34;background-color:#f6f8fa\"><code class=\"codeBlockLines_mRuA\"><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">CONFTEST_VERSION=0.18.2</span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">clap install https://github.com/instrumenta/conftest/releases/download/v${CONFTEST_VERSION}/conftest_${CONFTEST_VERSION}_Linux_x86_64.tar.gz conftest:/usr/local/bin/conftest</span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">chmod a+x /usr/local/bin/conftest</span><br></span></code></pre><button type=\"button\" aria-label=\"Copy code to clipboard\" class=\"copyButton_wuS7 clean-btn\">Copy</button></div></div><p>パーミッションの付与はやってくれないので必要に応じてやってください。\nファイルの圧縮形式は URL から自動で判別してくれます。</p><p>上記の conftest のインストールを今までは次のようなシェルスクリプトを書いていました。</p><div class=\"codeBlockContainer_I0IT language-sh theme-code-block\"><div class=\"codeBlockContent_wNvx sh\"><pre tabindex=\"0\" class=\"prism-code language-sh codeBlock_jd64 thin-scrollbar\" style=\"color:#393A34;background-color:#f6f8fa\"><code class=\"codeBlockLines_mRuA\"><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">#!/usr/bin/env bash</span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\" style=\"display:inline-block\"></span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">set -eu</span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\" style=\"display:inline-block\"></span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">CONFTEST_VERSION=0.18.2</span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\" style=\"display:inline-block\"></span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">dirpath=$(mktemp -d)</span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">pushd \"$dirpath\"</span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">TARFILE=conftest_${CONFTEST_VERSION}_Linux_x86_64.tar.gz</span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">curl -OL https://github.com/instrumenta/conftest/releases/download/v${CONFTEST_VERSION}/${TARFILE}</span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">tar xvzf $TARFILE</span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">mv conftest /usr/local/bin/conftest</span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">chmod a+x /usr/local/bin/conftest</span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">popd</span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">rm -R \"$dirpath\"</span><br></span></code></pre><button type=\"button\" aria-label=\"Copy code to clipboard\" class=\"copyButton_wuS7 clean-btn\">Copy</button></div></div><p>地味に面倒ですね。これをツール毎に書いて、しかも圧縮形式によって微妙に変えないといけません。</p><p>clap 自体のインストールはどうするかというと、 <a href=\"https://github.com/suzuki-shunsuke/clap/releases\" target=\"_blank\" rel=\"noopener noreferrer\">GitHub Releases で tarball の他にバイナリ単体でも配布</a>しているので簡単にインストールできます。</p><div class=\"codeBlockContainer_I0IT theme-code-block\"><div class=\"codeBlockContent_wNvx\"><pre tabindex=\"0\" class=\"prism-code language-text codeBlock_jd64 thin-scrollbar\" style=\"color:#393A34;background-color:#f6f8fa\"><code class=\"codeBlockLines_mRuA\"><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">CLAP_VERSION=0.1.0-1</span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">curl -L -o /usr/local/bin/clap https://github.com/suzuki-shunsuke/clap/releases/download/v${CLAP_VERSION}/clap_${CLAP_VERSION}_linux_amd64</span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">chmod a+x /usr/local/bin/clap</span><br></span></code></pre><button type=\"button\" aria-label=\"Copy code to clipboard\" class=\"copyButton_wuS7 clean-btn\">Copy</button></div></div><p>以上、簡単な紹介でした。</p>",
             "url": "https://techblog.szksh.cloud/clap",
             "title": "clap - 簡単にツールをインストールするためのツールを作った",
-            "summary": "多分車輪の再生産だとは思いますが、簡単にツールをインストールするための CLI ツールを作りました。",
+            "summary": "多分車輪の再発明だとは思いますが、簡単にツールをインストールするための CLI ツールを作りました。",
             "date_modified": "2020-07-06T07:52:58.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "oss"
             ]
@@ -658,6 +882,10 @@
             "title": "CircleCI の run の実行時間を DataDog に送る",
             "summary": "小ネタです。",
             "date_modified": "2020-05-23T05:20:53.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "circleci",
                 "dd-time",
@@ -671,6 +899,10 @@
             "title": "CircleCI の checkout の注意点",
             "summary": "CircleCI の組み込みの command checkout の注意点について書きます。",
             "date_modified": "2020-04-24T07:53:01.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "circleci"
             ]
@@ -682,6 +914,10 @@
             "title": "Skaffold で特定のサービスだけ動かすためのツールを作った",
             "summary": "自作の CLI ツール skaffold-generator の紹介です。",
             "date_modified": "2020-04-05T09:53:25.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "k8s",
                 "skaffold",
@@ -696,6 +932,10 @@
             "title": "Terraform ハンズオン with MySQL Provider",
             "summary": "Terraform を勉強するには実際に使ってみるのが一番手っ取り早いですが、",
             "date_modified": "2020-01-17T00:14:08.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "terraform"
             ]
@@ -707,6 +947,10 @@
             "title": "Terraform 入門",
             "summary": "参考",
             "date_modified": "2020-01-16T00:25:05.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "terraform"
             ]
@@ -718,6 +962,10 @@
             "title": "Terraform の State Locking の概要",
             "summary": "Terraform の State Locking という機能の概要について説明します。",
             "date_modified": "2020-01-10T07:18:05.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "terraform"
             ]
@@ -729,6 +977,10 @@
             "title": "dd-time - コマンドの実行時間を Datadog に送るツール",
             "summary": "コマンドの実行時間を Datadog に送る dd-time というツールを作りました。",
             "date_modified": "2019-11-30T04:54:47.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "oss",
                 "datadog"
@@ -741,7 +993,13 @@
             "title": "モブレビューやっていきたい",
             "summary": "最近モブレビュー取り入れたいと感じていて、なんで取り入れたいかなどについて書いてみました。",
             "date_modified": "2019-11-10T09:31:05.000Z",
-            "tags": []
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
+            "tags": [
+                "job"
+            ]
         },
         {
             "id": "/go-timeout",
@@ -750,8 +1008,13 @@
             "title": "go-timeout - command の timeout",
             "summary": "作ったのは 2ヶ月くらい前の話ですが、",
             "date_modified": "2019-11-04T01:00:21.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
-                "oss"
+                "oss",
+                "golang"
             ]
         },
         {
@@ -761,6 +1024,10 @@
             "title": "cmdx - task runner",
             "summary": "最近自作した OSS, cmdx の紹介です。",
             "date_modified": "2019-08-23T02:35:13.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "oss"
             ]
@@ -772,6 +1039,10 @@
             "title": "Drone Extension のリスク",
             "summary": "Drone v1 では Extension という仕組みが導入されました。",
             "date_modified": "2019-08-14T22:54:23.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "drone"
             ]
@@ -783,6 +1054,10 @@
             "title": "Drone v1 で gRPC が使われなくなった",
             "summary": "v0.8 では server - agent 間の通信に gPRC が使われていましたが、 v1 では使われなくなりました。",
             "date_modified": "2019-08-14T22:39:18.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "drone",
                 "grpc"
@@ -795,6 +1070,10 @@
             "title": "Golang での時刻の扱い方を整理する",
             "summary": "今更ながら Golang での時刻の扱い方について改めて整理してみました。",
             "date_modified": "2019-08-14T11:28:56.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "golang"
             ]
@@ -806,6 +1085,10 @@
             "title": "Drone v1 では Jsonnet が extension なしで使える",
             "summary": "Drone では v1 から冗長な YAML を DRY にする一つの手として、 Jsonnet の利用が推奨されています。",
             "date_modified": "2019-08-02T14:02:57.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "drone"
             ]
@@ -817,6 +1100,10 @@
             "title": "The Top 10 Most Common Mistakes I’ve Seen in Go Projects を読んでみて",
             "summary": "The Top 10 Most Common Mistakes I’ve Seen in Go Projects という記事を読んで面白かったのでメモります。",
             "date_modified": "2019-07-21T09:13:53.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "go"
             ]
@@ -828,6 +1115,10 @@
             "title": "Flute - Golang HTTP client testing framework",
             "summary": "2019-07-17 追記",
             "date_modified": "2019-07-06T23:20:00.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "oss",
                 "golang",
@@ -841,6 +1132,10 @@
             "title": "Drone で「ビルド実行時にパラメータを渡す」っぽいことをする",
             "summary": "Jenkins では parameterized build という機能で、ビルド実行時に Web UI からパラメータを指定することができます。",
             "date_modified": "2019-06-20T08:50:11.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "drone"
             ]
@@ -852,6 +1147,10 @@
             "title": "Drone v0.8 の .drone.yml を v1 の .drone.jsonnet に変換するツールを作った",
             "summary": "Drone v0.8 の .drone.yml を v1 の .drone.jsonnet に変換するツールを作ったので紹介します。",
             "date_modified": "2019-06-11T22:40:45.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "oss",
                 "drone"
@@ -864,6 +1163,10 @@
             "title": ".drone.jsonnet と .drone.yml を比較する Drone plugin を作った",
             "summary": "久しぶりに Drone plugin を作ったので紹介します。",
             "date_modified": "2019-05-31T23:34:10.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "drone"
             ]
@@ -875,8 +1178,13 @@
             "title": "go-jsoneq - 2つの値がJSONとして等しいか比較するGoライブラリ",
             "summary": "https://github.com/suzuki-shunsuke/go-jsoneq",
             "date_modified": "2019-05-23T02:43:18.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
-                "oss"
+                "oss",
+                "golang"
             ]
         },
         {
@@ -897,7 +1205,13 @@
             "title": "毎週30分の技術共有会",
             "summary": "自分が最近職場で行っている技術共有の取り組みについて紹介したいと思います。",
             "date_modified": "2019-03-17T04:47:40.000Z",
-            "tags": []
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
+            "tags": [
+                "job"
+            ]
         },
         {
             "id": "/rancher-duplicated-user-name",
@@ -906,6 +1220,10 @@
             "title": "Rancherでusername が重複してログインできなくなった場合の解消方法",
             "summary": "先日起こった Rancher のトラブルの解消方法について紹介したいと思います。",
             "date_modified": "2019-03-16T12:17:05.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "rancher"
             ]
@@ -917,6 +1235,10 @@
             "title": "Goの設定管理で viper の代わりに confita を使う",
             "summary": "Golang の設定管理のライブラリといえば viper が有名ですが、",
             "date_modified": "2019-02-16T09:38:45.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "golang"
             ]
@@ -928,17 +1250,25 @@
             "title": "JS以外でのnpmの活用",
             "summary": "npm は Node.js のパッケージマネージャーですが、自分はJS以外のプロジェクトでも使えると思っています。",
             "date_modified": "2019-02-14T12:34:22.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "npm"
             ]
         },
         {
             "id": "/golang-good-point",
-            "content_html": "<p>自分は 2017/8頃(曖昧)からメインで書く言語をPythonからGolangに変更しました。\nGoを書き始めて割と早い段階でGoが一番好きになりました。\nそこでなんで Go が好きなのかということを頑張って言語化しようと思います。</p><p>若干他の言語と比較する部分もありますが、決して他の言語をディスったり、\n他の言語より優れているということが言いたいわけではないのでご了承ください。</p><ul><li>依存するものが小さく、バイナリ1つインストールするだけで良い<ul><li>Prometheus の exporter とかインストールするの簡単</li><li>Docker Imageも最小限になる</li></ul></li><li>静的型付け<ul><li>ビルド出来ている時点で一定の信頼性が担保されている</li><li>よく知らないコードを読んだり修正するときとかだいぶ有り難い</li></ul></li><li>GoDocが素晴らしい<ul><li>何もしなくてもライブラリのドキュメントが出来上がっている</li></ul></li><li>ライブラリの公開が容易<ul><li>GitHubに公開するだけ</li><li>npm や pypi のようなレジストリがないので楽</li></ul></li><li>go test とか go vet, gofmt みたいに標準ツールが揃っている</li><li>コーディング規約で悩む必要がない</li><li>lintツールが充実している<ul><li>gometalinter とか使っておけば OK</li><li>lintできる環境を構築するのにそこまで頑張らなくて良い</li></ul></li><li>エラーハンドリングが暗黙的に省略できないので信頼性が高い<ul><li>Goのエラーハンドリング嫌いって人もいるし、v2で改善されるって話も聞くけど、自分はむしろ好き(面倒なのは理解できるけど)</li></ul></li><li>言語仕様がシンプル(客観的な根拠はないし、難しい部分もあるけど、そんな気がする)<ul><li>メタプログラミング使った、魔術的なコードになりにくい</li></ul></li><li>interface 使ってコードを疎結合にするのが書いてて気持ちいい</li><li>並列処理が書きやすい</li></ul>",
+            "content_html": "<p>自分は 2017/8頃(曖昧)からメインで書く言語を Python から Go に変更しました。\nGoを書き始めて割と早い段階でGoが一番好きになりました。\nそこでなんで Go が好きなのかということを頑張って言語化しようと思います。</p><p>若干他の言語と比較する部分もありますが、決して他の言語をディスったり、\n他の言語より優れているということが言いたいわけではないのでご了承ください。</p><ul><li>依存するものが小さく、バイナリ1つインストールするだけで良い<ul><li>Prometheus の exporter とかインストールするの簡単</li><li>Docker Imageも最小限になる</li></ul></li><li>静的型付け<ul><li>ビルド出来ている時点で一定の信頼性が担保されている</li><li>よく知らないコードを読んだり修正するときとかだいぶ有り難い</li></ul></li><li>GoDocが素晴らしい<ul><li>何もしなくてもライブラリのドキュメントが出来上がっている</li></ul></li><li>ライブラリの公開が容易<ul><li>GitHubに公開するだけ</li><li>npm や pypi のようなレジストリがないので楽</li></ul></li><li>go test とか go vet, gofmt みたいに標準ツールが揃っている</li><li>コーディング規約で悩む必要がない</li><li>lintツールが充実している<ul><li>gometalinter とか使っておけば OK</li><li>lintできる環境を構築するのにそこまで頑張らなくて良い</li></ul></li><li>エラーハンドリングが暗黙的に省略できないので信頼性が高い<ul><li>Goのエラーハンドリング嫌いって人もいるし、v2で改善されるって話も聞くけど、自分はむしろ好き(面倒なのは理解できるけど)</li></ul></li><li>言語仕様がシンプル(客観的な根拠はないし、難しい部分もあるけど、そんな気がする)<ul><li>メタプログラミング使った、魔術的なコードになりにくい</li></ul></li><li>interface 使ってコードを疎結合にするのが書いてて気持ちいい</li><li>並列処理が書きやすい</li></ul>",
             "url": "https://techblog.szksh.cloud/golang-good-point",
-            "title": "Golang の好きなところ",
-            "summary": "自分は 2017/8頃(曖昧)からメインで書く言語をPythonからGolangに変更しました。",
+            "title": "Go の好きなところ",
+            "summary": "自分は 2017/8頃(曖昧)からメインで書く言語を Python から Go に変更しました。",
             "date_modified": "2019-02-10T08:49:58.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "golang"
             ]
@@ -950,7 +1280,13 @@
             "title": "go-error-handling-logging-practice v0.2",
             "summary": "以前 Golang のロギング・エラーハンドリングについて書きました。",
             "date_modified": "2019-02-01T13:26:13.000Z",
-            "tags": []
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
+            "tags": [
+                "golang"
+            ]
         },
         {
             "id": "/terraform-provider-graylog-import",
@@ -959,6 +1295,10 @@
             "title": "Terraform Providerで import を実装する方法",
             "summary": "terraform provider graylog で alert condition と stream rule の import を実装しました。",
             "date_modified": "2019-01-25T13:38:28.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "terraform",
                 "graylog"
@@ -971,17 +1311,25 @@
             "title": "GithubをFree Planにダウングレードした",
             "summary": "GitHub のプラン体系が変わり、無料プランでも無制限でprivate repositoryが作れるようになりました。",
             "date_modified": "2019-01-20T03:27:26.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "github"
             ]
         },
         {
             "id": "/golang-logging-error-handling-practice",
-            "content_html": "<h2 class=\"anchor anchorWithStickyNavbar_mojV\" id=\"2018-12-30-追記\">2018-12-30 追記<a class=\"hash-link\" href=\"#2018-12-30-追記\" title=\"Direct link to heading\">​</a></h2><p>この記事を元にドキュメントを書いてみました。</p><p><a href=\"https://github.com/suzuki-shunsuke/go-error-handling-logging-practice\" target=\"_blank\" rel=\"noopener noreferrer\">https://github.com/suzuki-shunsuke/go-error-handling-logging-practice</a></p><p>追記ここまで</p><hr><p>Golang でエラーハンドリングとロギングをしてきて自分の中で固まりつつあるプラクティスを明文化します。\n明文化することで以下のことを目指します。</p><ul><li>迷いをなくす</li><li>コードの一貫性を保つ</li><li>コーディング規約とすることでレビューの品質を上げる(自動化は出来ないけど)</li><li>コードの品質を上げる(コードがゴチャつかなくなる)</li><li>適切にエラーをロギングする(必要十分な情報をログとして残す)</li></ul><p>またエラーハンドリングとロギングのためのライブラリを自作しているのでそれも紹介します。</p><p><a href=\"https://github.com/suzuki-shunsuke/go-errlog\" target=\"_blank\" rel=\"noopener noreferrer\">https://github.com/suzuki-shunsuke/go-errlog</a></p><h2 class=\"anchor anchorWithStickyNavbar_mojV\" id=\"ロギングに関する関連記事\">ロギングに関する関連記事<a class=\"hash-link\" href=\"#ロギングに関する関連記事\" title=\"Direct link to heading\">​</a></h2><p>この記事を書く前に軽くググってみただけでちゃんと読んでないのですが、\n興味のある人は読んでみてください。</p><ul><li><a href=\"https://www.loggly.com/blog/think-differently-about-what-to-log-in-go-best-practices-examined/\" target=\"_blank\" rel=\"noopener noreferrer\">https://www.loggly.com/blog/think-differently-about-what-to-log-in-go-best-practices-examined/</a></li><li><a href=\"https://dave.cheney.net/2015/11/05/lets-talk-about-logging\" target=\"_blank\" rel=\"noopener noreferrer\">https://dave.cheney.net/2015/11/05/lets-talk-about-logging</a></li><li><a href=\"https://postd.cc/go-best-practices-2016/#logging-and-instrumentation\" target=\"_blank\" rel=\"noopener noreferrer\">https://postd.cc/go-best-practices-2016/#logging-and-instrumentation</a></li></ul><h2 class=\"anchor anchorWithStickyNavbar_mojV\" id=\"ログレベルは分ける\">ログレベルは分ける<a class=\"hash-link\" href=\"#ログレベルは分ける\" title=\"Direct link to heading\">​</a></h2><p>ログレベルでwarningとかいらないという意見もありますが、自分は必要だと思っています。\n自分は以下のログレベルを使い分けます。</p><ul><li>debug: あまり使わない。調査目的で一時的に埋め込むログ。調査が終わったら出力しないようにする。一時的でないものはinfoにする</li><li>info: エラーでないログ。イベント、処理の開始時や終了を記録するのに使うことが多い</li><li>warn: 4xx系のエラー。それが起こっただけではアラートを飛ばさないが、数が通常時より多い場合はバグかUIに問題があってユーザーが間違えやすくなっている可能性があるのでアラートを飛ばす</li><li>error: 5xx系のエラー。アラートを飛ばす(閾値は調整)</li><li>fatal: 処理継続が不可能な致命的なエラー。システムを止める</li></ul><p>書いてから思いましたが、これに関しては標準的な使い分けのルールがありそうですね(要調査)。。</p><h2 class=\"anchor anchorWithStickyNavbar_mojV\" id=\"logrus-を使ってログを構造化する\">logrus を使ってログを構造化する<a class=\"hash-link\" href=\"#logrus-を使ってログを構造化する\" title=\"Direct link to heading\">​</a></h2><p>前提としてwebシステムやバッチシステムなどを想定しています。CLIツールならば話は変わるでしょう。\nJSONフォーマットで出力してfluentdでElasticsearchにフォワードするのが個人的によくあるパターンです。</p><p>go-errlogもlogrusの使用を前提としています。</p><p>ロギングのライブラリは他にも色々あるので、logrusで満足できない人は以下から探してみるとよいでしょう。</p><p><a href=\"https://github.com/avelino/awesome-go#logging\" target=\"_blank\" rel=\"noopener noreferrer\">https://github.com/avelino/awesome-go#logging</a></p><h2 class=\"anchor anchorWithStickyNavbar_mojV\" id=\"エラーログは中央集権的に-main-に近い所で出力する\">エラーログは中央集権的に main に近い所で出力する<a class=\"hash-link\" href=\"#エラーログは中央集権的に-main-に近い所で出力する\" title=\"Direct link to heading\">​</a></h2><p>エラーログをどこで出力するかですが、原則中央集権的に main に近い所で出力します。\n因みに中央集権的という表現は echo の centralized error handling からもじっています。</p><p><a href=\"https://echo.labstack.com/guide/error-handling\" target=\"_blank\" rel=\"noopener noreferrer\">https://echo.labstack.com/guide/error-handling</a></p><p>error が発生してもすぐログを吐くのではなく、error を関数の戻り値として返し、ロギングする責務を親に委譲します。\nGoでは以下のようなイディオムがよく見られますね。</p><div class=\"codeBlockContainer_I0IT language-go theme-code-block\"><div class=\"codeBlockContent_wNvx go\"><pre tabindex=\"0\" class=\"prism-code language-go codeBlock_jd64 thin-scrollbar\" style=\"color:#393A34;background-color:#f6f8fa\"><code class=\"codeBlockLines_mRuA\"><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token keyword\" style=\"color:#00009f\">if</span><span class=\"token plain\"> err </span><span class=\"token operator\" style=\"color:#393A34\">!=</span><span class=\"token plain\"> </span><span class=\"token boolean\" style=\"color:#36acaa\">nil</span><span class=\"token plain\"> </span><span class=\"token punctuation\" style=\"color:#393A34\">{</span><span class=\"token plain\"></span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">    </span><span class=\"token keyword\" style=\"color:#00009f\">return</span><span class=\"token plain\"> err</span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\"></span><span class=\"token punctuation\" style=\"color:#393A34\">}</span><br></span></code></pre><button type=\"button\" aria-label=\"Copy code to clipboard\" class=\"copyButton_wuS7 clean-btn\">Copy</button></div></div><h2 class=\"anchor anchorWithStickyNavbar_mojV\" id=\"ロギングに必要な情報を戻り値のerrorに含める\">ロギングに必要な情報を戻り値のerrorに含める<a class=\"hash-link\" href=\"#ロギングに必要な情報を戻り値のerrorに含める\" title=\"Direct link to heading\">​</a></h2><p>上記のコードで問題なのは、エラーに関する情報が欠損することがあることです。</p><p>これに関しては以下の記事が参考になります。</p><p><a href=\"https://deeeet.com/writing/2016/04/25/go-pkg-errors/\" target=\"_blank\" rel=\"noopener noreferrer\">https://deeeet.com/writing/2016/04/25/go-pkg-errors/</a></p><p>エラーに関する情報には2種類あると個人的に考えていて「メッセージ」と「メタ情報」なんて風に脳内で呼んでたりします。</p><ul><li>メッセージ: エラーの原因を示すhuman readable なテキスト(<a href=\"https://github.com/pkg/errors\" target=\"_blank\" rel=\"noopener noreferrer\">pkg/errors</a>はこれに対応している)<ul><li>リストになる</li></ul></li><li>メタ情報: エラーに関する構造化されたデータ<ul><li>ハッシュになる</li></ul></li></ul><p>例えば foo というユーザー名が既に使われていてユーザーの作成に失敗した場合</p><ul><li>メッセージ<ul><li>username is already used</li><li>invalid username</li><li>failed to create a user</li></ul></li><li>メタ情報<ul><li>username: foo</li></ul></li></ul><p>と言った感じになります。\nメッセージにメタ情報を含めて <code>\"foo\" is invalid username</code> といった風にも出来ますが、そうすると検索・集計しづらかったり、メッセージの生成に一手間かかったりするのでメッセージにはメタ情報を含めません。</p><p>pkg/errors だとメタ情報には対応できないので自分でライブラリを作りました。</p><p><a href=\"https://github.com/suzuki-shunsuke/go-errlog\" target=\"_blank\" rel=\"noopener noreferrer\">https://github.com/suzuki-shunsuke/go-errlog</a></p><p>こんな感じになります。</p><div class=\"codeBlockContainer_I0IT language-go theme-code-block\"><div class=\"codeBlockContent_wNvx go\"><pre tabindex=\"0\" class=\"prism-code language-go codeBlock_jd64 thin-scrollbar\" style=\"color:#393A34;background-color:#f6f8fa\"><code class=\"codeBlockLines_mRuA\"><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token keyword\" style=\"color:#00009f\">return</span><span class=\"token plain\"> errlog</span><span class=\"token punctuation\" style=\"color:#393A34\">.</span><span class=\"token function\" style=\"color:#d73a49\">Wrap</span><span class=\"token punctuation\" style=\"color:#393A34\">(</span><span class=\"token plain\">err</span><span class=\"token punctuation\" style=\"color:#393A34\">,</span><span class=\"token plain\"> logrus</span><span class=\"token punctuation\" style=\"color:#393A34\">.</span><span class=\"token plain\">Fields</span><span class=\"token punctuation\" style=\"color:#393A34\">{</span><span class=\"token string\" style=\"color:#e3116c\">\"username\"</span><span class=\"token punctuation\" style=\"color:#393A34\">:</span><span class=\"token plain\"> </span><span class=\"token string\" style=\"color:#e3116c\">\"foo\"</span><span class=\"token punctuation\" style=\"color:#393A34\">}</span><span class=\"token punctuation\" style=\"color:#393A34\">,</span><span class=\"token plain\"> </span><span class=\"token string\" style=\"color:#e3116c\">\"failed to create a user\"</span><span class=\"token punctuation\" style=\"color:#393A34\">)</span><br></span></code></pre><button type=\"button\" aria-label=\"Copy code to clipboard\" class=\"copyButton_wuS7 clean-btn\">Copy</button></div></div><h2 class=\"anchor anchorWithStickyNavbar_mojV\" id=\"error-に含める情報の責務\">error に含める情報の責務<a class=\"hash-link\" href=\"#error-に含める情報の責務\" title=\"Direct link to heading\">​</a></h2><p>上記のように error に情報を含める場合、どこまで含めるかというのが問題になります。\nここでプラクティスとして、\n<strong>関数がerrorを返す場合、その関数がもっている情報は全て含める責務があり、\n逆に子関数から返ってきたerrorには子関数に渡っている情報が含まれているので呼び出し元で付与する必要はない</strong>というふうにしています。</p><div class=\"codeBlockContainer_I0IT language-go theme-code-block\"><div class=\"codeBlockContent_wNvx go\"><pre tabindex=\"0\" class=\"prism-code language-go codeBlock_jd64 thin-scrollbar\" style=\"color:#393A34;background-color:#f6f8fa\"><code class=\"codeBlockLines_mRuA\"><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token keyword\" style=\"color:#00009f\">func</span><span class=\"token plain\"> </span><span class=\"token function\" style=\"color:#d73a49\">createUser</span><span class=\"token punctuation\" style=\"color:#393A34\">(</span><span class=\"token plain\">name </span><span class=\"token builtin\">string</span><span class=\"token punctuation\" style=\"color:#393A34\">,</span><span class=\"token plain\"> age </span><span class=\"token builtin\">int</span><span class=\"token punctuation\" style=\"color:#393A34\">)</span><span class=\"token plain\"> </span><span class=\"token builtin\">error</span><span class=\"token plain\"> </span><span class=\"token punctuation\" style=\"color:#393A34\">{</span><span class=\"token plain\"></span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">    </span><span class=\"token keyword\" style=\"color:#00009f\">if</span><span class=\"token plain\"> err </span><span class=\"token operator\" style=\"color:#393A34\">:=</span><span class=\"token plain\"> </span><span class=\"token function\" style=\"color:#d73a49\">checkName</span><span class=\"token punctuation\" style=\"color:#393A34\">(</span><span class=\"token plain\">name</span><span class=\"token punctuation\" style=\"color:#393A34\">)</span><span class=\"token punctuation\" style=\"color:#393A34\">;</span><span class=\"token plain\"> err </span><span class=\"token operator\" style=\"color:#393A34\">!=</span><span class=\"token plain\"> </span><span class=\"token boolean\" style=\"color:#36acaa\">nil</span><span class=\"token plain\"> </span><span class=\"token punctuation\" style=\"color:#393A34\">{</span><span class=\"token plain\"></span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">        </span><span class=\"token keyword\" style=\"color:#00009f\">return</span><span class=\"token plain\"> errlog</span><span class=\"token punctuation\" style=\"color:#393A34\">.</span><span class=\"token function\" style=\"color:#d73a49\">Wrap</span><span class=\"token punctuation\" style=\"color:#393A34\">(</span><span class=\"token plain\">err</span><span class=\"token punctuation\" style=\"color:#393A34\">,</span><span class=\"token plain\"> logrus</span><span class=\"token punctuation\" style=\"color:#393A34\">.</span><span class=\"token plain\">Fields</span><span class=\"token punctuation\" style=\"color:#393A34\">{</span><span class=\"token string\" style=\"color:#e3116c\">\"age\"</span><span class=\"token punctuation\" style=\"color:#393A34\">:</span><span class=\"token plain\"> age</span><span class=\"token punctuation\" style=\"color:#393A34\">}</span><span class=\"token punctuation\" style=\"color:#393A34\">,</span><span class=\"token plain\"> </span><span class=\"token string\" style=\"color:#e3116c\">\"failed to create a user\"</span><span class=\"token punctuation\" style=\"color:#393A34\">)</span><span class=\"token plain\"></span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">    </span><span class=\"token punctuation\" style=\"color:#393A34\">}</span><span class=\"token plain\"></span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\"></span><span class=\"token punctuation\" style=\"color:#393A34\">}</span><br></span></code></pre><button type=\"button\" aria-label=\"Copy code to clipboard\" class=\"copyButton_wuS7 clean-btn\">Copy</button></div></div><p>つまり上のコードでは子関数に渡っているメタ情報<code>name</code>や、<code>invalid username</code> のようなメッセージを <code>errlog.Wrap</code> に渡す必要はありません。\n上記の例だとエラーに関係ない <code>age</code> も渡す必要はないのではないかとも考えられますが、原則ログに残すこととします。</p><p>ただし、子関数が標準関数やサードパーティのライブラリなど、プロジェクト外部で定義された関数であれば話は別です。\nそれらがどのようなエラーを返すかは保証がありません。</p><div class=\"codeBlockContainer_I0IT language-go theme-code-block\"><div class=\"codeBlockContent_wNvx go\"><pre tabindex=\"0\" class=\"prism-code language-go codeBlock_jd64 thin-scrollbar\" style=\"color:#393A34;background-color:#f6f8fa\"><code class=\"codeBlockLines_mRuA\"><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token keyword\" style=\"color:#00009f\">if</span><span class=\"token plain\"> f</span><span class=\"token punctuation\" style=\"color:#393A34\">,</span><span class=\"token plain\"> err </span><span class=\"token operator\" style=\"color:#393A34\">:=</span><span class=\"token plain\"> os</span><span class=\"token punctuation\" style=\"color:#393A34\">.</span><span class=\"token function\" style=\"color:#d73a49\">Open</span><span class=\"token punctuation\" style=\"color:#393A34\">(</span><span class=\"token plain\">filename</span><span class=\"token punctuation\" style=\"color:#393A34\">)</span><span class=\"token punctuation\" style=\"color:#393A34\">;</span><span class=\"token plain\"> err </span><span class=\"token operator\" style=\"color:#393A34\">!=</span><span class=\"token plain\"> </span><span class=\"token boolean\" style=\"color:#36acaa\">nil</span><span class=\"token plain\"> </span><span class=\"token punctuation\" style=\"color:#393A34\">{</span><span class=\"token plain\"></span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">    </span><span class=\"token keyword\" style=\"color:#00009f\">return</span><span class=\"token plain\"> errlog</span><span class=\"token punctuation\" style=\"color:#393A34\">.</span><span class=\"token function\" style=\"color:#d73a49\">Wrap</span><span class=\"token punctuation\" style=\"color:#393A34\">(</span><span class=\"token plain\">err</span><span class=\"token punctuation\" style=\"color:#393A34\">,</span><span class=\"token plain\"> logrus</span><span class=\"token punctuation\" style=\"color:#393A34\">.</span><span class=\"token plain\">Fields</span><span class=\"token punctuation\" style=\"color:#393A34\">{</span><span class=\"token string\" style=\"color:#e3116c\">\"filename\"</span><span class=\"token punctuation\" style=\"color:#393A34\">:</span><span class=\"token plain\"> filename</span><span class=\"token punctuation\" style=\"color:#393A34\">}</span><span class=\"token punctuation\" style=\"color:#393A34\">,</span><span class=\"token plain\"> </span><span class=\"token string\" style=\"color:#e3116c\">\"failed to open a file\"</span><span class=\"token punctuation\" style=\"color:#393A34\">,</span><span class=\"token plain\"> </span><span class=\"token string\" style=\"color:#e3116c\">\"failed to create a user\"</span><span class=\"token punctuation\" style=\"color:#393A34\">)</span><span class=\"token plain\"></span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\"></span><span class=\"token punctuation\" style=\"color:#393A34\">}</span><br></span></code></pre><button type=\"button\" aria-label=\"Copy code to clipboard\" class=\"copyButton_wuS7 clean-btn\">Copy</button></div></div><p>上記の例だと、<code>os.Open</code>に渡したメタ情報 <code>filename</code> や os.Openに失敗したことを示す <code>failed to open a file</code> といったメッセージも<code>errlog.Wrap</code>に渡しています。</p><p><code>errlog.Wrap</code> は複数のメッセージを渡せるようになっています。\nメッセージの順番は左からイベントが発生した順になるようにします。\n上記の例だと「ファイルのオープンに失敗」した結果、「ユーザの作成に失敗」するという順序になります。</p><h2 class=\"anchor anchorWithStickyNavbar_mojV\" id=\"エラーのロギングはシンプルに\">エラーのロギングはシンプルに<a class=\"hash-link\" href=\"#エラーのロギングはシンプルに\" title=\"Direct link to heading\">​</a></h2><p>go-errlogではシンプルにロギングを記述できます。</p><div class=\"codeBlockContainer_I0IT language-go theme-code-block\"><div class=\"codeBlockContent_wNvx go\"><pre tabindex=\"0\" class=\"prism-code language-go codeBlock_jd64 thin-scrollbar\" style=\"color:#393A34;background-color:#f6f8fa\"><code class=\"codeBlockLines_mRuA\"><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">logger </span><span class=\"token operator\" style=\"color:#393A34\">:=</span><span class=\"token plain\"> errlog</span><span class=\"token punctuation\" style=\"color:#393A34\">.</span><span class=\"token function\" style=\"color:#d73a49\">NewLogger</span><span class=\"token punctuation\" style=\"color:#393A34\">(</span><span class=\"token boolean\" style=\"color:#36acaa\">nil</span><span class=\"token punctuation\" style=\"color:#393A34\">)</span><span class=\"token plain\"></span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\"></span><span class=\"token comment\" style=\"color:#999988;font-style:italic\">// err != nil なら logging する</span><span class=\"token plain\"></span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\"></span><span class=\"token comment\" style=\"color:#999988;font-style:italic\">// err がメタ情報を持ってたら logrusで構造化してロギングする</span><span class=\"token plain\"></span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\"></span><span class=\"token comment\" style=\"color:#999988;font-style:italic\">// メッセージも pkg/errors のように一つのテキストに連結してロギング</span><span class=\"token plain\"></span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">logger</span><span class=\"token punctuation\" style=\"color:#393A34\">.</span><span class=\"token function\" style=\"color:#d73a49\">Fatal</span><span class=\"token punctuation\" style=\"color:#393A34\">(</span><span class=\"token function\" style=\"color:#d73a49\">createUser</span><span class=\"token punctuation\" style=\"color:#393A34\">(</span><span class=\"token string\" style=\"color:#e3116c\">\"foo\"</span><span class=\"token punctuation\" style=\"color:#393A34\">,</span><span class=\"token plain\"> </span><span class=\"token number\" style=\"color:#36acaa\">10</span><span class=\"token punctuation\" style=\"color:#393A34\">)</span><span class=\"token punctuation\" style=\"color:#393A34\">)</span><br></span></code></pre><button type=\"button\" aria-label=\"Copy code to clipboard\" class=\"copyButton_wuS7 clean-btn\">Copy</button></div></div><h2 class=\"anchor anchorWithStickyNavbar_mojV\" id=\"その他-go-errlog-の機能\">その他 go-errlog の機能<a class=\"hash-link\" href=\"#その他-go-errlog-の機能\" title=\"Direct link to heading\">​</a></h2><p>メタ情報やメッセージによって条件分岐したり出来るようにヘルパー関数を幾つか提供しています。</p><ul><li>CheckField</li><li>HasField</li><li>HasMsg</li></ul><p>詳細は<a href=\"https://godoc.org/github.com/suzuki-shunsuke/go-errlog\" target=\"_blank\" rel=\"noopener noreferrer\">GoDoc</a>やソースコードを見てください。</p><h2 class=\"anchor anchorWithStickyNavbar_mojV\" id=\"最後に\">最後に<a class=\"hash-link\" href=\"#最後に\" title=\"Direct link to heading\">​</a></h2><p>色々書いてしまいましたが、一番言いたかったことは</p><blockquote><p><strong>関数がerrorを返す場合、その関数がもっている情報は全て含める責務があり、\n逆に子関数から返ってきたerrorには子関数に渡っている情報が含まれているので呼び出し元で付与する必要はない</strong>というふうにしています。</p><p>ただし、子関数が標準関数やサードパーティのライブラリなど、プロジェクト外部で定義された関数であれば話は別です。</p></blockquote><p>の部分です。この辺は元々自分の中でルールが決まってなくてずっとモヤモヤしてて、\nコードを書くたびにぶれてたのですが、「こうすればいけるんじゃないか」と思いつき、その実装を補助するライブラリを開発し、\n実践したところ今の所そこそこうまく行っています。\nただまだ日が浅いので少しずつブラッシュアップされていく部分もあると思いますが、\nその場合でも「なんとなく」ではなく、可能な限り明文化していくことで、迷いをなくし、コードとログの品質を上げていきたいと思います。</p>",
+            "content_html": "<h2 class=\"anchor anchorWithStickyNavbar_mojV\" id=\"2018-12-30-追記\">2018-12-30 追記<a class=\"hash-link\" href=\"#2018-12-30-追記\" title=\"Direct link to heading\">​</a></h2><p>この記事を元にドキュメントを書いてみました。</p><p><a href=\"https://github.com/suzuki-shunsuke/go-error-handling-logging-practice\" target=\"_blank\" rel=\"noopener noreferrer\">https://github.com/suzuki-shunsuke/go-error-handling-logging-practice</a></p><p>追記ここまで</p><hr><p>Go でエラーハンドリングとロギングをしてきて自分の中で固まりつつあるプラクティスを明文化します。\n明文化することで以下のことを目指します。</p><ul><li>迷いをなくす</li><li>コードの一貫性を保つ</li><li>コーディング規約とすることでレビューの品質を上げる(自動化は出来ないけど)</li><li>コードの品質を上げる(コードがゴチャつかなくなる)</li><li>適切にエラーをロギングする(必要十分な情報をログとして残す)</li></ul><p>またエラーハンドリングとロギングのためのライブラリを自作しているのでそれも紹介します。</p><p><a href=\"https://github.com/suzuki-shunsuke/go-errlog\" target=\"_blank\" rel=\"noopener noreferrer\">https://github.com/suzuki-shunsuke/go-errlog</a></p><h2 class=\"anchor anchorWithStickyNavbar_mojV\" id=\"ロギングに関する関連記事\">ロギングに関する関連記事<a class=\"hash-link\" href=\"#ロギングに関する関連記事\" title=\"Direct link to heading\">​</a></h2><p>この記事を書く前に軽くググってみただけでちゃんと読んでないのですが、\n興味のある人は読んでみてください。</p><ul><li><a href=\"https://www.loggly.com/blog/think-differently-about-what-to-log-in-go-best-practices-examined/\" target=\"_blank\" rel=\"noopener noreferrer\">https://www.loggly.com/blog/think-differently-about-what-to-log-in-go-best-practices-examined/</a></li><li><a href=\"https://dave.cheney.net/2015/11/05/lets-talk-about-logging\" target=\"_blank\" rel=\"noopener noreferrer\">https://dave.cheney.net/2015/11/05/lets-talk-about-logging</a></li><li><a href=\"https://postd.cc/go-best-practices-2016/#logging-and-instrumentation\" target=\"_blank\" rel=\"noopener noreferrer\">https://postd.cc/go-best-practices-2016/#logging-and-instrumentation</a></li></ul><h2 class=\"anchor anchorWithStickyNavbar_mojV\" id=\"ログレベルは分ける\">ログレベルは分ける<a class=\"hash-link\" href=\"#ログレベルは分ける\" title=\"Direct link to heading\">​</a></h2><p>ログレベルでwarningとかいらないという意見もありますが、自分は必要だと思っています。\n自分は以下のログレベルを使い分けます。</p><ul><li>debug: あまり使わない。調査目的で一時的に埋め込むログ。調査が終わったら出力しないようにする。一時的でないものはinfoにする</li><li>info: エラーでないログ。イベント、処理の開始時や終了を記録するのに使うことが多い</li><li>warn: 4xx系のエラー。それが起こっただけではアラートを飛ばさないが、数が通常時より多い場合はバグかUIに問題があってユーザーが間違えやすくなっている可能性があるのでアラートを飛ばす</li><li>error: 5xx系のエラー。アラートを飛ばす(閾値は調整)</li><li>fatal: 処理継続が不可能な致命的なエラー。システムを止める</li></ul><p>書いてから思いましたが、これに関しては標準的な使い分けのルールがありそうですね(要調査)。。</p><h2 class=\"anchor anchorWithStickyNavbar_mojV\" id=\"logrus-を使ってログを構造化する\">logrus を使ってログを構造化する<a class=\"hash-link\" href=\"#logrus-を使ってログを構造化する\" title=\"Direct link to heading\">​</a></h2><p>前提としてwebシステムやバッチシステムなどを想定しています。CLIツールならば話は変わるでしょう。\nJSONフォーマットで出力してfluentdでElasticsearchにフォワードするのが個人的によくあるパターンです。</p><p>go-errlogもlogrusの使用を前提としています。</p><p>ロギングのライブラリは他にも色々あるので、logrusで満足できない人は以下から探してみるとよいでしょう。</p><p><a href=\"https://github.com/avelino/awesome-go#logging\" target=\"_blank\" rel=\"noopener noreferrer\">https://github.com/avelino/awesome-go#logging</a></p><h2 class=\"anchor anchorWithStickyNavbar_mojV\" id=\"エラーログは中央集権的に-main-に近い所で出力する\">エラーログは中央集権的に main に近い所で出力する<a class=\"hash-link\" href=\"#エラーログは中央集権的に-main-に近い所で出力する\" title=\"Direct link to heading\">​</a></h2><p>エラーログをどこで出力するかですが、原則中央集権的に main に近い所で出力します。\n因みに中央集権的という表現は echo の centralized error handling からもじっています。</p><p><a href=\"https://echo.labstack.com/guide/error-handling\" target=\"_blank\" rel=\"noopener noreferrer\">https://echo.labstack.com/guide/error-handling</a></p><p>error が発生してもすぐログを吐くのではなく、error を関数の戻り値として返し、ロギングする責務を親に委譲します。\nGoでは以下のようなイディオムがよく見られますね。</p><div class=\"codeBlockContainer_I0IT language-go theme-code-block\"><div class=\"codeBlockContent_wNvx go\"><pre tabindex=\"0\" class=\"prism-code language-go codeBlock_jd64 thin-scrollbar\" style=\"color:#393A34;background-color:#f6f8fa\"><code class=\"codeBlockLines_mRuA\"><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token keyword\" style=\"color:#00009f\">if</span><span class=\"token plain\"> err </span><span class=\"token operator\" style=\"color:#393A34\">!=</span><span class=\"token plain\"> </span><span class=\"token boolean\" style=\"color:#36acaa\">nil</span><span class=\"token plain\"> </span><span class=\"token punctuation\" style=\"color:#393A34\">{</span><span class=\"token plain\"></span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">    </span><span class=\"token keyword\" style=\"color:#00009f\">return</span><span class=\"token plain\"> err</span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\"></span><span class=\"token punctuation\" style=\"color:#393A34\">}</span><br></span></code></pre><button type=\"button\" aria-label=\"Copy code to clipboard\" class=\"copyButton_wuS7 clean-btn\">Copy</button></div></div><h2 class=\"anchor anchorWithStickyNavbar_mojV\" id=\"ロギングに必要な情報を戻り値のerrorに含める\">ロギングに必要な情報を戻り値のerrorに含める<a class=\"hash-link\" href=\"#ロギングに必要な情報を戻り値のerrorに含める\" title=\"Direct link to heading\">​</a></h2><p>上記のコードで問題なのは、エラーに関する情報が欠損することがあることです。</p><p>これに関しては以下の記事が参考になります。</p><p><a href=\"https://deeeet.com/writing/2016/04/25/go-pkg-errors/\" target=\"_blank\" rel=\"noopener noreferrer\">https://deeeet.com/writing/2016/04/25/go-pkg-errors/</a></p><p>エラーに関する情報には2種類あると個人的に考えていて「メッセージ」と「メタ情報」なんて風に脳内で呼んでたりします。</p><ul><li>メッセージ: エラーの原因を示すhuman readable なテキスト(<a href=\"https://github.com/pkg/errors\" target=\"_blank\" rel=\"noopener noreferrer\">pkg/errors</a>はこれに対応している)<ul><li>リストになる</li></ul></li><li>メタ情報: エラーに関する構造化されたデータ<ul><li>ハッシュになる</li></ul></li></ul><p>例えば foo というユーザー名が既に使われていてユーザーの作成に失敗した場合</p><ul><li>メッセージ<ul><li>username is already used</li><li>invalid username</li><li>failed to create a user</li></ul></li><li>メタ情報<ul><li>username: foo</li></ul></li></ul><p>と言った感じになります。\nメッセージにメタ情報を含めて <code>\"foo\" is invalid username</code> といった風にも出来ますが、そうすると検索・集計しづらかったり、メッセージの生成に一手間かかったりするのでメッセージにはメタ情報を含めません。</p><p>pkg/errors だとメタ情報には対応できないので自分でライブラリを作りました。</p><p><a href=\"https://github.com/suzuki-shunsuke/go-errlog\" target=\"_blank\" rel=\"noopener noreferrer\">https://github.com/suzuki-shunsuke/go-errlog</a></p><p>こんな感じになります。</p><div class=\"codeBlockContainer_I0IT language-go theme-code-block\"><div class=\"codeBlockContent_wNvx go\"><pre tabindex=\"0\" class=\"prism-code language-go codeBlock_jd64 thin-scrollbar\" style=\"color:#393A34;background-color:#f6f8fa\"><code class=\"codeBlockLines_mRuA\"><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token keyword\" style=\"color:#00009f\">return</span><span class=\"token plain\"> errlog</span><span class=\"token punctuation\" style=\"color:#393A34\">.</span><span class=\"token function\" style=\"color:#d73a49\">Wrap</span><span class=\"token punctuation\" style=\"color:#393A34\">(</span><span class=\"token plain\">err</span><span class=\"token punctuation\" style=\"color:#393A34\">,</span><span class=\"token plain\"> logrus</span><span class=\"token punctuation\" style=\"color:#393A34\">.</span><span class=\"token plain\">Fields</span><span class=\"token punctuation\" style=\"color:#393A34\">{</span><span class=\"token string\" style=\"color:#e3116c\">\"username\"</span><span class=\"token punctuation\" style=\"color:#393A34\">:</span><span class=\"token plain\"> </span><span class=\"token string\" style=\"color:#e3116c\">\"foo\"</span><span class=\"token punctuation\" style=\"color:#393A34\">}</span><span class=\"token punctuation\" style=\"color:#393A34\">,</span><span class=\"token plain\"> </span><span class=\"token string\" style=\"color:#e3116c\">\"failed to create a user\"</span><span class=\"token punctuation\" style=\"color:#393A34\">)</span><br></span></code></pre><button type=\"button\" aria-label=\"Copy code to clipboard\" class=\"copyButton_wuS7 clean-btn\">Copy</button></div></div><h2 class=\"anchor anchorWithStickyNavbar_mojV\" id=\"error-に含める情報の責務\">error に含める情報の責務<a class=\"hash-link\" href=\"#error-に含める情報の責務\" title=\"Direct link to heading\">​</a></h2><p>上記のように error に情報を含める場合、どこまで含めるかというのが問題になります。\nここでプラクティスとして、\n<strong>関数がerrorを返す場合、その関数がもっている情報は全て含める責務があり、\n逆に子関数から返ってきたerrorには子関数に渡っている情報が含まれているので呼び出し元で付与する必要はない</strong>というふうにしています。</p><div class=\"codeBlockContainer_I0IT language-go theme-code-block\"><div class=\"codeBlockContent_wNvx go\"><pre tabindex=\"0\" class=\"prism-code language-go codeBlock_jd64 thin-scrollbar\" style=\"color:#393A34;background-color:#f6f8fa\"><code class=\"codeBlockLines_mRuA\"><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token keyword\" style=\"color:#00009f\">func</span><span class=\"token plain\"> </span><span class=\"token function\" style=\"color:#d73a49\">createUser</span><span class=\"token punctuation\" style=\"color:#393A34\">(</span><span class=\"token plain\">name </span><span class=\"token builtin\">string</span><span class=\"token punctuation\" style=\"color:#393A34\">,</span><span class=\"token plain\"> age </span><span class=\"token builtin\">int</span><span class=\"token punctuation\" style=\"color:#393A34\">)</span><span class=\"token plain\"> </span><span class=\"token builtin\">error</span><span class=\"token plain\"> </span><span class=\"token punctuation\" style=\"color:#393A34\">{</span><span class=\"token plain\"></span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">    </span><span class=\"token keyword\" style=\"color:#00009f\">if</span><span class=\"token plain\"> err </span><span class=\"token operator\" style=\"color:#393A34\">:=</span><span class=\"token plain\"> </span><span class=\"token function\" style=\"color:#d73a49\">checkName</span><span class=\"token punctuation\" style=\"color:#393A34\">(</span><span class=\"token plain\">name</span><span class=\"token punctuation\" style=\"color:#393A34\">)</span><span class=\"token punctuation\" style=\"color:#393A34\">;</span><span class=\"token plain\"> err </span><span class=\"token operator\" style=\"color:#393A34\">!=</span><span class=\"token plain\"> </span><span class=\"token boolean\" style=\"color:#36acaa\">nil</span><span class=\"token plain\"> </span><span class=\"token punctuation\" style=\"color:#393A34\">{</span><span class=\"token plain\"></span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">        </span><span class=\"token keyword\" style=\"color:#00009f\">return</span><span class=\"token plain\"> errlog</span><span class=\"token punctuation\" style=\"color:#393A34\">.</span><span class=\"token function\" style=\"color:#d73a49\">Wrap</span><span class=\"token punctuation\" style=\"color:#393A34\">(</span><span class=\"token plain\">err</span><span class=\"token punctuation\" style=\"color:#393A34\">,</span><span class=\"token plain\"> logrus</span><span class=\"token punctuation\" style=\"color:#393A34\">.</span><span class=\"token plain\">Fields</span><span class=\"token punctuation\" style=\"color:#393A34\">{</span><span class=\"token string\" style=\"color:#e3116c\">\"age\"</span><span class=\"token punctuation\" style=\"color:#393A34\">:</span><span class=\"token plain\"> age</span><span class=\"token punctuation\" style=\"color:#393A34\">}</span><span class=\"token punctuation\" style=\"color:#393A34\">,</span><span class=\"token plain\"> </span><span class=\"token string\" style=\"color:#e3116c\">\"failed to create a user\"</span><span class=\"token punctuation\" style=\"color:#393A34\">)</span><span class=\"token plain\"></span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">    </span><span class=\"token punctuation\" style=\"color:#393A34\">}</span><span class=\"token plain\"></span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\"></span><span class=\"token punctuation\" style=\"color:#393A34\">}</span><br></span></code></pre><button type=\"button\" aria-label=\"Copy code to clipboard\" class=\"copyButton_wuS7 clean-btn\">Copy</button></div></div><p>つまり上のコードでは子関数に渡っているメタ情報<code>name</code>や、<code>invalid username</code> のようなメッセージを <code>errlog.Wrap</code> に渡す必要はありません。\n上記の例だとエラーに関係ない <code>age</code> も渡す必要はないのではないかとも考えられますが、原則ログに残すこととします。</p><p>ただし、子関数が標準関数やサードパーティのライブラリなど、プロジェクト外部で定義された関数であれば話は別です。\nそれらがどのようなエラーを返すかは保証がありません。</p><div class=\"codeBlockContainer_I0IT language-go theme-code-block\"><div class=\"codeBlockContent_wNvx go\"><pre tabindex=\"0\" class=\"prism-code language-go codeBlock_jd64 thin-scrollbar\" style=\"color:#393A34;background-color:#f6f8fa\"><code class=\"codeBlockLines_mRuA\"><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token keyword\" style=\"color:#00009f\">if</span><span class=\"token plain\"> f</span><span class=\"token punctuation\" style=\"color:#393A34\">,</span><span class=\"token plain\"> err </span><span class=\"token operator\" style=\"color:#393A34\">:=</span><span class=\"token plain\"> os</span><span class=\"token punctuation\" style=\"color:#393A34\">.</span><span class=\"token function\" style=\"color:#d73a49\">Open</span><span class=\"token punctuation\" style=\"color:#393A34\">(</span><span class=\"token plain\">filename</span><span class=\"token punctuation\" style=\"color:#393A34\">)</span><span class=\"token punctuation\" style=\"color:#393A34\">;</span><span class=\"token plain\"> err </span><span class=\"token operator\" style=\"color:#393A34\">!=</span><span class=\"token plain\"> </span><span class=\"token boolean\" style=\"color:#36acaa\">nil</span><span class=\"token plain\"> </span><span class=\"token punctuation\" style=\"color:#393A34\">{</span><span class=\"token plain\"></span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">    </span><span class=\"token keyword\" style=\"color:#00009f\">return</span><span class=\"token plain\"> errlog</span><span class=\"token punctuation\" style=\"color:#393A34\">.</span><span class=\"token function\" style=\"color:#d73a49\">Wrap</span><span class=\"token punctuation\" style=\"color:#393A34\">(</span><span class=\"token plain\">err</span><span class=\"token punctuation\" style=\"color:#393A34\">,</span><span class=\"token plain\"> logrus</span><span class=\"token punctuation\" style=\"color:#393A34\">.</span><span class=\"token plain\">Fields</span><span class=\"token punctuation\" style=\"color:#393A34\">{</span><span class=\"token string\" style=\"color:#e3116c\">\"filename\"</span><span class=\"token punctuation\" style=\"color:#393A34\">:</span><span class=\"token plain\"> filename</span><span class=\"token punctuation\" style=\"color:#393A34\">}</span><span class=\"token punctuation\" style=\"color:#393A34\">,</span><span class=\"token plain\"> </span><span class=\"token string\" style=\"color:#e3116c\">\"failed to open a file\"</span><span class=\"token punctuation\" style=\"color:#393A34\">,</span><span class=\"token plain\"> </span><span class=\"token string\" style=\"color:#e3116c\">\"failed to create a user\"</span><span class=\"token punctuation\" style=\"color:#393A34\">)</span><span class=\"token plain\"></span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\"></span><span class=\"token punctuation\" style=\"color:#393A34\">}</span><br></span></code></pre><button type=\"button\" aria-label=\"Copy code to clipboard\" class=\"copyButton_wuS7 clean-btn\">Copy</button></div></div><p>上記の例だと、<code>os.Open</code>に渡したメタ情報 <code>filename</code> や os.Openに失敗したことを示す <code>failed to open a file</code> といったメッセージも<code>errlog.Wrap</code>に渡しています。</p><p><code>errlog.Wrap</code> は複数のメッセージを渡せるようになっています。\nメッセージの順番は左からイベントが発生した順になるようにします。\n上記の例だと「ファイルのオープンに失敗」した結果、「ユーザの作成に失敗」するという順序になります。</p><h2 class=\"anchor anchorWithStickyNavbar_mojV\" id=\"エラーのロギングはシンプルに\">エラーのロギングはシンプルに<a class=\"hash-link\" href=\"#エラーのロギングはシンプルに\" title=\"Direct link to heading\">​</a></h2><p>go-errlogではシンプルにロギングを記述できます。</p><div class=\"codeBlockContainer_I0IT language-go theme-code-block\"><div class=\"codeBlockContent_wNvx go\"><pre tabindex=\"0\" class=\"prism-code language-go codeBlock_jd64 thin-scrollbar\" style=\"color:#393A34;background-color:#f6f8fa\"><code class=\"codeBlockLines_mRuA\"><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">logger </span><span class=\"token operator\" style=\"color:#393A34\">:=</span><span class=\"token plain\"> errlog</span><span class=\"token punctuation\" style=\"color:#393A34\">.</span><span class=\"token function\" style=\"color:#d73a49\">NewLogger</span><span class=\"token punctuation\" style=\"color:#393A34\">(</span><span class=\"token boolean\" style=\"color:#36acaa\">nil</span><span class=\"token punctuation\" style=\"color:#393A34\">)</span><span class=\"token plain\"></span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\"></span><span class=\"token comment\" style=\"color:#999988;font-style:italic\">// err != nil なら logging する</span><span class=\"token plain\"></span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\"></span><span class=\"token comment\" style=\"color:#999988;font-style:italic\">// err がメタ情報を持ってたら logrusで構造化してロギングする</span><span class=\"token plain\"></span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\"></span><span class=\"token comment\" style=\"color:#999988;font-style:italic\">// メッセージも pkg/errors のように一つのテキストに連結してロギング</span><span class=\"token plain\"></span><br></span><span class=\"token-line\" style=\"color:#393A34\"><span class=\"token plain\">logger</span><span class=\"token punctuation\" style=\"color:#393A34\">.</span><span class=\"token function\" style=\"color:#d73a49\">Fatal</span><span class=\"token punctuation\" style=\"color:#393A34\">(</span><span class=\"token function\" style=\"color:#d73a49\">createUser</span><span class=\"token punctuation\" style=\"color:#393A34\">(</span><span class=\"token string\" style=\"color:#e3116c\">\"foo\"</span><span class=\"token punctuation\" style=\"color:#393A34\">,</span><span class=\"token plain\"> </span><span class=\"token number\" style=\"color:#36acaa\">10</span><span class=\"token punctuation\" style=\"color:#393A34\">)</span><span class=\"token punctuation\" style=\"color:#393A34\">)</span><br></span></code></pre><button type=\"button\" aria-label=\"Copy code to clipboard\" class=\"copyButton_wuS7 clean-btn\">Copy</button></div></div><h2 class=\"anchor anchorWithStickyNavbar_mojV\" id=\"その他-go-errlog-の機能\">その他 go-errlog の機能<a class=\"hash-link\" href=\"#その他-go-errlog-の機能\" title=\"Direct link to heading\">​</a></h2><p>メタ情報やメッセージによって条件分岐したり出来るようにヘルパー関数を幾つか提供しています。</p><ul><li>CheckField</li><li>HasField</li><li>HasMsg</li></ul><p>詳細は<a href=\"https://godoc.org/github.com/suzuki-shunsuke/go-errlog\" target=\"_blank\" rel=\"noopener noreferrer\">GoDoc</a>やソースコードを見てください。</p><h2 class=\"anchor anchorWithStickyNavbar_mojV\" id=\"最後に\">最後に<a class=\"hash-link\" href=\"#最後に\" title=\"Direct link to heading\">​</a></h2><p>色々書いてしまいましたが、一番言いたかったことは</p><blockquote><p><strong>関数がerrorを返す場合、その関数がもっている情報は全て含める責務があり、\n逆に子関数から返ってきたerrorには子関数に渡っている情報が含まれているので呼び出し元で付与する必要はない</strong>というふうにしています。</p><p>ただし、子関数が標準関数やサードパーティのライブラリなど、プロジェクト外部で定義された関数であれば話は別です。</p></blockquote><p>の部分です。この辺は元々自分の中でルールが決まってなくてずっとモヤモヤしてて、\nコードを書くたびにぶれてたのですが、「こうすればいけるんじゃないか」と思いつき、その実装を補助するライブラリを開発し、\n実践したところ今の所そこそこうまく行っています。\nただまだ日が浅いので少しずつブラッシュアップされていく部分もあると思いますが、\nその場合でも「なんとなく」ではなく、可能な限り明文化していくことで、迷いをなくし、コードとログの品質を上げていきたいと思います。</p>",
             "url": "https://techblog.szksh.cloud/golang-logging-error-handling-practice",
-            "title": "Golangにおけるエラーハンドリングとロギングのプラクティス",
+            "title": "Go におけるエラーハンドリングとロギングのプラクティス",
             "summary": "2018-12-30 追記",
             "date_modified": "2018-12-25T12:51:41.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "golang",
                 "logging"
@@ -994,6 +1342,10 @@
             "title": "GraylogのAlertの課題",
             "summary": "Graylogを運用してきて感じているAlert機能周りの課題をリストアップします。",
             "date_modified": "2018-12-19T12:02:11.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "graylog"
             ]
@@ -1005,6 +1357,10 @@
             "title": "Graylog の Terraform を CI/CDで実行する",
             "summary": "以前 Graylog を Terraform で管理する記事を書きました。",
             "date_modified": "2018-12-06T23:22:49.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "graylog",
                 "terraform",
@@ -1018,6 +1374,10 @@
             "title": "molecule でansible の role と playbook をテストする",
             "summary": "ansible 専用の testing ツール molecule を紹介します。",
             "date_modified": "2018-12-06T14:08:04.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "ansible",
                 "molecule"
@@ -1030,6 +1390,10 @@
             "title": "GraylogをTerraformで管理する",
             "summary": "Graylogのリソースを terraform で管理するために作った terraform provider を紹介します。",
             "date_modified": "2018-12-01T05:56:00.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "oss",
                 "graylog",
@@ -1043,6 +1407,10 @@
             "title": "Graylog で log を管理する",
             "summary": "Java 製の OSS ログ管理システム Graylog の紹介です。",
             "date_modified": "2018-11-27T07:40:33.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "oss",
                 "graylog"
@@ -1055,6 +1423,10 @@
             "title": "akoi - binary installer",
             "summary": "自作のOSS akoi の紹介をします。",
             "date_modified": "2018-10-30T23:56:04.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "oss",
                 "ansible"
@@ -1067,6 +1439,10 @@
             "title": "gomic - Goのモックジェネレータ",
             "summary": "自作のOSS gomic の紹介をします。",
             "date_modified": "2018-10-29T23:35:16.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "oss",
                 "golang",
@@ -1080,6 +1456,10 @@
             "title": "Dockerを使ってansible playbookをテストする",
             "summary": "ansible playbookを(VMの代わりに)Dockerコンテナに対して実行すると、効率よく動作確認できるというお話です。",
             "date_modified": "2018-10-12T12:02:51.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "ansible"
             ]
@@ -1091,6 +1471,10 @@
             "title": "Project site を User site に移行しました (GitHub Pages)",
             "summary": "なんとなく試験的に Project site でホスティングしていた GitHub Pages を User site に移行しました。",
             "date_modified": "2018-10-10T12:14:03.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "hugo"
             ]
@@ -1102,6 +1486,10 @@
             "title": "Hugo製ブログをGitHub PagesへCIでデプロイ",
             "summary": "https//pages.github.com/ の話です。",
             "date_modified": "2018-09-30T23:04:16.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "hugo"
             ]
@@ -1113,6 +1501,10 @@
             "title": "travis ci から circle ci への移行のすすめ",
             "summary": "travis ci と circle ci の無償SaaS 版を比較しています。",
             "date_modified": "2018-09-30T22:23:15.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "circleci",
                 "travisci"
@@ -1125,6 +1517,10 @@
             "title": "metabase を使って drone の利用状況を可視化する",
             "summary": "drone OSS 0.8.5 で検証しています。",
             "date_modified": "2018-09-30T13:55:57.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "drone",
                 "metabase"
@@ -1137,6 +1533,10 @@
             "title": "drone の管理のために portainer を導入した",
             "summary": "drone OSS 0.8.5 で検証しています。",
             "date_modified": "2018-09-30T12:56:42.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "drone",
                 "portainer"
@@ -1149,7 +1549,13 @@
             "title": "drone で非rootユーザーで実行されるImageを使えない",
             "summary": "drone で非rootユーザーで実行されるDocker Imageを使おうとするとbuildに失敗します。",
             "date_modified": "2018-09-30T12:42:16.000Z",
-            "tags": []
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
+            "tags": [
+                "drone"
+            ]
         },
         {
             "id": "/drone-tag-conditional-step",
@@ -1158,6 +1564,10 @@
             "title": "drone の step を実行するか否かをタグ名で判定する方法",
             "summary": "drone 0.8.5 で検証しています。",
             "date_modified": "2018-09-30T12:30:06.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "drone"
             ]
@@ -1169,6 +1579,10 @@
             "title": "drone の project visibility とは",
             "summary": "恐らく公式ドキュメントに説明がない気がするので書いておきます。",
             "date_modified": "2018-09-30T11:32:20.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "drone"
             ]
@@ -1180,6 +1594,10 @@
             "title": "drone の matrix build が27個しか実行されない",
             "summary": "drone 0.8.5 で検証しています。",
             "date_modified": "2018-09-30T11:26:11.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": []
         },
         {
@@ -1189,6 +1607,10 @@
             "title": "drone の build の timeout が変更できない",
             "summary": "drone 0.8.5 で検証しています。",
             "date_modified": "2018-09-30T11:16:28.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "drone"
             ]
@@ -1200,6 +1622,10 @@
             "title": "Drone の build 実行時の認証方法",
             "summary": "drone の build における GitHub (GitHub前提で書きますが、GitHub以外でも同じだと思います) の認証の話(どうやって認証しているか)について書いておこうと思います。",
             "date_modified": "2018-09-30T10:44:27.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "drone"
             ]
@@ -1211,6 +1637,10 @@
             "title": "Drone と Circle CI の workspace の扱いの違いについて",
             "summary": "drone は同じ pipeline の step 間で同じ workspace を docker の volume としてマウントすることで workspace を共有します。",
             "date_modified": "2018-09-30T10:27:59.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "drone",
                 "circleci"
@@ -1223,6 +1653,10 @@
             "title": "drone exec を並列実行した際のdocker network name の衝突について",
             "summary": "drone exec を並列実行すると docker network name が衝突することがあります。",
             "date_modified": "2018-09-30T09:52:34.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
                 "drone"
             ]
@@ -1234,8 +1668,13 @@
             "title": "go-gencfg - viperの個々のアプリケーション用のラッパーのコードジェネレータ",
             "summary": "自作のOSS go-gencfg を紹介します。",
             "date_modified": "2018-09-06T14:59:35.000Z",
+            "author": {
+                "name": "Shunsuke Suzuki",
+                "url": "https://github.com/suzuki-shunsuke"
+            },
             "tags": [
-                "oss"
+                "oss",
+                "golang"
             ]
         }
     ]
