@@ -1,10 +1,11 @@
 ---
 title: go-jsoneq - 2つの値がJSONとして等しいか比較するGoライブラリ
 date: 2019-05-23T11:43:18+09:00
-draft: false
 tags:
 - oss
-archives: ["2019/05"]
+- golang
+authors:
+- suzuki-shunsuke
 ---
 
 https://github.com/suzuki-shunsuke/go-jsoneq

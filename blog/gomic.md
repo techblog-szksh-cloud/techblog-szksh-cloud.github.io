@@ -1,12 +1,12 @@
 ---
 title: "gomic - Goのモックジェネレータ"
 date: 2018-10-30T08:35:16+09:00
-draft: false
 tags:
 - oss
 - golang
 - gomic
-archives: ["2018/10"]
+authors:
+- suzuki-shunsuke
 ---
 
 自作のOSS [gomic](https://github.com/suzuki-shunsuke/gomic) の紹介をします。

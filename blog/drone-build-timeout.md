@@ -1,10 +1,10 @@
 ---
 title: "drone の build の timeout が変更できない"
 date: 2018-09-30T20:16:28+09:00
-draft: false
 tags:
 - drone
-archives: ["2018/09"]
+authors:
+- suzuki-shunsuke
 ---
 
 drone 0.8.5 で検証しています。

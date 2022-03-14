@@ -1,10 +1,11 @@
 ---
 title: "buildflow の script や template に渡される parameter"
 date: 2020-10-17T19:44:39+09:00
-archives: ["2020/10"]
 tags:
 - oss
 - buildflow
+authors:
+- suzuki-shunsuke
 ---
 
 buildflow というツールを開発しているので `buildflow` というタグをつけて何回かに分けてブログを書こうと思います。

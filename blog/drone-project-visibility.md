@@ -1,10 +1,10 @@
 ---
 title: "drone の project visibility とは"
 date: 2018-09-30T20:32:20+09:00
-draft: false
 tags:
 - drone
-archives: ["2018/09"]
+authors:
+- suzuki-shunsuke
 ---
 
 恐らく公式ドキュメントに説明がない気がするので書いておきます。

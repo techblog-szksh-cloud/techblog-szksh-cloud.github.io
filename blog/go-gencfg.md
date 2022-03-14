@@ -1,10 +1,11 @@
 ---
 title: "go-gencfg - viperの個々のアプリケーション用のラッパーのコードジェネレータ"
 date: 2018-09-06T23:59:35+09:00
-draft: false
 tags:
 - oss
-archives: ["2018/09"]
+- golang
+authors:
+- suzuki-shunsuke
 ---
 
 自作のOSS [go-gencfg](https://github.com/suzuki-shunsuke/go-gencfg) を紹介します。

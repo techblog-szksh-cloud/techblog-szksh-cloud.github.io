@@ -1,11 +1,11 @@
 ---
 title: "molecule でansible の role と playbook をテストする"
 date: 2018-12-06T23:08:04+09:00
-draft: false
+authors:
+- suzuki-shunsuke
 tags:
 - ansible
 - molecule
-archives: ["2018/12"]
 ---
 
 ansible 専用の testing ツール [molecule](https://molecule.readthedocs.io/en/latest/index.html) を紹介します。

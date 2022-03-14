@@ -1,11 +1,11 @@
 ---
 title: "akoi - binary installer"
 date: 2018-10-31T08:56:04+09:00
-draft: false
+authors:
+- suzuki-shunsuke
 tags:
 - oss
 - ansible
-archives: ["2018/10"]
 ---
 
 自作のOSS [akoi](https://github.com/suzuki-shunsuke/akoi) の紹介をします。

@@ -1,10 +1,10 @@
 ---
 title: "Project site を User site に移行しました (GitHub Pages)"
 date: 2018-10-10T21:14:03+09:00
-draft: false
 tags:
 - hugo
-archives: ["2018/10"]
+authors:
+- suzuki-shunsuke
 ---
 
 なんとなく試験的に Project site でホスティングしていた GitHub Pages を User site に移行しました。

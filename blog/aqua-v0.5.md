@@ -1,10 +1,11 @@
 ---
 title: "aqua v0.1.0 から v0.5.0 での変更点"
 date: 2021-09-04T11:58:42+09:00
-archives: ["2021/09"]
 tags:
 - oss
 - aqua
+authors:
+- suzuki-shunsuke
 ---
 
 [先日 aqua v0.1.0 をリリースした記事を書いた](/aqua/)ばかりですが、

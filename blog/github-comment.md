@@ -1,10 +1,10 @@
 ---
 title: "github-comment - GitHub にコメントを投稿する CLI"
 date: 2020-07-31T20:42:54+09:00
-draft: false
-archives: ["2020/07"]
 tags:
 - oss
+authors:
+- suzuki-shunsuke
 ---
 
 GitHub の issue や pull request, commit にコメントを投稿する CLI ツールを作りました(結構前の話ですが)。

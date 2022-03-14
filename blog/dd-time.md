@@ -1,10 +1,11 @@
 ---
 title: "dd-time - コマンドの実行時間を Datadog に送るツール"
 date: 2019-11-30T13:54:47+09:00
-archives: ["2019/11"]
 tags:
 - oss
 - datadog
+authors:
+- suzuki-shunsuke
 ---
 
 コマンドの実行時間を Datadog に送る [dd-time](https://github.com/suzuki-shunsuke/dd-time) というツールを作りました。

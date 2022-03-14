@@ -1,11 +1,11 @@
 ---
 title: "Graylog で log を管理する"
 date: 2018-11-27T16:40:33+09:00
-draft: false
 tags:
 - oss
 - graylog
-archives: ["2018/11"]
+authors:
+- suzuki-shunsuke
 ---
 
 Java 製の OSS ログ管理システム Graylog の紹介です。

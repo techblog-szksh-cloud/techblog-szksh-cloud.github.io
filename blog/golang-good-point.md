@@ -1,13 +1,13 @@
 ---
-title: "Golang の好きなところ"
+title: "Go の好きなところ"
 date: 2019-02-10T17:49:58+09:00
-draft: false
 tags:
 - golang
-archives: ["2019/02"]
+authors:
+- suzuki-shunsuke
 ---
 
-自分は 2017/8頃(曖昧)からメインで書く言語をPythonからGolangに変更しました。
+自分は 2017/8頃(曖昧)からメインで書く言語を Python から Go に変更しました。
 Goを書き始めて割と早い段階でGoが一番好きになりました。
 そこでなんで Go が好きなのかということを頑張って言語化しようと思います。
 

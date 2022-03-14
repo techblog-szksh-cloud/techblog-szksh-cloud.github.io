@@ -1,10 +1,11 @@
 ---
 title: "なぜ buildflow を作ったのか"
 date: 2020-10-18T09:53:08+09:00
-archives: ["2020/10"]
 tags:
 - oss
 - buildflow
+authors:
+- suzuki-shunsuke
 ---
 
 buildflow というツールを開発しているので `buildflow` というタグをつけて何回かに分けてブログを書きます。

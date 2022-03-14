@@ -1,10 +1,10 @@
 ---
 title: "Drone の build 実行時の認証方法"
 date: 2018-09-30T19:44:27+09:00
-draft: false
 tags:
 - drone
-archives: ["2018/09"]
+authors:
+- suzuki-shunsuke
 ---
 
 drone の build における GitHub (GitHub前提で書きますが、GitHub以外でも同じだと思います) の認証の話(どうやって認証しているか)について書いておこうと思います。

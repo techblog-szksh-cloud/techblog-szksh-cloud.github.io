@@ -1,10 +1,11 @@
 ---
 title: "buildflow で設定ファイルを分割する"
 date: 2020-10-17T20:49:28+09:00
-archives: ["2020/10"]
 tags:
 - oss
 - buildflow
+authors:
+- suzuki-shunsuke
 ---
 
 buildflow というツールを開発しているので `buildflow` というタグをつけて何回かに分けてブログを書こうかなと思います。

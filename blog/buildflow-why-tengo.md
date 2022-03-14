@@ -1,10 +1,11 @@
 ---
 title: "buildflow ではなぜ Tengo を採用しているのか"
 date: 2020-10-17T22:35:56+09:00
-archives: ["2020/10"]
 tags:
 - oss
 - buildflow
+authors:
+- suzuki-shunsuke
 ---
 
 buildflow というツールを開発しているので `buildflow` というタグをつけて何回かに分けてブログを書きます。

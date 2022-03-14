@@ -5,6 +5,8 @@ draft: false
 tags:
 - npm
 archives: ["2019/02"]
+authors:
+- suzuki-shunsuke
 ---
 
 npm は Node.js のパッケージマネージャーですが、自分はJS以外のプロジェクトでも使えると思っています。

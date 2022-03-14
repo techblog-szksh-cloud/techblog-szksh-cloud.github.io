@@ -1,10 +1,11 @@
 ---
 title: "tfnotify を fork した"
 date: 2021-01-02T19:42:10+09:00
-archives: ["2021/01"]
 tags:
 - oss
 - terraform
+authors:
+- suzuki-shunsuke
 ---
 
 [mercari/tfnotify](https://github.com/mercari/tfnotify) を Fork して 2 つほど OSS を作りました。

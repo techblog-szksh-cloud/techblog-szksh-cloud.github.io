@@ -1,9 +1,10 @@
 ---
 title: "matchfile - 変更されたファイルの一覧から必要なタスクを導出するための CLI ツール"
 date: 2020-10-27T19:39:44+09:00
-archives: ["2020/10"]
 tags:
 - oss
+authors:
+- suzuki-shunsuke
 ---
 
 自作の CLI ツール matchfile について紹介します。

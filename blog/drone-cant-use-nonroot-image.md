@@ -1,8 +1,10 @@
 ---
 title: "drone で非rootユーザーで実行されるImageを使えない"
 date: 2018-09-30T21:42:16+09:00
-draft: false
-archives: ["2018/09"]
+authors:
+- suzuki-shunsuke
+tags:
+- drone
 ---
 
 drone で非rootユーザーで実行されるDocker Imageを使おうとするとbuildに失敗します。

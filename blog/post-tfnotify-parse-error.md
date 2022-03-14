@@ -1,11 +1,12 @@
 ---
 title: "tfnotify の parse error を通知する"
 date: 2020-09-12T08:05:59+09:00
-archives: ["2020/09"]
 tags:
 - terraform
 - tfnotify
 - github-comment
+authors:
+- suzuki-shunsuke
 ---
 
 [tfnotify](https://github.com/mercari/tfnotify) が terraform の標準出力のパースに失敗してコメントを投稿できないことがあります。

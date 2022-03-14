@@ -1,12 +1,12 @@
 ---
 title: "GraylogをTerraformで管理する"
 date: 2018-12-01T14:56:00+09:00
-draft: false
 tags:
 - oss
 - graylog
 - terraform
-archives: ["2018/12"]
+authors:
+- suzuki-shunsuke
 ---
 
 Graylogのリソースを terraform で管理するために作った terraform provider を紹介します。

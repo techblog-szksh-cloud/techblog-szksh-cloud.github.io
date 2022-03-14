@@ -1,10 +1,11 @@
 ---
 title: "aqua の設定ファイルをインタラクティブに生成する generate コマンド"
 date: 2021-09-05T10:17:39+09:00
-archives: ["2021/09"]
 tags:
 - oss
 - aqua
+authors:
+- suzuki-shunsuke
 ---
 
 * [aqua - CLI ツールのバージョン管理](/aqua)

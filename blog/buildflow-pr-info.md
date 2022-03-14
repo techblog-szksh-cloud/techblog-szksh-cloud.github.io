@@ -1,10 +1,11 @@
 ---
 title: "buildflow が自動で取得する Pull Request の情報"
 date: 2020-10-18T08:13:48+09:00
-archives: ["2020/10"]
 tags:
 - oss
 - buildflow
+authors:
+- suzuki-shunsuke
 ---
 
 buildflow というツールを開発しているので `buildflow` というタグをつけて何回かに分けてブログを書きます。

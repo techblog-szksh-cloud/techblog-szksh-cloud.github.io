@@ -1,12 +1,12 @@
 ---
 title: "Graylog の Terraform を CI/CDで実行する"
 date: 2018-12-07T08:22:49+09:00
-draft: false
 tags:
 - graylog
 - terraform
 - ci
-archives: ["2018/12"]
+authors:
+- suzuki-shunsuke
 ---
 
 以前 Graylog を Terraform で管理する記事を書きました。

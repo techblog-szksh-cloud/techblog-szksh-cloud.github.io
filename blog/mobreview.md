@@ -1,8 +1,10 @@
 ---
 title: "モブレビューやっていきたい"
 date: 2019-11-10T18:31:05+09:00
-archives: ["2019/11"]
-draft: false
+tags:
+- job
+authors:
+- suzuki-shunsuke
 ---
 
 最近モブレビュー取り入れたいと感じていて、なんで取り入れたいかなどについて書いてみました。

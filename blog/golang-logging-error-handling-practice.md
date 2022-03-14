@@ -1,11 +1,11 @@
 ---
-title: "Golangにおけるエラーハンドリングとロギングのプラクティス"
+title: "Go におけるエラーハンドリングとロギングのプラクティス"
 date: 2018-12-25T21:51:41+09:00
-draft: false
 tags:
 - golang
 - logging
-archives: ["2018/12"]
+authors:
+- suzuki-shunsuke
 ---
 
 ## 2018-12-30 追記
@@ -18,7 +18,7 @@ https://github.com/suzuki-shunsuke/go-error-handling-logging-practice
 
 ---
 
-Golang でエラーハンドリングとロギングをしてきて自分の中で固まりつつあるプラクティスを明文化します。
+Go でエラーハンドリングとロギングをしてきて自分の中で固まりつつあるプラクティスを明文化します。
 明文化することで以下のことを目指します。
 
 * 迷いをなくす

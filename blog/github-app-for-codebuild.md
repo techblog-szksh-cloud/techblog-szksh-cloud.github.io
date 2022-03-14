@@ -1,11 +1,12 @@
 ---
 title: "AWS CodeBuild を実行する Github App を作る"
 date: 2021-08-16T09:10:51+09:00
-archives: ["2021/08"]
 tags:
 - aws
 - codebuild
 - github-app
+authors:
+- suzuki-shunsuke
 ---
 
 GitHub Repository の CI に CodeBuild を使う場合、 [CodeBuild の Webhook integration](https://docs.aws.amazon.com/codebuild/latest/userguide/github-webhook.html) (以下 `CodeBuild GitHub integration` と呼ぶことにします) を使うのが一番自然でしょう。

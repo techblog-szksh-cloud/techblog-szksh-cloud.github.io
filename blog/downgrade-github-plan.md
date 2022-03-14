@@ -1,10 +1,10 @@
 ---
 title: "GithubをFree Planにダウングレードした"
 date: 2019-01-20T12:27:26+09:00
-draft: false
 tags:
 - github
-archives: ["2019/01"]
+authors:
+- suzuki-shunsuke
 ---
 
 GitHub のプラン体系が変わり、無料プランでも無制限でprivate repositoryが作れるようになりました。

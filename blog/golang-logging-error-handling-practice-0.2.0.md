@@ -1,8 +1,10 @@
 ---
 title: "go-error-handling-logging-practice v0.2"
 date: 2019-02-01T22:26:13+09:00
-draft: false
-archives: ["2019/02"]
+tags:
+- golang
+authors:
+- suzuki-shunsuke
 ---
 
 以前 Golang のロギング・エラーハンドリングについて書きました。

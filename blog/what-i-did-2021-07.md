@@ -5,6 +5,8 @@ archives: ["2021/07"]
 tags:
 - job
 - oss
+authors:
+- suzuki-shunsuke
 ---
 
 今まで仕事に限定して書いてきましたが、 OSS 活動なんかにも触れてもいいんじゃないかと思ったので分かる範囲で書きます。

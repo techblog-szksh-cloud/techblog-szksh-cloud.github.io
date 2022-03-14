@@ -1,9 +1,10 @@
 ---
 title: "Drone v1 では Jsonnet が extension なしで使える"
 date: 2019-08-02T23:02:57+09:00
-archives: ["2019/08"]
 tags:
 - drone
+authors:
+- suzuki-shunsuke
 ---
 
 Drone では v1 から冗長な YAML を DRY にする一つの手として、 Jsonnet の利用が推奨されています。

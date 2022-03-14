@@ -1,11 +1,11 @@
 ---
 title: "Drone と Circle CI の workspace の扱いの違いについて"
 date: 2018-09-30T19:27:59+09:00
-draft: false
 tags:
 - drone
 - circleci
-archives: ["2018/09"]
+authors:
+- suzuki-shunsuke
 ---
 
 drone は同じ pipeline の step 間で同じ workspace を docker の volume としてマウントすることで workspace を共有します。

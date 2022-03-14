@@ -1,10 +1,10 @@
 ---
 title: ".drone.jsonnet と .drone.yml を比較する Drone plugin を作った"
 date: 2019-06-01T08:34:10+09:00
-draft: false
 tags:
 - drone
-archives: ["2019/06"]
+authors:
+- suzuki-shunsuke
 ---
 
 久しぶりに [Drone plugin](https://docs.drone.io/plugins/) を作ったので紹介します。

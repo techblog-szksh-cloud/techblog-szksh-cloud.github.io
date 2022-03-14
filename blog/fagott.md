@@ -5,7 +5,8 @@ tags:
 - oss
 - golang
 - flute
-archives: ["2019/07"]
+authors:
+- suzuki-shunsuke
 ---
 
 ## 2019-07-17 追記
