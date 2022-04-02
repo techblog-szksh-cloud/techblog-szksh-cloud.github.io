@@ -4,10 +4,20 @@
         <title>Melody Blog</title>
         <link>https://techblog.szksh.cloud/</link>
         <description>Melody Blog</description>
-        <lastBuildDate>Mon, 14 Mar 2022 05:16:55 GMT</lastBuildDate>
+        <lastBuildDate>Sat, 02 Apr 2022 05:16:55 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <copyright>Copyright © 2018 Shunsuke Suzuki.</copyright>
+        <item>
+            <title><![CDATA[2022-03 振り返り]]></title>
+            <link>https://techblog.szksh.cloud/what-i-did-2022-03</link>
+            <guid>/what-i-did-2022-03</guid>
+            <pubDate>Sat, 02 Apr 2022 05:16:55 GMT</pubDate>
+            <description><![CDATA[3 月は blog を結構読みました。]]></description>
+            <content:encoded><![CDATA[<p>3 月は blog を結構読みました。</p><p><a href="https://zenn.dev/shunsuke_suzuki/scraps/602d6f6b803168" target="_blank" rel="noopener noreferrer">https://zenn.dev/shunsuke_suzuki/scraps/602d6f6b803168</a></p><p>後は職場のインフラ周りのコードとかを読み返して復習しました。</p><p>最近は OSS 開発やブログの執筆などの output が中心で、 input をする時間があまり取れていなかったのでブログなどを読むという形で input をしました。</p><h2 class="anchor anchorWithStickyNavbar_mojV" id="仕事">仕事<a class="hash-link" href="#仕事" title="Direct link to heading">​</a></h2><ul><li>Blog 執筆</li><li>Terraform<ul><li>Module を Monorepo に集約: <a href="https://blog.studysapuri.jp/entry/2022/03/30/080000" target="_blank" rel="noopener noreferrer">Terraform Modules を Monorepo で versioning して管理</a></li></ul></li><li>AWS Account 分割</li></ul><h2 class="anchor anchorWithStickyNavbar_mojV" id="blog">Blog<a class="hash-link" href="#blog" title="Direct link to heading">​</a></h2><table><thead><tr><th>date</th><th>title</th></tr></thead><tbody><tr><td>2022-03-30</td><td><a href="https://blog.studysapuri.jp/entry/2022/03/30/080000" target="_blank" rel="noopener noreferrer">Terraform Modules を Monorepo で versioning して管理</a></td></tr><tr><td>2022-03-29</td><td><a href="https://devs.quipper.com/2022/03/29/automate-handling-a-number-of-pull-requests-by-renovate-in-terraform-monorepo.html" target="_blank" rel="noopener noreferrer">Automate handling a number of Pull Requests by Renovate in Terraform Monorepo</a></td></tr><tr><td>2022-03-05</td><td><a href="https://zenn.dev/shunsuke_suzuki/articles/tfaction-v050" target="_blank" rel="noopener noreferrer">tfaction v0.5.0 の update</a></td></tr></tbody></table><h2 class="anchor anchorWithStickyNavbar_mojV" id="oss-開発">OSS 開発<a class="hash-link" href="#oss-開発" title="Direct link to heading">​</a></h2><ul><li>aqua v1.2.0 ~ v1.3.0</li><li>aqua-registry v1.6.0 ~ v1.11.0</li><li>tfaction v0.5.0 ~ v0.5.7</li><li><a href="https://github.com/suzuki-shunsuke/tfcmt/releases/tag/v3.1.0" target="_blank" rel="noopener noreferrer">tfcmt v3.1.0</a></li></ul><h2 class="anchor anchorWithStickyNavbar_mojV" id="その他">その他<a class="hash-link" href="#その他" title="Direct link to heading">​</a></h2><p>AWS CodeDeploy を用いた AWS Lambda の Progressive Delivery に関して検討しました。</p><p><a href="https://zenn.dev/shunsuke_suzuki/scraps/64bf029c5eeb7b" target="_blank" rel="noopener noreferrer">https://zenn.dev/shunsuke_suzuki/scraps/64bf029c5eeb7b</a></p><p>PipeCD も考えましたが、 CodeDeploy で出来るんならそれでいい気がするので、まずは CodeDeploy で検討しています。</p>]]></content:encoded>
+            <category>job</category>
+            <category>oss</category>
+        </item>
         <item>
             <title><![CDATA[2022-02 振り返り]]></title>
             <link>https://techblog.szksh.cloud/what-i-did-2022-02</link>
