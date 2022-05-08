@@ -2,12 +2,28 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://techblog.szksh.cloud/</id>
     <title>Melody Blog</title>
-    <updated>2022-05-05T05:16:55.000Z</updated>
+    <updated>2022-05-08T06:47:40.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://techblog.szksh.cloud/"/>
     <subtitle>Melody Blog</subtitle>
     <icon>https://techblog.szksh.cloud/http://github.com/suzuki-shunsuke.png</icon>
     <rights>Copyright © 2018 Shunsuke Suzuki.</rights>
+    <entry>
+        <title type="html"><![CDATA[Pull Request を再度 review してほしい場合は Re-request review をしましょう]]></title>
+        <id>/github-re-request-review</id>
+        <link href="https://techblog.szksh.cloud/github-re-request-review"/>
+        <updated>2022-05-08T06:47:40.000Z</updated>
+        <summary type="html"><![CDATA[Pull Request を再度 review してほしい場合には、 mention つきでコメントするのではなく、]]></summary>
+        <content type="html"><![CDATA[<p>Pull Request を再度 review してほしい場合には、 mention つきでコメントするのではなく、
+Re-request review をしましょう。
+GitHub には再度 review 依頼するための機能があります。</p><p><img src="https://user-images.githubusercontent.com/13323303/167285404-c9a1a1ee-1a81-41b3-9b68-1a5dc0fc95f3.png" alt="image"></p><p><a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/about-pull-request-reviews#re-requesting-a-review" target="_blank" rel="noopener noreferrer">https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/about-pull-request-reviews#re-requesting-a-review</a></p><p>mention つきのコメントでは、一度通知を見逃したり、後で対応しようと思って時間が経ってしまった場合に、
+忘れられやすいという問題があります。</p><p>Re-request review を使うと mention 同様に通知がリアルタイムで通知が行くのに加え、 review 待ちの pull request を検索で絞り込めたり、自分の review 待ちの pull request を一覧できたりします。</p><p>自分の review 待ちの pull request 一覧: <a href="https://github.com/pulls/review-requested" target="_blank" rel="noopener noreferrer">https://github.com/pulls/review-requested</a></p><p>検索で絞り込み</p><ul><li>Awaiting review from you</li><li>Awaiting review from you or your team</li></ul><p><img src="https://user-images.githubusercontent.com/13323303/167285469-59caf353-ecc8-4f59-82eb-220077254cea.png" alt="image"></p><p>また、 Slack の integration で定期的に通知を飛ばしてリマインドすることで、忘れるのを防ぐことができます。</p>]]></content>
+        <author>
+            <name>Shunsuke Suzuki</name>
+            <uri>https://github.com/suzuki-shunsuke</uri>
+        </author>
+        <category label="practice" term="practice"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[2022-04 振り返り]]></title>
         <id>/what-i-did-2022-04</id>

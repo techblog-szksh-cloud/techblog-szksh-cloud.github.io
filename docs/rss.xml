@@ -4,10 +4,22 @@
         <title>Melody Blog</title>
         <link>https://techblog.szksh.cloud/</link>
         <description>Melody Blog</description>
-        <lastBuildDate>Thu, 05 May 2022 05:16:55 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 08 May 2022 06:47:40 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <copyright>Copyright © 2018 Shunsuke Suzuki.</copyright>
+        <item>
+            <title><![CDATA[Pull Request を再度 review してほしい場合は Re-request review をしましょう]]></title>
+            <link>https://techblog.szksh.cloud/github-re-request-review</link>
+            <guid>/github-re-request-review</guid>
+            <pubDate>Sun, 08 May 2022 06:47:40 GMT</pubDate>
+            <description><![CDATA[Pull Request を再度 review してほしい場合には、 mention つきでコメントするのではなく、]]></description>
+            <content:encoded><![CDATA[<p>Pull Request を再度 review してほしい場合には、 mention つきでコメントするのではなく、
+Re-request review をしましょう。
+GitHub には再度 review 依頼するための機能があります。</p><p><img src="https://user-images.githubusercontent.com/13323303/167285404-c9a1a1ee-1a81-41b3-9b68-1a5dc0fc95f3.png" alt="image"></p><p><a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/about-pull-request-reviews#re-requesting-a-review" target="_blank" rel="noopener noreferrer">https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/about-pull-request-reviews#re-requesting-a-review</a></p><p>mention つきのコメントでは、一度通知を見逃したり、後で対応しようと思って時間が経ってしまった場合に、
+忘れられやすいという問題があります。</p><p>Re-request review を使うと mention 同様に通知がリアルタイムで通知が行くのに加え、 review 待ちの pull request を検索で絞り込めたり、自分の review 待ちの pull request を一覧できたりします。</p><p>自分の review 待ちの pull request 一覧: <a href="https://github.com/pulls/review-requested" target="_blank" rel="noopener noreferrer">https://github.com/pulls/review-requested</a></p><p>検索で絞り込み</p><ul><li>Awaiting review from you</li><li>Awaiting review from you or your team</li></ul><p><img src="https://user-images.githubusercontent.com/13323303/167285469-59caf353-ecc8-4f59-82eb-220077254cea.png" alt="image"></p><p>また、 Slack の integration で定期的に通知を飛ばしてリマインドすることで、忘れるのを防ぐことができます。</p>]]></content:encoded>
+            <category>practice</category>
+        </item>
         <item>
             <title><![CDATA[2022-04 振り返り]]></title>
             <link>https://techblog.szksh.cloud/what-i-did-2022-04</link>
