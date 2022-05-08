@@ -1,0 +1,32 @@
+---
+title: "Pull Request を再度 review してほしい場合は Re-request review をしましょう"
+date: 2022-05-08T15:47:40+09:00
+authors:
+- suzuki-shunsuke
+tags:
+- practice
+---
+
+Pull Request を再度 review してほしい場合には、 mention つきでコメントするのではなく、
+Re-request review をしましょう。
+GitHub には再度 review 依頼するための機能があります。
+
+![image](https://user-images.githubusercontent.com/13323303/167285404-c9a1a1ee-1a81-41b3-9b68-1a5dc0fc95f3.png)
+
+https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/about-pull-request-reviews#re-requesting-a-review
+
+mention つきのコメントでは、一度通知を見逃したり、後で対応しようと思って時間が経ってしまった場合に、
+忘れられやすいという問題があります。
+
+Re-request review を使うと mention 同様に通知がリアルタイムで通知が行くのに加え、 review 待ちの pull request を検索で絞り込めたり、自分の review 待ちの pull request を一覧できたりします。
+
+自分の review 待ちの pull request 一覧: https://github.com/pulls/review-requested
+
+検索で絞り込み
+
+* Awaiting review from you
+* Awaiting review from you or your team
+
+![image](https://user-images.githubusercontent.com/13323303/167285469-59caf353-ecc8-4f59-82eb-220077254cea.png)
+
+また、 Slack の integration で定期的に通知を飛ばしてリマインドすることで、忘れるのを防ぐことができます。
