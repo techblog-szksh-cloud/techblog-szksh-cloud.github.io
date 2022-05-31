@@ -7,8 +7,8 @@
 <link rel="alternate" type="application/rss+xml" href="/rss.xml" title="Melody RSS Feed">
 <link rel="alternate" type="application/atom+xml" href="/atom.xml" title="Melody Atom Feed">
 <link rel="alternate" type="application/json" href="/feed.json" title="Melody JSON Feed"><title data-rh="true">Blog | Melody</title><meta data-rh="true" property="og:title" content="Blog | Melody"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" name="description" content="Blog"><meta data-rh="true" property="og:description" content="Blog"><meta data-rh="true" property="og:url" content="https://techblog.szksh.cloud//page/5"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docusaurus_tag" content="blog_posts_list"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docsearch:docusaurus_tag" content="blog_posts_list"><link data-rh="true" rel="icon" href="http://github.com/suzuki-shunsuke.png"><link data-rh="true" rel="canonical" href="https://techblog.szksh.cloud//page/5"><link data-rh="true" rel="alternate" href="https://techblog.szksh.cloud//page/5" hreflang="en"><link data-rh="true" rel="alternate" href="https://techblog.szksh.cloud//page/5" hreflang="x-default"><link rel="stylesheet" href="/assets/css/styles.53be142c.css">
-<link rel="preload" href="/assets/js/runtime~main.d60c1ebf.js" as="script">
-<link rel="preload" href="/assets/js/main.c613ca06.js" as="script">
+<link rel="preload" href="/assets/js/runtime~main.007f715a.js" as="script">
+<link rel="preload" href="/assets/js/main.22d9f237.js" as="script">
 </head>
 <body class="navigation-with-keyboard">
 <script>!function(){function t(t){document.documentElement.setAttribute("data-theme",t)}var e=function(){var t=null;try{t=localStorage.getItem("theme")}catch(t){}return t}();t(null!==e?e:"light")}()</script><div id="__docusaurus">
@@ -116,7 +116,7 @@ task.items を指定する場合、 map か list か、それらを返す Tengo 
 例えばファイルなどの一覧を返すコマンドの実行結果を元に
 dynamic task でファイルごとに別の task で並列に処理するとかが考えられそうです。</p><h2 class="anchor anchorWithStickyNavbar_mojV" id="制約">制約<a class="hash-link" href="#制約" title="Direct link to heading">​</a></h2><p>task.items は phase の最初に評価されます。
 つまり同じ phase の task の結果を参照したり出来ません。</p><p>これは task.dependency の評価時に、 task のリストが定まっていないと評価できないためです。</p><p>ただし、前の phase 及び phase の task の実行結果は参照できるため、 items で特定の task の実行結果を参照したい場合は、phase を分けることになります。</p><p>実は dynamic task を実現する上で上記の問題をクリアするために phase という概念を導入したという経緯があったります。</p></div><footer class="row docusaurus-mt-lg"><div class="col"><b>Tags:</b><ul class="tags_XVD_ padding--none margin-left--sm"><li class="tag_JSN8"><a class="tag_hD8n tagRegular_D6E_" href="/tags/oss">oss</a></li><li class="tag_JSN8"><a class="tag_hD8n tagRegular_D6E_" href="/tags/buildflow">buildflow</a></li></ul></div></footer></article><nav class="pagination-nav" aria-label="Blog list page navigation"><div class="pagination-nav__item"><a href="//page/4" target="_blank" rel="noopener noreferrer" class="pagination-nav__link"><div class="pagination-nav__label">Newer Entries</div></a></div><div class="pagination-nav__item pagination-nav__item--next"><a href="//page/6" target="_blank" rel="noopener noreferrer" class="pagination-nav__link"><div class="pagination-nav__label">Older Entries</div></a></div></nav></main></div></div></div><footer class="footer footer--dark"><div class="container container-fluid"><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2017 Shunsuke Suzuki. Built with Docusaurus.</div></div></div></footer></div>
-<script src="/assets/js/runtime~main.d60c1ebf.js"></script>
-<script src="/assets/js/main.c613ca06.js"></script>
+<script src="/assets/js/runtime~main.007f715a.js"></script>
+<script src="/assets/js/main.22d9f237.js"></script>
 </body>
 </html>
