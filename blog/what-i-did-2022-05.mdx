@@ -27,6 +27,17 @@ https://twitter.com/szkdash/status/1527235538951974912
 * [CLI での構造化ロギングのすすめ](https://zenn.dev/shunsuke_suzuki/articles/cli-structured-logging)
 * [tfcmt apply で通知先の取得方法を改善](https://zenn.dev/shunsuke_suzuki/articles/tfcmt-apply-v322)
 
+## OSS Contribution
+
+merged date | repository | lang | PR's short description
+--- | --- | --- | ---
+2022-05-07 | [terraform-linters/tflint-ruleset-aws](https://github.com/terraform-linters/tflint-ruleset-aws) | go | [feat: support provider aliases](https://github.com/terraform-linters/tflint-ruleset-aws/pull/342)
+
+Terraform の AWS Provider の Alias が設定されている場合でも tflint の AWS Plugin の Deep Check が正しく動くようにしました。
+
+https://github.com/terraform-linters/tflint-ruleset-aws/issues/331 を読むと分かりやすいかも。
+これを実装する際にはメンテナの [@wata727](https://github.com/wata727) さんに結構フォローしていただき、助かりました。
+
 ## OSS 開発
 
 ### 新規
