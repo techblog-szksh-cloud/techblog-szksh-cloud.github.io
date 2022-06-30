@@ -1,0 +1,174 @@
+---
+title: "2022-06 振り返り"
+date: 2022-06-28T14:16:55+09:00
+authors:
+- suzuki-shunsuke
+tags:
+- job
+- oss
+---
+
+import LinkCard from '@site/src/components/linkcard';
+
+## 仕事
+
+05-18 がリクルートでの最終出社日でした。 https://techblog.szksh.cloud/job-change-2022-06/
+
+なので今月は丸々休みです。来月 07-01 から働きます。
+
+## 日報(?)
+
+https://zenn.dev/shunsuke_suzuki/scraps/dbfdeb67518c52
+
+zenn で日報のようなものを書いてみました。休み中なのに偉い。
+06-07 だけ何も書いてないですね。この日はグダグダ漫画読んでたのかもしれません。
+でも基本は休み中もずっと OSS のメンテしてました。
+
+## Blog
+
+* [2022-06-23 CLI Version Manager の aqua が Windows をサポート](https://zenn.dev/shunsuke_suzuki/articles/aqua-windows-support)
+* [2022-06-08 aqua が Go 製のツールのビルドをサポート](https://zenn.dev/shunsuke_suzuki/articles/aqua-go-build-support)
+
+## OSS 開発
+
+### aquaproj/aqua
+
+Windows 対応は非常に大きな改修でしたが、反響がほぼなくて残念でした。
+
+v1.9.0 => v1.15.0
+
+* [v1.10.0](https://github.com/aquaproj/aqua/releases/tag/v1.10.0)
+  * パフォーマンスチューニングのために `-trace` と `-cpu-profile` option を追加
+  * `go install` によるツールのインストールをサポート
+* [v1.10.1](https://github.com/aquaproj/aqua/releases/tag/v1.10.0), [v1.10.2](https://github.com/aquaproj/aqua/releases/tag/v1.10.2)
+  * 異常系のエラーハンドリングを改善
+  * aqua はツールの性質上、 invalid な設定ファイルをなるべく許容しないといけない
+  * https://zenn.dev/link/comments/bb67b39f122f25
+* [v1.11.0](https://github.com/aquaproj/aqua/releases/tag/v1.11.0)
+  * Bash, Zsh でコマンドを補完をサポート
+* [v1.12.0](https://github.com/aquaproj/aqua/releases/tag/v1.12.0)
+  * Windows を正式にサポート
+  * `supported_envs` の追加
+* [v1.12.1](https://github.com/aquaproj/aqua/releases/tag/v1.12.1)
+  * `supported_envs` に関するバグ修正
+* [v1.13.0](https://github.com/aquaproj/aqua/releases/tag/v1.13.0)
+  * Windows でログに色がつくように修正
+* [v1.14.0](https://github.com/aquaproj/aqua/releases/tag/v1.14.0)
+  * JSON Schema の修正
+  * Registry のコードを scaffold するコマンド `aqua gr` コマンドを追加
+    * Registry の設定を自分で書く人にとっては非常に便利
+* [v1.14.1](https://github.com/aquaproj/aqua/releases/tag/v1.14.1)
+  * Windows 関連のバグを修正
+* [v1.15.0](https://github.com/aquaproj/aqua/releases/tag/v1.15.0)
+  * `aqua g` に `-s` オプションを追加して、 version を interactive に選択できるようにした
+  * ツールの download 時に progress bar を表示
+* 動画収録
+  * 宣伝のために動画収録
+  * https://zenn.dev/shunsuke_suzuki/scraps/210234e8fa39bf
+  * 英語で短いの撮りました: https://www.youtube.com/watch?v=adX_lloB3mY
+  * 日本語で長め(10 ~ 30 分) くらいの動画も準備しています
+    * https://zenn.dev/shunsuke_suzuki/scraps/c5e0da3c378e97
+    * ただ、 aqua を rename するならその後のほうが良いかなと思って保留
+* aqua のリネームを検討&準備
+  * https://zenn.dev/shunsuke_suzuki/scraps/fe8807a0296f33
+  * https://github.com/aquaproj/aqua/issues/881
+
+### aqua-registry
+
+v2.19.0 => v3.5.0
+
+Package 数が 515 から 637 まで増えました。
+[#4181](https://github.com/aquaproj/aqua-registry/issues/4181) binenv が対応しているツールに関して、 aqua-registry でもだいたい対応しました。
+
+### tfcmt
+
+* [v3.2.4](https://github.com/suzuki-shunsuke/tfcmt/releases/tag/v3.2.4): `-auto-approve` なしで tfcmt apply 実行できるようにしました。
+* [v3.2.5](https://github.com/suzuki-shunsuke/tfcmt/releases/tag/v3.2.5): Windows に対応しました
+
+### asciinema-trim
+
+https://github.com/suzuki-shunsuke/asciinema-trim/releases/tag/v0.1.2
+
+Windows に対応しました
+
+## その他
+
+### aqua が紹介されました
+
+<LinkCard url="https://zenn.dev/zoetro/articles/9454a6231a1273" />
+
+著者の zoetro さんは以前も aqua に関する記事を書いてくださいました。ありがたい話です。
+
+<LinkCard url="https://zenn.dev/zoetro/articles/eee98d772c2483" />
+
+Terraform や Kubernetes では様々な周辺ツールがあり、それらのツールの管理に aqua は非常に便利だと思います。
+
+### Windows 環境を用意するなら Amazon Workspaces が便利
+
+https://zenn.dev/shunsuke_suzuki/scraps/6859774d379414
+
+aqua の Windows 対応で Windows 環境が必要だったので Amazon Workspaces を使いました。
+とても簡単に Windows 環境を用意できるので便利でした。
+
+### tfcmt plan は plan ファイルを使っても実行できる
+
+terraform plan の代わりに terraform show コマンドを使えば plan file を使って tfcmt でコメントできます。
+
+https://github.com/suzuki-shunsuke/tfcmt/issues/316
+
+### tfaction の Star 数がなぜか増えた
+
+理由はよくわかりませんが、結構 star 数が増えました。
+
+![image](https://storage.googleapis.com/zenn-user-upload/737521634e44-20220605.png)
+
+### Renovate が GitHub Actions x.y.z-0 を x.y.z に update してくれない原因と修正方法
+
+https://zenn.dev/shunsuke_suzuki/scraps/9b4a3e5e8f6925#comment-09bfe96f8a2c1d
+
+### Slide 作成は Google Slide が自分にあってる
+
+Slide をなにで作るか考えたりしましたが、結局 Google Slide が自分には合ってるのではないかという結論に至りました。
+もっとも Slide ってあまりコスパが良くないので、ブログとかドキュメントのほうが良い気はしますね。
+
+https://zenn.dev/link/comments/888dbb8af3ca0a
+
+### マイク買ってみた
+
+https://www.amazon.co.jp/gp/product/B099ZZMGJ5
+
+![image](https://storage.googleapis.com/zenn-user-upload/3a302e3c9ba5-20220609.png)
+
+aqua の動画を撮るのに内臓のマイクだとイマイチな気がしたのでマイクを買ってみました。
+有線のヘッドホンしないといけないのがちょっとマイナスですね。
+QuickTime Player で録画してみたら、まぁ内臓のマイクよりはクリアな気がしますが、
+音を拾いすぎている気もします。
+
+買ったあとちょっと動画収録に使っただけであまり使ってないですが、来月から仕事でも使う機会あるのかな？内蔵マイクで十分な気もするけど。
+
+### 運動
+
+アキレス腱が痛くて走れないんですが、卓球はなんとか出来ます。
+マイラケットとマイシューズを買いました。
+週1, 2 くらいでやってますが、仕事始まったら週1になるかも。
+
+## その他のその他
+
+tweet の埋め込み、もうちょいいい感じにしたいですね。
+
+tfaction に関するコメント。ありがとうございます。すごい自動化されている感じがしていいですよね。
+
+<LinkCard url="https://twitter.com/irotoris/status/1536953830306287617" />
+
+自分が LINE で Corporate Engineer やってた頃に作った Slack App が未だに現役らしくて感動しました。
+
+<LinkCard url="https://twitter.com/szkdash/status/1537674427269545984" />
+
+## さいごに
+
+05-19 から 1 ヶ月以上に渡る有給消化が終わりました。
+長い休みの間に新しい OSS を作ったりしたいとも思ってましたが、既存の OSS (主に aqua) のメンテで手一杯でした。
+それでも aqua や tfcmt などを改善できたので良かったです。
+
+来月から Mercari で働きます。
+環境が大きく変わるはず(特に英語)なので、楽しみな半面ちょっと緊張します。
