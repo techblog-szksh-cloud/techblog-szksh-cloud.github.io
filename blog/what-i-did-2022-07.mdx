@@ -1,0 +1,139 @@
+---
+title: "2022-07 振り返り"
+date: 2022-07-30T18:30:55+09:00
+authors:
+- suzuki-shunsuke
+tags:
+- job
+- oss
+---
+
+import LinkCard from '@site/src/components/linkcard';
+
+## 仕事
+
+今月から Mercari の Platform Group の Platform DX team のメンバーとして仕事をしています。
+英語で若干苦労している部分はありますがなんとかやっています。
+
+このご時世なので同僚の方とオフラインで会うことは当分無いだろうなと思っていましたが、
+2 回ぐらい歓迎会をして頂き(オンラインを含めるともっとある)、顔を合わせることができました。
+
+ドキュメントはかなり整ってますし、わからないことは聞けば教えてもらえますし、毎日メンターと 10 ~ 15 分程度 1on1 をやっているので順調にオンボーディングを進められているかなという気がしています。
+
+自動化の仕組みとかはかなり整っていますが、
+[aqua](https://aquaproj.github.io/) や [tfcmt](https://github.com/suzuki-shunsuke/tfcmt), [github-comment](https://github.com/suzuki-shunsuke/github-comment) といった自分が開発している OSS を活用して更に DX を高めたりコードを綺麗にしてメンテナンス性を高めることができるのではないかなと感じています。
+
+現在幾つかのタスクに取り組みつつ、上記のツールを導入するためにツール側を若干修正しています。
+新しい環境に移ることで今まで見えてなかった部分が見えてツールを進化させることが出来ていていい話だなと思います。
+
+## OSS 開発
+
+### aquaproj/aqua
+
+v1.15.1 => v1.18.0
+
+* [v1.16.0](https://github.com/aquaproj/aqua/releases/tag/v1.16.0)
+  * `aqua g` の検索結果の表示を改善
+* [v1.17.0](https://github.com/aquaproj/aqua/releases/tag/v1.17.0)
+  * log のカラー出力を環境変数で制御できるようにした
+  * progress bar をデフォルトで無効化した。環境変数で有効化できるようにした
+* [v1.18.0](https://github.com/aquaproj/aqua/releases/tag/v1.18.0)
+  * `aqua cp` コマンドのサポート
+    * Docker image などにツールをインストールし、 aqua なしで実行できるようにする際に便利
+
+aqua cp を使った Docker image の build に関しては以下に書きました。
+
+<LinkCard url="https://aquaproj.github.io/docs/tutorial-extras/build-container-image/" />
+
+### aqua-registry
+
+v3.5.0 => v3.20.0
+
+Package 数が 637 から 702 まで増えました。
+Contribution してくださった方々、ありがとうございます。
+
+あと、 aqua-registry に contribution するためのシェルスクリプト `generate-registry.sh` や `scaffold.sh` を Go で書き直したり、新たに `create-pr-new-pkg` というコマンドを追加したりしました。
+Go で書き直すことで Windows でも動くようになりました。
+scaffold してから PR を作成するまでが自動化できるようになり、より簡単に contribution できるようになりました。かなり便利です。
+
+例えば以下の 3 コマンドで [kevwan/depu](https://github.com/kevwan/depu) を追加する PR を作成できてしまいました。 [#4992](https://github.com/aquaproj/aqua-registry/pull/4992)
+
+```console
+$ go run ./cmd/scaffold kevwan/depu # scaffold
+$ depu --help # 動作確認
+$ go run ./cmd/create-pr-new-pkg kevwan/depu # PR 作成
+```
+
+また Style Guide を整えました。
+
+https://aquaproj.github.io/docs/reference/registry-style-guide
+
+そして既存のコードを Style Guide に合わせて修正しました。
+
+Package 数が 700 を超え、順調にパッケージの数は増え続けています。
+これも簡単に新しいパッケージを追加できるアーキテクチャも含めた仕組み作りの賜物です。
+ユーザーからは見えにくい部分ですが、この辺の良さも伝わればいいなと思います。
+
+### tfcmt
+
+* [v3.3.0](https://github.com/suzuki-shunsuke/tfcmt/releases/tag/v3.3.0)
+  * Google Cloud Build を標準でサポート
+
+### github-comment
+
+* [v4.3.0](https://github.com/suzuki-shunsuke/tfcmt/releases/tag/v4.3.0)
+  * post command で既存のコマンドの更新をサポート
+  * ARM64 をサポート
+* [v4.4.0](https://github.com/suzuki-shunsuke/tfcmt/releases/tag/v4.4.0)
+  * Google Cloud Build を標準でサポート
+
+### go-ci-env
+
+* [v3.0.0](https://github.com/suzuki-shunsuke/go-ci-env/releases/tag/v3.0.0)
+  * API を大幅に修正し、使いやすくした
+  * `generic` package を削除
+  * `Add` function を追加し、独自の Platform をサポートしやすくした
+  * `JobURL` を追加
+
+### tfaction
+
+* [v0.5.13](https://github.com/suzuki-shunsuke/tfaction/releases/tag/v0.5.13)
+  * tfaction.yaml と tfaction-root.yaml で環境変数を設定できるようになりました。特定の working directory で terraform の `-parallelism` を変えたいときとかに便利です
+* [v0.5.14](https://github.com/suzuki-shunsuke/tfaction/releases/tag/v0.5.14)
+  * v0.5.13 で生じた、 terraform apply を実行する際に GCS から plan file をダウンロードするのに失敗するバグを修正しました (GCS じゃなくて S3 を使っている場合は関係ありません)
+
+tfaction, もしかして某W社でも使われている(?)
+
+## その他
+
+### aqua の Twitter アカウントを作ってみた
+
+[@aquaclivm](https://twitter.com/aquaclivm)
+あとは hash tag [#aquaclivm](https://twitter.com/hashtag/aquaclivm) を活用し始めました(ちょくちょくつけるの忘れますが)。
+`aqua` というワードがあまりにも一般的すぎて検索しても aqua が埋もれて見つけられないので、 aqua に関して呟くときは @aquaclivm をメンションするなり hash tag をつけるなりしてもらえると助かります。
+
+### starship, Yggdroot/LeaderF を導入
+
+仕事用の PC をセットアップした際、今まで使ってた denite.nvim や kube-ps1 がうまく動かず、調べるのも面倒なので別のツールに乗り換えました。
+
+* https://github.com/Yggdroot/LeaderF
+* https://github.com/starship/starship
+* https://github.com/yuru7/HackGen
+
+## その他のその他
+
+`aqua gr` コマンドすごい便利。
+
+<LinkCard url="https://twitter.com/tadayosi/status/1542803440837234688" />
+
+fish で aqua を補完できるようにした話です。いい話
+
+<LinkCard url="https://weblog.grimoh.net/entry/2022/07/31/135537" />
+
+いい話
+
+<LinkCard url="https://twitter.com/gr1m0h/status/1553043965166755840" />
+
+わかる。みんなにこの良さを知ってほしい
+
+<LinkCard url="https://twitter.com/dubs11kt/status/1549372407017721856" />
