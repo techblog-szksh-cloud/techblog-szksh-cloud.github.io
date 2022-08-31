@@ -1,0 +1,243 @@
+---
+title: "2022-08 振り返り"
+date: 2022-08-24T18:30:55+09:00
+authors:
+- suzuki-shunsuke
+tags:
+- job
+- oss
+---
+
+import LinkCard from '@site/src/components/linkcard';
+
+## 仕事
+
+仕事はあまり書けることもないんですが、元気にやっています。
+tfcmt, github-comment, aqua をとあるリポジトリに導入しました。
+
+## OSS 開発
+
+### aquaproj/aqua
+
+ツールのインストール時に checksum を検証する機能の開発を進めています。
+基本的な機能の開発は既に出来ていて prerelease も出しています。
+あとは現職に導入してフィードバックをもらいながら正式リリースに持っていきたいと思っています。
+
+<LinkCard url="https://github.com/aquaproj/aqua/issues/427" />
+
+<LinkCard url="https://twitter.com/aquaclivm/status/1559535842061733894" />
+
+### aqua-registry
+
+v3.20.0 => [3.42.0](https://github.com/aquaproj/aqua-registry/releases/tag/v3.42.0)
+
+Package 数が 702 から 803 まで増えました。
+Contribution してくださった方々、ありがとうございます。
+
+今月は Pull Request の数がすごくて 91 個の PR がマージされました。
+
+* Renovate 以外 132 個 [Merged Pull Requests](https://github.com/aquaproj/aqua-registry/pulls?q=is%3Apr+is%3Aclosed+merged%3A2022-08-01..2022-08-31+-author%3Aapp%2Frenovate+)
+* suzuki-shunsuke 41 個 [Merged Pull Requests](https://github.com/aquaproj/aqua-registry/pulls?q=is%3Apr+is%3Aclosed+merged%3A2022-08-01..2022-08-31+author%3Asuzuki-shunsuke)
+
+ありがたい話ですし、これほどの PR が来る OSS を開発できたことを誇りに思います。
+
+aqua-registry がサポートするツールの数が 800 を超えました。
+ちなみに asdf-plugins がサポートする数は 2022-08-30 時点で 514 なので、 asdf よりだいぶ多くなりました。
+
+```console
+$ asdf plugin list all | wc -l
+     514
+```
+
+<LinkCard url="https://twitter.com/szkdash/status/1564617121111621674" />
+
+
+また、 GitHub の API rate limit に引っかかるようになったので対応しました。
+
+* github.token を使う
+* main branch で test するのやめる
+* ci-info の結果を cache
+
+後述する aqua registry のための framework を使って CI とローカル開発を大きく改善しました。
+
+### aqua registry のための framework
+
+aqua Registry を開発するための Framework をリリースしました。
+主な aqua Registry といえば [Standard Registry](https://github.com/aquaproj/aqua-registry) ですが、
+組織内の private なツールのための Private Registry を作ることも出来ます。
+aqua-registry を開発するためのコードは元々 aqua-registry のリポジトリ内に置いてありましたが、
+それを Private Registry を開発するのにも使えるよう、別の OSS として切り出しました。
+また、 Private Registry の Template Repository とドキュメントも整備しました。
+
+* https://github.com/aquaproj/registry-tool
+* https://github.com/aquaproj/template-private-aqua-registry
+* https://github.com/aquaproj/registry-action
+* https://aquaproj.github.io/docs/reference/create-private-registry
+
+自分も社内のツールのための Private Registry を作るのにこれらを使っています。
+
+### aqua-installer
+
+aqua-installer を GopherJS を使って JavaScript Action に出来ないか検証しました。
+
+<LinkCard url="https://zenn.dev/shunsuke_suzuki/scraps/3b7eee7ca8d3ad" />
+
+<LinkCard url="https://github.com/aquaproj/aqua-installer/pull/144" />
+
+結論を言うと今はまだやめたほうが良さそうということで諦めました。
+興味のある人は zenn の scrap を見てみてください。
+将来的に GopherJS がより成熟してきたらまた検討するかもしれません。
+
+### aqua-renovate-config
+
+`go` datasource をサポートしたら warning が大量に出るようになったので対応しました。
+
+- https://github.com/aquaproj/aqua-renovate-config/releases/tag/1.2.1
+- https://github.com/aquaproj/aqua-renovate-config/releases/tag/1.2.2
+
+### tfcmt
+
+- [v3.4.0](https://github.com/suzuki-shunsuke/tfcmt/releases/tag/v3.4.0)
+  - commit hash に関連した PR を取得して PR にコメントするようにしました
+
+GitHub 側の仕様変更で、今月になって commit に対する comment が PR の timeline に表示されなくなりました。
+
+<LinkCard url="https://github.blog/changelog/2022-08-04-commit-comments-no-longer-appear-in-the-pull-request-timeline/" />
+
+そのため、 CI で push event を hook して commit にコメントをしている場合、 tfcmt plan の結果が PR に表示されなくなるというケースがありました。
+
+そこで commit hash に関連した PR を取得して PR にコメントするようにしました。
+なお、元々 pull_request event を hook するなどして PR 番号が tfcmt に渡っている場合は関係ありません。
+
+### tfaction
+
+- [v0.5.15](https://github.com/suzuki-shunsuke/tfaction/releases/tag/v0.5.15): tfmigrate-apply 中の typo の修正
+- [v0.5.16](https://github.com/suzuki-shunsuke/tfaction/releases/tag/v0.5.16)
+  - tfmigrate が history の保存先に GCS をサポートしたことのに合わせて、 tfmigrate-plan job で .tfmigrate.hcl を scaffold する際に GCS を指定できるようになりました
+  - gsutil が Workload Identity Federation をサポートしたことに合わせて、 setup job の中で最新の gsutil をインストールするようになりました
+  - これにより、それまで AWS を利用することが前提だったのが、 AWS の代わりに GCP を使うことができるようになりました
+
+### github-comment
+
+- [v4.5.0](https://github.com/suzuki-shunsuke/tfcmt/releases/tag/v4.5.0)
+
+上記の tfcmt と同様の変更を github-comment にもしました。
+
+### ci-info
+
+* [v2.1.0](https://github.com/suzuki-shunsuke/ci-info/releases/tag/v2.1.0)
+  * public repository なら GitHub Access Token なしで動くようにしました
+* [v2.1.1](https://github.com/suzuki-shunsuke/ci-info/releases/tag/v2.1.1)
+  * arm64 support
+
+## OSS の新規開発 :rocket:
+
+### gha-trigger
+
+まだ開発中ですが、新しい OSS を開発しています。詳細はまたいずれ書けたらと思います。
+
+<LinkCard url="https://github.com/suzuki-shunsuke/gha-trigger" />
+
+## その他
+
+### Aqua Picker (Third Party)
+
+公式ではないですが、 aqua に色々 Contribution してくださっている [4513echo](https://twitter.com/4513echo) さんが作られているサイトです。
+
+<LinkCard url="https://aqua-picker.deno.dev/" />
+
+<LinkCard url="https://twitter.com/4513echo/status/1556953063365025798" />
+
+<LinkCard url="https://twitter.com/4513echo/status/1558711976741572608" />
+
+<LinkCard url="https://twitter.com/4513echo/status/1560054691827855360" />
+
+ありがたい話です。
+
+### Chrome の tab を手動で group 作って整理するようにしてみた
+
+tab たくさん開きすぎて目的のページが見つからなくなって手当たりしだいに閉じるみたいなのをなんとかしたいとは前から思ってました。
+
+たまに Chrome の拡張機能をググったりしつつもどれもしっくりこず、特に何も対策を打たずに来ましたが、
+最近 Chrome 標準の Grouping 機能を使って、業務のトピックごとに Group を使って整理するようにしてみました。
+
+それなりにうまくいってますが、まだ改善の余地はありそうな感じはするので、模索していきたいと思います。
+
+## その他のその他
+
+### aqua
+
+<LinkCard url="https://github.com/aquaproj/aqua/issues/1076" />
+
+GitHub Sponsor になると言ってもらえてありがたい。
+
+<LinkCard url="https://twitter.com/hiro_o918/status/1554845898194108418" />
+
+雑に使えるというのは、学習コストの低さの表れかなと思います。
+これは team や project にツールを導入し、普及していく上ではとても重要なことです。
+個人で使う分には多少学習コストが高くても好きなものを使えば良いですが、
+他の人にも広めていく上では学習コストの低さは極めて重要です。
+仕事で使う場合には学習することが目的ではなく、他にもやるべきことがあるはずなので、
+そういう状態でもストレスなく、簡単に使えることがスムーズに導入を進める上で大事です。
+なので、学習コストが低くて team や project に導入しやすいという意味でも、 個人の dotfiles だけでなく team, project で使うツールのバージョン管理にも aqua が広がっていくと良いなと思っています。
+
+また、雑に使えると言っても、 aqua では registry も含めて version を厳格に固定し管理され、バージョンの差異による問題が起こらないようになっています。
+
+<LinkCard url="https://twitter.com/LGUG2Z/status/1562129310219059200" />
+
+こうやって徐々に認知されていくのはいい話ですね。
+
+<LinkCard url="https://twitter.com/ponkio_o/status/1562352036028461056" />
+
+<LinkCard url="https://twitter.com/ponkio_o/status/1562356254991089669" />
+
+### aqua-registry
+
+<LinkCard url="https://twitter.com/ponkio_o/status/1556532831324884992" />
+
+<LinkCard url="https://twitter.com/kei711_/status/1561855780424679425" />
+
+<LinkCard url="https://twitter.com/sukukyon/status/1560587208025063425" />
+
+<LinkCard url="https://twitter.com/ryodocx/status/1562847088006021121" />
+
+PR お待ちしてます。
+
+### tfcmt
+
+<LinkCard url="https://twitter.com/szkdash/status/1557334525381730304" />
+
+<LinkCard url="https://twitter.com/koki_develop/status/1560188434227965952" />
+
+### tfaction
+
+<LinkCard url="https://twitter.com/practainc/status/1555430142545399809" />
+
+<LinkCard url="https://twitter.com/sonic883b/status/1557060143312805888" />
+
+> GCPでのworkload identityと連携できるか
+
+できるはずです
+
+<LinkCard url="https://twitter.com/Kengo_TODA/status/1564576050671075329" />
+
+### github-comment
+
+<LinkCard url="https://twitter.com/ponkio_o/status/1555119431260729344" />
+
+github-comment でコメントが長すぎた場合に、代わりのコメントを post する設定です。
+
+<LinkCard url="https://twitter.com/ponkio_o/status/1561046628269961216" />
+
+inspire しました。
+
+> It is inspired from [suzuki-shunsuke/github-comment](https://github.com/suzuki-shunsuke/github-comment).
+
+### ci-info
+
+<LinkCard url="https://twitter.com/szkdash/status/1561735944213958661" />
+
+ci-info が自動で環境変数から commit hash などの情報を取得してくれるという話ですね。
+内部的には go-ci-env というライブラリを使っています。
+
+<LinkCard url="https://github.com/suzuki-shunsuke/go-ci-env" />
