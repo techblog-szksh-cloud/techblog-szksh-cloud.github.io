@@ -1,0 +1,121 @@
+---
+title: "Activity at 2022-09"
+date: 2022-09-24T18:30:55+09:00
+authors:
+- suzuki-shunsuke
+tags:
+- job
+- oss
+---
+
+import LinkCard from '@site/src/components/linkcard';
+
+## Work
+
+I've improved the experience of a huge Terraform Monorepo by introducing my OSS tfcmt and github-comment.
+
+## OSS Development
+
+### aqua
+
+- [v1.19.4](https://github.com/aquaproj/aqua/releases/tag/v1.19.4)
+  - generate-registry: set `complete_windows_ext`
+  - Support MD5 for the checksum verification
+  - Improve a log creating a symbolic link
+- [v1.19.3](https://github.com/aquaproj/aqua/releases/tag/v1.19.3)
+  - generate-registry: fix the regular expression to extract checksums
+  - exec: set config file path
+
+### aqua-registry
+
+I've updated aqua-registry from [v3.42.0](https://github.com/aquaproj/aqua-registry/releases/tag/v3.42.0) to [v3.59.0](https://github.com/aquaproj/aqua-registry/releases/tag/v3.64.0).
+The number of packages has increased from 803 to 870.
+Thank you, all contributors!
+
+### tfcmt
+
+- [v3.4.1](https://github.com/suzuki-shunsuke/tfcmt/releases/tag/v3.4.1)
+  - fix: Fix links to GitHub Actions jobs in GitHub Enterprise
+  - chore: Update Go from v1.18.5 to v1.19.1
+- [v3.4.2](https://github.com/suzuki-shunsuke/tfcmt/releases/tag/v3.4.2)
+  - fix: Add pull request labels properly even if a pull request number isn't passed as an argument or an environment variable
+- [v4.0.0](https://github.com/suzuki-shunsuke/tfcmt/releases/tag/v4.0.0)
+  - breaking change: Remove features to output environment variables for security
+
+### github-comment
+
+- [v4.5.1](https://github.com/suzuki-shunsuke/github-comment/releases/tag/v4.5.1)
+  - fix: Fix links to GitHub Actions jobs in GitHub Enterprise
+  - chore: Update Go from v1.18.5 to v1.19.1
+- [v4.5.2](https://github.com/suzuki-shunsuke/github-comment/releases/tag/v4.5.2)
+  - fix: Check if the configuration `base` is nil
+- [v5.0.0](https://github.com/suzuki-shunsuke/github-comment/releases/tag/v5.0.0)
+  - breaking change: Remove features to output environment variables for security
+
+### go-ci-env
+
+- [v3.0.1](https://github.com/suzuki-shunsuke/go-ci-env/releases/tag/v3.0.1)
+  - fix: fix GitHub Actions JobURL for GitHub Enterprise
+
+### tfaction
+
+- [v0.5.17](https://github.com/suzuki-shunsuke/tfaction/releases/tag/v0.5.17)
+  - feat: Show how to create a scaffold pull request with $GITHUB_STEP_SUMMARY
+- [v0.5.18](https://github.com/suzuki-shunsuke/tfaction/releases/tag/v0.5.18)
+  - tfmigrate-plan: Support testing with Conftest
+
+## New OSS :rocket:
+
+### gha-trigger
+
+I've released gha-trigger, which is Webhook Server and Actions to run GitHub Actions securely.
+
+<LinkCard url="https://gha-trigger.github.io" />
+
+<LinkCard url="https://dev.to/suzukishunsuke/gha-trigger-webhook-server-and-actions-for-secure-github-actions-538a" />
+
+<LinkCard url="https://zenn.dev/shunsuke_suzuki/articles/gha-trigger-action" />
+
+### oss-contribution-guide
+
+I've published [OSS Contribution Guide](https://github.com/suzuki-shunsuke/oss-contribution-guide), which is a guide to creating GitHub Issues and Pull Requests for OSS Contribution.
+
+## Egosearch
+
+### aqua
+
+<LinkCard url="https://twitter.com/takumiiinn/status/1571396305733451777" />
+
+<LinkCard url="https://twitter.com/scott_lowe/status/1570438151201755136" />
+
+<LinkCard url="https://twitter.com/4513echo/status/1567868727328391172" />
+
+<LinkCard url="https://twitter.com/corrupt952/status/1565561919528116225" />
+
+<LinkCard url="https://twitter.com/corrupt952/status/1565608452659224578" />
+
+### tfcmt
+
+<LinkCard url="https://twitter.com/pudding_info/status/1570796576595120128" />
+
+<LinkCard url="https://twitter.com/r4mimu/status/1568876468977156101" />
+
+<LinkCard url="https://twitter.com/koki_develop/status/1568555341956395008" />
+
+<LinkCard url="https://twitter.com/jojomasanori3/status/1566691464825819137" />
+
+### tfaction
+
+<LinkCard url="https://twitter.com/k_0ka/status/1570060863784230912" />
+
+<LinkCard url="https://twitter.com/Sho2010/status/1569567988155809794" />
+
+<LinkCard url="https://twitter.com/Sho2010/status/1569570930854338561" />
+
+### gha-trigger
+
+<LinkCard url="https://twitter.com/ponkio_o/status/1573673487708803073" />
+
+<LinkCard url="https://twitter.com/Civitaspo/status/1574020374693441539" />
+
+<LinkCard url="https://twitter.com/deeeet/status/1574558442018119680" />
