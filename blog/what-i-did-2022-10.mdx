@@ -1,0 +1,114 @@
+---
+title: "My Activity in 2022-10"
+date: 2022-11-01T22:13:55+09:00
+authors:
+- suzuki-shunsuke
+tags:
+- oss
+---
+
+import LinkCard from '@site/src/components/linkcard';
+
+## Blog posts
+
+* 2022-10-10: [aqua CLI Version Manager が checksum の検証をサポート](https://zenn.dev/shunsuke_suzuki/articles/aqua-checksum-verification)
+
+## OSS Contribution
+
+merged date | repository | lang | PR's short description
+--- | --- | --- | ---
+2022-10-21 | [slsa-framework/slsa-github-generator](https://github.com/slsa-framework/slsa-github-generator) | go | [fix: use GITHUB_OUTPUT instead of deprecated set-output command](https://github.com/slsa-framework/slsa-github-generator/pull/1066)
+2022-10-17 | [slsa-framework/slsa-github-generator](https://github.com/slsa-framework/slsa-github-generator) | go | [fix: use GITHUB_OUTPUT instead of deprecated set-output command](https://github.com/slsa-framework/slsa-github-generator/pull/1061)
+2022-10-04 | [shipyard-run/shipyard](https://github.com/shipyard-run/shipyard) | go (shell script) | [ci: fix checksums.txt](https://github.com/shipyard-run/shipyard/pull/182)
+
+## OSS Development
+
+### aqua
+
+:star: Over 200 stars :star:
+
+The notable change is [the support of checksum verification](https://aquaproj.github.io/docs/reference/checksum/).
+
+Please see [the GitHub Project](https://github.com/orgs/aquaproj/projects/8) to check prioritized issues.
+
+- WIP
+  - [v1.22.0-1](https://github.com/aquaproj/aqua/releases/tag/v1.22.0-1)
+    - :rocket: Support filtering packages with tags
+  - [#1306](https://github.com/aquaproj/aqua/issues/1306) Support restricting registries and packages globally for security
+- [v1.21.0](https://github.com/aquaproj/aqua/releases/tag/v1.21.0)
+  - Support changing `type` in `overrides`
+- [v1.20.2](https://github.com/aquaproj/aqua/releases/tag/v1.20.2)
+  - cp: Skip creating links
+- [v1.20.1](https://github.com/aquaproj/aqua/releases/tag/v1.20.1)
+  - update-checksum: Fix the checksum of http package calculated by `-deep` option
+- [v1.20.0](https://github.com/aquaproj/aqua/releases/tag/v1.20.0)
+  - :tada: Support the checksum verification
+  - :tada: cp: Support coping all packages
+- [v1.19.5](https://github.com/aquaproj/aqua/releases/tag/v1.19.5)
+  - nil check to avoid panic
+  - Improve error log: Output download url when it failed to download a file
+
+### aqua-registry
+
+:tada: Supported over 900 packages :tada:
+
+:tada: 30 Contributors :tada:
+
+I've updated aqua-registry from [v3.64.0](https://github.com/aquaproj/aqua-registry/releases/tag/v3.64.0) to [v3.85.0](https://github.com/aquaproj/aqua-registry/releases/tag/v3.85.0).
+The number of packages has increased from 870 to 923 (+53).
+Thank you, all contributors!
+
+### tfaction
+
+- [v0.5.19](https://github.com/suzuki-shunsuke/tfaction/releases/tag/v0.5.19)
+  - Use GITHUB_OUTPUT instead of deprecated set-output command ([ref](https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/))
+  - Replace https://github.com to `$GITHUB_SERVER_URL` for GitHub Enterprise
+
+## What I learned
+
+I'm interested in the supply chain security and the improvement of local development and CI/CD pipeline.
+
+- [SLSA](https://slsa.dev/)
+  - https://zenn.dev/shunsuke_suzuki/scraps/68dc8e47093af6
+- [Development Containers](https://containers.dev/)
+  - https://zenn.dev/shunsuke_suzuki/scraps/3910ea414e0c8d
+- [Dagger](https://dagger.io/)
+- [Earthly](https://earthly.dev/)
+  - [The Platform Values of Earthly](https://earthly.dev/blog/platform-values/) - The blog post is awesome
+  - https://github.com/suzuki-shunsuke/example-earthly-terraform
+  - https://zenn.dev/shunsuke_suzuki/scraps/5d1f5984defe9c
+- [ORAS](https://oras.land/)
+
+---
+
+- https://zenn.dev/shunsuke_suzuki/scraps/eae73a2513d8c6
+
+## News
+
+- [GCP IAM's Deny Policies has become GA finally](https://cloud.google.com/iam/docs/deny-overview)
+- [GitHub Actions: Deprecating save-state and set-output commands](https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/)
+- [Dependabot now updates comments in GitHub Actions workflows referencing action versions](https://github.blog/changelog/2022-10-31-dependabot-now-updates-comments-in-github-actions-workflows-referencing-action-versions/)
+  - [Renovate supports the similar feature](https://docs.renovatebot.com/modules/manager/github-actions/#additional-information)
+- [The bug of GitHub Actions `GITHUB_STEP_SUMMARY` has been fixed](https://github.com/community/community/discussions/32566)
+  - https://twitter.com/szkdash/status/1568607299266281475
+- [Your CI pipelines should be code: introducing the Dagger Go SDK](https://dagger.io/blog/go-sdk)
+- [Introducing fine-grained personal access tokens for GitHub](https://github.blog/2022-10-18-introducing-fine-grained-personal-access-tokens-for-github/)
+- [New Branch Protections: Last Pusher and Locked Branch](https://github.blog/changelog/2022-10-20-new-branch-protections-last-pusher-and-locked-branch/)
+- [Docker Hub: October 2022 Pricing Change FAQ](https://www.docker.com/pricing/october-2022-pricing-change-faq/)
+- [［速報］Google Cloud、「Cloud Workstations」発表。セキュアな開発環境一式をマネージドサービスで提供。Google Cloud Next '22](https://www.publickey1.jp/blog/22/google_cloudcloud_workstationsgoogle_cloud_next_22.html)
+
+## Others
+
+[GitHub Copilot](https://github.com/features/copilot)'s License issue
+
+<LinkCard url="https://twitter.com/DocSparse/status/1581461734665367554" />
+
+[Tekton's Hermetic Execution Mode](https://tekton.dev/docs/pipelines/hermetic/)
+
+<LinkCard url="https://twitter.com/rung/status/1581616187607506944" />
+
+### Markdown Style Guide
+
+- https://github.com/markdownlint/markdownlint/blob/main/docs/RULES.md#md014---dollar-signs-used-before-commands-without-showing-output
+- https://cirosantilli.com/markdown-style-guide/#dollar-signs-in-shell-code
+- https://arcticicestudio.github.io/styleguide-markdown/rules/code.html#no-shell-code-dollar-sign
