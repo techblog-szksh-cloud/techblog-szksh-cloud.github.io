@@ -1,0 +1,78 @@
+---
+title: "My Activity in 2022-11"
+date: 2022-12-01T22:13:55+09:00
+authors:
+- suzuki-shunsuke
+tags:
+- oss
+---
+
+import LinkCard from '@site/src/components/linkcard';
+
+## Blog posts
+
+* 2022-11-15: [aqua の Policy as Code](https://zenn.dev/shunsuke_suzuki/articles/aqua-policy-as-code)
+* 2022-11-08: [Checksum Verification by aqua](https://dev.to/suzukishunsuke/checksum-verification-by-aqua-5038)
+* 2022-11-07: [aqua Release Notes (v1.20.0 ~ v1.22.0)](https://zenn.dev/shunsuke_suzuki/articles/aqua-release-notes-v1200-v1220)
+
+## OSS Contribution
+
+merged date | repository | lang | PR's short description
+--- | --- | --- | ---
+2022-11-12 | [slsa-framework/slsa-verifier](https://github.com/slsa-framework/slsa-verifier) | go | [fix: fix error logs](https://github.com/slsa-framework/slsa-verifier/pull/356)
+
+## OSS Development
+
+### aqua
+
+The notable change is [the support of Policy as Code](https://aquaproj.github.io/docs/tutorial-extras/policy-as-code/).
+I'm working on [the release of aqua v2](https://github.com/aquaproj/aqua/pull/1413) and [signing of aqua and aqua-installer](https://github.com/aquaproj/aqua/issues/1391).
+
+Please see Release Notes for the detail.
+
+- WIP
+  - [v2.0.0-0](https://github.com/aquaproj/aqua/releases/tag/v2.0.0-0)
+    - Only standard registry is allowed by default
+    - etc
+- [v1.25.0](https://github.com/aquaproj/aqua/releases/tag/v1.25.0)
+  - Replace `$HOME` to the home directory in local registry path
+- [v1.24.0](https://github.com/aquaproj/aqua/releases/tag/v1.24.0)
+  - Support defining the policy of package installation and execution for security
+- [v1.23.1](https://github.com/aquaproj/aqua/releases/tag/v1.23.1)
+  - generate: Fix a panic when unknown packages are specified
+- [v1.23.0](https://github.com/aquaproj/aqua/releases/tag/v1.23.0)
+  - Support filtering packages with tags
+- [v1.22.0](https://github.com/aquaproj/aqua/releases/tag/v1.22.0)
+  - Add `update-aqua` command
+  - generate: Support specifying version
+
+### aqua-registry
+
+- version: v3.85.0 => [v3.100.0](https://github.com/aquaproj/aqua-registry/releases/tag/v3.100.0)
+- the number of packages: 923 => 961 (+38)
+
+Thank you, all contributors!
+
+## What I learned
+
+I'm investigating the signing of aqua and aqua-installer.
+
+- [Sigstore](https://www.sigstore.dev/)
+
+## News
+
+- AWS
+  - [［速報］AWS Lambdaのコールドスタートを劇的に速くする「AWS Lambda SnapStart」発表。AWS re:Invent 2022](https://www.publickey1.jp/blog/22/aws_lambdaaws_lambda_snapstartaws_reinvent_2022.html)
+  - [Amazon Virtual Private Cloud (VPC) now supports the transfer of Elastic IP addresses between AWS accounts](https://aws.amazon.com/about-aws/whats-new/2022/10/amazon-virtual-private-cloud-vpc-transfer-elastic-ip-addresses-between-aws-accounts/)
+  - [AWS App Runner now supports privately accessible services within Amazon VPC](https://aws.amazon.com/about-aws/whats-new/2022/11/aws-app-runner-supports-privately-accessible-services-amazon-vpc/)
+- GitHub
+  - [Repository archive date now shown in UI](https://github.blog/changelog/2022-11-23-repository-archive-date-now-shown-in-ui/)
+  - [About Tasklists - You can use Tasklists to divide your issues into smaller subtasks](https://docs.github.com/en/issues/tracking-your-work-with-issues/about-tasklists)
+  - [Dependabot now updates comments in GitHub Actions workflows referencing action versions](https://github.blog/changelog/2022-10-31-dependabot-now-updates-comments-in-github-actions-workflows-referencing-action-versions/)
+- [AWS、Docker Desktop代替となり得る「Finch」をオープンソースで公開。ローカルマシンに仮想環境とコンテナランタイム、ビルドツールなど一式を導入](https://www.publickey1.jp/blog/22/awsdocker_desktopfinch.html)
+- [Go Style Guide from Google](https://google.github.io/styleguide/go/)
+- [Retty の Terraform CI/CD 解体新書](https://engineer.retty.me/entry/2022/11/18/130000)
+  - In this blog, many my OSS and blog posts are referred
+- [Announcing Docker Hub OCI Artifacts Support](https://www.docker.com/blog/announcing-docker-hub-oci-artifacts-support/)
+- [ついにGitHubのコードで学習したAI「GitHub Copilot」が集団訴訟に直面](https://gigazine.net/news/20221104-github-copilot-lawsuit/)
+- [OpenSSLで史上2度目の「致命的」レベルの脆弱性が発見される、2022年11月1日夜間に修正版がリリースされるため即更新を](https://gigazine.net/news/20221101-openssl-critical-vulnerability-fix/)
