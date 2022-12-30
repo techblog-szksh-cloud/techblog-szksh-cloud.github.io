@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunktechblog_szksh_cloud_github_io=self.webpackChunktechblog_szksh_cloud_github_io||[]).push([[7966],{2055:function(e){e.exports=JSON.parse('{"allTagsPath":"/tags","slug":"/tags/renovate","name":"renovate","count":2,"permalink":"/tags/renovate"}')}}]);

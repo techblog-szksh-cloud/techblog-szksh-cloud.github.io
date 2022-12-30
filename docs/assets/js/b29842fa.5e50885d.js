@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunktechblog_szksh_cloud_github_io=self.webpackChunktechblog_szksh_cloud_github_io||[]).push([[2673],{582:function(a){a.exports=JSON.parse('{"allTagsPath":"/tags","slug":"/tags/lambda","name":"lambda","count":1,"permalink":"/tags/lambda"}')}}]);

@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunktechblog_szksh_cloud_github_io=self.webpackChunktechblog_szksh_cloud_github_io||[]).push([[3887],{5358:function(s){s.exports=JSON.parse('{"allTagsPath":"/tags","slug":"/tags/rego","name":"rego","count":1,"permalink":"/tags/rego"}')}}]);
