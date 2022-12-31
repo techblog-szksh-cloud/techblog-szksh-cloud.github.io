@@ -1,0 +1,115 @@
+---
+title: "2022 年振り返り"
+date: 2022-12-31T22:13:55+09:00
+authors:
+- suzuki-shunsuke
+tags:
+- oss
+---
+
+import LinkCard from '@site/src/components/linkcard';
+
+2022 年を振り返っていきます。
+
+* [2022-01](https://zenn.dev/shunsuke_suzuki/articles/what-i-did-2022-01)
+* [2022-02](what-i-did-2022-02)
+* [2022-03](what-i-did-2022-03)
+* [2022-04](what-i-did-2022-04)
+* [2022-05](what-i-did-2022-05)
+* [2022-06](what-i-did-2022-06)
+* [2022-07](what-i-did-2022-07)
+* [2022-08](what-i-did-2022-08)
+* [2022-09](what-i-did-2022-09)
+* [2022-10](what-i-did-2022-10)
+* [2022-11](what-i-did-2022-11)
+* [2022-12](what-i-did-2022-12)
+
+--
+
+* https://suzuki-shunsuke.github.io/profile/oss-contribution
+* https://suzuki-shunsuke.github.io/profile/oss-development
+
+詳細については上記のリンクに譲るとして、大きな出来事としては
+
+- [2022-01 tfaction のリリース](https://zenn.dev/shunsuke_suzuki/articles/tfaction-introduction)
+- 2022-01 tfaction と tfcmt が weekly.tf で紹介される
+  - [weekly.tf - Issue #69](https://weekly.tf/issues/weekly-tf-issue-69-tools-for-terraform-workflow-tfcmt-compost-trunk-tfnotify-multi-end-deploy-hcl2json-984084)
+  - [weekly.tf - Issue #70](https://weekly.tf/issues/weekly-tf-issue-70-monorepos-platform-infra-team-terraform-scale-environment-as-code-995507)
+- :rocket: [2022-07-01 Mercari に転職](job-change-2022-06)
+- [2022-09 gha-trigger のリリース](https://zenn.dev/shunsuke_suzuki/articles/gha-trigger-action)
+- :rocket: 2022-11 一人暮らしを始めた
+- 2022-12 aqua の Standard Registry の package 数が 1,000 に到達
+- aqua が [v0.8.11](https://github.com/aquaproj/aqua/releases/tag/v0.8.11) から [v1.28.0](https://github.com/aquaproj/aqua/releases/tag/v1.28.0) まで update され、様々な機能が実装される
+- tfaction がいくつかの企業で導入される
+  - https://zenn.dev/luup/articles/sre-nakanishi-20221218
+  - https://twitter.com/kekekenta/status/1584860647556546560
+- [aqua が幾つかの blog で紹介される](https://aquaproj.github.io/docs/slide-blog#non-official-blogs)
+
+色々挙げましたが、環境の変化という意味では転職と一人暮らしが非常に大きかったですね。
+
+### 転職
+
+転職してからは基本英語でコミュニケーションを取るようになりました(といっても日本人しかいないような場では日本語で話しますが)。
+OSS 活動などを通じて英語の読み書きはこれまでもしてきたのでさほど苦ではないのですが、 Listening, Speaking には結構苦労をしています。英語の学習が重要なのはわかっていながらも、どうしても OSS 活動の方に時間と気力を費やしてしまいがちです。とはいえ、自身の今後のキャリアを考えると英語は多分避けられないしなんとかやっていくしかないですね。
+
+### 一人暮らし
+
+これまでずっと実家ぐらしだったのですが、ようやく実家を出て一人暮らしを始めました。生活力0の自分に真っ当な暮らしが出来るのかあまり自信はありませんでしたが、意外とちゃんとした生活を送っています。 3 食自炊してるし。
+運動もして毎日体組成計にも乗るようになり、 1 年前より 3, 4 kg ぐらい痩せました。いい話です。
+
+### gha-trigger
+
+(出来れば A を使いたいが) A では B は出来ないから C を使います、と言われたら、いや A でも B は出来るよと言いたくなるのがエンジニアというものです(?)。
+つまり、作った背景としては必要だから作ったというよりは、 GitHub Actions でも出来るということを示すために作ってみせたというところが大きいです。
+まぁ「こうすれば出来るよ」って言うのだけであれば簡単ですが、実際に動くものを作ってみせるのは自分らしいところかもしれません。
+
+ドキュメント含めて折角力を入れて作ったので活用したいところではありますが、現状自分の方では活用できていません。
+環境変数 `GITHUB_*` を変更できない(run step 内部では変更できるけど) という GitHub Actions の制約が結構厳しく、既存の Action を活用しづらいというのがネックかなと思います。
+一方で Google Cloud Build や AWS CodeBuild からの移行先としてはありかなとは思います。
+
+### tfaction
+
+Terraform の Workflow は各社で個別に実装されていて OSS のような再利用可能な形で公開されることは少ないと思うので (atlantis なんかはありますが、あまり良くしりません) 、 tfaction のリリースは意義深いものだったと思っています。
+tfaction を使わないものの、 tfaction のアイディアを参考に Terraform Workflow を実装したという話もたまに聞きます。 (tfaction 使えばいいのになとは思いつつ) それも想定された tfaction の使われ方で、単に blog でアイディアを公開するよりも OSS のように実行可能なソースコードでメンテ可能な形で公開できたことに満足しています。
+
+### aqua
+
+2022 年は aqua 中心の年と言っても過言ではありませんでした。かなりの時間を費やしました。
+結果として単に「インストールの手間がちょっと省けて便利」なツールとは次元が違うツールになったと思っています。
+その割に GitHub Star 数が少なく、自分の考えている aqua の良さが十分に理解されていない点を残念に思います。
+それでも幾つかのブログ記事で紹介いただいたり、いろいろな方に contribution していただいたり、 Sponsor になりたいと言っていただけたり、著名なエンジニアの方に興味を持ってもらって contribution していただけたりと、ありがたいことも沢山ありました。
+Sigstore や SLSA といった自分に取って新しい技術を学んで取り入れたり、技術的なチャレンジも色々出来ました。
+
+Standard Registry がサポートする package の数が遂に 1,000 に到達しました。これはかなりすごいことだと思っています。最近は自分よりもむしろ他の contributor の方々から追加していただくことも多く 2022-12-31 現在 aqua-registry の contributor の数は 34 人になっています。ありがたい話です。
+
+## 2022-12-31 時点の GitHub Status
+
+Followers: 180
+
+![image](https://user-images.githubusercontent.com/13323303/210130405-7096c36a-a39c-4097-b064-450174dc092a.png)
+
+![image](https://user-images.githubusercontent.com/13323303/210130410-a5dfdf9a-6094-4371-9cd1-102ad13cb0e5.png)
+
+[7 ヶ月前](job-change-2022-06/#%E3%81%8A%E3%81%BE%E3%81%91-oss-%E6%B4%BB%E5%8B%95%E3%81%AE%E6%8C%AF%E3%82%8A%E8%BF%94%E3%82%8A)と比べるとまぁまぁ増えましたね。 commit 数は結構減ってしまってますが。
+
+## 来年取り組みたいこと
+
+来年も引き続き、 OSS 活動を中心に頑張ります。
+
+* aqua
+  * Registry の checksum 検証 (未定)
+  * v2 リリース
+  * パッケージ構成も含めたリファクタリング
+  * 社内でももっと導入していきたい (個人の願望です)
+* tfaction
+  * より汎用的に使えるようにする (未定)
+    * 現状決め打ちされている部分を一部設定可能にできないか
+  * Reusable Workflow の提供 (未定)
+    * 需要あるのか(?)
+* 新しい OSS の開発
+  * tfcmt, aqua, tfaction に次ぐ OSS を作りたい
+* GitHub Sponsor 始める
+* 英語
+  * Listening, Speaking 頑張る
+    * ネイティブキャンプ始めようかなぁ
+  * 文法も勉強し直したほうがいい気もするが、どうするのがいいんだろうか
