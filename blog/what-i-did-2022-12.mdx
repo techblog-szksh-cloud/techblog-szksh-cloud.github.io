@@ -1,0 +1,108 @@
+---
+title: "Look back Dec 2022"
+date: 2022-12-30T22:13:55+09:00
+authors:
+- suzuki-shunsuke
+tags:
+- oss
+---
+
+import LinkCard from '@site/src/components/linkcard';
+
+## Blog posts
+
+* 2022-12-27: [Cosign と SLSA による aqua CLI Version Manager の Security 改善](https://zenn.dev/shunsuke_suzuki/articles/aqua-cosign-slsa)
+
+## OSS Contribution
+
+### Issue
+
+created date | repository | short description
+--- | --- | ---
+2022-12-18 | [sigstore/cosign](https://github.com/sigstore/cosign) | [Improve the document for new users to understand quickly that Cosign supports blobs signing](https://github.com/sigstore/cosign/issues/2554)
+2022-12-01 | [cloudflare/cloudflared](https://github.com/cloudflare/cloudflared) | [cloudflared-darwin-amd64.tgz of the version 2022.11.1 is empty](https://github.com/cloudflare/cloudflared/issues/831)
+
+### Pull Request
+
+merged date | repository | lang | PR's short description
+--- | --- | --- | ---
+2022-12-29 | [bufbuild/protoc-gen-validate](https://github.com/bufbuild/protoc-gen-validate) | document | [docs: fix installation](https://github.com/bufbuild/protoc-gen-validate/pull/765)
+2022-12-28 | [crazy-max/diun](https://github.com/crazy-max/diun) | dockerfile | [chore: fix the file extension](https://github.com/crazy-max/diun/pull/743)
+2022-12-22 | [x-motemen/blogsync](https://github.com/x-motemen/blogsync) | go | [chore: build assets for Windows](https://github.com/x-motemen/blogsync/pull/56)
+2022-12-03 | [mercari/github-app-token-generator](https://github.com/mercari/github-app-token-generator) | go | [fix: use GITHUB_OUTPUT instead of deprecated set-output command](https://github.com/mercari/github-app-token-generator/pull/5)
+2022-12-03 | [slsa-framework/slsa-verifier](https://github.com/slsa-framework/slsa-verifier) | go | [docs: fix go install](https://github.com/slsa-framework/slsa-verifier/pull/376)
+2022-12-02 | [slsa-framework/slsa-verifier](https://github.com/slsa-framework/slsa-verifier) | go | [docs: refer v2.0.0 in README](https://github.com/slsa-framework/slsa-verifier/pull/375)
+2022-12-02 | [slsa-framework/slsa-verifier](https://github.com/slsa-framework/slsa-verifier) | go | [fix: fix the Go package version to v2](https://github.com/slsa-framework/slsa-verifier/pull/373)
+2022-12-02 | [slsa-framework/slsa-verifier](https://github.com/slsa-framework/slsa-verifier) | go | [docs: add the checksum of v2.0.0](https://github.com/slsa-framework/slsa-verifier/pull/374)
+
+## OSS Development
+
+### aqua
+
+The notable change is [Cosign and SLSA Provenance support](https://aquaproj.github.io/docs/reference/cosign-slsa/).
+You can install aqua and tools securely.
+And the Improvement of `aqua update-checksum` command is also important.
+
+Please see Document and Release Notes for the detail.
+
+- [v1.28.0](https://github.com/aquaproj/aqua/releases/tag/v1.28.0)
+  - Improved aqua update-checksum command
+    - Ignore unrelated files' checksums in checksum files
+    - Support pruning unused checksums in aqua-checksums.json
+- [v1.27.0](https://github.com/aquaproj/aqua/releases/tag/v1.27.0)
+  - Support a new field `private` for private packages and registries
+  - Support template in `go_install` package's `path` attribute
+- [v1.26.2](https://github.com/aquaproj/aqua/releases/tag/v1.26.2)
+  - Install Cosign asset for correct platform even if `AQUA_GOOS` and `AQUA_GOARCH` are set
+- [v1.26.1](https://github.com/aquaproj/aqua/releases/tag/v1.26.1)
+  - Skip installing Cosign and verify with Cosign in windows/arm64
+  - Check if Cosign is supported
+- [v1.26.0](https://github.com/aquaproj/aqua/releases/tag/v1.26.0)
+  - Support package verification by Cosign and slsa-verifier
+- [v1.25.2](https://github.com/aquaproj/aqua/releases/tag/v1.25.2)
+  - generate: fix a bug of `--pin` option
+
+### aqua-registry
+
+- version: v3.100.0 => [v3.114.0](https://github.com/aquaproj/aqua-registry/releases/tag/v3.114.0)
+- the number of packages: 961 => 1000 (+39)
+
+Thank you, all contributors!
+
+### aqua-installer
+
+- [v2.0.2](https://github.com/aquaproj/aqua-installer/releases/tag/v2.0.2)
+  - Update aqua for bootstrap to v1.26.2
+- [v2.0.1](https://github.com/aquaproj/aqua-installer/releases/tag/v2.0.1)
+  - Use `shasum` instead of `sha256sum` if `sha256sum` isn't found and skip checksum verification if they aren't found
+- [v2.0.0](https://github.com/aquaproj/aqua-installer/releases/tag/v2.0.0)
+  - Verify aqua with slsa-verifier
+- [v1.2.0](https://github.com/aquaproj/aqua-installer/releases/tag/v1.2.0)
+  - GitHub Action: Support Windows PowerShell
+
+### aqua-renovate-config
+
+- [1.5.0](https://github.com/aquaproj/aqua-renovate-config/releases/tag/1.5.0)
+  - Refactor presets with Jsonnet
+- [1.4.0](https://github.com/aquaproj/aqua-renovate-config/releases/tag/1.4.0)
+  - Support mongodb/mongodb-atlas-cli/atlascli and ipinfo/cli
+- [1.3.0](https://github.com/aquaproj/aqua-renovate-config/releases/tag/1.3.0)
+  - installer-script: Support updating aqua
+
+### update-checksum-action
+
+- [v0.1.1](https://github.com/aquaproj/update-checksum-action/releases/tag/v0.1.1)
+  - Add an input prune to support aqua update-checksum's -prune option
+
+## News
+
+- GitHub
+  - [GitHub、無料のパブリックリポジトリユーザーにも、コード内のシークレットを検知してくれる「Secret scanning」を無料提供へ](https://www.publickey1.jp/blog/22/githubsecret_scanning_1.html)
+  - [GitHub Actions – Sharing actions and reusable workflows from private repositories is now GA](https://github.blog/changelog/2022-12-14-github-actions-sharing-actions-and-reusable-workflows-from-private-repositories-is-now-ga/)
+- AWS
+  - [AWSのSIer世界一に日本の「クラスメソッド」が選出、アジア太平洋では「アイレット」が選出。クラウド専門のSIerがリードするクラウドのSIビジネス](https://www.publickey1.jp/blog/22/awssiersiersi.html)
+  - [［速報］AWS上で開発環境一式、フレームワーク、初期コード、IDE、ビルド環境、CI/CDなど提供する「Amazon CodeCatalyst」発表。AWS re:Invent 2022](https://www.publickey1.jp/blog/22/awsidecicdamazon_codecatalystaws_reinvent_2022.html)
+- aqua
+  - [CLI バージョンマネージャー aqua のススメ](https://engineer.retty.me/entry/2022/12/14/130000)
+  - [asdf と比較しても使いやすいCLI のバージョン管理ツール「aqua」](https://blog.framinal.life/entry/aqua)
+  - [Snyk IaC + reviewdog + aquaではじめるDevSecOps](https://tech.gunosy.io/entry/snyk_iac_reviewdog_aqua_devsecops)
