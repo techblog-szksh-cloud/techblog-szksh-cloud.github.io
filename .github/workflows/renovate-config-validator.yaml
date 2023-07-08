@@ -2,23 +2,18 @@ name: renovate-config-validator
 
 on:
   pull_request:
-    branches:
-    - main
     paths:
-    - .github/workflows/renovate-config-validator.yaml
-    - renovate.json
+      - .github/workflows/renovate-config-validator.yaml
+      - renovate.json5
   push:
     branches:
-    - main
+      - main
     paths:
-    - .github/workflows/renovate-config-validator.yaml
-    - renovate.json
+      - .github/workflows/renovate-config-validator.yaml
+      - renovate.json5
 
 jobs:
-  validate:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - uses: rinchsan/renovate-config-validator@v0.0.9
-      with:
-        pattern: 'renovate.json'
+  renovate-config-validator:
+    uses: suzuki-shunsuke/renovate-config-validator-workflow/.github/workflows/validate.yaml@1a2fd7b15d99b1c434124b0bd2d8bd55b54ed869 # v0.2.0
+    permissions:
+      contents: read
