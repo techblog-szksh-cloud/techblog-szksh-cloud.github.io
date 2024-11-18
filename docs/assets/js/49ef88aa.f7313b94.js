@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunktechblog_szksh_cloud_github_io=self.webpackChunktechblog_szksh_cloud_github_io||[]).push([[2989],{8719:e=>{e.exports=JSON.parse('{"label":"renovate","permalink":"/tags/renovate","allTagsPath":"/tags","count":2}')}}]);

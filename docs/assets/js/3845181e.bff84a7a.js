@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunktechblog_szksh_cloud_github_io=self.webpackChunktechblog_szksh_cloud_github_io||[]).push([[126],{2346:s=>{s.exports=JSON.parse('{"label":"gitops","permalink":"/tags/gitops","allTagsPath":"/tags","count":1}')}}]);

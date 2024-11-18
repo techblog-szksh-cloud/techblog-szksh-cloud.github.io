@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunktechblog_szksh_cloud_github_io=self.webpackChunktechblog_szksh_cloud_github_io||[]).push([[4871],{2268:e=>{e.exports=JSON.parse('{"permalink":"/tags/terraform","page":1,"postsPerPage":10,"totalPages":2,"totalCount":13,"nextPage":"/tags/terraform/page/2","blogDescription":"Blog","blogTitle":"Blog"}')}}]);

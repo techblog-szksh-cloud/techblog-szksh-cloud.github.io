@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunktechblog_szksh_cloud_github_io=self.webpackChunktechblog_szksh_cloud_github_io||[]).push([[3259],{9450:s=>{s.exports=JSON.parse('{"label":"practice","permalink":"/tags/practice","allTagsPath":"/tags","count":1}')}}]);

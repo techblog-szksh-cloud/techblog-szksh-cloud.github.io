@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunktechblog_szksh_cloud_github_io=self.webpackChunktechblog_szksh_cloud_github_io||[]).push([[6023],{7436:t=>{t.exports=JSON.parse('{"label":"tfnotify","permalink":"/tags/tfnotify","allTagsPath":"/tags","count":1}')}}]);
