@@ -3,5 +3,5 @@ registries:
     ref: v0.10.10 # renovate: depName=aquaproj/aqua-registry
 
 packages:
-  - name: gohugoio/hugo@v0.89.4
+  - name: gohugoio/hugo@v0.138.0
   - name: suzuki-shunsuke/durl@v1.0.0
