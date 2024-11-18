@@ -1,7 +1,9 @@
+checksum:
+  enabled: true
+  require_checksum: true
 registries:
   - type: standard
-    ref: v0.10.10 # renovate: depName=aquaproj/aqua-registry
-
+    ref: v4.254.0 # renovate: depName=aquaproj/aqua-registry
 packages:
-  - name: gohugoio/hugo@v0.89.4
-  - name: suzuki-shunsuke/durl@v1.0.0
+  - name: gohugoio/hugo@v0.138.0
+  - name: nodejs/node@v23.2.0
