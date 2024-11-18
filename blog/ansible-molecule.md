@@ -117,7 +117,7 @@ verifier:
 test の前にまずは lint します。
 
 ```
-$ molecule lint [-s <senario name>]
+$ molecule lint [-s <scenario name>]
 ```
 
 すると yamllint の設定ファイル `.yamllint` が作られていると思うので、必要に応じて修正します。
@@ -131,7 +131,7 @@ https://github.com/ansible/ansible-lint
 そして test コマンドを実行します。
 
 ```
-$ molecule test [-s <senario name>]
+$ molecule test [-s <scenario name>]
 ```
 
 `test` コマンドではコンテナが削除されるため、デバッグが難しかったりします。
@@ -139,13 +139,13 @@ $ molecule test [-s <senario name>]
 その場合、 `converge` コマンドを実行すればコンテナは消えません。
 
 ```
-$ molecule converge [-s <senario name>]
+$ molecule converge [-s <scenario name>]
 ```
 
 消したくなったら destroy コマンドで消しましょう。
 
 ```
-$ molecule destroy [-s <senario name>]
+$ molecule destroy [-s <scenario name>]
 ```
 
 ## playbook のテスト
