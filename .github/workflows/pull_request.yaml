@@ -9,6 +9,7 @@ jobs:
     # Get changed files to filter jobs
     outputs:
       renovate-config-validator: ${{steps.changes.outputs.renovate-config-validator}}
+      update-aqua-checksums: ${{steps.changes.outputs.update-aqua-checksums}}
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -22,6 +23,11 @@ jobs:
             renovate-config-validator:
               - renovate.json5
               - .github/workflows/pull_request.yaml
+              - .github/workflows/workflow_call_renovate-config-validator.yaml
+            update-aqua-checksums:
+              - aqua.yaml
+              - aqua-checksums.yaml
+              - .github/workflows/workflow_call_update-aqua-checksums.yaml
 
   status-check:
     # This job is used for main branch's branch protection rule's status check.
@@ -37,10 +43,21 @@ jobs:
       - run: exit 1
 
   renovate-config-validator:
-    uses: suzuki-shunsuke/renovate-config-validator-workflow/.github/workflows/validate.yaml@4a378742d05b4e67aae34039d7c779ac913cd79d # v0.2.3
+    uses: ./.github/workflows/workflow_call_renovate-config-validator.yaml
+    if: needs.path-filter.outputs.renovate-config-validator == 'true'
     needs: path-filter
     permissions:
       contents: read
+
+  update-aqua-checksums:
+    uses: ./.github/workflows/workflow_call_update-aqua-checksums.yaml
+    if: needs.path-filter.outputs.update-aqua-checksums == 'true'
+    needs: path-filter
+    permissions:
+      contents: read
+    secrets:
+      gh_app_id: ${{secrets.APP_ID}}
+      gh_app_private_key: ${{secrets.APP_PRIVATE_KEY}}
 
   test:
     uses: ./.github/workflows/workflow_call_release.yaml
