@@ -1,0 +1,59 @@
+{
+  "checksums": [
+    {
+      "id": "github_release/github.com/gohugoio/hugo/v0.138.0/hugo_0.138.0_darwin-universal.tar.gz",
+      "checksum": "7FC96FD169C692AD6280B43574F3A65AD99D092650A9E6AF6C5FCCD179F2677D",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/gohugoio/hugo/v0.138.0/hugo_0.138.0_linux-amd64.tar.gz",
+      "checksum": "A4F5A40F24E482D812094054C0A66CC77558974D8CC9C89D7C96DB72CA22BEB6",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/gohugoio/hugo/v0.138.0/hugo_0.138.0_linux-arm64.tar.gz",
+      "checksum": "9938624904BB8B4AAE5A9D32286172A6CA7583DF97623A40BEF6B9EF4DDE2ADE",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/gohugoio/hugo/v0.138.0/hugo_0.138.0_windows-amd64.zip",
+      "checksum": "3B64F580F3FA8A441D9A33DC48AE0A6D5603AA3CA3152D97F717B9D1BDF86F81",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/gohugoio/hugo/v0.138.0/hugo_0.138.0_windows-arm64.zip",
+      "checksum": "CD3C6D9F102268CC34EAE107D423FF92759D85C783AB453132A842378B9FFCFA",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "http/nodejs.org/dist/v23.1.0/node-v23.1.0-darwin-arm64.tar.gz",
+      "checksum": "414D4B68299BE0CBCCFABFAC59E53D0726151320E9FF71457AB0BB507FC0592D",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "http/nodejs.org/dist/v23.1.0/node-v23.1.0-darwin-x64.tar.gz",
+      "checksum": "CB84BD83064FF75F63DD95F1A53B6F7F2D2D36C67E03E9E9C87CFA2B977511B6",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "http/nodejs.org/dist/v23.1.0/node-v23.1.0-linux-arm64.tar.gz",
+      "checksum": "21E20E961EB2F6AB3FCC24421D3975D1714B6A4525C8ECD4F3DBBEE3938A95CC",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "http/nodejs.org/dist/v23.1.0/node-v23.1.0-linux-x64.tar.gz",
+      "checksum": "1C436B2AC33A4FEF7CF08C08B8A33362325C0C8AC8D05D4054A79628D5D0B5AE",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "http/nodejs.org/dist/v23.1.0/node-v23.1.0-win-x64.zip",
+      "checksum": "0E904430FA560B7666B48B0F7B9A6DDDBB5A70613C00EA3F386EDD64726ADE70",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "registries/github_content/github.com/aquaproj/aqua-registry/v4.254.0/registry.yaml",
+      "checksum": "6FFA6314EC9B401A2F01BB9B44CBA1199A7EDCC924A6C5094691255D306978FF",
+      "algorithm": "sha256"
+    }
+  ]
+}
