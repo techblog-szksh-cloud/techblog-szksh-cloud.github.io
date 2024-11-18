@@ -97,9 +97,9 @@ Registry はツールのインストール方法の設定を、プロジェク�
 
 Registry には現状 4 種類あります。
 
-* inline regisry: aqua.yaml の中に直接 install 方法を定義する。 v0.1.0 からサポートされている方法
+* inline registry: aqua.yaml の中に直接 install 方法を定義する。 v0.1.0 からサポートされている方法
 * github_content registry: GitHub Repository にあるファイルを Registry として参照する方法
-* local registry: GitHub Repository にあるファイルを Regisry として参照する方法
+* local registry: GitHub Repository にあるファイルを Registry として参照する方法
 * standard registry: 自分がメンテしている github_content registry のエイリアス
 
 ### inline registry
