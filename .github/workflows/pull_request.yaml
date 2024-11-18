@@ -9,6 +9,7 @@ jobs:
     # Get changed files to filter jobs
     outputs:
       renovate-config-validator: ${{steps.changes.outputs.renovate-config-validator}}
+      update-aqua-checksums: ${{steps.changes.outputs.update-aqua-checksums}}
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -43,12 +44,14 @@ jobs:
 
   renovate-config-validator:
     uses: ./.github/workflows/workflow_call_renovate-config-validator.yaml
+    if: needs.path-filter.outputs.renovate-config-validator == 'true'
     needs: path-filter
     permissions:
       contents: read
 
   update-aqua-checksums:
     uses: ./.github/workflows/workflow_call_update-aqua-checksums.yaml
+    if: needs.path-filter.outputs.update-aqua-checksums == 'true'
     needs: path-filter
     permissions:
       contents: read
