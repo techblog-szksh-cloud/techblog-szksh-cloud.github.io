@@ -3,6 +3,6 @@ checksum:
   require_checksum: true
 registries:
   - type: standard
-    ref: v4.268.0 # renovate: depName=aquaproj/aqua-registry
+    ref: v4.269.0 # renovate: depName=aquaproj/aqua-registry
 packages:
   - name: nodejs/node@v23.3.0
