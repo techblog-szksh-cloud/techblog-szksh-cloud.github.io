@@ -7,7 +7,7 @@
 <link rel="alternate" type="application/atom+xml" href="/atom.xml" title="Melody Atom Feed">
 <link rel="alternate" type="application/json" href="/feed.json" title="Melody JSON Feed"><link rel="stylesheet" href="/assets/css/styles.bf1fb70d.css">
 <link rel="preload" href="/assets/js/runtime~main.6d367547.js" as="script">
-<link rel="preload" href="/assets/js/main.60786359.js" as="script">
+<link rel="preload" href="/assets/js/main.7b702cdf.js" as="script">
 </head>
 <body class="navigation-with-keyboard">
 <script>!function(){function t(t){document.documentElement.setAttribute("data-theme",t)}var e=function(){var t=null;try{t=new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}return t}()||function(){var t=null;try{t=localStorage.getItem("theme")}catch(t){}return t}();t(null!==e?e:"light")}()</script><div id="__docusaurus">
@@ -16,6 +16,6 @@
 上記の例だとユーザー名というメタ情報のフィールド名は <code>name</code> より <code>user_name</code> や <code>admin_name</code>, <code>owner_name</code> としたほうが適切かもしれません。それは関数内部では分からず、呼び出し元でないと分かりません。呼び出し元でないとフィールド名の衝突が避けられないこともあるでしょう。</p><p>メッセージに関しても同様のことが言えます。
 また、元々 v0.1 ではユーザーが定義した関数と</p><ul><li>標準関数やサードパーティのライブラリなど、プロジェクト外部で定義された関数</li><li>interface の関数やメソッド</li></ul><p>を区別し、前者では関数側でエラーに情報を付与させる一方、後者では呼び出し元で情報を付与させるというふうにしていました。</p><p>v0.2 では両者を区別せず、どちらの場合でも呼び出し元に付与させるというふうにすることでよりルールがシンプルになります。</p></div><footer class="row docusaurus-mt-lg blogPostFooterDetailsFull_mRVl"><div class="col"><b>Tags:</b><ul class="tags_jXut padding--none margin-left--sm"><li class="tag_QGVx"><a class="tag_zVej tagRegular_sFm0" href="/tags/golang">golang</a></li></ul></div></footer></article><nav class="pagination-nav docusaurus-mt-lg" aria-label="Blog post page navigation"><a class="pagination-nav__link pagination-nav__link--prev" href="/golang-good-point"><div class="pagination-nav__sublabel">Newer Post</div><div class="pagination-nav__label">Go の好きなところ</div></a><a class="pagination-nav__link pagination-nav__link--next" href="/terraform-provider-graylog-import"><div class="pagination-nav__sublabel">Older Post</div><div class="pagination-nav__label">Terraform Providerで import を実装する方法</div></a></nav></main><div class="col col--2"><div class="tableOfContents_bqdL thin-scrollbar"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#変更点" class="table-of-contents__link toc-highlight">変更点</a></li><li><a href="#変更理由" class="table-of-contents__link toc-highlight">変更理由</a></li></ul></div></div></div></div></div><footer class="footer footer--dark"><div class="container container-fluid"><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2017 Shunsuke Suzuki. Built with Docusaurus.</div></div></div></footer></div>
 <script src="/assets/js/runtime~main.6d367547.js"></script>
-<script src="/assets/js/main.60786359.js"></script>
+<script src="/assets/js/main.7b702cdf.js"></script>
 </body>
 </html>
