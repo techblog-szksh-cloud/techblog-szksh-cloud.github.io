@@ -1,28 +1,28 @@
 {
   "checksums": [
     {
-      "id": "http/nodejs.org/dist/v23.7.0/node-v23.7.0-darwin-arm64.tar.gz",
-      "checksum": "0DAC0DE3308A87F84CB14BAB349A3F0AE5F6CDB8DA32600459EE407236F9CEBC",
+      "id": "http/nodejs.org/dist/v23.8.0/node-v23.8.0-darwin-arm64.tar.gz",
+      "checksum": "7C3BB4CCFD558F5CC12FFB81DF795C5960E429088FEB1AE650FA2AE65418858A",
       "algorithm": "sha256"
     },
     {
-      "id": "http/nodejs.org/dist/v23.7.0/node-v23.7.0-darwin-x64.tar.gz",
-      "checksum": "D32B53D95A42A64388486490E7C3F6A23F00AE3BF6175C64C200954CD41EF2BA",
+      "id": "http/nodejs.org/dist/v23.8.0/node-v23.8.0-darwin-x64.tar.gz",
+      "checksum": "A4C93B517D51D368248E9FDDD20BC46BA1F6081DF2A55D267A33015A4AB31886",
       "algorithm": "sha256"
     },
     {
-      "id": "http/nodejs.org/dist/v23.7.0/node-v23.7.0-linux-arm64.tar.gz",
-      "checksum": "3997BBD0E56D5E3664B66025B13072DE2851743A811C2AFB16E349AB798203C4",
+      "id": "http/nodejs.org/dist/v23.8.0/node-v23.8.0-linux-arm64.tar.gz",
+      "checksum": "D603DCCE61CD8F27440BD0CDB2688F5963A7AC6CD0F425E5C9AE8C93CFAAA134",
       "algorithm": "sha256"
     },
     {
-      "id": "http/nodejs.org/dist/v23.7.0/node-v23.7.0-linux-x64.tar.gz",
-      "checksum": "D9173025EC1F18264BC5F1E70E99C19D9BBA72C563143D150DB0CED98A177C2F",
+      "id": "http/nodejs.org/dist/v23.8.0/node-v23.8.0-linux-x64.tar.gz",
+      "checksum": "F6D98BBDD0A4078C1E422A6A1D8BF07AD693A4DD793BB5772990456FAECA6E95",
       "algorithm": "sha256"
     },
     {
-      "id": "http/nodejs.org/dist/v23.7.0/node-v23.7.0-win-x64.zip",
-      "checksum": "9B26EBC897984332D1B05948CAE9DA0AB32B3FC23E01133C04AAB09F9BCBB4EB",
+      "id": "http/nodejs.org/dist/v23.8.0/node-v23.8.0-win-x64.zip",
+      "checksum": "9E03646224FCF44FA0B594DF5D012DA9CB5B137C52F36F33B11DEF3319CD132C",
       "algorithm": "sha256"
     },
     {
