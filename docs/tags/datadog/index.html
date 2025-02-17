@@ -6,8 +6,8 @@
 <title data-rh="true">2 posts tagged with &quot;datadog&quot; | Melody</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://techblog.szksh.cloud/tags/datadog"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" property="og:title" content="2 posts tagged with &quot;datadog&quot; | Melody"><meta data-rh="true" name="docusaurus_tag" content="blog_tags_posts"><meta data-rh="true" name="docsearch:docusaurus_tag" content="blog_tags_posts"><link data-rh="true" rel="icon" href="http://github.com/suzuki-shunsuke.png"><link data-rh="true" rel="canonical" href="https://techblog.szksh.cloud/tags/datadog"><link data-rh="true" rel="alternate" href="https://techblog.szksh.cloud/tags/datadog" hreflang="en"><link data-rh="true" rel="alternate" href="https://techblog.szksh.cloud/tags/datadog" hreflang="x-default"><link rel="alternate" type="application/rss+xml" href="/rss.xml" title="Melody RSS Feed">
 <link rel="alternate" type="application/atom+xml" href="/atom.xml" title="Melody Atom Feed">
 <link rel="alternate" type="application/json" href="/feed.json" title="Melody JSON Feed"><link rel="stylesheet" href="/assets/css/styles.bf1fb70d.css">
-<link rel="preload" href="/assets/js/runtime~main.e53da46b.js" as="script">
-<link rel="preload" href="/assets/js/main.7b702cdf.js" as="script">
+<link rel="preload" href="/assets/js/runtime~main.89ffe170.js" as="script">
+<link rel="preload" href="/assets/js/main.d02f6108.js" as="script">
 </head>
 <body class="navigation-with-keyboard">
 <script>!function(){function t(t){document.documentElement.setAttribute("data-theme",t)}var e=function(){var t=null;try{t=new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}return t}()||function(){var t=null;try{t=localStorage.getItem("theme")}catch(t){}return t}();t(null!==e?e:"light")}()</script><div id="__docusaurus">
@@ -17,7 +17,7 @@
 <code>--tag</code> は複数回指定可能で、 <code>key:value</code> というフォーマットで指定します。</p><p>CircleCI で実行した場合、 CircleCI のビルドイン環境変数が tag として勝手に設定されますが、 CircleCI 以外でも使えます。</p><p>dd-time を作る上で意識したことは、<code>透過的にする(元のコードにほとんど影響を与えずに使えるようにする)</code>ということです。
 具体的には以下のような点です。</p><ul><li>標準入力をそのままコマンドに渡す</li><li>コマンドの標準出力・標準エラー出力をそのまま出力する</li><li>コマンドの exit code をそのまま dd-time の exit code とする</li><li>Datadog への送信に失敗しても dd-time の exit code は 0 とする
 (option で non zero にもできるようにするのもありだが、現状はそうしてない)</li><li>Datadog への送信に失敗した場合のエラーメッセージをファイルに吐き出せる(コマンドの出力と混ざらないようにできる)<ul><li>デフォルトは標準エラー出力だが、 <code>--output (-o)</code> と <code>--append (-a)</code> オプションで変更できる</li><li><code>--append</code> を指定すると追記モードで出力できる</li></ul></li><li>適切にシグナルハンドリングする(本当に適切と言えるかは分かりませんが)</li></ul><p>以上、簡単ですが dd-time の紹介でした。</p></div><footer class="row docusaurus-mt-lg"><div class="col"><b>Tags:</b><ul class="tags_jXut padding--none margin-left--sm"><li class="tag_QGVx"><a class="tag_zVej tagRegular_sFm0" href="/tags/oss">oss</a></li><li class="tag_QGVx"><a class="tag_zVej tagRegular_sFm0" href="/tags/datadog">datadog</a></li></ul></div></footer></article><nav class="pagination-nav" aria-label="Blog list page navigation"></nav></main></div></div></div><footer class="footer footer--dark"><div class="container container-fluid"><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2017 Shunsuke Suzuki. Built with Docusaurus.</div></div></div></footer></div>
-<script src="/assets/js/runtime~main.e53da46b.js"></script>
-<script src="/assets/js/main.7b702cdf.js"></script>
+<script src="/assets/js/runtime~main.89ffe170.js"></script>
+<script src="/assets/js/main.d02f6108.js"></script>
 </body>
 </html>
