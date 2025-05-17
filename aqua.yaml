@@ -5,4 +5,4 @@ registries:
   - type: standard
     ref: v4.368.0 # renovate: depName=aquaproj/aqua-registry
 packages:
-  - name: nodejs/node@v23.11.0
+  - name: nodejs/node@v23.11.1
