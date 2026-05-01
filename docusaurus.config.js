@@ -1,8 +1,9 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
-const lightCodeTheme = require('prism-react-renderer/themes/github');
-const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+const {themes} = require('prism-react-renderer');
+const lightCodeTheme = themes.github;
+const darkCodeTheme = themes.dracula;
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -15,6 +16,10 @@ const config = {
   organizationName: 'techblog-szksh-cloud', // Usually your GitHub org/user name.
   projectName: 'techblog-szksh-cloud.github.io', // Usually your repo name.
   favicon: 'http://github.com/suzuki-shunsuke.png',
+
+  markdown: {
+    format: 'detect',
+  },
 
   presets: [
     [
