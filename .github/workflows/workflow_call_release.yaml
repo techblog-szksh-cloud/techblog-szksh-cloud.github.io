@@ -15,9 +15,8 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: echo "techblog.szksh.cloud" > build/CNAME
-      - uses: peaceiris/actions-gh-pages@4f9cc6602d3f66b9c108549d475ec49e8ef4d45e # v4.0.0
-        if: inputs.is_release
+      - if: inputs.is_release
+        uses: suzuki-shunsuke/gh-pages-action@5df123b4f8ae31edbe71bcc9a28a9598c29b1011 # v0.0.6
         with:
-          github_token: ${{ github.token }}
-          publish_dir: ./build
-          destination_dir: ./docs
+          publish_dir: build
+          destination_dir: docs
