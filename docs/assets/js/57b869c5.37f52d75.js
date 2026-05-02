@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunktechblog_szksh_cloud_github_io=self.webpackChunktechblog_szksh_cloud_github_io||[]).push([[1826],{6629:s=>{s.exports=JSON.parse('{"label":"skaffold-generator","permalink":"/tags/skaffold-generator","allTagsPath":"/tags","count":1}')}}]);
