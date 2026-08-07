@@ -1,43 +1,43 @@
 {
   "checksums": [
     {
-      "id": "http/nodejs.org/dist/v26.5.1/node-v26.5.1-darwin-arm64.tar.gz",
-      "checksum": "F4387DF0B46556516D19ABF2F2D6806481AC8368AA7F9D96BAFED422A56A1D01",
+      "id": "http/nodejs.org/dist/v26.6.0/node-v26.6.0-darwin-arm64.tar.gz",
+      "checksum": "75480CD43B6FCB35D8E772DD18983FBD9F691B2F03B1C94393206098E9944B5E",
       "algorithm": "sha256"
     },
     {
-      "id": "http/nodejs.org/dist/v26.5.1/node-v26.5.1-darwin-x64.tar.gz",
-      "checksum": "077D5C936868DAB19D21F77F1E71CE13697E80B3E86A399DCAB238902A2EBF93",
+      "id": "http/nodejs.org/dist/v26.6.0/node-v26.6.0-darwin-x64.tar.gz",
+      "checksum": "DE075FFC09F33CC4B44ED38E1E4B2EF71F699B986F6D5952329DA4973220726D",
       "algorithm": "sha256"
     },
     {
-      "id": "http/nodejs.org/dist/v26.5.1/node-v26.5.1-linux-arm64.tar.gz",
-      "checksum": "21194BBF41C18D9EC277545C4D14CCE8597D57A9D9F494C323D8121A25DE33E8",
+      "id": "http/nodejs.org/dist/v26.6.0/node-v26.6.0-linux-arm64.tar.gz",
+      "checksum": "51C59DE738843677A3C97BCCBDBF9895141CB308BF25A95DAEAFD1AADE09F0D5",
       "algorithm": "sha256"
     },
     {
-      "id": "http/nodejs.org/dist/v26.5.1/node-v26.5.1-linux-x64.tar.gz",
-      "checksum": "2B07F09C218D473A26442BFF5A90151F53F7B7C0A23BAD244EDA2C26303A2BA7",
+      "id": "http/nodejs.org/dist/v26.6.0/node-v26.6.0-linux-x64.tar.gz",
+      "checksum": "714F352A7539C5CE09AF15E440CBAADBE935BB23BA23FCEE66B066D00A063822",
       "algorithm": "sha256"
     },
     {
-      "id": "http/nodejs.org/dist/v26.5.1/node-v26.5.1-win-x64.zip",
-      "checksum": "C432C996B95CBF7568F13A0FBB37526DE84A27E3A5C520C3BE15F05A9A168212",
+      "id": "http/nodejs.org/dist/v26.6.0/node-v26.6.0-win-x64.zip",
+      "checksum": "AA81C8552F251FF280134985CCDAF16D336E2961B1E2C3EEB7B7B2221509F723",
       "algorithm": "sha256"
     },
     {
-      "id": "http/unofficial-builds.nodejs.org/download/release/v26.5.1/node-v26.5.1-linux-arm64-musl.tar.gz",
-      "checksum": "34F620B8DAD6E8C9188623E46B20F1A07283DCB1B32EBA471EFB08CA573444B3",
+      "id": "http/unofficial-builds.nodejs.org/download/release/v26.6.0/node-v26.6.0-linux-arm64-musl.tar.gz",
+      "checksum": "A4AD7BEEDB23618D1FEBB55B02B4E96B19F90D61E80A3D8BB52D621B8ACF3F82",
       "algorithm": "sha256"
     },
     {
-      "id": "http/unofficial-builds.nodejs.org/download/release/v26.5.1/node-v26.5.1-linux-x64-musl.tar.gz",
-      "checksum": "95CA909BBB80688262C5B27D98CED7878BDECFF2CF1F62069FA7C9C61AFC0A5B",
+      "id": "http/unofficial-builds.nodejs.org/download/release/v26.6.0/node-v26.6.0-linux-x64-musl.tar.gz",
+      "checksum": "60E6A77F6FC69F77925F15C1AF78E70320C9A64FE541668C7662906EF5ADF3C0",
       "algorithm": "sha256"
     },
     {
-      "id": "registries/github_content/github.com/aquaproj/aqua-registry/v4.549.0/registry.yaml",
-      "checksum": "9F742A7B08C556C1BF98782E3305B4421531E65E70B84FFBB1FE9F3926E4D724",
+      "id": "registries/github_content/github.com/aquaproj/aqua-registry/v4.550.0/registry.yaml",
+      "checksum": "CB90BB436C94AD3922E39BC88D281320CC7D9C2200EF2700197D989E74581FFA",
       "algorithm": "sha256"
     }
   ]
