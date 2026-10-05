@@ -107,9 +107,9 @@ SNS で自分の OSS を褒めてもらったりすると嬉しいですし、�
 <li class=""><a href="https://weekly.tf/issues/weekly-tf-issue-70-monorepos-platform-infra-team-terraform-scale-environment-as-code-995507" target="_blank" rel="noopener noreferrer" class="">weekly.tf - Issue #70</a></li>
 </ul>
 </li>
-<li class="">🚀<!-- --> <a class="" href="https://techblog.szksh.cloud/job-change-2022-06">2022-07-01 Mercari に転職</a></li>
+<li class="">🚀 <a class="" href="https://techblog.szksh.cloud/job-change-2022-06">2022-07-01 Mercari に転職</a></li>
 <li class=""><a href="https://zenn.dev/shunsuke_suzuki/articles/gha-trigger-action" target="_blank" rel="noopener noreferrer" class="">2022-09 gha-trigger のリリース</a></li>
-<li class="">🚀<!-- --> 2022-11 一人暮らしを始めた</li>
+<li class="">🚀 2022-11 一人暮らしを始めた</li>
 <li class="">2022-12 aqua の Standard Registry の package 数が 1,000 に到達</li>
 <li class="">aqua が <a href="https://github.com/aquaproj/aqua/releases/tag/v0.8.11" target="_blank" rel="noopener noreferrer" class="">v0.8.11</a> から <a href="https://github.com/aquaproj/aqua/releases/tag/v1.28.0" target="_blank" rel="noopener noreferrer" class="">v1.28.0</a> まで update され、様々な機能が実装される</li>
 <li class="">tfaction がいくつかの企業で導入される<!-- -->
@@ -443,7 +443,7 @@ I'm working on <a href="https://github.com/aquaproj/aqua/pull/1413" target="_bla
 <table><thead><tr><th>merged date</th><th>repository</th><th>lang</th><th>PR's short description</th></tr></thead><tbody><tr><td>2022-10-21</td><td><a href="https://github.com/slsa-framework/slsa-github-generator" target="_blank" rel="noopener noreferrer" class="">slsa-framework/slsa-github-generator</a></td><td>go</td><td><a href="https://github.com/slsa-framework/slsa-github-generator/pull/1066" target="_blank" rel="noopener noreferrer" class="">fix: use GITHUB_OUTPUT instead of deprecated set-output command</a></td></tr><tr><td>2022-10-17</td><td><a href="https://github.com/slsa-framework/slsa-github-generator" target="_blank" rel="noopener noreferrer" class="">slsa-framework/slsa-github-generator</a></td><td>go</td><td><a href="https://github.com/slsa-framework/slsa-github-generator/pull/1061" target="_blank" rel="noopener noreferrer" class="">fix: use GITHUB_OUTPUT instead of deprecated set-output command</a></td></tr><tr><td>2022-10-04</td><td><a href="https://github.com/shipyard-run/shipyard" target="_blank" rel="noopener noreferrer" class="">shipyard-run/shipyard</a></td><td>go (shell script)</td><td><a href="https://github.com/shipyard-run/shipyard/pull/182" target="_blank" rel="noopener noreferrer" class="">ci: fix checksums.txt</a></td></tr></tbody></table>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="oss-development">OSS Development<a href="https://techblog.szksh.cloud/what-i-did-2022-10#oss-development" class="hash-link" aria-label="Direct link to OSS Development" title="Direct link to OSS Development" translate="no">​</a></h2>
 <h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="aqua">aqua<a href="https://techblog.szksh.cloud/what-i-did-2022-10#aqua" class="hash-link" aria-label="Direct link to aqua" title="Direct link to aqua" translate="no">​</a></h3>
-<p>⭐<!-- --> Over 200 stars <!-- -->⭐</p>
+<p>⭐ Over 200 stars ⭐</p>
 <p>The notable change is <a href="https://aquaproj.github.io/docs/reference/checksum/" target="_blank" rel="noopener noreferrer" class="">the support of checksum verification</a>.</p>
 <p>Please see <a href="https://github.com/orgs/aquaproj/projects/8" target="_blank" rel="noopener noreferrer" class="">the GitHub Project</a> to check prioritized issues.</p>
 <ul>
@@ -451,7 +451,7 @@ I'm working on <a href="https://github.com/aquaproj/aqua/pull/1413" target="_bla
 <ul>
 <li class=""><a href="https://github.com/aquaproj/aqua/releases/tag/v1.22.0-1" target="_blank" rel="noopener noreferrer" class="">v1.22.0-1</a>
 <ul>
-<li class="">🚀<!-- --> Support filtering packages with tags</li>
+<li class="">🚀 Support filtering packages with tags</li>
 </ul>
 </li>
 <li class=""><a href="https://github.com/aquaproj/aqua/issues/1306" target="_blank" rel="noopener noreferrer" class="">#1306</a> Support restricting registries and packages globally for security</li>
@@ -474,8 +474,8 @@ I'm working on <a href="https://github.com/aquaproj/aqua/pull/1413" target="_bla
 </li>
 <li class=""><a href="https://github.com/aquaproj/aqua/releases/tag/v1.20.0" target="_blank" rel="noopener noreferrer" class="">v1.20.0</a>
 <ul>
-<li class="">🎉<!-- --> Support the checksum verification</li>
-<li class="">🎉<!-- --> cp: Support coping all packages</li>
+<li class="">🎉 Support the checksum verification</li>
+<li class="">🎉 cp: Support coping all packages</li>
 </ul>
 </li>
 <li class=""><a href="https://github.com/aquaproj/aqua/releases/tag/v1.19.5" target="_blank" rel="noopener noreferrer" class="">v1.19.5</a>
@@ -486,8 +486,8 @@ I'm working on <a href="https://github.com/aquaproj/aqua/pull/1413" target="_bla
 </li>
 </ul>
 <h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="aqua-registry">aqua-registry<a href="https://techblog.szksh.cloud/what-i-did-2022-10#aqua-registry" class="hash-link" aria-label="Direct link to aqua-registry" title="Direct link to aqua-registry" translate="no">​</a></h3>
-<p>🎉<!-- --> Supported over 900 packages <!-- -->🎉</p>
-<p>🎉<!-- --> 30 Contributors <!-- -->🎉</p>
+<p>🎉 Supported over 900 packages 🎉</p>
+<p>🎉 30 Contributors 🎉</p>
 <p>I've updated aqua-registry from <a href="https://github.com/aquaproj/aqua-registry/releases/tag/v3.64.0" target="_blank" rel="noopener noreferrer" class="">v3.64.0</a> to <a href="https://github.com/aquaproj/aqua-registry/releases/tag/v3.85.0" target="_blank" rel="noopener noreferrer" class="">v3.85.0</a>.
 The number of packages has increased from 870 to 923 (+53).
 Thank you, all contributors!</p>
@@ -654,7 +654,7 @@ Thank you, all contributors!</p>
 </ul>
 </li>
 </ul>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="new-oss-rocket">New OSS <!-- -->🚀<a href="https://techblog.szksh.cloud/what-i-did-2022-09#new-oss-rocket" class="hash-link" aria-label="Direct link to new-oss-rocket" title="Direct link to new-oss-rocket" translate="no">​</a></h2>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="new-oss-rocket">New OSS 🚀<a href="https://techblog.szksh.cloud/what-i-did-2022-09#new-oss-rocket" class="hash-link" aria-label="Direct link to New OSS 🚀" title="Direct link to New OSS 🚀" translate="no">​</a></h2>
 <h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="gha-trigger">gha-trigger<a href="https://techblog.szksh.cloud/what-i-did-2022-09#gha-trigger" class="hash-link" aria-label="Direct link to gha-trigger" title="Direct link to gha-trigger" translate="no">​</a></h3>
 <p>I've released gha-trigger, which is Webhook Server and Actions to run GitHub Actions securely.</p>
 <iframe class="hatenablogcard" style="width:100%;height:155px;max-width:680px" src="https://hatenablog-parts.com/embed?url=https://gha-trigger.github.io" width="300" height="150" frameborder="0" scrolling="no"></iframe>
@@ -771,7 +771,7 @@ aqua-registry を開発するためのコードは元々 aqua-registry のリポ
 </ul>
 </li>
 </ul>
-<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="oss-の新規開発-rocket">OSS の新規開発 <!-- -->🚀<a href="https://techblog.szksh.cloud/what-i-did-2022-08#oss-%E3%81%AE%E6%96%B0%E8%A6%8F%E9%96%8B%E7%99%BA-rocket" class="hash-link" aria-label="Direct link to oss-の新規開発-rocket" title="Direct link to oss-の新規開発-rocket" translate="no">​</a></h2>
+<h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="oss-の新規開発-rocket">OSS の新規開発 🚀<a href="https://techblog.szksh.cloud/what-i-did-2022-08#oss-%E3%81%AE%E6%96%B0%E8%A6%8F%E9%96%8B%E7%99%BA-rocket" class="hash-link" aria-label="Direct link to OSS の新規開発 🚀" title="Direct link to OSS の新規開発 🚀" translate="no">​</a></h2>
 <h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="gha-trigger">gha-trigger<a href="https://techblog.szksh.cloud/what-i-did-2022-08#gha-trigger" class="hash-link" aria-label="Direct link to gha-trigger" title="Direct link to gha-trigger" translate="no">​</a></h3>
 <p>まだ開発中ですが、新しい OSS を開発しています。詳細はまたいずれ書けたらと思います。</p>
 <iframe class="hatenablogcard" style="width:100%;height:155px;max-width:680px" src="https://hatenablog-parts.com/embed?url=https://github.com/suzuki-shunsuke/gha-trigger" width="300" height="150" frameborder="0" scrolling="no"></iframe>
