@@ -1577,35 +1577,6 @@ Slack のようにその場で質問をしてすぐ解決するのには向か�
 </ul>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="oss-開発">OSS 開発<a href="https://techblog.szksh.cloud/what-i-did-2022-04#oss-%E9%96%8B%E7%99%BA" class="hash-link" aria-label="Direct link to OSS 開発" title="Direct link to OSS 開発" translate="no">​</a></h2>
 <h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="新規開発">新規開発<a href="https://techblog.szksh.cloud/what-i-did-2022-04#%E6%96%B0%E8%A6%8F%E9%96%8B%E7%99%BA" class="hash-link" aria-label="Direct link to 新規開発" title="Direct link to 新規開発" translate="no">​</a></h3>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <table><thead><tr><th>first release date</th><th>name</th><th>badges</th><th>lang</th><th>type</th><th>short description</th></tr></thead><tbody><tr><td>2022-04-23</td><td><a href="https://github.com/suzuki-shunsuke/renovate-issue-action" target="_blank" rel="noopener noreferrer" class="">renovate-issue-action</a></td><td><a href="https://github.com/suzuki-shunsuke/renovate-issue-action" target="_blank" rel="noopener noreferrer" class=""><img decoding="async" loading="lazy" src="https://img.shields.io/github/last-commit/suzuki-shunsuke/renovate-issue-action.svg" alt="GitHub last commit" class="img_ev3q"></a></td><td>go</td><td>cli for GitHub Actions</td><td>Create, update, and close GitHub Issues with GitHub Actions according to Renovate Pull Requests</td></tr><tr><td>2022-04-21</td><td><a href="https://github.com/suzuki-shunsuke/zap-error" target="_blank" rel="noopener noreferrer" class="">zap-error</a></td><td><a href="https://github.com/suzuki-shunsuke/zap-error" target="_blank" rel="noopener noreferrer" class=""><img decoding="async" loading="lazy" src="https://img.shields.io/github/last-commit/suzuki-shunsuke/zap-error.svg" alt="GitHub last commit" class="img_ev3q"></a></td><td>go</td><td>library</td><td>Embed zap.Field into error</td></tr></tbody></table>
 <h4 class="anchor anchorTargetStickyNavbar_Vzrq" id="zap-error">zap-error<a href="https://techblog.szksh.cloud/what-i-did-2022-04#zap-error" class="hash-link" aria-label="Direct link to zap-error" title="Direct link to zap-error" translate="no">​</a></h4>
 <p>zap-error は Go の error に zap.Field を埋め込み、構造化されたコンテキストを error に持たせてロギングできるようにするライブラリです。
@@ -1651,53 +1622,6 @@ zap の logger をラップするようなことはしていないので zap は
 </li>
 </ul>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="oss-contribution">OSS Contribution<a href="https://techblog.szksh.cloud/what-i-did-2022-04#oss-contribution" class="hash-link" aria-label="Direct link to OSS Contribution" title="Direct link to OSS Contribution" translate="no">​</a></h2>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <table><thead><tr><th>merged date</th><th>repository</th><th>lang</th><th>PR's short description</th></tr></thead><tbody><tr><td>2022-04-29</td><td><a href="https://github.com/shuaibiyy/awesome-terraform" target="_blank" rel="noopener noreferrer" class="">shuaibiyy/awesome-terraform</a></td><td>document</td><td><a href="https://github.com/shuaibiyy/awesome-terraform/pull/164" target="_blank" rel="noopener noreferrer" class="">tools: add tfaction</a></td></tr><tr><td>2022-04-29</td><td><a href="https://github.com/shuaibiyy/awesome-terraform" target="_blank" rel="noopener noreferrer" class="">shuaibiyy/awesome-terraform</a></td><td>document</td><td><a href="https://github.com/shuaibiyy/awesome-terraform/pull/165" target="_blank" rel="noopener noreferrer" class="">fix: update links to some tools</a></td></tr><tr><td>2022-04-22</td><td><a href="https://github.com/kreuzwerker/terraform-provider-docker" target="_blank" rel="noopener noreferrer" class="">kreuzwerker/terraform-provider-docker</a></td><td>go</td><td><a href="https://github.com/kreuzwerker/terraform-provider-docker/pull/371" target="_blank" rel="noopener noreferrer" class="">chore: remove the workflow to close stale issues and pull requests</a></td></tr><tr><td>2022-04-21</td><td><a href="https://github.com/mitchellh/mapstructure" target="_blank" rel="noopener noreferrer" class="">mitchellh/mapstructure</a></td><td>go</td><td><a href="https://github.com/mitchellh/mapstructure/pull/265" target="_blank" rel="noopener noreferrer" class="">fix: panic when Decode's input is array and output is a slice</a></td></tr><tr><td>2022-04-12</td><td><a href="https://github.com/rhysd/actionlint" target="_blank" rel="noopener noreferrer" class="">rhysd/actionlint</a></td><td>go</td><td><a href="https://github.com/rhysd/actionlint/pull/131" target="_blank" rel="noopener noreferrer" class="">fix: add permissions "pages" and "discussions" and remove invalid permission "metadata"</a></td></tr><tr><td>2022-04-06</td><td><a href="https://github.com/terraform-linters/tflint-ruleset-aws" target="_blank" rel="noopener noreferrer" class="">terraform-linters/tflint-ruleset-aws</a></td><td>go</td><td><a href="https://github.com/terraform-linters/tflint-ruleset-aws/pull/333" target="_blank" rel="noopener noreferrer" class="">style: format rules/api/rule.go.tmpl and run go generate ./...</a></td></tr></tbody></table>
 <p>tfaction が awesome-terraform に追加されました。</p>]]></content>
         <author>
@@ -1728,27 +1652,6 @@ zap の logger をラップするようなことはしていないので zap は
 <li class="">AWS Account 分割</li>
 </ul>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="blog">Blog<a href="https://techblog.szksh.cloud/what-i-did-2022-03#blog" class="hash-link" aria-label="Direct link to Blog" title="Direct link to Blog" translate="no">​</a></h2>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <table><thead><tr><th>date</th><th>title</th></tr></thead><tbody><tr><td>2022-03-30</td><td><a href="https://blog.studysapuri.jp/entry/2022/03/30/080000" target="_blank" rel="noopener noreferrer" class="">Terraform Modules を Monorepo で versioning して管理</a></td></tr><tr><td>2022-03-29</td><td><a href="https://devs.quipper.com/2022/03/29/automate-handling-a-number-of-pull-requests-by-renovate-in-terraform-monorepo.html" target="_blank" rel="noopener noreferrer" class="">Automate handling a number of Pull Requests by Renovate in Terraform Monorepo</a></td></tr><tr><td>2022-03-05</td><td><a href="https://zenn.dev/shunsuke_suzuki/articles/tfaction-v050" target="_blank" rel="noopener noreferrer" class="">tfaction v0.5.0 の update</a></td></tr></tbody></table>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="oss-開発">OSS 開発<a href="https://techblog.szksh.cloud/what-i-did-2022-03#oss-%E9%96%8B%E7%99%BA" class="hash-link" aria-label="Direct link to OSS 開発" title="Direct link to OSS 開発" translate="no">​</a></h2>
 <ul>

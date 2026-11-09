@@ -6,7 +6,7 @@
 <title data-rh="true">github-comment - GitHub にコメントを投稿する CLI | Melody</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:url" content="https://techblog.szksh.cloud/github-comment"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docusaurus_tag" content="default"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docsearch:docusaurus_tag" content="default"><meta data-rh="true" property="og:title" content="github-comment - GitHub にコメントを投稿する CLI | Melody"><meta data-rh="true" name="description" content="GitHub の issue や pull request, commit にコメントを投稿する CLI ツールを作りました(結構前の話ですが)。"><meta data-rh="true" property="og:description" content="GitHub の issue や pull request, commit にコメントを投稿する CLI ツールを作りました(結構前の話ですが)。"><meta data-rh="true" property="og:type" content="article"><meta data-rh="true" property="article:published_time" content="2020-07-31T11:42:54.000Z"><meta data-rh="true" property="article:author" content="https://github.com/suzuki-shunsuke"><meta data-rh="true" property="article:tag" content="oss"><link data-rh="true" rel="icon" href="http://github.com/suzuki-shunsuke.png"><link data-rh="true" rel="canonical" href="https://techblog.szksh.cloud/github-comment"><link data-rh="true" rel="alternate" href="https://techblog.szksh.cloud/github-comment" hreflang="en"><link data-rh="true" rel="alternate" href="https://techblog.szksh.cloud/github-comment" hreflang="x-default"><script data-rh="true" type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","@id":"https://techblog.szksh.cloud/github-comment","mainEntityOfPage":"https://techblog.szksh.cloud/github-comment","url":"https://techblog.szksh.cloud/github-comment","headline":"github-comment - GitHub にコメントを投稿する CLI","name":"github-comment - GitHub にコメントを投稿する CLI","description":"GitHub の issue や pull request, commit にコメントを投稿する CLI ツールを作りました(結構前の話ですが)。","datePublished":"2020-07-31T11:42:54.000Z","author":{"@type":"Person","name":"Shunsuke Suzuki","description":"Platform Engineer / OSS Developer / Go / Terraform","url":"https://github.com/suzuki-shunsuke","image":"https://github.com/suzuki-shunsuke.png"},"keywords":[],"isPartOf":{"@type":"Blog","@id":"https://techblog.szksh.cloud/","name":"Blog"}}</script><link rel="alternate" type="application/rss+xml" href="/rss.xml" title="Melody RSS Feed">
 <link rel="alternate" type="application/atom+xml" href="/atom.xml" title="Melody Atom Feed">
 <link rel="alternate" type="application/json" href="/feed.json" title="Melody JSON Feed"><link rel="stylesheet" href="/assets/css/styles.9947dc59.css">
-<script src="/assets/js/runtime~main.ca0e4957.js" defer="defer"></script>
+<script src="/assets/js/runtime~main.933fd8fb.js" defer="defer"></script>
 <script src="/assets/js/main.ec619706.js" defer="defer"></script>
 </head>
 <body>
@@ -111,87 +111,12 @@ false なら次のテンプレートを評価します。
 <p>先に述べたとおり、いくつかの Platform では環境変数から自動でパラメータを補完してくれます。</p>
 <h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="circleci">CircleCI<a href="#circleci" class="hash-link" aria-label="Direct link to CircleCI" title="Direct link to CircleCI" translate="no">​</a></h3>
 <p>プラットフォームの判別: <code>CIRCLECI</code> の有無</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <table><thead><tr><th>パラメータ</th><th>ソース</th></tr></thead><tbody><tr><td>.Org</td><td>CIRCLE_PROJECT_USERNAME</td></tr><tr><td>.Repo</td><td>CIRCLE_PROJECT_REPONAME</td></tr><tr><td>.PRNumber</td><td>CIRCLE_PULL_REQUEST</td></tr><tr><td>.SHA1</td><td>CIRCLE_SHA1</td></tr></tbody></table>
 <h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="drone">Drone<a href="#drone" class="hash-link" aria-label="Direct link to Drone" title="Direct link to Drone" translate="no">​</a></h3>
 <p>プラットフォームの判別: <code>DRONE</code> の有無</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <table><thead><tr><th>パラメータ</th><th>ソース</th></tr></thead><tbody><tr><td>.Org</td><td>DRONE_REPO_OWNER</td></tr><tr><td>.Repo</td><td>DRONE_REPO_NAME</td></tr><tr><td>.PRNumber</td><td>DRONE_PULL_REQUEST</td></tr><tr><td>.SHA1</td><td>DRONE_COMMIT_SHA1</td></tr></tbody></table>
 <h3 class="anchor anchorTargetStickyNavbar_Vzrq" id="github-actions">GitHub Actions<a href="#github-actions" class="hash-link" aria-label="Direct link to GitHub Actions" title="Direct link to GitHub Actions" translate="no">​</a></h3>
 <p>プラットフォームの判別: <code>GITHUB_ACTIONS</code> の有無</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <table><thead><tr><th>パラメータ</th><th>ソース</th></tr></thead><tbody><tr><td>.Org</td><td>GITHUB_REPOSITORY</td></tr><tr><td>.Repo</td><td>GITHUB_REPOSITORY</td></tr><tr><td>.PRNumber</td><td>GITHUB_EVENT_PATH</td></tr><tr><td>.SHA1</td><td>GITHUB_SHA1</td></tr></tbody></table>
 <h2 class="anchor anchorTargetStickyNavbar_Vzrq" id="exec-のパラメータの-command-と-joincommand">exec のパラメータの Command と JoinCommand<a href="#exec-のパラメータの-command-と-joincommand" class="hash-link" aria-label="Direct link to exec のパラメータの Command と JoinCommand" title="Direct link to exec のパラメータの Command と JoinCommand" translate="no">​</a></h2>
 <p>実行したコマンドを示すパラメータとして Command と JoinCommand があります。
